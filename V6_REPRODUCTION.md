@@ -6,6 +6,10 @@ Compustat, OptionMetrics, LSEG, Alpaca, and factor inputs are deliberately not
 committed to Git. They remain part of the reproduction input, are authenticated
 by frozen manifests, and cannot be replaced silently.
 
+The checked-in `evidence/v6_selector/feature_registry.csv` is metadata only. It
+lets repository tests validate the frozen 318-feature production-source
+contract without requiring a contributor to possess the private data tree.
+
 ## What “from scratch” means
 
 There are three reproducibility layers:
