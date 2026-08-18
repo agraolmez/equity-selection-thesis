@@ -1,0 +1,51 @@
+{
+  "costs_recomputed_at_target_nav": true,
+  "frozen_identity": {
+    "benchmarks_sha256": "b7041648b15d345910b6b3810bfd5ad31b3eebfc6bf7a18b7a5d33a31f491c03",
+    "code_identity": "e5468ec50cbfbefb7719f9c69097998e44d1f73d8cc15158cb43f73ba2a01ec8",
+    "config_sha256": "b50c39dfbd62e1c924a95f923bbac55809b8a899e13434b9b602244d00da0401",
+    "risk_cost_sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e",
+    "source_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2"
+  },
+  "initial_nav": 100000.0,
+  "interpretation": "The 2.05x research profile is uncapped and reached more than 2x overnight gross exposure; it is not the still-unrun 2.0x-capped Alpaca paper implementation.",
+  "phases": {
+    "historical_test": {
+      "annualized_primary_cost": 0.020185423678785022,
+      "maximum_absolute_position_dollars_at_start": 3532.5699850151873,
+      "maximum_drawdown": -0.03493169146637354,
+      "maximum_gross": 2.623807659667972,
+      "maximum_one_way_adv_participation": 0.00024627321689614544,
+      "months": 20,
+      "net_sharpe": 2.3325890650776477,
+      "qqq_cagr": 0.23256088227906258,
+      "qqq_final_value": 141692.64281437307,
+      "spy_cagr": 0.21329678873393587,
+      "spy_final_value": 138020.97157887774,
+      "strategy_cagr": 0.40495421498553275,
+      "strategy_final_value": 176239.64903373053
+    },
+    "validation": {
+      "annualized_primary_cost": 0.019647629166120235,
+      "maximum_absolute_position_dollars_at_start": 3075.0000090492554,
+      "maximum_drawdown": -0.06104207748839374,
+      "maximum_gross": 2.764730840025514,
+      "maximum_one_way_adv_participation": 0.00022276861410704642,
+      "months": 23,
+      "net_sharpe": 0.8544488129842683,
+      "qqq_cagr": 0.05950446950454924,
+      "qqq_final_value": 111715.56513000841,
+      "spy_cagr": 0.039309578583857085,
+      "spy_final_value": 107669.9345256505,
+      "strategy_cagr": 0.1213843156429042,
+      "strategy_final_value": 124555.45385266765
+    }
+  },
+  "profile": {
+    "id": "constant_2.05",
+    "kind": "constant",
+    "multiplier": 2.05
+  },
+  "schema": "research_v6_1_100k_wealth_visualization_v1",
+  "status": "COMPLETE"
+}

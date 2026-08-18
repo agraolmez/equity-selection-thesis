@@ -1,0 +1,10 @@
+{
+  "schema": "research_v6_8_live_sec_features_v1",
+  "purpose": "Point-in-time SEC filing and event features for V6.8 paper signals.",
+  "user_agent_environment": "SEC_USER_AGENT",
+  "submissions_url_template": "https://data.sec.gov/submissions/CIK{cik}.json",
+  "maximum_requests_per_second": 8.0,
+  "signal_cutoff_timezone": "America/New_York",
+  "signal_cutoff_local_time": "16:00:00",
+  "ambiguous_multi_cik_policy": "leave SEC features missing; never choose one issuer guess"
+}

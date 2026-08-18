@@ -1,0 +1,253 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase05-stage11-portfolio-resume-amendment-v1",
+  "stage": 11,
+  "methodology_version": "v1",
+  "status": "FROZEN_RULE_RESTORING_PORTFOLIO_PHASE_RESUME",
+  "prior_failed_execution": {
+    "failure_receipt_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260724-elastic-net-dual-certificate-2015-07/failure_receipt.json",
+    "failure_receipt_sha256": "c41f39b82100778209877f2879b82f34d313f6829ab0937d0de19b555a19f105",
+    "failure_seal_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260724-elastic-net-dual-certificate-2015-07/_SEALED.json",
+    "failure_seal_sha256": "198cecaaf887293f446fc36e9e56a1a4ed5d07280f137cd94db78dd190ec7845",
+    "preflight_primary_pointer_sha256": "9abc8ace8400cb79c8e07d751c612d6a35d42af267cec666e0ef551dc6c85934",
+    "preflight_verified_pointer_sha256": "1d0c992164dacd8b86e308e5f19fb8bb7b94d157c0830dec03167b1bf252796e",
+    "preceding_held_march_failure_receipt_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260724-held-missing-return-2015-03/failure_receipt.json",
+    "preceding_held_march_failure_receipt_sha256": "5170530809dc76c597fac27ca6e90cccd222a7dcd9d054ca9662faa92ac22cf5",
+    "preceding_march_failure_receipt_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260724-unheld-unresolved-delisting-2015-03/failure_receipt.json",
+    "preceding_march_failure_receipt_sha256": "778dc59dd31e64ac979c3c2332ef2389b95a677ea0e6c65f41dcf1c069c2f411",
+    "originating_february_failure_receipt_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260724-dual-certificate-trigger-2015-02/failure_receipt.json",
+    "originating_february_failure_receipt_sha256": "720e76b43e7952cfc8f2190835af65df274d989c18f1145231274a6bf8332a43",
+    "completed_refit_count": 20,
+    "completed_selector_fit_count": 660,
+    "completed_forecast_equality_check_count": 1947,
+    "completed_forecast_rows": 4013460,
+    "completed_monthly_score_count": 59,
+    "failure_holding_month": "2015-07",
+    "portfolio_months_completed": 6,
+    "failure_message": "elastic_net_hybrid_challenger allocation failed: ordinary hybrid retry candidate was not dual-certified: ordinary_primary:optimal_inaccurate, ordinary_retry:optimal_inaccurate, ordinary_feasibility_retry:optimal, ordinary_explicit_dual_certificate:optimal, ordinary_explicit_dual_certificate_source:separately_solved_explicit_dual, ordinary_explicit_dual_certificate_audit:failed:candidate_dual_gap, ordinary_retry_dual_certificate:optimal_inaccurate, ordinary_retry_dual_certificate_source:clarabel_retry_canonical_dual_lsmr_refined, ordinary_retry_dual_certificate_audit:failed:dual_soc_cone",
+    "failure_scope": "elastic_net_dual_certificate_exact_metric_capture_required",
+    "result_bundle_published": false,
+    "outcome_root": {
+      "authority_build_id": "stage11-preflight-d02668012a550a9a1b5b17c4",
+      "authority_verification_id": "verify-d2c8a62968a1e3ac",
+      "directory_mode_counts": {
+        "0755": 1
+      },
+      "file_count": 29,
+      "file_mode": "0644",
+      "inventory_sha256": "abe776e6382ac9bff16fe524d81a6f4692f57b498b7b0427382a7103d6601a41",
+      "outcome_materialization_receipt_sha256": "862ff81a33d23f9e5e9a06f29bd767cd93c5dd4d2f3326071fb1bd2f682aac03",
+      "table_receipts_equal_frozen_contract": true,
+      "total_size_bytes": 156420966
+    }
+  },
+  "resume_authority": {
+    "mode": "authenticated_checkpoint_and_raw_forecast_replay_after_completed_exact_recomputation",
+    "repeat_model_fitting_permitted": false,
+    "exact_cache_tree_authentication_required": true,
+    "normal_pseudo_live_ledger_replay_required": true,
+    "normal_selection_calibration_portfolio_publication_and_verification_required": true,
+    "fresh_preflight_required": true,
+    "performance_preserving_replay_optimizations": {
+      "authenticated_forecast_arrays_reused_in_memory": true,
+      "completed_outcome_hash_computed_once_per_refit": true,
+      "forecast_domain_scanned_once_per_signal_date": true,
+      "fresh_canonical_portfolio_recheck_objects_reused_once": true,
+      "portfolio_recheck_requires_exact_object_identity_and_content_hashes": true,
+      "portfolio_recheck_bindings_restored_before_publication": true,
+      "forecast_values_changed": false
+    }
+  },
+  "missing_return_projection": {
+    "classification": "authenticated_no_mark_projection_with_exact_span_continuity",
+    "failure_receipt_path": "artifacts/phase_05_validation/stage_11_execution_attempts/attempt-20260723-invalid-daily-return-seal/failure_receipt.json",
+    "failure_receipt_sha256": "554348d98ffa335aa315498f89a5cc950a178815598a39097f8de994474a899a",
+    "adapter_path": "scripts/stage_11_missing_return_projection_adapter.py",
+    "adapter_sha256": "2b693b106fe3b91b2440bc279761ff57b1c175d9e5424632f55084b4adf27060",
+    "test_path": "tests/unit/test_stage11_missing_return_projection_adapter.py",
+    "test_sha256": "ce0b01555e669abb64d4e8b0e6e7cc1d6b1d07826a65a52a464d561d5ab18269",
+    "daily_engine_path": "src/portfolio_bot/validation/daily_engine.py",
+    "daily_engine_sha256": "6952a22738089e5021807952b25d661ae396ea54b8df217f881ce7e2f977f86e",
+    "daily_engine_test_path": "tests/unit/test_stage11_daily_engine.py",
+    "daily_engine_test_sha256": "90aaa8f0d362b464b5ebf7e72a4c250f9ecbdd8d9aca9cccb4965b0ebc3df540",
+    "portfolio_backend_path": "src/portfolio_bot/validation/empirical_portfolio_backend.py",
+    "portfolio_backend_sha256": "52055f3bc36b1bbc03ea7b250d29c3409b11889578e5360660740f1514fa43e5",
+    "execution_orchestrator_path": "src/portfolio_bot/validation/execution_orchestrator.py",
+    "execution_orchestrator_sha256": "cdc2954510938a8575564c4777568c0bad09a6e265042b05b090d593553a9b3d",
+    "execution_orchestrator_test_path": "tests/unit/test_stage11_execution_orchestrator.py",
+    "execution_orchestrator_test_sha256": "85b7908307233265b6b51619bdde0bf84039b10e3fda5bfb32028bb508b0fd2b",
+    "authoritative_null_to_zero_permitted": false,
+    "invalid_nonnull_numeric_suppression_permitted": false,
+    "open_nonzero_position_without_return": "exact_missing_return_is_explicit_no_mark_all_other_nulls_fail_closed",
+    "expected_exact_no_mark_source_count": 66198,
+    "expected_exact_no_mark_source_key_sha256": "1d2eea9164a8030341c68c35c596f8bf9cab1cb910c68b57d875c063986f6978",
+    "observed_return_span_start_continuity_required": true,
+    "pending_identity_rebalance_trade_permitted": false,
+    "pending_identity_corporate_action_permitted": false,
+    "disconnected_or_overlapping_return_span_permitted": false,
+    "final_nonzero_pending_identity_permitted": false,
+    "unresolved_terminal_action_projection": "audit_only_with_exact_nullable_return_twin",
+    "expected_unresolved_terminal_action_count": 20,
+    "expected_unresolved_terminal_return_twin_count": 20,
+    "expected_unresolved_terminal_key_sha256": "3888ef6b7e50a3eed374aeb1d53af00df8172d0cf1b62bff86efcdec92473bec",
+    "expected_resolved_canonical_action_count": 2275,
+    "unresolved_action_or_settlement_creation_permitted": false,
+    "canonical_resolved_action_mapping_required": true,
+    "projection_bindings_restored_before_publication": true,
+    "corporate_action_economic_treatment_changed": false
+  },
+  "retired_identity_execution_gate": {
+    "classification": "authenticated_terminal_identity_new_trade_execution_gate",
+    "trigger_failure_message": "open identities lack an authoritative daily return/rate: 89558",
+    "trigger_holding_month": "2015-03",
+    "trigger_session_date": "2015-03-03",
+    "trigger_permno": 89558,
+    "result_bundle_published": false,
+    "portfolio_backend_path": "src/portfolio_bot/validation/empirical_portfolio_backend.py",
+    "portfolio_backend_sha256": "52055f3bc36b1bbc03ea7b250d29c3409b11889578e5360660740f1514fa43e5",
+    "test_path": "tests/unit/test_stage11_empirical_portfolio_backend.py",
+    "test_sha256": "7bf4d391efcad72677047f0c14d4836c85bd310fbecf9f66ac28192ccf160a53",
+    "signal_score_or_ic_domain_changed": false,
+    "signal_date_universe_membership_changed": false,
+    "execution_gate_timing": "terminal_action_assigned_on_or_before_entry_close",
+    "future_terminal_event_permitted": false,
+    "suppressed_posting_promoted_to_return_or_no_mark": false,
+    "terminal_action_reapplied": false,
+    "expected_execution_gate_rows": 106,
+    "expected_unique_permnos": 106,
+    "expected_execution_gate_sha256": "9c000de80aef24207b8a33081d091cdc2039d85c10918c307f30dc258721c824",
+    "expected_unresolved_terminal_gate_rows": 0
+  },
+  "pending_identity_materiality_policy": {
+    "classification": "uniform_pending_five_cent_post_month_boundary_retirement_with_authenticated_tip_migration",
+    "policy_id": "stage11-pending-five-cent-dust-retirement-v2",
+    "application_scope": "all_strategies_all_holding_months_and_authenticated_checkpoint_045_tip",
+    "strict_absolute_position_value_dollars_upper_bound": 0.05,
+    "normalized_required_exit_violation_upper_bound": 5e-08,
+    "pending_no_mark_count_must_be_positive": true,
+    "nav_preserved_bit_for_bit": true,
+    "position_value_set_to_exact_zero": true,
+    "mark_continuity_identity_removed": true,
+    "synthetic_trade_permitted": false,
+    "transaction_cost_permitted": false,
+    "execution_price_read_permitted": false,
+    "return_imputation_permitted": false,
+    "corporate_action_permitted": false,
+    "terminal_identity_retirement_permitted": false,
+    "position_at_or_above_five_cents_permitted": false,
+    "return_span_continuity_limit_changed": false,
+    "expected_evidence_rows": 13,
+    "expected_unique_permnos": [
+      32791,
+      76736,
+      91366,
+      91907,
+      92102
+    ],
+    "expected_strategy_ids_by_permno": {
+      "32791": [
+        "ensemble_hybrid_primary",
+        "elastic_net_hybrid_challenger",
+        "ensemble_rank_challenger"
+      ],
+      "76736": [
+        "elastic_net_hybrid_challenger",
+        "ensemble_rank_challenger"
+      ],
+      "91366": [
+        "ensemble_hybrid_primary",
+        "elastic_net_hybrid_challenger",
+        "ensemble_rank_challenger"
+      ],
+      "91907": [
+        "elastic_net_hybrid_challenger",
+        "ensemble_rank_challenger"
+      ],
+      "92102": [
+        "ensemble_hybrid_primary",
+        "elastic_net_hybrid_challenger",
+        "ensemble_rank_challenger"
+      ]
+    },
+    "expected_event_key_sha256": "cbf2616214703d97eee7b130a26c9144b20c0642ac04600aa221010c8b1a525d",
+    "expected_evidence_sha256": "b8e938a3393e148f1c4cabcd87d861a5ea09a6120d4f7c05c34bc4c61a7c754e",
+    "one_ulp_pending_weight_comparison": "exact_opening_weight_equals_target_weight",
+    "one_ulp_comparison_tolerance": 0.0,
+    "next_representable_weight_change_permitted": false,
+    "failure_ids": [
+      "3ec463f0fe9ca11ee7e89063eccd45033724a62f38b35dcdde0d8a71e48b9ce7",
+      "4bf2a4eccdef94ff1c6373fb32f3416b5c2c58689a438ad4bfaa8216c405b8b8",
+      "31c79c48ef576f37159215ed64c1ae2f9f386027754de846f8d5847c5de4a54e"
+    ],
+    "failure_fixtures": [
+      {
+        "path": "tests/fixtures/stage11_failures/2017-04-pending-weight-roundtrip/manifest.json",
+        "sha256": "9d46864663946c1287989c98b38b0296f879b8c9df16a69a9bf656b3438c685b"
+      },
+      {
+        "path": "tests/fixtures/stage11_failures/2018-10-pending-dust-reentry/manifest.json",
+        "sha256": "2408d05d8755de324af71ffb349a1713e5a884ae5c4f191871128e55271d0c47"
+      }
+    ],
+    "checkpoint_tip_migration": {
+      "adapter_path": "scripts/stage_11_pending_materiality_adapter.py",
+      "adapter_sha256": "f61eb5980270a1e48885fe16fe35cba44783c993e97d39cc3096120f770baaa8",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad",
+      "source_compatibility_sha256": "32e6f242b123412ccf077ffecbb809b369b2d6942bd73a620106ceaf2a953c53",
+      "source_checkpoint_sha256": "194b05c1bdcc29ef5c771de9388e10dcb9e6a17c1a6a64613574dfc4ad4ad7ea",
+      "source_completed_month": "2018-09",
+      "source_completed_month_count": 45,
+      "next_holding_month": "2018-10",
+      "boundary_date": "2018-10-01",
+      "checkpoint_rewritten": false,
+      "completed_month_count_changed": false,
+      "prior_month_replay_permitted": false,
+      "strategy_id": "elastic_net_hybrid_challenger",
+      "permno": 91366,
+      "position_value_dollars_hex": "0x1.68a9c50792833p-6",
+      "opening_nav_dollars_hex": "0x1.806a243fe0569p+26",
+      "weight_hex": "0x1.e05d94dc5340ap-33",
+      "last_authoritative_mark_date": "2018-05-11",
+      "pending_no_mark_count": 98,
+      "pending_evidence_sha256": "7898097a3f8a7aa003978f99d77bf900cb5c10edec5debb1798c57a853d7906e",
+      "expected_migration_evidence_sha256": "c46f4cc4e29e7576c023a310b368c7d32c7ab9e35db4844d6376f112cbe554cc"
+    }
+  },
+  "diagnostic_compatibility_transition": {
+    "classification": "protected_accounting_identity_restart_with_whole_tree_archive",
+    "prior_compatibility_sha256": "854aa14aa9cd50cf718f6cb44b9cb8d0653c8ad5eef46e0ee8fa0e4d0478011d",
+    "prior_accounting_transition_code_sha256": "89a0e3ee2bc3638a7bcc46bb69401204a3dfad68738ea5e2991684ddaf4afbcf",
+    "prior_completed_month_count": 27,
+    "prior_latest_holding_month": "2017-03",
+    "prior_next_holding_month": "2017-04",
+    "prior_latest_checkpoint_sha256": "b07a59790621c6c451fd499203461c9fd8c8c9ac8798ec698e8f8030b9346a1d",
+    "archive_relative_to_execution_results": "diagnostic_archives/compatibility-854aa14aa9cd50cf-inventory-d3894ca0e15c633a",
+    "archive_tree": {
+      "file_count": 279,
+      "total_size_bytes": 1641191747,
+      "inventory_sha256": "d3894ca0e15c633aabfa6ba07f658fcaf613ed83bf5218aedeaaed651108c345",
+      "directory_mode_counts": {
+        "0700": 67
+      },
+      "file_mode": "0600"
+    },
+    "archive_reverified_after_atomic_move": true,
+    "prior_tree_reuse_permitted": false,
+    "replacement_first_holding_month": "2015-01",
+    "cached_forecasts_and_model_fits_reused": true,
+    "repeat_model_fitting_permitted": false
+  },
+  "frozen_invariants": {
+    "allocation_constraints_changed": false,
+    "allocation_costs_changed": false,
+    "allocation_objective_changed": false,
+    "borrow_or_financing_cost_changed": false,
+    "forecast_value_changed": false,
+    "portfolio_selection_rule_changed": false,
+    "return_value_imputed": false,
+    "solver_changed": false,
+    "final_2020_plus_data_permitted": false,
+    "stage12_or_later_data_permitted": false
+  }
+}

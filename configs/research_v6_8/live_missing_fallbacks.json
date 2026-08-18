@@ -1,0 +1,22 @@
+{
+  "schema": "research_v6_8_live_missing_fallbacks_v1",
+  "purpose": "Explicitly materialize only frozen missing-value fallbacks for provider bridges that have not passed equivalence, without relabelling proxy data.",
+  "allowed_groups": {
+    "valuation_fundamentals": {
+      "ordinal_ranges": [[54, 82], [315, 318]],
+      "categorical_constants": {"fundamental_source_basis": "UNKNOWN"},
+      "reason": "LSEG-to-Compustat field, fiscal-period, reporting-lag, and currency equivalence is not certified"
+    },
+    "institutional_ownership": {
+      "ordinal_ranges": [[83, 86]],
+      "categorical_constants": {},
+      "reason": "current public 13F holdings and a complete date-effective CUSIP/security denominator bridge are not yet authenticated"
+    },
+    "optionmetrics": {
+      "ordinal_ranges": [[110, 135]],
+      "categorical_constants": {},
+      "reason": "LSEG OPRA-to-OptionMetrics aggregate equivalence is not certified"
+    }
+  },
+  "policy": "economic values remain missing and the already-frozen encoder activates their missing indicators"
+}

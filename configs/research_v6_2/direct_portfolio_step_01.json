@@ -1,0 +1,108 @@
+{
+  "schema": "research_v6_2_direct_portfolio_step_01_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "Can a policy trained on portfolio-level net utility convert the V6 information set into better implementable weights than the frozen rank-then-optimize pipeline?",
+  "scope": {
+    "new_lineage": true,
+    "direct_portfolio_learning": true,
+    "v6_or_v6_1_models_reused": false,
+    "v6_feature_matrix_reused_as_frozen_input": true,
+    "v6_1_ff5_predictions_used_only_by_named_gate_variant": true,
+    "historical_post_diagnostic_evidence": true,
+    "portfolios_and_optimization_in_scope": true
+  },
+  "bound_predecessor": {
+    "portfolio_contract": "configs/research_v6_1/portfolio_step_02.json",
+    "portfolio_contract_sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f",
+    "step03_result": "artifacts/research_v6_1/portfolio_step_03/e6253d84f60c-53a6425a3d92-4981f8103e7b"
+  },
+  "sources": [
+    {"id": "rows", "root": "workspace", "path": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet", "sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056"},
+    {"id": "encoded_values", "root": "workspace", "path": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/encoded_values.npy", "sha256": "0404afe9af600ce02d7461c56a357dd6da5f79a91a82a84da1e19795607570fd"},
+    {"id": "feature_metadata", "root": "workspace", "path": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/feature_metadata.json", "sha256": "549235b75fa1991f84b45c3f89a6a498daa773177c7c81ea878f14ecd1398814"},
+    {"id": "feature_views", "root": "workspace", "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/feature_views/feature_views.json", "sha256": "a1effcd8641efbad8721e7838418a25448267c3b9e28a2c3aec611433a213f71"},
+    {"id": "ff5_predictions", "root": "workspace", "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/ff5_momentum/official_predictions.parquet", "sha256": "2ec9be95ccbb48199bc896d01cb46a6c5a5326ce7a9b42ce9877da22dbd8ccf8"},
+    {"id": "validation_risk_cost", "root": "external", "path": "interim/phase_05_validation/stage11-validation-data-v1/candidate_payloads/validation_risk_cost_inputs.parquet", "sha256": "6a52ec5a3fc2d8a551f334da9083596cc458d13cc28b99725568b67fd1c2b234"},
+    {"id": "december_2019_risk_cost", "root": "external", "path": "processed/research_v6/december_2019_v1/cost_inputs.parquet", "sha256": "0c3d4c851504d8461f267891fd395c776520689830b1879807f837313ff5320c"},
+    {"id": "final_risk_cost", "root": "external", "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet", "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"}
+  ],
+  "chronology": {
+    "profile_fit_start": "2017-03",
+    "profile_fit_end": "2019-11",
+    "validation_start": "2020-01",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "test_refit": "annual_expanding",
+    "fit_rule": "A realized outcome enters training only when label_available_date is no later than the refit signal date.",
+    "december_2019_rule": "The authentic December 2019 feature, outcome, and risk-cost rows enter every refit after their label availability date; no interpolation is used.",
+    "quarantined_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "feature_views": ["full", "cam_free", "correlation_reduced"],
+  "policies": ["direct_weight", "direct_weight_plus_ff5"],
+  "model": {
+    "family": "linear_cross_sectional_policy",
+    "description": "A linear stock score plus feature-conditioned long and short gross heads, trained end-to-end on monthly net portfolio utility rather than stock-level return or rank loss.",
+    "profiles": [
+      {"id": "return_focused", "risk_penalty": 0.25, "l2_penalty": 0.001, "learning_rate": 0.03, "epochs": 6},
+      {"id": "balanced", "risk_penalty": 1.00, "l2_penalty": 0.003, "learning_rate": 0.02, "epochs": 6}
+    ],
+    "temperature": 0.50,
+    "maximum_long_gross": 1.00,
+    "maximum_short_gross": 0.50,
+    "initial_long_gross_logit": 0.0,
+    "initial_short_gross_logit": -2.2,
+    "short_gross_zero_threshold": 0.01,
+    "random_seed": 20260813,
+    "gradient_clip": 5.0
+  },
+  "training_objective": {
+    "objective": "maximize realized monthly stock excess return minus primary trading, borrow, and financing costs minus a point-in-time forecast-risk penalty",
+    "turnover_is_endogenous": true,
+    "risk_uses_point_in_time_factor_betas_and_specific_variance": true,
+    "future_information_prohibited": true,
+    "validation_selection_metric": "annualized net Sharpe after primary costs"
+  },
+  "ff5_gate": {
+    "prediction_column": "ensemble__cam_free_mlp_plus_cam__equal",
+    "calibration_bin_edges": [0.0, 0.20, 0.40, 0.60, 0.80, 1.0],
+    "minimum_history_months": 24,
+    "shrinkage_prior_months": 24,
+    "training_rule": "Both policy variants train the same ungated direct-weight model candidates. The frozen FF5 gate is applied only to validation and test weights in months where its own causal calibration has at least 24 completed forecast months; earlier months remain ungated. This isolates the FF5 overlay from policy retraining.",
+    "long_rule": "causal calibrated FF5 plus momentum alpha strictly positive",
+    "short_rule": "causal calibrated FF5 plus momentum alpha strictly negative"
+  },
+  "portfolio": {
+    "nav_dollars": 100000000.0,
+    "maximum_gross": 1.50,
+    "minimum_long_gross": 0.0,
+    "minimum_short_gross": 0.0,
+    "minimum_net": -0.10,
+    "maximum_net": 1.00,
+    "maximum_position_weight": 0.01,
+    "maximum_one_way_turnover": 0.35,
+    "maximum_one_way_adv_participation": 0.10,
+    "forecast_volatility_target": 0.10,
+    "market_beta_absolute_limit": 0.10,
+    "other_factor_absolute_limit": 0.10,
+    "sic2_industry_net_absolute_limit": 0.05,
+    "sic2_industry_gross_limit": 0.30,
+    "cash_allowed": true,
+    "risk_repair": "deterministically scale and capacity-clip the learned target weights; never re-rank stocks or maximize a separate expected-return forecast"
+  },
+  "evaluation": {
+    "report_all_six_paths": true,
+    "primary_direct_weight": "full__direct_weight",
+    "primary_direct_weight_plus_ff5": "full__direct_weight_plus_ff5",
+    "comparators": ["V6.1 Step 02 primary", "V6.1 Step 03 best", "direct weight", "direct weight plus FF5"],
+    "promotion": "Historical evidence only; no claim of untouched confirmation before September 2026."
+  },
+  "checkpointing": {
+    "natural_units": ["completed validation profile", "completed annual refit", "completed portfolio month"],
+    "atomic": true,
+    "resume": true,
+    "binds_config_code_inputs_view_policy_profile_and_refit": true
+  }
+}

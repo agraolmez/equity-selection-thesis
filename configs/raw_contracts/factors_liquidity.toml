@@ -1,0 +1,30 @@
+[[files]]
+filename = "ff_5_momentum_daily.csv"
+family = "Factors"
+role = "Daily Fama-French five factors, risk-free rate, and momentum"
+coverage_date = "date"
+date_columns = ["date"]
+key_columns = ["date"]
+grain = "factor_trading_day"
+required_columns = ["date", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"]
+
+[[files]]
+filename = "ff_5_momentum_monthly.csv"
+family = "Factors"
+role = "Monthly Fama-French five factors, risk-free rate, and momentum"
+coverage_date = "dateff"
+date_columns = ["dateff"]
+key_columns = ["dateff"]
+grain = "factor_month"
+required_columns = ["dateff", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"]
+
+[[files]]
+filename = "ps_liquidity_monthly.csv"
+family = "Liquidity state"
+role = "Historically revised Pastor-Stambaugh aggregate liquidity series; raw innovation is not a model feature"
+coverage_date = "DATE"
+availability_note = "DATE is the revised-series coverage month; Phase 2 imposes the locked full-month release lag and derives its own past-only expanding innovation. Raw PS_INNOV is prohibited as a feature."
+date_columns = ["DATE"]
+key_columns = ["DATE"]
+grain = "liquidity_month"
+required_columns = ["DATE", "PS_LEVEL", "PS_INNOV", "PS_VWF"]

@@ -1,0 +1,110 @@
+{
+  "schema": "research_v6_1_net_return_frontier_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_TEST",
+  "approved_on": "2026-08-14",
+  "question": "How much annualized net return can the frozen genuine V6.1 return selectors and FF5+momentum alpha gate produce when the portfolio is selected only for validation net return across a transparent constraint frontier?",
+  "base_portfolio_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "frozen_control": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "variant": "return_plus_ff5_momentum__optimized_10pct_vol",
+    "manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef"
+  },
+  "scope": {
+    "selector_retraining": false,
+    "feature_change": false,
+    "model_change": false,
+    "signal_change": false,
+    "rank_change": false,
+    "alpha_gate_change": false,
+    "candidate_tail_change": false,
+    "calibration_change": false,
+    "cost_model_change": false,
+    "optimizer_objective": "maximize causal expected monthly stock excess return minus primary trading, financing, and borrow costs",
+    "only_constraint_frontier_changes": true,
+    "post_diagnostic_historical_development_only": true
+  },
+  "evidence": {
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "profiles": [
+    {"id": "control", "family": "control", "overrides": {}},
+    {"id": "short_floor_15", "family": "side_floor", "overrides": {"minimum_short_gross": 0.15}},
+    {"id": "short_free", "family": "side_floor", "overrides": {"minimum_short_gross": 0.0, "maximum_net": 1.0}},
+    {"id": "both_sides_free", "family": "side_floor", "overrides": {"minimum_long_gross": 0.0, "minimum_short_gross": 0.0, "minimum_net": -1.0, "maximum_net": 1.0}},
+    {"id": "turnover_75", "family": "turnover", "overrides": {"maximum_one_way_turnover": 0.75}},
+    {"id": "turnover_100", "family": "turnover", "overrides": {"maximum_one_way_turnover": 1.0}},
+    {"id": "adv_15", "family": "liquidity", "overrides": {"maximum_one_way_adv_participation": 0.15}},
+    {"id": "adv_20", "family": "liquidity", "overrides": {"maximum_one_way_adv_participation": 0.20}},
+    {"id": "position_1p5", "family": "concentration", "overrides": {"maximum_position_weight": 0.015}},
+    {"id": "position_2p0", "family": "concentration", "overrides": {"maximum_position_weight": 0.020}},
+    {"id": "net_45", "family": "net", "overrides": {"maximum_net": 0.45}},
+    {"id": "net_60", "family": "net", "overrides": {"maximum_net": 0.60}},
+    {"id": "factor_15", "family": "factor", "overrides": {"market_beta_absolute_limit": 0.15, "other_factor_absolute_limit": 0.15}},
+    {"id": "factor_20", "family": "factor", "overrides": {"market_beta_absolute_limit": 0.20, "other_factor_absolute_limit": 0.20}},
+    {"id": "industry_7p5_40", "family": "industry", "overrides": {"sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40}},
+    {"id": "industry_10_50", "family": "industry", "overrides": {"sic2_industry_net_absolute_limit": 0.10, "sic2_industry_gross_limit": 0.50}},
+    {"id": "volatility_12", "family": "forecast_risk", "overrides": {"primary_forecast_volatility": 0.12}},
+    {"id": "volatility_15", "family": "forecast_risk", "overrides": {"primary_forecast_volatility": 0.15}},
+    {"id": "gross_200", "family": "gross", "overrides": {"maximum_gross": 2.0}},
+    {"id": "moderate_return", "family": "joint_practical", "overrides": {"maximum_gross": 1.5, "minimum_long_gross": 0.40, "minimum_short_gross": 0.15, "maximum_net": 0.45, "maximum_position_weight": 0.015, "maximum_one_way_turnover": 0.75, "maximum_one_way_adv_participation": 0.10, "market_beta_absolute_limit": 0.15, "other_factor_absolute_limit": 0.15, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40, "primary_forecast_volatility": 0.12}},
+    {"id": "moderate_short_free", "family": "joint_practical", "overrides": {"maximum_gross": 1.5, "minimum_long_gross": 0.30, "minimum_short_gross": 0.0, "maximum_net": 0.60, "maximum_position_weight": 0.015, "maximum_one_way_turnover": 0.75, "maximum_one_way_adv_participation": 0.10, "market_beta_absolute_limit": 0.15, "other_factor_absolute_limit": 0.15, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40, "primary_forecast_volatility": 0.12}},
+    {"id": "institutional_return", "family": "joint_institutional", "overrides": {"maximum_gross": 2.0, "minimum_long_gross": 0.30, "minimum_short_gross": 0.15, "maximum_net": 0.60, "maximum_position_weight": 0.020, "maximum_one_way_turnover": 1.0, "maximum_one_way_adv_participation": 0.15, "market_beta_absolute_limit": 0.20, "other_factor_absolute_limit": 0.20, "sic2_industry_net_absolute_limit": 0.10, "sic2_industry_gross_limit": 0.50, "primary_forecast_volatility": 0.15}},
+    {"id": "institutional_short_free", "family": "joint_institutional", "overrides": {"maximum_gross": 2.0, "minimum_long_gross": 0.0, "minimum_short_gross": 0.0, "minimum_net": -0.25, "maximum_net": 0.75, "maximum_position_weight": 0.020, "maximum_one_way_turnover": 1.0, "maximum_one_way_adv_participation": 0.15, "market_beta_absolute_limit": 0.20, "other_factor_absolute_limit": 0.20, "sic2_industry_net_absolute_limit": 0.10, "sic2_industry_gross_limit": 0.50, "primary_forecast_volatility": 0.15}},
+    {"id": "high_return", "family": "joint_aggressive", "overrides": {"maximum_gross": 2.5, "minimum_long_gross": 0.0, "minimum_short_gross": 0.0, "minimum_net": -0.50, "maximum_net": 1.0, "maximum_position_weight": 0.025, "maximum_one_way_turnover": 1.25, "maximum_one_way_adv_participation": 0.20, "market_beta_absolute_limit": 0.30, "other_factor_absolute_limit": 0.30, "sic2_industry_net_absolute_limit": 0.15, "sic2_industry_gross_limit": 0.60, "primary_forecast_volatility": 0.20}},
+    {"id": "aggressive_return", "family": "joint_aggressive", "overrides": {"maximum_gross": 3.0, "minimum_long_gross": 0.0, "minimum_short_gross": 0.0, "minimum_net": -0.75, "maximum_net": 1.25, "maximum_position_weight": 0.030, "maximum_one_way_turnover": 1.50, "maximum_one_way_adv_participation": 0.25, "market_beta_absolute_limit": 0.40, "other_factor_absolute_limit": 0.40, "sic2_industry_net_absolute_limit": 0.20, "sic2_industry_gross_limit": 0.75, "primary_forecast_volatility": 0.25}}
+  ],
+  "selection_tiers": {
+    "frozen_control": {
+      "allowed_profiles": ["control"]
+    },
+    "practical_100m": {
+      "maximum_gross": 1.50,
+      "maximum_one_way_adv_participation": 0.10,
+      "maximum_absolute_position": 0.015,
+      "maximum_one_way_turnover": 0.75,
+      "maximum_absolute_factor_exposure": 0.15,
+      "maximum_sic2_net": 0.075,
+      "maximum_sic2_gross": 0.40,
+      "require_positive_stressed_net_return": true
+    },
+    "expanded_institutional_100m": {
+      "maximum_gross": 2.00,
+      "maximum_one_way_adv_participation": 0.15,
+      "maximum_absolute_position": 0.020,
+      "maximum_one_way_turnover": 1.00,
+      "maximum_absolute_factor_exposure": 0.20,
+      "maximum_sic2_net": 0.10,
+      "maximum_sic2_gross": 0.50,
+      "require_positive_stressed_net_return": true
+    },
+    "unrestricted_research": {
+      "require_positive_stressed_net_return": false
+    }
+  },
+  "selection": {
+    "uses_validation_only": true,
+    "metric": "annualized_net_excess_return_primary",
+    "rule": "Within each tier, select the feasible profile with the highest February 2022--December 2023 annualized net excess return. Break exact ties by profile order. Run only the distinct tier winners on January 2024--August 2025.",
+    "test_outcomes_never_select_profile": true
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "interpretation": {
+    "primary_question": "Does selecting solely for validation net return improve the frozen selectors' implementable net return?",
+    "no_promotion_from_historical_test": true,
+    "clean_confirmation_required": true
+  }
+}

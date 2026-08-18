@@ -1,0 +1,18 @@
+{
+  "schema": "research_v6_8_live_identity_features_v1",
+  "purpose": "Current point-in-time security identity categories for V6.8 paper signals.",
+  "exchange_mapping": {
+    "NYSE Consolidated": "N",
+    "NYSE American Consolidated": "A",
+    "NASDAQ Global Select Consolidated": "Q",
+    "NASDAQ Global Market Consolidated": "Q",
+    "NASDAQ Capital Market Consolidated": "Q"
+  },
+  "unknown_exchange": "UNKNOWN",
+  "unknown_industry": "UNKNOWN_INDUSTRY",
+  "unknown_country": "UNKNOWN_COUNTRY",
+  "unknown_currency": "UNKNOWN_CURRENCY",
+  "sic_policy": "use SEC submissions sic only for one unambiguous 10-digit issuer CIK",
+  "domicile_policy": "prefer availability-aligned fundamental fic, then loc, then current LSEG IssuerCountry",
+  "reporting_currency_policy": "use the selected live fundamental bundle currency; trading currency is not a substitute"
+}

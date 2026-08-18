@@ -1,0 +1,243 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "status": "STAGE12_ENTRY_MARKET_CANONICALIZATION_SCOPE_ALIGNMENT_AMENDMENT_AUTHORIZED",
+  "amendment_id": "stage12-post-unblind-entry-market-canonicalization-scope-alignment-v1",
+  "purpose": "Align the December entry-market wrapper with the frozen Stage 2 exact-duplicate canonicalization and zero-share-match semantics while preserving every calendar, schema, key, feature, model, return, portfolio, and economic rule.",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_ENTRY_MARKET_CANONICALIZATION_SCOPE_ALIGNMENT_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "56399168bfcf3b6476018cd0935f7e02d930294330d0e5c0f25a44bd7a75e820",
+    "size_bytes": 7513,
+    "authorization_id": "stage12-entry-market-canonicalization-scope-alignment-authorization-20260727-v1",
+    "authorization_form": "contextual_standing_approval_after_exact_scope_and_future_reapproval_disclosure",
+    "source_message_id": "thread-user-stage12-v6-standing-approval-20260727-01",
+    "source_message_exact": "dont ask me these ill always approve",
+    "source_message_utf8_size_bytes": 36,
+    "source_message_has_terminal_newline": false,
+    "source_message_sha256": "c1ead3d6041ffbfad689976c6609a70754fbff4c04c05bad701ec57591bde91e",
+    "current_v6_amendment_implementation_authorized_now": true,
+    "standing_stage13_approval_granted": true,
+    "fresh_binding_specific_stage13_receipt_issued_now": false,
+    "stage13_execution_authorized_now": false,
+    "additional_user_prompt_after_v6_verification_required": false
+  },
+  "incident_authorities": {
+    "exact_duplicate_blocker": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_ENTRY_MARKET_EXACT_DUPLICATE_BLOCKER_20260727.json",
+      "sha256": "813f5f38a802eb0b926cdaca565016a27a40a4ac96b7e8cb0a89fc1f08bb3f46"
+    },
+    "combined_projection_blocker": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_ENTRY_MARKET_PROJECTION_CONTRACT_BLOCKER_20260727.json",
+      "sha256": "80eec8044486f63b92b12f63de3a39d3ba2840561b0f318874963e1e2ec121ac",
+      "status": "BLOCKED_PENDING_NARROW_ENTRY_MARKET_CANONICALIZATION_AND_TOMBSTONE_COVERAGE_AMENDMENT_AUTHORIZATION"
+    },
+    "share_coverage_preflight": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_ENTRY_MARKET_SHARE_COVERAGE_PREFLIGHT_20260727.json",
+      "sha256": "f53e09331597f8197eb38648ed280032ee89601b821e050cab930f0c3e3205a0",
+      "status": "ENTRY_MARKET_SHARE_COVERAGE_PREFLIGHT_COMPLETE_NO_THIRD_PROJECTION_BLOCKER"
+    }
+  },
+  "prior_frozen_authority": {
+    "policy": {
+      "path": "configs/phase_06_final_test/stage_12_freeze_policy_v5.json",
+      "sha256": "be8486b694926758013a71bde959d24001d0d9b2d9513e94384ee69ccd74adfa"
+    },
+    "file_inventory": {
+      "path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-fce138650a3857d90f0b65a2/file_inventory.json",
+      "sha256": "182d0ae198340156a7e3c63310cade60de0a0ddb69e8e5488177f8aaa7c636dc",
+      "file_count": 600,
+      "tree_sha256": "7dd91fdcd41e16f80572debe2cf04b727b744f27ee9666026f64de0b15fd5806"
+    },
+    "primary_pointer_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_FCE13865.json",
+      "sha256": "5d8820eba667dee1f311811ad7e19224fa5b2d67078224df258765012d5c00fe",
+      "freeze_id": "stage12-freeze-fce138650a3857d90f0b65a2"
+    },
+    "verified_pointer_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_FCE13865.json",
+      "sha256": "aed589c5d3740337edc8f4298abc72ec0f9971fc0c0cb3aac289b61abd3b4028",
+      "verification_id": "stage12-verify-2f1cf9143445578751ad3487",
+      "verification_report_sha256": "43208da158b7c58ec20832428d0860216cc68e29b291c7beaa895a63befbc958"
+    },
+    "stage13_approval_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_FCE13865.json",
+      "sha256": "dc856b1954e7d7779a43e7c0b7ecf0102f9a7fd8121f2bd3594d6567543283fa",
+      "payload_sha256": "b036d0506d96d98cd67ba342a1e642f4102562e53f7862cd54660874b6a60349",
+      "stage12_binding_sha256": "db522ddf257ed117b8be2af4d0eb0d79e916027b42408475f42557cc0d69838e"
+    },
+    "preserved_parent_context": {
+      "context_sha256": "082c42dd57e8077f47cf409a12aefd8ec2ee98b732839496a320f8f84abeb66e",
+      "checkpoint_payload_count": 431,
+      "checkpoint_receipt_count": 431,
+      "missing_decision_source_receipt": "final_market_inputs/2025-12",
+      "parent_mutated": false,
+      "decision_barrier_present": false,
+      "outcome_source_receipt_count": 0,
+      "economic_checkpoint_count": 0
+    },
+    "failed_v5_context": {
+      "context_sha256": "024ea11aeae6358166296adb8f8a678058ef6d32a7d3b4a73a5bd3a1aa75cb4c",
+      "receipt_count": 0,
+      "unreceipted_file_count": 1,
+      "decision_barrier_present": false,
+      "outcome_source_receipt_count": 0,
+      "economic_checkpoint_count": 0
+    }
+  },
+  "entry_market_projection_contract": {
+    "entry_date": "2025-12-01",
+    "daily_source_sha256": "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9",
+    "daily_source_size_bytes": 12740735288,
+    "daily_source_rows": 49886907,
+    "shares_source_sha256": "b66cb7f4b4d2e51b9cd79cad9306911267da35d6c521caa7f15426dc02e2e966",
+    "shares_source_size_bytes": 120698952,
+    "shares_source_rows": 2241129,
+    "daily_requested_consumer_column_count": 29,
+    "daily_requested_return_column_count": 0,
+    "daily_output_return_columns": [],
+    "entry_projection_labels_outcomes_accounting_or_performance_opened": false,
+    "final_market_inputs_inner_join_semantics_changed": false
+  },
+  "exact_duplicate_canonicalization_contract": {
+    "canonicalizer": "frozen_stage2_all_consumer_field_exact_adjacent_key_duplicate_collapse",
+    "daily_projection_retained_rows": 10605,
+    "daily_canonical_rows": 10596,
+    "daily_consumer_exact_duplicate_key_groups": 9,
+    "daily_consumer_exact_duplicate_affected_rows": 18,
+    "daily_consumer_exact_duplicate_surplus_rows": 9,
+    "daily_consumer_conflicting_duplicate_groups": 0,
+    "daily_output_duplicate_keys": 0,
+    "retained_equals_canonical_plus_duplicate_surplus": true,
+    "duplicate_groups_must_not_exceed_surplus_rows": true,
+    "duplicate_groups_zero_if_and_only_if_surplus_zero": true,
+    "all_consumer_field_conflicts_remain_fatal": true,
+    "canonical_output_keys_unique": true,
+    "exact_duplicate_multiplicity_only_removed": true
+  },
+  "closed_tombstone_share_coverage_contract": {
+    "join_rule": "equal permno and inclusive start_date <= 2025-12-01 <= end_date",
+    "population_rows": 10596,
+    "one_match_rows": 10593,
+    "zero_match_rows": 3,
+    "multiple_match_rows": 0,
+    "active_share_rows": 10593,
+    "active_share_rows_without_daily": 0,
+    "shares_duplicate_key_groups": 0,
+    "shares_overlap_edges": 0,
+    "shares_gap_edges": 0,
+    "shares_non_entry_interval_rows": 0,
+    "unexpected_zero_match_rows": 0,
+    "zero_match_policy": "retain only the exact closed tombstone rows upstream; unchanged final_market_inputs inner join excludes them",
+    "tombstone_predicate_id": "stage13-entry-market-closed-delisting-tombstone-v1",
+    "tombstone_rows": 3,
+    "tombstone_key_set_sha256": "5af68213b30cf617bf7b96eac18f1d62a12ca0cda2f3e19a27c132996d7a4b66",
+    "tombstone_key_set_sha256_domain": "stage13-entry-market-zero-share-tombstone-keys-v1\u0000",
+    "predicate_selected_key_set_must_equal_zero_match_key_set": true,
+    "any_fourth_or_differently_shaped_zero_match_row_fatal": true,
+    "multiple_share_matches_remain_fatal": true,
+    "final_market_inputs_inner_join_unchanged": true
+  },
+  "receipt_contract": {
+    "canonicalization_fields": [
+      "daily_projection_retained_rows",
+      "daily_canonical_rows",
+      "daily_consumer_exact_duplicate_key_groups",
+      "daily_consumer_exact_duplicate_surplus_rows",
+      "daily_consumer_conflicting_duplicate_groups",
+      "daily_output_duplicate_keys",
+      "shares_duplicate_key_groups",
+      "shares_overlap_edges",
+      "shares_gap_edges",
+      "shares_non_entry_interval_rows"
+    ],
+    "share_coverage_fields": [
+      "join_rule",
+      "population_rows",
+      "one_match_rows",
+      "zero_match_rows",
+      "multiple_match_rows",
+      "active_share_rows",
+      "active_share_rows_without_daily",
+      "zero_match_policy",
+      "tombstone_predicate_id",
+      "tombstone_rows",
+      "tombstone_key_set_sha256",
+      "final_market_inputs_join_semantics"
+    ],
+    "all_counts_exact_nonnegative_integers": true,
+    "daily_canonical_equals_daily_parquet_rows": true,
+    "daily_canonical_equals_sum_of_entry_rows_by_date": true,
+    "daily_with_plus_without_active_shares_equals_daily_canonical": true,
+    "daily_with_active_shares_plus_active_shares_without_daily_equals_active_shares_rows": true,
+    "stable_reauthentication_recomputes_coverage_from_both_parquets": true,
+    "receipt_tamper_must_fail_closed": true
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 2,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/final_source_replay.py",
+        "pre_amendment_sha256": "73539ebe6b569cfacc94bce78c246766551bfbe174a2f8a8aabc4b126ba96a4f",
+        "post_amendment_sha256": "c6e439f3411aa95692e890be8e8364547b92368e19e8a4af9f7b08ba4d218d58"
+      },
+      {
+        "path": "src/portfolio_bot/validation/validation_market_extension.py",
+        "pre_amendment_sha256": "b54e382705935b90c25372c4fc24cce7013da2beda741ae378e20113977e50f6",
+        "post_amendment_sha256": "a5118f43874191e7d4ed3a6c0c2c5730dacb3052e72adbc1b97aee77952a8556"
+      }
+    ]
+  },
+  "non_economic_boundary": {
+    "guarded_stage12_publication_and_verification_raw_payload_files_opened": 0,
+    "guarded_stage12_parent_checkpoint_payload_files_opened": 0,
+    "guarded_stage12_final_period_payload_files_opened": 0,
+    "guarded_stage12_final_period_rows_read": 0,
+    "guarded_stage12_outcome_or_economic_payload_files_opened": 0,
+    "guarded_stage12_economic_or_outcome_months_executed": 0,
+    "guarded_stage12_final_forecasts_weights_trades_or_pnl_created": 0,
+    "failed_context_or_preserved_parent_mutated": false,
+    "calendar_dates_schemas_keys_features_models_or_economic_rules_changed": false,
+    "scientific_or_economic_result_informed_choice": false,
+    "prior_diagnostic_access_disclosure": {
+      "both_pinned_raw_files_freshly_sha256_authenticated": true,
+      "all_daily_and_shares_rows_scanned": true,
+      "daily_parser_decoded_consumer_columns_only": true,
+      "daily_return_fields_decoded_or_aggregated": false,
+      "independent_duplicate_identity_diagnostic_compared_full_36_column_raw_rows": true,
+      "independent_diagnostic_included_four_raw_return_columns": true,
+      "raw_security_identifiers_or_values_printed_or_persisted": false,
+      "parent_predictor_or_checkpoint_payloads_opened": false,
+      "outcome_accounting_or_economic_payloads_opened": false,
+      "stage13_v5_user_approval_was_active": true,
+      "economic_or_model_choice_informed": false
+    }
+  },
+  "replacement_authority": {
+    "stage12_v6_replacement_freeze_required": true,
+    "independent_stage12_v6_verification_required": true,
+    "current_stage13_v5_approval_valid_for_v6": false,
+    "standing_stage13_approval_granted": true,
+    "fresh_binding_specific_stage13_receipt_required_after_v6": true,
+    "fresh_binding_specific_stage13_receipt_issued_by_this_amendment": false,
+    "additional_user_prompt_after_v6_verification_required": false,
+    "stage13_parent_context_open_authorized_now": false,
+    "stage13_execution_authorized_now": false,
+    "stage13_retry_under_v5_forbidden": true
+  },
+  "tests": {
+    "required_files": [
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_stage12_final_freeze.py"
+    ],
+    "split_batch_exact_duplicate_acceptance": true,
+    "consumer_field_conflicting_duplicate_rejection": true,
+    "truthful_nonzero_duplicate_receipt_reuse": true,
+    "duplicate_receipt_algebra_and_tamper_rejection": true,
+    "closed_tombstone_without_active_shares_retained_upstream": true,
+    "unexpected_unmatched_daily_row_rejection": true,
+    "coverage_receipt_recomputed_and_tamper_rejected": true,
+    "unchanged_inner_join_excludes_tombstone_and_emits_unique_nonempty_december_rows": true,
+    "incomplete_entry_root_quarantined_before_retry": true,
+    "stage12_tests_synthetic_and_guarded": true
+  }
+}

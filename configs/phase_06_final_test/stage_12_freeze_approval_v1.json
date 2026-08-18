@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "approval_id": "stage12-metadata-only-current-codex-task-v1",
+  "source": "current_codex_task_user_message",
+  "source_message_text": "Okay, Let's start and finish Stage 12. Please do not spend too much time on negligble errors, use the \"buffer\" we talked before, and once we pass a stage and an error occured, we should not go back and start the process before but we should use a \"memoization\" technique. Let's start",
+  "source_message_text_sha256": "883042a902a6d75e7eb6afb7819cadf93a8a30b6bf7d3ec24822ca809e48518a",
+  "scope": "stage12_metadata_only_pre_final_freeze",
+  "approved": true,
+  "final_period_payload_access_approved": false,
+  "stage13_execution_approved": false,
+  "stage11_recomputation_approved": false,
+  "memoized_resume_required": true,
+  "negligible_numeric_buffer_may_apply_only_under_frozen_materiality_policy": true,
+  "calibration_scope_economic_amendment_explicitly_user_acknowledged": false,
+  "bindings": {
+    "methodology_source_sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81",
+    "methodology_freeze_receipt_sha256": "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98",
+    "stage11_primary_build_id": "stage11-validation-8d5e7f863ee093089520457e",
+    "stage11_primary_manifest_sha256": "28481a09d5f933ed97f54b7441b45e9ac728ac4616e40fb76ce2b8f5abf60801",
+    "stage11_verification_id": "verify-86a1e2d42b4c84f0",
+    "stage12_policy_id": "stage12-pre-final-freeze-policy-v1",
+    "stage12_final_system_path": "configs/phase_06_final_test/stage_12_final_system_v1.json",
+    "stage12_final_system_sha256": "7fb0209dac9eee810bba3566071bae4a54c24ce9f80c74127455ed0bd980fe11",
+    "stage12_calibration_scope_amendment_path": "configs/phase_06_final_test/stage_12_calibration_scope_amendment_v1.json",
+    "stage12_calibration_scope_amendment_sha256": "6c44ab873f7c7c6ff69db4661a0edf1ad9d05f36ff9386f3eb96f6000febccf1",
+    "stage13_input_registry_path": "configs/phase_06_final_test/stage_13_input_registry_v1.json",
+    "stage13_input_registry_sha256": "bfef5266ec13af8377d3950fb70534b1ade27b599797cd72bbf315578b10994c"
+  },
+  "implementation_readiness_acknowledged": {
+    "specification_frozen": true,
+    "final_economic_kernel_certified": true,
+    "schema_bound_registration_materializer_certified": true,
+    "complete_final_input_arrow_schemas_frozen": true,
+    "pre_unblind_calibration_scope_amendment_frozen": true,
+    "stage13_technical_gate_passed": true
+  },
+  "payload_sha256": "d36a587691f6fa3fd81803c4cf826874989b516a9051d4f4dad9ea64b0e76211"
+}

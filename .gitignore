@@ -1,0 +1,77 @@
+.DS_Store
+*.swp
+*.tmp
+*.log
+
+# Local credentials and machine-specific environment files.
+.env
+.env.*
+!.env.example
+
+# Local research-agent operating guidance is not part of the publication.
+AGENTS.md
+
+# Python and notebook caches.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Licensed datasets, trained models, and binary research products.
+*.arrow
+*.bin
+*.ckpt
+*.docx
+*.feather
+*.gz
+*.h5
+*.hdf5
+*.joblib
+*.npy
+*.npz
+*.onnx
+*.parquet
+*.pdf
+*.pickle
+*.pkl
+*.pt
+*.pth
+*.tar
+*.xlsx
+*.zip
+*.7z
+
+# Rebuilt thesis deliverables.
+thesis/figures/
+thesis/report/*.html
+thesis/bocconi/*.docx
+thesis/bocconi/*.pdf
+
+# Local browser/runtime caches.
+.playwright-browsers/
+.codex_tmp/
+
+# Reproducible research outputs and run state. These stay on disk and are
+# referenced by manifests/configuration, but should not make the Git history
+# multi-gigabyte.
+artifacts/*
+!artifacts/README.md
+output/
+outputs/
+reports/*
+runs/
+tmp/
+scratch/
+work/
+
+# Large numerical replay payloads. Keep their lightweight manifests tracked.
+tests/fixtures/**/*.bin
+tests/fixtures/**/*.npz

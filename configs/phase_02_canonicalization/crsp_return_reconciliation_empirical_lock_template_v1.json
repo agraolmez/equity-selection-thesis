@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "template_id": "crsp-return-reconciliation-empirical-lock-template-v1",
+  "status": "template_only_not_an_empirical_lock",
+  "purpose": "Define the fields that aggregate-only discovery must fill before a production return-reconciliation build is permitted.",
+  "must_not_be_accepted_as": [
+    "empirical_evidence",
+    "production_build_authority",
+    "return_history_authority"
+  ],
+  "required_bindings": [
+    "discovery_config_sha256",
+    "policy_sha256",
+    "schema_sha256",
+    "verified_typed_backbone_pointer_sha256",
+    "verified_supporting_profile_pointer_sha256",
+    "verified_calendar_pointer_sha256",
+    "raw_distribution_sha256",
+    "raw_delisting_sha256"
+  ],
+  "required_empirical_sections": [
+    "daily_flag_availability_lock",
+    "daily_span_alignment_lock",
+    "monthly_flag_crosscheck_lock",
+    "distribution_assignment_lock",
+    "delisting_embedding_and_imputation_lock",
+    "monthly_tolerance_lock",
+    "aggregate_conservation_checks",
+    "scope_and_privacy_attestation"
+  ],
+  "monthly_tolerance_lock_requirements": {
+    "selected_from_predeclared_candidate_grid": true,
+    "exact_fixed_scale_decimal": true,
+    "relative_tolerance_permitted": false,
+    "selection_must_precede_first_production_build": true,
+    "selection_may_not_use_model_portfolio_or_backtest_results": true
+  },
+  "scope_and_privacy_requirements": {
+    "maximum_payload_date": "2014-12-31",
+    "december_2014_role": "embargo_quality_and_boundary_reconciliation_only",
+    "validation_or_final_test_accessed": false,
+    "security_level_examples_or_keys_published": false,
+    "aggregate_counts_only": true
+  },
+  "authorizations": {
+    "production_return_reconciliation_build_authorized": false,
+    "return_history_authorized": false,
+    "beta_estimation_authorized": false,
+    "labels_targets_features_models_portfolios_pnl_performance_or_backtests_authorized": false
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "schema": "research_v6_1_portfolio_step_02_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "Can the frozen V6.1 stock rankings support a robust fully net $100 million long/short portfolio after realistic risk, capacity, trading-cost, financing, and borrow controls?",
+  "scope": {
+    "portfolio_and_optimizer_authorized": true,
+    "selector_retraining_authorized": false,
+    "selector_choices_frozen": true,
+    "historical_development_not_untouched_confirmation": true,
+    "report_every_prespecified_policy": true,
+    "post_outcome_winner_switching_prohibited": true
+  },
+  "evidence": {
+    "portfolio_start": "2024-01",
+    "portfolio_end": "2025-08",
+    "calibration_start": "2020-01",
+    "calibration_rule": "For each signal, use only earlier completed holding months whose outcome availability date is no later than the current signal date.",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "nav_dollars": 100000000.0,
+  "selector_run": {
+    "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3",
+    "manifest_sha256": "e39e36eebcbf79eea76a19fb058d82db81612b50e474fa1e56675b998053b4e2",
+    "required_status": "COMPLETE",
+    "signals": {
+      "capm": {
+        "column": "ensemble__cam_free_mlp_plus_cam__equal",
+        "description": "Equal-rank CAM-free continuous MLP plus direct CAM"
+      },
+      "ff5_momentum": {
+        "column": "ensemble__cam_free_mlp_plus_cam__equal",
+        "description": "Equal-rank CAM-free pairwise MLP plus direct CAM"
+      },
+      "long_net": {
+        "column": "ensemble__cam_free_mlp_plus_cam__equal",
+        "description": "Equal-rank CAM-free continuous MLP plus direct CAM"
+      },
+      "short_net": {
+        "column": "ensemble__correlation_reduced_xgb_mlp__equal",
+        "description": "Equal-rank correlation-reduced pairwise XGBoost plus pairwise MLP"
+      }
+    }
+  },
+  "source_bindings": [
+    {
+      "id": "capm_predictions",
+      "root": "workspace",
+      "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/capm/official_predictions.parquet",
+      "sha256": "02939b97601114fafbbcc967309070c0bd136cb7790e2998c479693d5b8414b1"
+    },
+    {
+      "id": "ff5_momentum_predictions",
+      "root": "workspace",
+      "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/ff5_momentum/official_predictions.parquet",
+      "sha256": "2ec9be95ccbb48199bc896d01cb46a6c5a5326ce7a9b42ce9877da22dbd8ccf8"
+    },
+    {
+      "id": "long_net_predictions",
+      "root": "workspace",
+      "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/long_net/official_predictions.parquet",
+      "sha256": "c41dacc67c93a72f7a7a250e4bacd98efccf542903fa1edcbbe689585eac5eba"
+    },
+    {
+      "id": "short_net_predictions",
+      "root": "workspace",
+      "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/short_net/official_predictions.parquet",
+      "sha256": "d527f7f34409ff06f4721f44647ab8746339c143fbb918fd3cf3ff62b296cdb8"
+    },
+    {
+      "id": "v6_target_rows",
+      "root": "workspace",
+      "path": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet",
+      "sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056"
+    },
+    {
+      "id": "risk_cost",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet",
+      "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"
+    },
+    {
+      "id": "factor_covariance",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_factor_covariance.parquet",
+      "sha256": "53e42d9ae51b6f5a273bde59493b91da4471678e02a20c0c1303e4245e65ebe6"
+    },
+    {
+      "id": "predictor_controls",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_predictors.parquet",
+      "sha256": "3aba44432828908f0836b84070fcb27ad07e3795dc2fd8973d1423d16d38820f"
+    },
+    {
+      "id": "market_inputs",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_market_inputs.parquet",
+      "sha256": "851450c68fb1f514d4648a8767d489021c0d9ee41cee8a75c5a4c535b93cd91f",
+      "role": "Execution-date entry-close feasibility; a row without an authenticated entry cannot be traded."
+    },
+    {
+      "id": "outcomes",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_outcomes.parquet",
+      "sha256": "b844e1880199bfadf7ec774c18fb2fa25e2a9cbd2b05133ede4fa60c707b37dd"
+    },
+    {
+      "id": "market_accounting",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_market_accounting.parquet",
+      "sha256": "eeacb1e31f6f5d7172ee5baac4577d64d8b986109c56d3c4f211e0d8ce21b013",
+      "role": "Delisting-aware authenticated return fallback when the compact monthly outcome table has no row."
+    },
+    {
+      "id": "delisting_events",
+      "root": "external",
+      "path": "cache/phase_06_final_test/stage13-final-source-replay-v1/fb0ea36576b84c24eba7cca19e155b93d935deb6ac0e098612e37726d834627a/formula_work/decision_market/returns/interim/stage11-return-extension-f1b2f54282fa289aa6e59c97/crsp_delisting_event.parquet",
+      "sha256": "7be2f36464f00288bd08d2d75f5be654bf54121b60ac61802daec3b991176040",
+      "role": "Observed terminal corporate-action return fallback for an executable stock whose first holding-period event is suppressed from the daily posting payload. Used for realized P&L only, never portfolio formation."
+    },
+    {
+      "id": "outcome_availability",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_completed_labels.parquet",
+      "sha256": "494eaafe320eafe23e883a75e81fe701528a6125b38068e6b00aab36c421a1c9"
+    },
+    {
+      "id": "factors_and_cash",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_factors.parquet",
+      "sha256": "edc86f1b9bf9a8de5987598a8b8206a74b4eee362196c2acbbb7bfdb379b75f2"
+    },
+    {
+      "id": "benchmarks",
+      "root": "external",
+      "path": "processed/phase_06_final_test/stage13-final-inputs-v2/primary_benchmarks.parquet",
+      "sha256": "b7041648b15d345910b6b3810bfd5ad31b3eebfc6bf7a18b7a5d33a31f491c03"
+    }
+  ],
+  "formation": {
+    "candidate_fraction_each_side": 0.20,
+    "minimum_desired_holdings_each_side": 40,
+    "overlap_rule": "Assign a stock eligible for both sides to the side with the larger calibrated expected net edge; break exact ties by the larger tail rank and then PERMNO.",
+    "alpha_policies": [
+      "return_only",
+      "return_plus_capm",
+      "return_plus_ff5_momentum",
+      "return_plus_both"
+    ],
+    "primary_policy": "return_plus_both",
+    "gate_rule": {
+      "long": "Every alpha signal named by the policy must have a strictly positive causal calibrated expected alpha.",
+      "short": "Every alpha signal named by the policy must have a strictly negative causal calibrated expected alpha."
+    }
+  },
+  "rank_weighting": {
+    "methods": ["linear_tail", "gaussian_tail", "squared_tail"],
+    "linear_tail": "Within the selected tail, weight in proportion to normalized distance beyond the 80th percentile.",
+    "gaussian_tail": "Gaussianize percentile rank, subtract the 80th-percentile Gaussian threshold, and floor at zero.",
+    "squared_tail": "Square the normalized linear-tail score.",
+    "equal_weight_control": true,
+    "baseline_book": {
+      "long_fraction_of_gross": 0.50,
+      "short_fraction_of_gross": 0.50,
+      "forecast_volatility_target": 0.10,
+      "maximum_gross": 1.50,
+      "maximum_position_weight": 0.01,
+      "maximum_one_way_adv_participation": 0.10
+    }
+  },
+  "calibration": {
+    "purpose": "Translate frozen ranks into expected monthly payoff units without changing their ordering.",
+    "bin_edges": [0.0, 0.01, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99, 1.0],
+    "equal_weight_months": true,
+    "minimum_history_months": 24,
+    "shrinkage_prior_months": 12,
+    "monotonic_isotonic_fit": true,
+    "tail_preservation": "Use finer 1%, 5%, 10%, and 20% tail bins and retain realized tail observations; do not winsorize them away.",
+    "return_payoffs": {
+      "long": "next-holding-period stock total return minus the common monthly cash return",
+      "short": "negative of next-holding-period stock total return minus the common monthly cash return"
+    },
+    "cost_rule": "Calibrate pre-cost side payoff and charge actual portfolio trading, financing, and borrow costs once in portfolio accounting."
+  },
+  "optimizer": {
+    "objective": "maximize causal expected monthly excess return minus transaction, financing, and borrow costs",
+    "primary_forecast_volatility": 0.10,
+    "robustness_forecast_volatility": [0.08, 0.12],
+    "maximum_gross": 1.50,
+    "minimum_long_gross": 0.50,
+    "minimum_short_gross": 0.30,
+    "minimum_net": -0.10,
+    "maximum_net": 0.30,
+    "maximum_position_weight": 0.01,
+    "maximum_one_way_turnover": 0.50,
+    "maximum_one_way_adv_participation": 0.10,
+    "inherited_position_rule": "A holding that leaves the current candidate set cannot be increased or reverse side. The optimizer first minimizes its remaining gross exposure subject to liquidity, turnover, risk, and portfolio feasibility, then maximizes expected net return within that minimum-stale-exposure solution set.",
+    "market_beta_absolute_limit": 0.10,
+    "other_factor_absolute_limit": 0.10,
+    "sic2_industry_net_absolute_limit": 0.05,
+    "sic2_industry_gross_limit": 0.30,
+    "ff12_rule": "Diagnostic only; never used for formation, gating, neutralization, or optimization.",
+    "cash_allowed": true,
+    "risk_model": "Point-in-time six-factor covariance plus sector-shrunk security-specific variance.",
+    "solver": "CLARABEL"
+  },
+  "costs": {
+    "primary": {
+      "spread_multiplier": 1.0,
+      "impact_coefficient": 0.10,
+      "financing_rate_annual": 0.005,
+      "borrow_column": "primary_borrow_rate_annual"
+    },
+    "standard_stress": {
+      "spread_multiplier": 2.0,
+      "impact_coefficient": 0.20,
+      "financing_rate_annual": 0.015,
+      "borrow_column": "stress_borrow_rate_annual"
+    },
+    "stress_evaluation_rule": "Evaluate the same frozen monthly weights under stressed costs; do not re-optimize them using realized outcomes."
+  },
+  "comparisons": {
+    "all_alpha_policies_receive": [
+      "equal_weight",
+      "linear_tail",
+      "gaussian_tail",
+      "squared_tail",
+      "optimized_10pct_vol"
+    ],
+    "primary_policy_additional": ["optimized_8pct_vol", "optimized_12pct_vol"],
+    "frozen_v6_selector_comparator": true
+  },
+  "evaluation": {
+    "primary_metric": "realized annualized net Sharpe ratio under primary costs",
+    "secondary_metrics": [
+      "annualized gross return",
+      "annualized net return",
+      "annualized volatility",
+      "maximum drawdown",
+      "turnover",
+      "trading cost",
+      "borrow cost",
+      "financing cost",
+      "gross exposure",
+      "net exposure",
+      "beta and factor exposures",
+      "capacity",
+      "long contribution",
+      "short contribution",
+      "holdings breadth"
+    ],
+    "promotion": {
+      "primary_net_sharpe_strictly_above": 1.0,
+      "net_return_strictly_positive": true,
+      "not_dependent_on_one_or_two_months": true,
+      "stable_across_cost_and_volatility_robustness": true,
+      "acceptable_drawdown_turnover_and_capacity": true
+    }
+  },
+  "checkpointing": {
+    "natural_unit": "portfolio policy/weighting path/completed holding month",
+    "atomic": true,
+    "resume": true,
+    "identity_binds": [
+      "contract SHA-256",
+      "portfolio code identity",
+      "all source SHA-256 identities",
+      "policy",
+      "weighting method",
+      "volatility target",
+      "holding month"
+    ]
+  }
+}

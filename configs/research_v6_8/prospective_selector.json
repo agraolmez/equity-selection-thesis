@@ -1,0 +1,24 @@
+{
+  "schema": "research_v6_8_prospective_selector_v1",
+  "purpose": "Refit the frozen V6.1 selected components on every label available at a prospective V6.8 signal and score the current eligible universe.",
+  "v6_1_selector_config": "configs/research_v6_1/selector_step_01.json",
+  "historical_matrix": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/encoded_values.npy",
+  "historical_rows": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet",
+  "historical_metadata": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/feature_metadata.json",
+  "frozen_feature_views": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/feature_views/feature_views.json",
+  "state_directory": "paper_trading/research_v6_8/selector_state",
+  "seeds": [17, 42, 101],
+  "profile_policy": "causally retune on the first prospective refit using the frozen candidate grid and only prior label-available rows; thereafter follow the frozen cadence",
+  "components": {
+    "ff5_momentum_mlp": {"target": "ff5_momentum", "target_column": "target_rank_ff5_momentum", "family": "neural_network", "objective": "pairwise", "feature_view": "cam_free"},
+    "long_net_mlp": {"target": "long_net", "target_column": "target_rank_long_net", "family": "neural_network", "objective": "continuous_rank", "feature_view": "cam_free"},
+    "short_net_xgboost": {"target": "short_net", "target_column": "target_rank_short_net", "family": "xgboost", "objective": "pairwise", "feature_view": "correlation_reduced"},
+    "short_net_mlp": {"target": "short_net", "target_column": "target_rank_short_net", "family": "neural_network", "objective": "pairwise", "feature_view": "correlation_reduced"}
+  },
+  "direct_cam_source": "lseg_cam_country_rank",
+  "outputs": {
+    "ff5_momentum": "equal rank of ff5_momentum_mlp and direct CAM",
+    "long_net": "equal rank of long_net_mlp and direct CAM",
+    "short_net": "equal rank of short_net_xgboost and short_net_mlp"
+  }
+}

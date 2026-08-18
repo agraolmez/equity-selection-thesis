@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-auxiliary-nullability-transport-v1",
+  "status": "STAGE12_POST_UNBLIND_TECHNICAL_AMENDMENT_AUTHORIZED",
+  "classification": "non_economic_rule_restoring_infrastructure_compatibility_correction",
+  "authorization": {
+    "source": "current_codex_task_user_message",
+    "authorization_form": "contextual_affirmative_reply",
+    "scope_request_authored_by_user": false,
+    "scope_request_text": "I authorize the narrowly scoped post-unblind technical amendment in STAGE_13_RESUME_BLOCKER.json, with zero-null proof and no changes to data, formulas, types, keys, linkage rules, or economics. Implement it, test it, and publish an independently verified replacement Stage 12 freeze.",
+    "scope_request_text_sha256": "92887ebc5d93e83b721d46c0e6252330848dad367458bf8e48b4ad7d8ec3f1fe",
+    "source_message_text": "ok",
+    "source_message_text_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+    "authorized": true,
+    "authorized_scope": "only_the_blocker_described_narrow_arrow_nullability_transport_correction_and_replacement_stage12_refreeze",
+    "replacement_stage13_approval_granted": false
+  },
+  "historical_bindings": {
+    "base_stage12_policy_path": "configs/phase_06_final_test/stage_12_freeze_policy_v1.json",
+    "base_stage12_policy_sha256": "68b47869472a51453856822283bc68e065640fb0c447d1a87f409ad9c422bf31",
+    "prior_stage12_primary_pointer_path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_78E7F9E6.json",
+    "prior_stage12_primary_pointer_sha256": "7ebd59fe8d803cd7da06b0da8a1400f061bf043bf196f37d4a5639f0b5ca5735",
+    "prior_stage12_verified_pointer_path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_78E7F9E6.json",
+    "prior_stage12_verified_pointer_sha256": "75c45ed9d6c3c6f326d8d148224c3036fb1f331f734bf3ae3d4245c7be5df75e",
+    "prior_stage12_freeze_id": "stage12-freeze-78e7f9e6e9856597084a8046",
+    "prior_stage12_manifest_sha256": "6c26845811b5c089a123a905842f0d0e4597fb0204210b929bf4a040457b0110",
+    "prior_stage12_verification_id": "stage12-verify-8e1241681dfe6eb3d4a5ce13",
+    "prior_stage13_approval_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_78E7F9E6.json",
+    "prior_stage13_approval_sha256": "dab8e1465dc95eb46323ada79c7978151317fc55eacd35d95c3ae2325667049d",
+    "stage13_resume_blocker_path": "artifacts/phase_06_final_test/STAGE_13_RESUME_BLOCKER.json",
+    "stage13_resume_blocker_sha256": "d6c212f5272adcf2396f64a4483ce74de3ae74a0eed17c110ab569fc03c852a1"
+  },
+  "source_transition": {
+    "adapter_path": "src/portfolio_bot/validation/validation_feature_input_adapter.py",
+    "pre_amendment_sha256": "f02c0429a126a6a576197d2175030bc8a0018969ba01732b254b4a8318cfff31",
+    "post_amendment_sha256": "e2b3a85d32c87f0de42b67f75972a6a6203073fb603769cd7e11cbcfb69b7ec0",
+    "exact_changed_stage11_bound_member_count": 1,
+    "permitted_changed_stage11_bound_members": [
+      "src/portfolio_bot/validation/validation_feature_input_adapter.py"
+    ],
+    "frozen_auxiliary_schema_path": "configs/phase_02_canonicalization/auxiliary_source_schema_v1.json",
+    "frozen_auxiliary_schema_sha256": "98ea793e43799d17ce6914e41874a87fe962a09bb251e7b65d7f062cae4e808e"
+  },
+  "schema_transport_contract": {
+    "affected_merge_table_count": 14,
+    "ordered_field_names_must_match": true,
+    "physical_arrow_types_must_match": true,
+    "extension_schema_must_equal_frozen_phase2_schema": true,
+    "permitted_nullability_transition": "development_nullable_to_extension_nonnullable_only",
+    "inverse_nullability_relaxation_permitted": false,
+    "type_order_or_field_drift_permitted": false,
+    "every_widened_development_required_column_zero_null_required": true,
+    "per_column_zero_null_receipt_required": true,
+    "row_value_date_key_precedence_sort_or_cardinality_change_permitted": false
+  },
+  "diagnostic_evidence": {
+    "failure_class": "Development/extension schema differs: ccm_link_interval.parquet",
+    "economic_or_outcome_months_executed_before_failure": 0,
+    "stage13_publication_pointers_created_before_failure": 0,
+    "observed_affected_merge_tables": 14,
+    "observed_widened_required_field_pairs": 106,
+    "observed_development_rows_covered_by_zero_null_proofs": 317047702,
+    "observed_required_field_null_rows": 0,
+    "result_informed_choice": false
+  },
+  "non_economic_boundary": {
+    "scientific_formula_changed": false,
+    "model_selection_or_frozen_economic_policy_changed": false,
+    "source_rows_values_dates_keys_or_linkage_rules_changed": false,
+    "stage11_recomputed": false,
+    "final_period_predictor_prerequisite_unique_payload_files_opened_by_amendment_work": 64,
+    "final_period_predictor_prerequisite_payload_file_open_events_by_amendment_work": 320,
+    "final_period_predictor_prerequisite_bytes_hashed_by_amendment_work": 35953170670,
+    "outcome_or_economic_payload_files_opened_by_amendment_work": 0,
+    "final_period_rows_read_by_amendment_work": 0,
+    "economic_months_executed_by_amendment_work": 0,
+    "outcome_months_executed_by_amendment_work": 0,
+    "final_forecasts_weights_trades_or_pnl_created_by_amendment_work": 0
+  },
+  "hash_audit_incident": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_POST_UNBLIND_HASH_AUDIT_INCIDENT.json",
+    "sha256": "e0b9ad71bb6a42f8bd0cefdcd08aaaa1e44d0cbb440814de80e626f678edbb36",
+    "status": "STAGE12_POST_UNBLIND_HASH_AUDIT_INCIDENT_DISCLOSED",
+    "result_informed_choice": false,
+    "guarded_stage12_build_or_test_execution": false,
+    "must_be_independently_reverified": true
+  },
+  "replacement_authority": {
+    "replacement_stage12_freeze_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_stage13_approval_valid_for_replacement_identity": false,
+    "renewed_explicit_stage13_approval_bound_to_exact_replacement_required": true,
+    "renewed_stage13_approval_granted_by_this_amendment": false,
+    "stage13_execution_authorized_now": false
+  },
+  "stage13_source_checkpoint_context_migration": {
+    "path": "configs/phase_06_final_test/stage_13_source_checkpoint_context_migration_v1.json",
+    "sha256": "956fe984d350cff58142affb2f3832f0bd7b061749f61f998b2d817c59012b13",
+    "memoization_authority_source_message_text": "Stop the stage 13 run at the first possible checkpoint, memoizing everything so we don't lose anything",
+    "memoization_authority_source_message_text_sha256": "bdcaf0f7329cc5c12472e38e33a0abd77a767a2c96c041124f292b2a604bc678",
+    "continuation_source_message_text": "Let's continue and finish stage 13",
+    "continuation_source_message_text_sha256": "035d476ed9117ac3fb07f055abf49085625118206f8e48db6c6a6c997c04935e",
+    "parent_open_before_replacement_stage13_approval_permitted": false
+  },
+  "required_tests": {
+    "test_file": "tests/unit/test_stage11_validation_empirical_feature_stream.py",
+    "must_cover": [
+      "positive_one_way_nullability_transport",
+      "per_column_zero_null_receipt",
+      "null_violation_rejection",
+      "inverse_nullability_relaxation_rejection",
+      "type_drift_rejection",
+      "field_order_drift_rejection",
+      "extension_frozen_schema_mismatch_rejection"
+    ]
+  }
+}

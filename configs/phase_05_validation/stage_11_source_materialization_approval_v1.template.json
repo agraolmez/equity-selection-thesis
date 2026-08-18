@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase05-stage11-source-materialization-approval-v1",
+  "stage": 11,
+  "gate": "A",
+  "scope": "stage11_validation_source_materialization_gate_a",
+  "approved": false,
+  "approved_by": null,
+  "approved_at_utc": null,
+  "approval_text": null,
+  "approval_text_sha256": null,
+  "source_materialization_plan_sha256": null,
+  "stage10_verified_pointer_sha256": null,
+  "methodology_source_sha256": null,
+  "authorizations": {
+    "normalized_source_materialization_authorized": false,
+    "main_2015_01_02_through_2019_10_31_authorized": false,
+    "reserve_2019_11_01_through_2019_12_02_authorized": false,
+    "labels_or_targets_authorized": false,
+    "model_fit_or_selection_authorized": false,
+    "forecasts_authorized": false,
+    "portfolio_weights_authorized": false,
+    "trades_authorized": false,
+    "pnl_or_performance_authorized": false,
+    "december_2019_holding_month_authorized": false,
+    "final_2020_2025_authorized": false,
+    "stage12_or_later_authorized": false
+  },
+  "payload_sha256": null
+}

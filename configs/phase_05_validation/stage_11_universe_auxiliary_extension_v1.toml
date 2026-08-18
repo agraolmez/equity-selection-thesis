@@ -1,0 +1,58 @@
+schema_version = 1
+policy_id = "phase05-stage11-universe-auxiliary-extension-v1"
+stage = 11
+status = "implementation_scaffold_no_raw_scan_no_outcome_access"
+
+[scope]
+internal_context_signal_date = "2014-11-28"
+first_scored_signal_date = "2014-12-31"
+last_scored_signal_date = "2019-10-31"
+scored_signal_count = 59
+last_permitted_exit_date = "2019-12-02"
+first_prohibited_signal_date = "2019-11-29"
+first_final_entry_date = "2020-01-02"
+
+[universe]
+frozen_formula_module = "src/portfolio_bot/data/phase_02_signal_date_universe.py"
+context_signal_count = 1
+published_context_rows = 0
+permitted_security_types = ["EQTY"]
+permitted_security_subtypes = ["COM"]
+permitted_share_types = ["NS", "AD"]
+permitted_primary_exchanges = ["N", "A", "Q"]
+us_incorporation_is_an_eligibility_filter = false
+future_outcome_filter_permitted = false
+
+[auxiliary]
+optionmetrics_scope_start = "2014-11-01"
+optionmetrics_scope_end = "2019-10-31"
+compustat_last_public_availability_date = "2019-10-31"
+factor_last_observation_date = "2019-10-31"
+sec_last_public_availability_date = "2019-10-31"
+segment_feature_support = "frozen_inactive"
+segment_observation_rows = 0
+validation_vocabulary_learning_permitted = false
+
+[boundaries]
+labels_or_forward_returns_permitted = false
+portfolio_weights_trades_or_pnl_permitted = false
+final_2020_2025_rows_permitted = false
+raw_scan_during_unit_tests_permitted = false
+frozen_stage02_source_modification_permitted = false
+
+[outputs]
+scored_universe = "validation_signal_date_universe.parquet"
+internal_context_universe = "internal_context_signal_date_universe.parquet"
+scored_auxiliary_linkage = "auxiliary_signal_linkage.parquet"
+internal_context_auxiliary_linkage = "internal_context_auxiliary_signal_linkage.parquet"
+receipt = "universe_auxiliary_receipt.json"
+full_predictor_context_receipt = "full_predictor_context_receipt.json"
+full_predictor_context_tables = [
+  "crsp_security_day.parquet",
+  "crsp_security_day_return.parquet",
+  "crsp_identity_interval.parquet",
+  "crsp_shares_interval.parquet",
+  "ff_factor_daily_observation.parquet",
+  "ff_factor_monthly_observation.parquet",
+  "ps_liquidity_observation.parquet",
+]

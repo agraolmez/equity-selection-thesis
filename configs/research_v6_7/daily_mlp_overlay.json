@@ -1,0 +1,143 @@
+{
+  "schema": "research_v6_7_daily_mlp_overlay_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_STUDY",
+  "approved_on": "2026-08-16",
+  "question": "Does a compact neural daily hold/trim/exit model improve on the frozen V6.6 five-day XGBoost overlay and the untouched monthly control when every portfolio, cost, execution, and chronology rule is held fixed?",
+  "scope": {
+    "new_lineage": "research_v6_7",
+    "v6_6_remains_closed": true,
+    "frozen_monthly_selectors_optimizer_and_relative_weights": true,
+    "frozen_rebalance_gross_cap": 1.8,
+    "daily_interventions_only_reduce_existing_positions": true,
+    "no_intramonth_new_positions_or_reentry": true,
+    "same_next_session_close_execution": true,
+    "historical_development_not_untouched_confirmation": true
+  },
+  "chronology": {
+    "initial_fit_start": "2022-02",
+    "initial_fit_end": "2022-12",
+    "selection_start": "2023-01",
+    "selection_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "predictive_refit": "quarterly_expanding",
+    "decision_time": "16:00 America/New_York after the official close",
+    "execution_time": "next trading-session close",
+    "quarantined_outcomes_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "sources": {
+    "v6_6_config": {
+      "path": "configs/research_v6_6/intrmonth_interventions.json",
+      "sha256": "566f3749ee9baa6317a7af2a123323cb96bc3870908ead3a4525baf6d334c6ff"
+    },
+    "v6_6_runner": {
+      "path": "scripts/run_v6_6_intramonth_interventions.py",
+      "sha256": "dff4e111215c53ae287725ac283f9350d6380fcbffe9268dcffdbfcc8daee2e0"
+    },
+    "v6_6_result": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/result.json",
+      "sha256": "600f9e79e8a82da2981e358cfe7b25f31e2aaa5504af2c6888083b5cc240e628"
+    },
+    "v6_6_selection": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/selection/selection.json",
+      "sha256": "56ef84b97d737b6decee0fa1d2144aaa6c5544c0678b6723fddd48b392ceff07"
+    },
+    "prepared_position_days": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/prepared/position_days.parquet",
+      "sha256": "2ef39b0755c5af351755fda773112c4ec034de3ac4fd453936d465b823161e96"
+    },
+    "frozen_xgboost_validation_predictions": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/models/selection/xgb_depth_2/h5/2023-01.parquet",
+      "sha256": "398e48eb6cd75959738c16f0c1e24610b87ed10d17fcdec62072390f8afc5a6a"
+    },
+    "frozen_xgboost_historical_predictions": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/models/selected_historical_test_predictions.parquet",
+      "sha256": "ee980a4782f6bd3085cb6e3c141fd18b54945e65e115f18eb3297645b30056ea"
+    },
+    "frozen_historical_replays": {
+      "monthly_control_monthly": {
+        "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/historical_test/monthly_control/monthly.parquet",
+        "sha256": "d70d94cb38d5ed9851a64573ff67bc5e0850379f7cf4844671cf3750b1a584e3"
+      },
+      "monthly_control_daily": {
+        "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/historical_test/monthly_control/daily.parquet",
+        "sha256": "d81af425252cec77a43cbca2016284796a555886633cd885108021c62999c493"
+      },
+      "frozen_xgboost_monthly": {
+        "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/historical_test/selected_predictive/monthly.parquet",
+        "sha256": "d3d1cf55f1fd9431a53be9418ea8ed2158efb75036f4ff86078e5c4201a5b813"
+      },
+      "frozen_xgboost_daily": {
+        "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/historical_test/selected_predictive/daily.parquet",
+        "sha256": "bb9cab3a9e2ae63d376f36757cf99833973f7bd2e6faff77e35c81c5ebb86470"
+      }
+    },
+    "v6_encoded_inputs": {
+      "rows": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet",
+      "rows_sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056",
+      "matrix": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/encoded_values.npy",
+      "matrix_sha256": "0404afe9af600ce02d7461c56a357dd6da5f79a91a82a84da1e19795607570fd",
+      "input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd",
+      "encoded_feature_count": 850
+    }
+  },
+  "mlp_models": {
+    "targets": [1, 5],
+    "seeds": [20260811, 20260812, 20260813],
+    "profiles": [
+      {
+        "id": "mlp_signed_return",
+        "objective": "signed_return_regression",
+        "hidden_layers": [128, 64],
+        "dropout": 0.10,
+        "epochs": 5,
+        "batch_size": 4096,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001,
+        "target_winsor_lower": 0.005,
+        "target_winsor_upper": 0.995
+      },
+      {
+        "id": "mlp_adverse_classifier",
+        "objective": "adverse_return_classifier",
+        "hidden_layers": [128, 64],
+        "dropout": 0.10,
+        "epochs": 5,
+        "batch_size": 4096,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001
+      }
+    ],
+    "ensemble": {
+      "id": "equal_mlp_xgboost",
+      "eligible_horizon": 5,
+      "frozen_xgboost_model": "xgb_depth_2__h5",
+      "weight_mlp": 0.5,
+      "weight_xgboost": 0.5,
+      "validation_zscore_scaling_frozen_for_historical_test": true
+    },
+    "decision_intensities": [
+      {"id": "selective", "trim_quantile": 0.10, "exit_quantile": 0.05},
+      {"id": "broad", "trim_quantile": 0.20, "exit_quantile": 0.10}
+    ],
+    "action_fractions": {"trim": 0.50, "exit": 0.00},
+    "selection_metric": "2023 monthly net Sharpe under the frozen V6.6 replay",
+    "selection_tie_breakers": ["annualized_net_excess_return", "maximum_drawdown", "lower_intervention_turnover"],
+    "only_one_validation_selected_v6_7_challenger_enters_historical_test": true
+  },
+  "promotion": {
+    "historical_test_net_sharpe_strictly_higher_than_monthly_control": true,
+    "historical_test_annualized_net_excess_return_strictly_higher_than_monthly_control": true,
+    "historical_test_net_sharpe_strictly_higher_than_frozen_xgboost": true,
+    "historical_test_maximum_drawdown_not_worse_than_control_by_more_than": 0.005,
+    "paired_monthly_difference_hac_t_minimum": 1.96,
+    "promotion_status_even_if_all_gates_pass": "FORWARD_PAPER_TRADING_SHADOW_CANDIDATE_ONLY"
+  },
+  "checkpointing": {
+    "natural_unit": "model-profile-horizon-refit block and replayed policy",
+    "atomic": true,
+    "resume": true,
+    "identity_bound": true
+  }
+}

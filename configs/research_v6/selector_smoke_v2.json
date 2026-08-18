@@ -1,0 +1,71 @@
+{
+  "schema": "research_v6_selector_smoke_v2",
+  "status": "EXPLORATORY_BASELINE_COMPLETE_NEWS_PENDING",
+  "capital": {
+    "nav_usd": 100000000,
+    "long_shadow_gross_usd": 100000000,
+    "short_shadow_gross_usd": 100000000
+  },
+  "features": {
+    "predecessor_registry_count": 163,
+    "structurally_empty_excluded": [
+      "business_segment_count",
+      "geographic_segment_count",
+      "business_segment_revenue_hhi",
+      "business_segment_revenue_hhi_change_1y"
+    ],
+    "usable_predecessor_count": 159,
+    "encoded_feature_count": 543,
+    "complete_case_stocks_per_month": 0,
+    "alpaca_news": "RAW_BACKFILL_IN_PROGRESS"
+  },
+  "preprocessing": {
+    "continuous_firm": "within-month 1/99 winsorization, centered cross-sectional rank, missing value zero after centering, explicit missing indicator",
+    "binary_firm": "retain 0/1, missing value zero, explicit missing indicator",
+    "categorical_firm": "frozen-vocabulary one-hot encoding with unknown state",
+    "categorical_multihot_firm": "frozen-vocabulary multi-hot encoding with unknown state",
+    "aggregate_state": "strictly-past expanding z-score, sample standard deviation, clip to [-5,5], missing value zero, explicit missing indicator"
+  },
+  "targets": [
+    "capm_alpha_rank",
+    "ff5_plus_momentum_alpha_rank",
+    "long_net_opportunity_rank",
+    "short_net_opportunity_rank"
+  ],
+  "cost_shadow": {
+    "commission_each_leg_bps": 1,
+    "spread": "one half of the observed full spread on each executed leg",
+    "market_impact": "0.10 times square root of order dollars divided by 60-day median ADV",
+    "short_borrow": "authenticated modeled monthly borrow cost",
+    "maximum_adv_participation": 0.10,
+    "side_position_count": "separate eligible-side decile count for long and short"
+  },
+  "models": [
+    "xgboost_pairwise",
+    "mlp_ranknet_pairwise",
+    "causal_dynamic_ensemble",
+    "elastic_net_benchmark"
+  ],
+  "dynamic_ensemble": {
+    "performance_measure": "prior-month cross-sectional rank IC",
+    "half_life_months": 12,
+    "minimum_history_months": 24,
+    "component_weight_bounds": [0.2, 0.8]
+  },
+  "chronology": {
+    "initial_fit": "2015-01/2019-11",
+    "missing_predictor_month": "2019-12",
+    "validation": "2020-01/2023-12",
+    "historical_test": "2024-01/2025-08"
+  },
+  "decision": {
+    "baseline": "DO_NOT_PROMOTE",
+    "reason": "No model-target result is positive and persistent across both evaluation periods; news increment remains pending."
+  },
+  "scope": {
+    "portfolio_constructed": false,
+    "optimizer_run": false,
+    "refit_retune_search_run": false,
+    "thesis_grade_claim": false
+  }
+}

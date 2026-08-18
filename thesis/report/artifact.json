@@ -1,0 +1,1142 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Machine Learning in Portfolio Construction: Stock Selection and Dynamic Equity Allocation",
+    "description": "Technical thesis reading copy of the frozen V6.1 selector and portfolio evidence, with V6.3 closure and forward-validation limits.",
+    "generatedAt": "2026-08-14T16:30:00+03:00",
+    "cards": [
+      {
+        "id": "net_return",
+        "description": "Annualized arithmetic mean monthly return in excess of cash after primary modeled costs.",
+        "dataset": "headline",
+        "sourceId": "frontier_results",
+        "metrics": [
+          {
+            "label": "Annualized net excess",
+            "field": "net_excess",
+            "format": "percent"
+          },
+          {
+            "label": "Stressed costs",
+            "field": "stress_net_excess",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "sharpe",
+        "description": "Annualized net excess return divided by realized annualized volatility.",
+        "dataset": "headline",
+        "sourceId": "frontier_results",
+        "metrics": [
+          {
+            "label": "Net Sharpe",
+            "field": "sharpe",
+            "format": "number"
+          },
+          {
+            "label": "Stressed",
+            "field": "stress_sharpe",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "risk",
+        "description": "Realized risk of the frozen 20-month total-return path.",
+        "dataset": "headline",
+        "sourceId": "frontier_results",
+        "metrics": [
+          {
+            "label": "Realized volatility",
+            "field": "volatility",
+            "format": "percent"
+          },
+          {
+            "label": "Maximum drawdown",
+            "field": "drawdown",
+            "format": "percent",
+            "signed": true
+          }
+        ]
+      },
+      {
+        "id": "evidence",
+        "description": "Short post-diagnostic historical-development sample; not untouched production confirmation.",
+        "dataset": "headline",
+        "sourceId": "frontier_results",
+        "metrics": [
+          {
+            "label": "Historical-test months",
+            "field": "months",
+            "format": "number"
+          },
+          {
+            "label": "Positive months",
+            "field": "positive_months",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "capacity",
+        "description": "$100 million research scale; maximum one-way ADV participation reaches the frozen limit.",
+        "dataset": "headline",
+        "sourceId": "frontier_results",
+        "metrics": [
+          {
+            "label": "Maximum ADV",
+            "field": "maximum_adv",
+            "format": "percent"
+          },
+          {
+            "label": "Annualized primary cost",
+            "field": "primary_cost",
+            "format": "percent"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "selector_ic",
+        "title": "Mean monthly rank IC by selected target",
+        "subtitle": "All four frozen scores rank positively; short-payoff validation is directionally positive but weak.",
+        "type": "bar",
+        "intent": "comparison",
+        "dataset": "selector",
+        "sourceId": "selector_results",
+        "encodings": {
+          "x": {
+            "field": "target",
+            "type": "nominal",
+            "label": "Prediction target"
+          },
+          "y": {
+            "field": "mean_ic",
+            "type": "quantitative",
+            "label": "Mean rank IC",
+            "format": "number"
+          },
+          "color": {
+            "field": "period",
+            "type": "nominal",
+            "label": "Evidence period"
+          }
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "validation_frontier",
+        "title": "Selected validation constraint profiles",
+        "subtitle": "The 1.5% cap is selected on February 2022–December 2023 net return, before the historical-test outcomes.",
+        "type": "bar",
+        "intent": "comparison",
+        "dataset": "validation",
+        "sourceId": "frontier_results",
+        "encodings": {
+          "x": {
+            "field": "profile",
+            "type": "nominal",
+            "label": "Portfolio profile"
+          },
+          "y": {
+            "field": "annualized_net_excess",
+            "type": "quantitative",
+            "label": "Annualized net excess return",
+            "format": "percent"
+          }
+        },
+        "valueFormat": "percent",
+        "layout": "full"
+      },
+      {
+        "id": "wealth_path",
+        "title": "Compounded total-return paths",
+        "subtitle": "The portfolio and SPY finish at nearly identical wealth; the portfolio path is smoother in this sample.",
+        "type": "line",
+        "intent": "trend",
+        "dataset": "path",
+        "sourceId": "frontier_results",
+        "encodings": {
+          "x": {
+            "field": "month",
+            "type": "temporal",
+            "label": "Holding month"
+          },
+          "y": {
+            "field": "wealth",
+            "type": "quantitative",
+            "label": "Growth of $1",
+            "format": "number"
+          },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "label": "Series"
+          }
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "monthly_return",
+        "title": "Monthly net excess returns",
+        "subtitle": "Primary modeled trading, borrow, and financing costs; 15 of 20 months are positive.",
+        "type": "bar",
+        "intent": "trend",
+        "dataset": "monthly",
+        "sourceId": "frontier_results",
+        "encodings": {
+          "x": {
+            "field": "month",
+            "type": "temporal",
+            "label": "Holding month"
+          },
+          "y": {
+            "field": "net_excess_return",
+            "type": "quantitative",
+            "label": "Net excess return",
+            "format": "percent"
+          },
+          "color": {
+            "field": "direction",
+            "type": "nominal",
+            "label": "Direction"
+          }
+        },
+        "valueFormat": "percent",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "selector_table",
+        "title": "Frozen selected models",
+        "subtitle": "Validation and historical-test rank statistics for the exact scores used or retained by the final portfolio lineage.",
+        "dataset": "selector",
+        "sourceId": "selector_results",
+        "defaultSort": {
+          "field": "target",
+          "direction": "asc"
+        },
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "target",
+            "label": "Target",
+            "type": "text"
+          },
+          {
+            "field": "model",
+            "label": "Model",
+            "type": "text"
+          },
+          {
+            "field": "period",
+            "label": "Period",
+            "type": "text"
+          },
+          {
+            "field": "months",
+            "label": "Months",
+            "format": "number"
+          },
+          {
+            "field": "mean_ic",
+            "label": "Mean IC",
+            "format": "number"
+          },
+          {
+            "field": "hac_t",
+            "label": "HAC t",
+            "format": "number"
+          },
+          {
+            "field": "positive_fraction",
+            "label": "Positive IC",
+            "format": "percent"
+          }
+        ]
+      },
+      {
+        "id": "portfolio_table",
+        "title": "Frozen portfolio comparison",
+        "subtitle": "The 1.5% cap is the validation-selected confirmation candidate; the 1.0% row is its frozen comparator.",
+        "dataset": "comparison",
+        "sourceId": "frontier_results",
+        "defaultSort": {
+          "field": "net_excess",
+          "direction": "desc"
+        },
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "portfolio",
+            "label": "Portfolio",
+            "type": "text"
+          },
+          {
+            "field": "net_excess",
+            "label": "Net excess",
+            "format": "percent"
+          },
+          {
+            "field": "stress_net_excess",
+            "label": "Stress net",
+            "format": "percent"
+          },
+          {
+            "field": "total_cagr",
+            "label": "Total CAGR",
+            "format": "percent"
+          },
+          {
+            "field": "volatility",
+            "label": "Volatility",
+            "format": "percent"
+          },
+          {
+            "field": "sharpe",
+            "label": "Sharpe",
+            "format": "number"
+          },
+          {
+            "field": "drawdown",
+            "label": "Max drawdown",
+            "format": "percent"
+          },
+          {
+            "field": "primary_cost",
+            "label": "Cost",
+            "format": "percent"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "selector_results",
+        "label": "Frozen V6.1 selector summaries",
+        "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3",
+        "query": {
+          "engine": "pandas/Apache Arrow",
+          "language": "python",
+          "sql": "SELECT model_id, period, months, mean_rank_ic, rank_ic_hac_t, positive_ic_fraction, mean_economic_top_minus_bottom FROM read_parquet('artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/*/official_summary.parquet') WHERE (target, model_id) IN (('capm','ensemble__cam_free_mlp_plus_cam__equal'),('ff5_momentum','ensemble__cam_free_mlp_plus_cam__equal'),('long_net','ensemble__cam_free_mlp_plus_cam__equal'),('short_net','ensemble__correlation_reduced_xgb_mlp__equal')) AND period IN ('validation','historical_test');",
+          "description": "Selected the four frozen V6.1 score columns and their validation and historical-test rank statistics.",
+          "executed_at": "2026-08-14T16:30:00+03:00",
+          "tables_used": [
+            "artifacts.research_v6_1.selector_step_01.target.official_summary"
+          ],
+          "filters": [
+            "selected score columns from the frozen portfolio contract",
+            "validation 2020-01 to 2023-12",
+            "historical test 2024-01 to 2025-08"
+          ],
+          "metric_definitions": {
+            "mean_ic": "Equal-month mean cross-sectional Spearman rank correlation.",
+            "hac_t": "Six-lag HAC t-statistic of monthly rank IC."
+          }
+        }
+      },
+      {
+        "id": "frontier_results",
+        "label": "Frozen V6.1 net-return frontier and SPY benchmark",
+        "path": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db",
+        "query": {
+          "engine": "pandas/Apache Arrow",
+          "language": "python/sql",
+          "sql": "SELECT * FROM read_parquet('artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/historical_test_monthly.parquet') WHERE profile IN ('control','position_1p5'); SELECT * FROM read_parquet('artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/validation_summary.parquet'); SELECT holding_month, total_return FROM read_parquet('processed/phase_06_final_test/stage13-final-inputs-v2/primary_benchmarks.parquet') WHERE benchmark_id = 'spy_total_return';",
+          "description": "Read the complete validation constraint frontier, the two frozen historical-test paths, and the authenticated SPY total-return benchmark.",
+          "executed_at": "2026-08-14T16:30:00+03:00",
+          "tables_used": [
+            "artifacts.research_v6_1.net_return_frontier.validation_summary",
+            "artifacts.research_v6_1.net_return_frontier.historical_test_monthly",
+            "phase_06_final_test.stage13_final_inputs_v2.primary_benchmarks"
+          ],
+          "filters": [
+            "portfolio validation 2022-02 to 2023-12",
+            "historical test 2024-01 to 2025-08",
+            "no outcomes after 2025-08"
+          ],
+          "metric_definitions": {
+            "net_excess": "Annualized arithmetic mean monthly return in excess of cash after modeled costs.",
+            "sharpe": "Annualized mean monthly net excess return divided by realized annualized volatility.",
+            "total_cagr": "Geometric annualized net total return including cash on net capital."
+          }
+        }
+      },
+      {
+        "id": "final_challenge",
+        "label": "Frozen V6.3 signal-to-weight challenge",
+        "path": "artifacts/research_v6_3/signal_weight_research/69841fc46fbd-c1dc1cd6be2e-ec470fe0dfb4",
+        "query": {
+          "engine": "pandas/Apache Arrow",
+          "language": "python/sql",
+          "sql": "SELECT profile, annualized_net_excess_return_primary, net_sharpe_primary FROM read_parquet('artifacts/research_v6_3/signal_weight_research/69841fc46fbd-c1dc1cd6be2e-ec470fe0dfb4/historical_test_summary.parquet');",
+          "description": "Compared the exactly reproduced incumbent with the only validation-surviving latent-risk challenger.",
+          "executed_at": "2026-08-14T16:30:00+03:00",
+          "tables_used": [
+            "artifacts.research_v6_3.signal_weight_research.historical_test_summary"
+          ],
+          "filters": [
+            "historical test 2024-01 to 2025-08",
+            "validation-selected challenger only"
+          ]
+        }
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Machine Learning in Portfolio Construction: Stock Selection and Dynamic Equity Allocation"
+      },
+      {
+        "id": "summary",
+        "type": "markdown",
+        "sourceId": "frontier_results",
+        "body": "## Technical Summary\n\nThe completed research supports a qualified positive conclusion. Frozen machine-learning ensembles rank CAPM alpha, FF5-plus-momentum alpha, long payoff, and short payoff positively. A causal rank-to-payoff calibration and cost-aware optimizer translate those rankings into a $100 million portfolio. The validation-selected 1.5% position-cap policy earns **14.67% annualized net excess return**, **6.32% realized volatility**, a **2.320 Sharpe ratio**, and a **−1.34% maximum drawdown** over January 2024–August 2025. Under stressed costs, Sharpe remains **2.054**.\n\nThe result is post-diagnostic historical development, not production proof. It spans 20 months, reaches the 10% ADV limit, and has no untouched confirmation."
+      },
+      {
+        "id": "metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "net_return",
+          "sharpe",
+          "risk",
+          "evidence",
+          "capacity"
+        ]
+      },
+      {
+        "id": "selectors_heading",
+        "type": "markdown",
+        "body": "## The Models Rank Stocks, Not Exact Returns\n\nThe final design asks models to order stocks cross-sectionally. CAPM, FF5-plus-momentum, and long payoff use equal-rank blends of a CAM-free neural network and direct LSEG CAM. Short payoff uses a pairwise, correlation-reduced XGBoost–MLP ensemble. CAM is an analyst-consensus rank, not a separately trained model."
+      },
+      {
+        "id": "selector_chart",
+        "type": "chart",
+        "chartId": "selector_ic",
+        "layout": "full"
+      },
+      {
+        "id": "selector_table_block",
+        "type": "table",
+        "tableId": "selector_table",
+        "layout": "full"
+      },
+      {
+        "id": "portfolio_heading",
+        "type": "markdown",
+        "sourceId": "frontier_results",
+        "body": "## Validation Selected a Simple Concentration Change\n\nThe frozen selectors, FF5-plus-momentum sign gate, candidate tails, causal calibration, cost model, and risk model remain unchanged. The frontier changes transparent portfolio constraints only. A **1.5% candidate cap** wins on February 2022–December 2023 validation net return. More aggressive turnover, leverage, and broad freedom generally reduce net performance after costs."
+      },
+      {
+        "id": "validation_chart_block",
+        "type": "chart",
+        "chartId": "validation_frontier",
+        "layout": "full"
+      },
+      {
+        "id": "results_heading",
+        "type": "markdown",
+        "sourceId": "frontier_results",
+        "body": "## Historical-Test Result\n\nThe 1.5% candidate improves annualized net excess return by **4.73 percentage points** and Sharpe by **0.597** relative to the frozen 1.0% control. Its paired HAC t-statistic is **5.135** and its block-bootstrap annualized return-difference interval is **+2.984% to +6.524%**. Those figures are strong within the observed comparison but do not correct for the complete post-diagnostic research history."
+      },
+      {
+        "id": "portfolio_table_block",
+        "type": "table",
+        "tableId": "portfolio_table",
+        "layout": "full"
+      },
+      {
+        "id": "wealth_chart_block",
+        "type": "chart",
+        "chartId": "wealth_path",
+        "layout": "full"
+      },
+      {
+        "id": "monthly_chart_block",
+        "type": "chart",
+        "chartId": "monthly_return",
+        "layout": "full"
+      },
+      {
+        "id": "mechanism",
+        "type": "markdown",
+        "sourceId": "frontier_results",
+        "body": "## Economic Mechanism\n\nThe result is long-driven. Annualized long contribution is **+16.28%**, short contribution is **−0.54%**, and primary costs consume **1.07%**. Mean gross exposure is **1.013**, mean net exposure is **0.279**, and the portfolio holds about 60 longs and 62 shorts. The short sleeve is best interpreted as a joint alpha-and-covariance instrument rather than a separately proven return engine."
+      },
+      {
+        "id": "robustness",
+        "type": "markdown",
+        "sourceId": "final_challenge",
+        "body": "## Final Robustness Challenge\n\nV6.3 tested six additional signal-to-weight ideas. Only a three-factor latent-risk challenger survived validation; it earned 14.55% net excess return and a 2.282 Sharpe in the historical test, slightly below the unchanged incumbent. V6.3 reproduced every incumbent monthly return exactly. The final decision is to retain the simpler frozen policy."
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## Limitations and Uncertainty\n\nThe test contains only 20 months and follows multiple earlier research decisions. The short-payoff selector's validation t-statistic is only 0.97. All monthly optimizations carry an `optimal_inaccurate` solver label, although realized constraints and accounting reconcile to immaterial residue. The 10% ADV limit binds at $100 million. The active local dependency environment also differs from the pinned project contract. None of these facts changes the frozen historical arithmetic, but together they prevent a production-quality claim."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "body": "## Next Step: Frozen Paper Trading\n\nDo not tune further on the historical window. Recreate the pinned environment, freeze the repository and source manifest, and begin prospective paper trading no earlier than September 2026. Preserve each signal-time data snapshot, feature vector, score, calibrated payoff, target weight, constraint audit, order, fill, borrow status, and realized cost. Evaluate the untouched policy only after a predeclared forward horizon."
+      },
+      {
+        "id": "questions",
+        "type": "markdown",
+        "body": "## Further Questions\n\n1. Do selector IC and calibration slopes remain positive prospectively?\n2. Does the short sleeve continue to reduce covariance without excessive drag?\n3. How large is broker-paper slippage relative to modeled cost?\n4. Does the 10% ADV constraint remain feasible as the universe and capital change?\n5. Does the strategy retain its low-volatility benchmark-matching profile outside the 2024–2025 regime?"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-14T16:30:00+03:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [
+        {
+          "net_excess": 0.1466982364025034,
+          "stress_net_excess": 0.12961392421241547,
+          "total_cagr": 0.2133914137043036,
+          "sharpe": 2.320207264983375,
+          "stress_sharpe": 2.0543835447246757,
+          "volatility": 0.0632263499112673,
+          "drawdown": -0.01336429080276691,
+          "positive_months": 0.75,
+          "hac_t": 3.48665161184428,
+          "months": 20,
+          "mean_gross": 1.012618710859304,
+          "mean_net": 0.27898546701874677,
+          "primary_cost": 0.010660228058744857,
+          "maximum_adv": 0.10000000064039373
+        }
+      ],
+      "selector": [
+        {
+          "target": "CAPM alpha",
+          "model": "CAM-free continuous MLP + direct CAM",
+          "period": "Validation",
+          "months": 48,
+          "mean_ic": 0.027115,
+          "hac_t": 1.5538,
+          "positive_fraction": 0.5833,
+          "top_minus_bottom": 0.007916
+        },
+        {
+          "target": "CAPM alpha",
+          "model": "CAM-free continuous MLP + direct CAM",
+          "period": "Historical test",
+          "months": 20,
+          "mean_ic": 0.057766,
+          "hac_t": 3.6779,
+          "positive_fraction": 0.7,
+          "top_minus_bottom": 0.020204
+        },
+        {
+          "target": "FF5 + momentum alpha",
+          "model": "CAM-free pairwise MLP + direct CAM",
+          "period": "Validation",
+          "months": 48,
+          "mean_ic": 0.021861,
+          "hac_t": 2.8279,
+          "positive_fraction": 0.6458,
+          "top_minus_bottom": 0.006295
+        },
+        {
+          "target": "FF5 + momentum alpha",
+          "model": "CAM-free pairwise MLP + direct CAM",
+          "period": "Historical test",
+          "months": 20,
+          "mean_ic": 0.04753,
+          "hac_t": 7.5113,
+          "positive_fraction": 0.85,
+          "top_minus_bottom": 0.014886
+        },
+        {
+          "target": "Long net payoff",
+          "model": "CAM-free continuous MLP + direct CAM",
+          "period": "Validation",
+          "months": 48,
+          "mean_ic": 0.059115,
+          "hac_t": 2.5936,
+          "positive_fraction": 0.6042,
+          "top_minus_bottom": 0.015634
+        },
+        {
+          "target": "Long net payoff",
+          "model": "CAM-free continuous MLP + direct CAM",
+          "period": "Historical test",
+          "months": 20,
+          "mean_ic": 0.067371,
+          "hac_t": 3.815,
+          "positive_fraction": 0.75,
+          "top_minus_bottom": 0.013572
+        },
+        {
+          "target": "Short net payoff",
+          "model": "Correlation-reduced pairwise XGBoost + MLP",
+          "period": "Validation",
+          "months": 48,
+          "mean_ic": 0.025568,
+          "hac_t": 0.9679,
+          "positive_fraction": 0.5417,
+          "top_minus_bottom": -0.006099
+        },
+        {
+          "target": "Short net payoff",
+          "model": "Correlation-reduced pairwise XGBoost + MLP",
+          "period": "Historical test",
+          "months": 20,
+          "mean_ic": 0.057403,
+          "hac_t": 3.3932,
+          "positive_fraction": 0.7,
+          "top_minus_bottom": 0.006404
+        }
+      ],
+      "comparison": [
+        {
+          "portfolio": "Frozen 1.0% control",
+          "net_excess": 0.09943557811905937,
+          "stress_net_excess": 0.08332144801354247,
+          "total_cagr": 0.15849208962022332,
+          "volatility": 0.05769478191535544,
+          "sharpe": 1.7234761068157298,
+          "stress_sharpe": 1.4488508883023505,
+          "drawdown": -0.01957989360137724,
+          "primary_cost": 0.009947795531509079,
+          "gross": 0.971676993882053,
+          "net": 0.27702635546202503
+        },
+        {
+          "portfolio": "Validation-selected 1.5% cap",
+          "net_excess": 0.1466982364025034,
+          "stress_net_excess": 0.12961392421241547,
+          "total_cagr": 0.2133914137043036,
+          "volatility": 0.0632263499112673,
+          "sharpe": 2.320207264983375,
+          "stress_sharpe": 2.0543835447246757,
+          "drawdown": -0.01336429080276691,
+          "primary_cost": 0.010660228058744857,
+          "gross": 1.012618710859304,
+          "net": 0.27898546701874677
+        }
+      ],
+      "validation": [
+        {
+          "profile": "1.5% position cap",
+          "annualized_net_excess": 0.04117003,
+          "stress_net_excess": 0.02315691,
+          "sharpe": 0.830554,
+          "drawdown": -0.027692
+        },
+        {
+          "profile": "15% factor limits",
+          "annualized_net_excess": 0.04081181,
+          "stress_net_excess": 0.02386456,
+          "sharpe": 0.740321,
+          "drawdown": -0.02458324
+        },
+        {
+          "profile": "2.0% position cap",
+          "annualized_net_excess": 0.04012027,
+          "stress_net_excess": 0.02183514,
+          "sharpe": 0.812201,
+          "drawdown": -0.03228148
+        },
+        {
+          "profile": "Frozen 1.0% control",
+          "annualized_net_excess": 0.02628139,
+          "stress_net_excess": 0.00888362,
+          "sharpe": 0.497283,
+          "drawdown": -0.02417887
+        },
+        {
+          "profile": "No short floor",
+          "annualized_net_excess": 0.01956036,
+          "stress_net_excess": 0.00364647,
+          "sharpe": 0.38804,
+          "drawdown": -0.03611645
+        },
+        {
+          "profile": "75% turnover cap",
+          "annualized_net_excess": 0.01185808,
+          "stress_net_excess": -0.00918264,
+          "sharpe": 0.220311,
+          "drawdown": -0.026555
+        },
+        {
+          "profile": "Joint aggressive",
+          "annualized_net_excess": 0.00529513,
+          "stress_net_excess": -0.0423796,
+          "sharpe": 0.048255,
+          "drawdown": -0.11381614
+        }
+      ],
+      "path": [
+        {
+          "month": "2024-01",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.020682
+        },
+        {
+          "month": "2024-01",
+          "series": "SPY total return",
+          "wealth": 1.035015
+        },
+        {
+          "month": "2024-02",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.020721
+        },
+        {
+          "month": "2024-02",
+          "series": "SPY total return",
+          "wealth": 1.085052
+        },
+        {
+          "month": "2024-03",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.041713
+        },
+        {
+          "month": "2024-03",
+          "series": "SPY total return",
+          "wealth": 1.108205
+        },
+        {
+          "month": "2024-04",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.035796
+        },
+        {
+          "month": "2024-04",
+          "series": "SPY total return",
+          "wealth": 1.061918
+        },
+        {
+          "month": "2024-05",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.058557
+        },
+        {
+          "month": "2024-05",
+          "series": "SPY total return",
+          "wealth": 1.120176
+        },
+        {
+          "month": "2024-06",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.074841
+        },
+        {
+          "month": "2024-06",
+          "series": "SPY total return",
+          "wealth": 1.161139
+        },
+        {
+          "month": "2024-07",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.141291
+        },
+        {
+          "month": "2024-07",
+          "series": "SPY total return",
+          "wealth": 1.15618
+        },
+        {
+          "month": "2024-08",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.171356
+        },
+        {
+          "month": "2024-08",
+          "series": "SPY total return",
+          "wealth": 1.175494
+        },
+        {
+          "month": "2024-09",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.210841
+        },
+        {
+          "month": "2024-09",
+          "series": "SPY total return",
+          "wealth": 1.214432
+        },
+        {
+          "month": "2024-10",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.198517
+        },
+        {
+          "month": "2024-10",
+          "series": "SPY total return",
+          "wealth": 1.2196
+        },
+        {
+          "month": "2024-11",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.214179
+        },
+        {
+          "month": "2024-11",
+          "series": "SPY total return",
+          "wealth": 1.289204
+        },
+        {
+          "month": "2024-12",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.197953
+        },
+        {
+          "month": "2024-12",
+          "series": "SPY total return",
+          "wealth": 1.252798
+        },
+        {
+          "month": "2025-01",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.224122
+        },
+        {
+          "month": "2025-01",
+          "series": "SPY total return",
+          "wealth": 1.280933
+        },
+        {
+          "month": "2025-02",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.270329
+        },
+        {
+          "month": "2025-02",
+          "series": "SPY total return",
+          "wealth": 1.250937
+        },
+        {
+          "month": "2025-03",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.272827
+        },
+        {
+          "month": "2025-03",
+          "series": "SPY total return",
+          "wealth": 1.205696
+        },
+        {
+          "month": "2025-04",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.279716
+        },
+        {
+          "month": "2025-04",
+          "series": "SPY total return",
+          "wealth": 1.20032
+        },
+        {
+          "month": "2025-05",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.322344
+        },
+        {
+          "month": "2025-05",
+          "series": "SPY total return",
+          "wealth": 1.273912
+        },
+        {
+          "month": "2025-06",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.332146
+        },
+        {
+          "month": "2025-06",
+          "series": "SPY total return",
+          "wealth": 1.331448
+        },
+        {
+          "month": "2025-07",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.341869
+        },
+        {
+          "month": "2025-07",
+          "series": "SPY total return",
+          "wealth": 1.340221
+        },
+        {
+          "month": "2025-08",
+          "series": "Frozen ML portfolio",
+          "wealth": 1.380389
+        },
+        {
+          "month": "2025-08",
+          "series": "SPY total return",
+          "wealth": 1.38021
+        }
+      ],
+      "monthly": [
+        {
+          "month": "2024-01",
+          "net_excess_return": 0.01647321,
+          "direction": "Positive",
+          "gross": 1.0,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.0007699
+        },
+        {
+          "month": "2024-02",
+          "net_excess_return": -0.00396928,
+          "direction": "Negative",
+          "gross": 0.800002,
+          "net": 0.200002,
+          "turnover": 0.5,
+          "cost": 0.00066059
+        },
+        {
+          "month": "2024-03",
+          "net_excess_return": 0.01655829,
+          "direction": "Positive",
+          "gross": 1.020306,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00083199
+        },
+        {
+          "month": "2024-04",
+          "net_excess_return": -0.01008935,
+          "direction": "Negative",
+          "gross": 1.192056,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00087783
+        },
+        {
+          "month": "2024-05",
+          "net_excess_return": 0.01756549,
+          "direction": "Positive",
+          "gross": 1.279906,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00102939
+        },
+        {
+          "month": "2024-06",
+          "net_excess_return": 0.01157586,
+          "direction": "Positive",
+          "gross": 0.899215,
+          "net": 0.299215,
+          "turnover": 0.5,
+          "cost": 0.00075609
+        },
+        {
+          "month": "2024-07",
+          "net_excess_return": 0.05741417,
+          "direction": "Positive",
+          "gross": 1.0,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00082346
+        },
+        {
+          "month": "2024-08",
+          "net_excess_return": 0.02193414,
+          "direction": "Positive",
+          "gross": 0.853125,
+          "net": 0.253125,
+          "turnover": 0.5,
+          "cost": 0.00085084
+        },
+        {
+          "month": "2024-09",
+          "net_excess_return": 0.02970106,
+          "direction": "Positive",
+          "gross": 1.043498,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00090632
+        },
+        {
+          "month": "2024-10",
+          "net_excess_return": -0.01478854,
+          "direction": "Negative",
+          "gross": 1.058235,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00087712
+        },
+        {
+          "month": "2024-11",
+          "net_excess_return": 0.00906053,
+          "direction": "Positive",
+          "gross": 0.958574,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00081206
+        },
+        {
+          "month": "2024-12",
+          "net_excess_return": -0.0175727,
+          "direction": "Negative",
+          "gross": 1.164462,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00104298
+        },
+        {
+          "month": "2025-01",
+          "net_excess_return": 0.01783787,
+          "direction": "Positive",
+          "gross": 1.260594,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00102573
+        },
+        {
+          "month": "2025-02",
+          "net_excess_return": 0.03393968,
+          "direction": "Positive",
+          "gross": 1.164843,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00096488
+        },
+        {
+          "month": "2025-03",
+          "net_excess_return": -0.0022421,
+          "direction": "Negative",
+          "gross": 0.800002,
+          "net": 0.200002,
+          "turnover": 0.5,
+          "cost": 0.00069695
+        },
+        {
+          "month": "2025-04",
+          "net_excess_return": 0.00120461,
+          "direction": "Positive",
+          "gross": 0.964175,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00080712
+        },
+        {
+          "month": "2025-05",
+          "net_excess_return": 0.02910154,
+          "direction": "Positive",
+          "gross": 0.8,
+          "net": 0.2,
+          "turnover": 0.5,
+          "cost": 0.00116057
+        },
+        {
+          "month": "2025-06",
+          "net_excess_return": 0.00340523,
+          "direction": "Positive",
+          "gross": 0.827366,
+          "net": 0.227366,
+          "turnover": 0.5,
+          "cost": 0.00106327
+        },
+        {
+          "month": "2025-07",
+          "net_excess_return": 0.00288976,
+          "direction": "Positive",
+          "gross": 1.011118,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00082327
+        },
+        {
+          "month": "2025-08",
+          "net_excess_return": 0.02449762,
+          "direction": "Positive",
+          "gross": 1.154897,
+          "net": 0.3,
+          "turnover": 0.5,
+          "cost": 0.00098669
+        }
+      ]
+    },
+    "accessIssues": []
+  },
+  "sources": [
+    {
+      "id": "selector_results",
+      "label": "Frozen V6.1 selector summaries",
+      "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3",
+      "query": {
+        "engine": "pandas/Apache Arrow",
+        "language": "python",
+        "sql": "SELECT model_id, period, months, mean_rank_ic, rank_ic_hac_t, positive_ic_fraction, mean_economic_top_minus_bottom FROM read_parquet('artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/*/official_summary.parquet') WHERE (target, model_id) IN (('capm','ensemble__cam_free_mlp_plus_cam__equal'),('ff5_momentum','ensemble__cam_free_mlp_plus_cam__equal'),('long_net','ensemble__cam_free_mlp_plus_cam__equal'),('short_net','ensemble__correlation_reduced_xgb_mlp__equal')) AND period IN ('validation','historical_test');",
+        "description": "Selected the four frozen V6.1 score columns and their validation and historical-test rank statistics.",
+        "executed_at": "2026-08-14T16:30:00+03:00",
+        "tables_used": [
+          "artifacts.research_v6_1.selector_step_01.target.official_summary"
+        ],
+        "filters": [
+          "selected score columns from the frozen portfolio contract",
+          "validation 2020-01 to 2023-12",
+          "historical test 2024-01 to 2025-08"
+        ],
+        "metric_definitions": {
+          "mean_ic": "Equal-month mean cross-sectional Spearman rank correlation.",
+          "hac_t": "Six-lag HAC t-statistic of monthly rank IC."
+        }
+      }
+    },
+    {
+      "id": "frontier_results",
+      "label": "Frozen V6.1 net-return frontier and SPY benchmark",
+      "path": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db",
+      "query": {
+        "engine": "pandas/Apache Arrow",
+        "language": "python/sql",
+        "sql": "SELECT * FROM read_parquet('artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/historical_test_monthly.parquet') WHERE profile IN ('control','position_1p5'); SELECT * FROM read_parquet('artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/validation_summary.parquet'); SELECT holding_month, total_return FROM read_parquet('processed/phase_06_final_test/stage13-final-inputs-v2/primary_benchmarks.parquet') WHERE benchmark_id = 'spy_total_return';",
+        "description": "Read the complete validation constraint frontier, the two frozen historical-test paths, and the authenticated SPY total-return benchmark.",
+        "executed_at": "2026-08-14T16:30:00+03:00",
+        "tables_used": [
+          "artifacts.research_v6_1.net_return_frontier.validation_summary",
+          "artifacts.research_v6_1.net_return_frontier.historical_test_monthly",
+          "phase_06_final_test.stage13_final_inputs_v2.primary_benchmarks"
+        ],
+        "filters": [
+          "portfolio validation 2022-02 to 2023-12",
+          "historical test 2024-01 to 2025-08",
+          "no outcomes after 2025-08"
+        ],
+        "metric_definitions": {
+          "net_excess": "Annualized arithmetic mean monthly return in excess of cash after modeled costs.",
+          "sharpe": "Annualized mean monthly net excess return divided by realized annualized volatility.",
+          "total_cagr": "Geometric annualized net total return including cash on net capital."
+        }
+      }
+    },
+    {
+      "id": "final_challenge",
+      "label": "Frozen V6.3 signal-to-weight challenge",
+      "path": "artifacts/research_v6_3/signal_weight_research/69841fc46fbd-c1dc1cd6be2e-ec470fe0dfb4",
+      "query": {
+        "engine": "pandas/Apache Arrow",
+        "language": "python/sql",
+        "sql": "SELECT profile, annualized_net_excess_return_primary, net_sharpe_primary FROM read_parquet('artifacts/research_v6_3/signal_weight_research/69841fc46fbd-c1dc1cd6be2e-ec470fe0dfb4/historical_test_summary.parquet');",
+        "description": "Compared the exactly reproduced incumbent with the only validation-surviving latent-risk challenger.",
+        "executed_at": "2026-08-14T16:30:00+03:00",
+        "tables_used": [
+          "artifacts.research_v6_3.signal_weight_research.historical_test_summary"
+        ],
+        "filters": [
+          "historical test 2024-01 to 2025-08",
+          "validation-selected challenger only"
+        ]
+      }
+    }
+  ]
+}

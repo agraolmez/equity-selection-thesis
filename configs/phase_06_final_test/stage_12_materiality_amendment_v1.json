@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-strict-numerical-materiality-and-source-transition-v1",
+  "status": "STAGE12_PREFINAL_POLICY_FROZEN_PENDING_FINAL_MANIFEST",
+  "authority_boundary": {
+    "stage11_authority_immutable": true,
+    "stage11_primary_build_id": "stage11-validation-8d5e7f863ee093089520457e",
+    "stage11_primary_manifest_sha256": "28481a09d5f933ed97f54b7441b45e9ac728ac4616e40fb76ce2b8f5abf60801",
+    "stage11_verification_id": "verify-86a1e2d42b4c84f0",
+    "stage11_difference_count": 0,
+    "stage11_resume_amendment_path": "configs/phase_05_validation/stage_11_portfolio_resume_amendment_v1.json",
+    "stage11_resume_amendment_sha256": "1f7f0ee11e73ebf26faf9c99bdd8e4b7d6d0b2876a46b9dc47d8f599e030f38e",
+    "stage11_recomputation_required": false,
+    "stage11_configuration_rewrite_permitted": false,
+    "final_period_rows_read": 0,
+    "data_from_2020_or_later_read": false
+  },
+  "source_transition": {
+    "stage11_bound_member_count": 301,
+    "unchanged_stage11_bound_member_count": 290,
+    "changed_stage11_bound_member_count": 11,
+    "new_stage12_member_count": 1,
+    "members": [
+      {
+        "path": "scripts/stage_11_pending_materiality_adapter.py",
+        "stage11_sealed_sha256": "f61eb5980270a1e48885fe16fe35cba44783c993e97d39cc3096120f770baaa8",
+        "stage12_sha256": "fb5857dc717af866146c5a6b9dc22c8070db36e2b249f9c5a183be3d18500775",
+        "classification": "literal_to_shared_constant_refactor",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "scripts/stage_11_portfolio_resume.py",
+        "stage11_sealed_sha256": "76981b8ad402b36de36d1427cc46af4df2bc45158056436e91d4a6982684c9f7",
+        "stage12_sha256": "e258564cb4520dc7a34c8910f6e090f3cf896ec0051e66d93c4995a25bb1b468",
+        "classification": "historical_reuse_verifier_routing_change",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/allocation/solver.py",
+        "stage11_sealed_sha256": "c11fdef33f69b491ef5cfc91a4057112fd13075a367cf3ff313e6423257549de",
+        "stage12_sha256": "4a7ac142e8c0846af6196003823727ed2e902eb92d8935cab952ea81fe716dde",
+        "classification": "bounded_economic_normalization_aggregate_gate_and_residue_evidence",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/validation/execution_publication.py",
+        "stage11_sealed_sha256": "a62f3c286ace7c321ce59359229b8eb8aca134a02efe8e80b917e749bad47ace",
+        "stage12_sha256": "ac77ad814a5ce66ec9a85d0829882d69b61db79a1dee4f28b5f63cbc6a0ef275",
+        "classification": "nav_aware_semantic_acceptance_change_no_return_calculation",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/validation/session_authority.py",
+        "stage11_sealed_sha256": "dae0c398b2ea99695153c49e08405a1d468426da8098d6efcde5a9b175e8fe2c",
+        "stage12_sha256": "7d3e55a81e84a52087508704e007f62ba68f8256dd50000f01048376fc8254a6",
+        "classification": "final_calendar_predecision_and_accounting_postdecision_authority_split",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/data/phase_02_crsp_return_reconciliation.py",
+        "stage11_sealed_sha256": "b76785d8744d63a1dc28cd975e128d59d9c8ff731f7b1cd46aac083c57b38aea",
+        "stage12_sha256": "18e8209005ecb4b2672bb4e62567e61a3920abe4a346104c2abe2163690a1872",
+        "classification": "observed_delisting_return_replaces_absent_gp_mr_ordinary_leg",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/data/phase_02_auxiliary_compustat_factors.py",
+        "stage11_sealed_sha256": "fa377066fc3ad56d165bd9fa7b9c7ca7ee517169ee0dbe513ed31750a49c1a62",
+        "stage12_sha256": "2e6311875c6ff8e4e0d13a1dff5ea2310076c34dffaf8d4001b44f9a30bb6e44",
+        "classification": "fallback_availability_beyond_authorized_signal_scope_excluded",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/data/phase_02_sec_restatement_auxiliary.py",
+        "stage11_sealed_sha256": "c6b1e01e3f7b7db49192425f7caa4e0d0fe33d0bb99ab90962d0433366e6dbda",
+        "stage12_sha256": "2dbcda7452ecc28e4692ab03473d162e46b1d509cd2af8176958d6a788dfe8f0",
+        "classification": "missing_13f_report_date_family_excluded_with_audit_counters",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/validation/corporate_action_adapter.py",
+        "stage11_sealed_sha256": "288beabc97ee871ca1ac74366a3e1c2bfcb985e80b5f9ccbb5b555366444e9ed",
+        "stage12_sha256": "9fe281a9d2fe49c86c5ab34f7b7b6f3491c1a9dcfc355c8fe2c27ebd001b7322",
+        "classification": "outside_locked_exchange_unresolved_terminal_leg_fail_closed",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/validation/validation_return_adapter.py",
+        "stage11_sealed_sha256": "aae4f208c33e62d2f0a983a0415b70e839f71189e0f24c2425f37e794bf3d9d9",
+        "stage12_sha256": "d5cc2046f607782625d3509a3f8acb3d8d63a78fdbfe8d43f3f60b25b63f1603",
+        "classification": "outside_exchange_quarantine_observed_terminal_only_scale_aware_transport_and_scope_aware_ns_audit",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/validation/validation_universe_auxiliary.py",
+        "stage11_sealed_sha256": "8d07c658efa99e522fdd38a587cf5e1b1a4db6f1fc973e239e9c9442ccc3a173",
+        "stage12_sha256": "fd8908dc59d55ecff201e4a922047809ac28fb775264bf5ed8c609c20929de6c",
+        "classification": "authorized_partial_terminal_exit_logical_schema_transport_compatibility_disk_partitioned_exact_comparison_and_dynamic_development_interval_cutoff",
+        "economic_behavior_changed": false,
+        "authority_or_acceptance_behavior_changed": true
+      },
+      {
+        "path": "src/portfolio_bot/numerical_materiality.py",
+        "stage11_sealed_sha256": null,
+        "stage12_sha256": "37fdf5749008ef2aed149cfe5a6fdd94cd02ae6b903df355834e47564c41eb58",
+        "classification": "new_stage12_shared_policy_module",
+        "economic_behavior_changed": true,
+        "authority_or_acceptance_behavior_changed": true
+      }
+    ]
+  },
+  "numerical_materiality_policy": {
+    "policy_id": "portfolio-bot-strict-five-cent-materiality-v2",
+    "strict_position_limit_dollars": 0.05,
+    "strict_position_comparison": "absolute_value_dollars < 0.05",
+    "exactly_five_cents_is_material": true,
+    "aggregate_limit_dollars_per_strategy_month": 1.0,
+    "aggregate_comparison": "sum_absolute_residue_dollars <= 1.00",
+    "solver_feasibility_absolute_tolerance": 5e-8,
+    "aggregate_limit_fraction_of_100mm_initial_nav": 1e-8,
+    "aggregate_limit_basis_points_of_100mm_initial_nav": 0.0001,
+    "cap_selection_rationale": "A fixed one-dollar cap is independent of realized performance, is only one hundred-millionth of the prespecified 100 million dollar initial NAV, and prevents many individually negligible residues from accumulating without bound.",
+    "eligible_solver_residue": [
+      "non_fixed_wrong_sign_weight_below_strict_position_limit",
+      "non_fixed_required_exit_weight_below_strict_position_limit",
+      "legacy_non_fixed_absolute_weight_at_most_1e-14"
+    ],
+    "zero_capacity_inherited_weight_preserved_exactly": true,
+    "correct_sign_non_required_weight_above_legacy_1e-14_preserved": true,
+    "audit_must_receive_complete_strategy_month_residue_set_once": true,
+    "invalid_numeric_input_fails_closed": true
+  },
+  "validation_only_reference_audit": {
+    "period": "2015-01_through_2019-11",
+    "portfolio_weight_rows": 266510,
+    "affected_residue_rows": 10280,
+    "affected_strategy_months": 174,
+    "aggregate_absolute_dollars_all_strategy_months": 0.2864329055359324,
+    "maximum_single_residue_dollars": 0.02167636854182339,
+    "maximum_aggregate_absolute_dollars_one_strategy_month": 0.14151900429442643,
+    "performance_metric_used_to_select_cap": false,
+    "final_period_data_used": false
+  },
+  "prohibited_relaxations": [
+    "schema",
+    "primary_key",
+    "date_or_calendar_scope",
+    "source_or_artifact_hash",
+    "missing_input",
+    "nan_or_infinity",
+    "nonpositive_nav",
+    "shape",
+    "risk_constraint",
+    "solver_certificate",
+    "objective",
+    "cost_model",
+    "feature_or_label",
+    "final_period_access"
+  ],
+  "stage13_rule": {
+    "use_only_stage12_frozen_source_identity": true,
+    "treat_stage12_source_as_stage11_identity": false,
+    "post_unblind_policy_change_permitted": false
+  }
+}

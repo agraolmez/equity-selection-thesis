@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-zero-row-merge-provenance-v1",
+  "status": "STAGE12_ZERO_ROW_MERGE_PROVENANCE_AMENDMENT_AUTHORIZED",
+  "classification": "non_economic_deterministic_fresh_materialization_provenance_correction",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_ZERO_ROW_MERGE_PROVENANCE_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "aa669c218dac6ab82df278f6a1013261b2f5d3f32335ac295f7cca225af40c4f",
+    "status": "STAGE12_ZERO_ROW_MERGE_PROVENANCE_AMENDMENT_AUTHORIZED",
+    "authorization_id": "stage12-zero-row-merge-provenance-amendment-authorization-20260726-v1"
+  },
+  "blocker_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_13_ZERO_ROW_COPY_GUARD_BLOCKER.json",
+    "sha256": "7fc5fecfefd4c291bc6196e16d7fd2f14f0763cf0cefcc1475ef869c44465bd7",
+    "status": "BLOCKED_PENDING_NARROW_TECHNICAL_AMENDMENT_AUTHORIZATION"
+  },
+  "historical_bindings": {
+    "prior_policy_v3_path": "configs/phase_06_final_test/stage_12_freeze_policy_v3.json",
+    "prior_policy_v3_sha256": "e023704ac6eeb99c1476b22ce1b30cf7da655317ed9c5ff52b15f0fe8c371130",
+    "prior_file_inventory_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-5fa8538a56b4ae01932f0705/file_inventory.json",
+    "prior_file_inventory_sha256": "9e4f0f8d9662869ba4715b4d0474a1950ab7823ca4d48d057efd0f57f1874871",
+    "prior_stage12_manifest_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-5fa8538a56b4ae01932f0705/pre_final_manifest.json",
+    "prior_stage12_manifest_sha256": "b7c9bf2fe5ae670dec12a3a110e5a8b5e201a2ebafbed33b33c954b8c85489db",
+    "prior_stage12_success_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-5fa8538a56b4ae01932f0705/_SUCCESS.json",
+    "prior_stage12_success_sha256": "e81fa2ae6e4088676ec90676ff0f2f08969ebb86bb5f77ddbfb504932efa5630",
+    "prior_stage12_verification_report_path": "artifacts/phase_06_final_test/stage_12_verifications/stage12-verify-3eb98419d4491f711a4596b6/verification_report.json",
+    "prior_stage12_verification_report_sha256": "145118e189218ebfa32a3752b1398463f7add231b867102dd62698f9e1e8b85a",
+    "prior_stage12_verification_success_path": "artifacts/phase_06_final_test/stage_12_verifications/stage12-verify-3eb98419d4491f711a4596b6/_SUCCESS.json",
+    "prior_stage12_verification_success_sha256": "f281512c93b05336c26ac07d840b82c880240e665ec9c9a1502fc6e1f18a404c",
+    "prior_stage13_approval_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_CURRENT_STAGE12_FREEZE_5FA8538A.json",
+    "prior_stage13_approval_sha256": "b366335728dda2559b07acbcc4bb7ceb52bdcff64bb6d9993a934425cd1dec4e",
+    "prior_stage13_approval_payload_sha256": "16b733a76dfa30b1235e2a381c101e9aad55681e7d424da2d5e16f3cdd1fc089",
+    "failed_stage13_launch_path": "artifacts/phase_06_final_test/STAGE_13_LAUNCH_CURRENT_STAGE12_5FA8538A.json",
+    "failed_stage13_launch_sha256": "2699fb26ad1b33f3733ff9009630b25e7941bc84587df0316ea9ebe9d1f6cdd0",
+    "prior_stage12_freeze_id": "stage12-freeze-5fa8538a56b4ae01932f0705",
+    "prior_stage12_primary_pointer_sha256": "4c8bbec0ffc8c35319f661dacde9ddd292628a6c3a62598c6b863980801eb0c2",
+    "prior_stage12_verification_id": "stage12-verify-3eb98419d4491f711a4596b6",
+    "prior_stage12_verified_pointer_sha256": "5cda903338b0877222991084891afc79bfe277069e81408f1123dc85b93e05b5",
+    "prior_stage12_binding_sha256": "c1204044a2227ed23fcba9532651615850a60bd6a34993592fd432200a2d3c68",
+    "failed_stage13_context_sha256": "404b4c176a444adc44a8ebe279eee2e6d030df0a965eb73fc6f4f69c17dd8696",
+    "failed_stage13_final_calendar_receipt_count": 72,
+    "failed_stage13_economic_or_outcome_month_checkpoint_count": 0
+  },
+  "frozen_scientific_scope": {
+    "registered_feature_count": 163,
+    "inactive_segment_feature_count": 4,
+    "inactive_segment_features": [
+      "business_segment_count",
+      "geographic_segment_count",
+      "business_segment_revenue_hhi",
+      "business_segment_revenue_hhi_change_1y"
+    ],
+    "feature_registry_unchanged": true,
+    "inactive_segment_support_unchanged": true,
+    "rows_values_dates_types_keys_linkage_formulas_models_and_economics_unchanged": true
+  },
+  "provenance_contract": {
+    "scope": "only_zero_plus_zero_auxiliary_merges",
+    "observed_collision_table": "compustat_segment_observation.parquet",
+    "development_rows_required": 0,
+    "extension_rows_required": 0,
+    "result_rows_required": 0,
+    "result_row_groups_required": 0,
+    "merge_operator": "UNION ALL",
+    "physical_provenance_metadata_key": "portfolio_bot.zero_row_auxiliary_merge_provenance",
+    "independent_output_inode_required": true,
+    "output_sha256_must_differ_from_each_parent": true,
+    "exact_field_schema_and_zero_rows_must_be_preserved": true,
+    "copy_hardlink_symlink_inode_alias_and_nonordinary_rejection_retained": true,
+    "nonzero_or_one_sided_merge_behavior_changed": false
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 2,
+    "members": [
+      {
+        "path": "src/portfolio_bot/validation/validation_feature_input_adapter.py",
+        "pre_amendment_sha256": "e2b3a85d32c87f0de42b67f75972a6a6203073fb603769cd7e11cbcfb69b7ec0",
+        "post_amendment_sha256": "a2d8ac04a84f957c61fca922b353116aa7c48512d188a2fb3f0547be5f1f6d45"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/final_source_replay.py",
+        "pre_amendment_sha256": "4cd88a6fbb702207004f66006364efc5cf0a7d66633ebb6361bbb6f2cc2c53de",
+        "post_amendment_sha256": "ebecc9d341331cb7e6dc0b15cd45bc522ed7dda5796608542b53412c8ccc28c6"
+      }
+    ]
+  },
+  "non_economic_boundary": {
+    "failed_context_or_sealed_parent_mutated": false,
+    "parent_payload_files_opened_by_stage12_amendment_work": 0,
+    "outcome_or_economic_payload_files_opened_by_stage12_amendment_work": 0,
+    "final_period_rows_read_by_stage12_amendment_work": 0,
+    "economic_or_outcome_months_executed_by_stage12_amendment_work": 0,
+    "final_forecasts_weights_trades_or_pnl_created_by_stage12_amendment_work": 0,
+    "scientific_or_economic_result_informed_choice": false
+  },
+  "replacement_authority": {
+    "replacement_stage12_freeze_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_stage13_approval_valid_for_replacement_identity": false,
+    "renewed_explicit_stage13_approval_bound_to_exact_replacement_required": true,
+    "renewed_stage13_approval_granted_by_this_amendment": false,
+    "stage13_parent_context_open_authorized_now": false,
+    "stage13_execution_authorized_now": false
+  },
+  "required_tests": {
+    "test_files": [
+      "tests/unit/test_stage11_validation_empirical_feature_stream.py",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py"
+    ],
+    "must_cover": [
+      "generic_zero_plus_zero_fresh_materialization_provenance",
+      "exact_physical_provenance_authentication",
+      "stale_or_tampered_provenance_rejection",
+      "copy_hardlink_symlink_inode_alias_and_nonordinary_rejection",
+      "nonzero_and_one_sided_merge_scope_exclusion",
+      "frozen_163_feature_and_four_inactive_feature_preservation"
+    ]
+  }
+}

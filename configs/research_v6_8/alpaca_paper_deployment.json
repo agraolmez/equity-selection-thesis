@@ -1,0 +1,88 @@
+{
+  "schema": "research_v6_8_alpaca_paper_deployment_v1",
+  "strategy_id": "research_v6_8_final_paper",
+  "authorized_by_user_on": "2026-08-16",
+  "purpose": "Prospective Alpaca paper evaluation of the frozen 1.80x monthly policy, selected V6.7 daily warnings, and V6.8 survivor reoptimization.",
+  "scientific_status": "USER_SELECTED_FOR_PROSPECTIVE_PAPER_EVALUATION_DESPITE_FAILED_HISTORICAL_PROMOTION_GATE",
+  "authorization": {
+    "paper_orders_authorized": true,
+    "live_orders_authorized": false,
+    "submission_acknowledgement": "SUBMIT_V6_8_PAPER_ORDERS"
+  },
+  "frozen_model": {
+    "config_path": "configs/research_v6_8/daily_reoptimization.json",
+    "config_sha256": "d55a1db689f9eeb15c77f0ed9afae733f95177d0ad9d5049ad9e9f87a07bba82",
+    "result_path": "artifacts/research_v6_8/daily_reoptimization/d55a1db689f9-2ef39b0755c5-2e422abd519f/result.json",
+    "result_sha256": "a6592d65a30dcaae27f1465e3c56baa7bd8899a7d53f57b69bea0d67f0200454",
+    "v6_7_result_sha256": "c27ee110190c86b0c79aa84630561407ba3871fae1a1df46994a30c9534463bb"
+  },
+  "broker": {
+    "base_url": "https://paper-api.alpaca.markets",
+    "data_url": "https://data.alpaca.markets",
+    "timeout_seconds": 20,
+    "paper_only": true
+  },
+  "credentials": {
+    "key_environment": "APCA_API_KEY_ID",
+    "secret_environment": "APCA_API_SECRET_KEY",
+    "must_never_be_written_to_artifacts": true
+  },
+  "production_data_gate": {
+    "source_contract_path": "/Users/agraemirolmez/Documents/Thesis/configs/research_v6_8/production_feature_sources.json",
+    "source_contract_sha256": "f8d45b4b81b56e4e3025385d745b362c666a348e5e6120d30bba6ee1e25000b9",
+    "block_account_calls_and_order_planning_on_failure": true
+  },
+  "signal_source_gate": {
+    "prospective_portfolio_config_path": "/Users/agraemirolmez/Documents/Thesis/configs/research_v6_8/prospective_portfolio.json",
+    "prospective_portfolio_config_sha256": "8e64dfca4135c2e73cac4dc419ef7b1490f6c872ed2aa1c831a1a3916f3a6ac3",
+    "producer_receipt_name": "receipt.json",
+    "required_producer_status": "PASS_EXECUTABLE",
+    "require_execution_authorized": true,
+    "stale_historical_weights_must_never_be_submitted": true
+  },
+  "signal_contract": {
+    "schema": "research_v6_8_paper_signal_v1",
+    "maximum_signal_age_hours": 96,
+    "allowed_policy_actions": ["monthly_rebalance", "daily_warning_reoptimization", "safety_deleveraging"],
+    "input_manifest_sha256_required": true,
+    "source_max_signal_date_must_equal_cutoff_date": true,
+    "full_target_book_required": true,
+    "execution_session_must_follow_signal_cutoff": true,
+    "submission_only_on_execution_session": true
+  },
+  "portfolio_limits": {
+    "maximum_starting_gross": 1.8,
+    "operational_safety_gross": 1.95,
+    "maximum_absolute_position_weight": 0.030751,
+    "minimum_net": -0.2,
+    "maximum_net": 0.6
+  },
+  "account_limits": {
+    "minimum_margin_equity": 2000.0
+  },
+  "asset_checks": {
+    "require_active": true,
+    "require_tradable": true,
+    "require_marginable_for_exposure_increase": true,
+    "require_shortable_for_new_or_increased_short": true,
+    "accepted_borrow_statuses": ["easy_to_borrow"]
+  },
+  "orders": {
+    "type": "market",
+    "time_in_force": "cls",
+    "extended_hours": false,
+    "whole_shares_only": true,
+    "minimum_order_notional_dollars": 5.0,
+    "latest_submission_time_new_york": "15:45",
+    "reductions_sorted_before_increases": true,
+    "idempotent_client_order_ids": true,
+    "dry_run_is_default": true,
+    "refuse_when_any_open_order_exists": true
+  },
+  "official_sources": {
+    "authentication": "https://docs.alpaca.markets/us/v1.1/docs/authentication-1",
+    "paper_trading": "https://docs.alpaca.markets/us/docs/paper-trading",
+    "orders": "https://docs.alpaca.markets/us/reference/postorder",
+    "margin_and_shorting": "https://docs.alpaca.markets/us/docs/margin-and-short-selling"
+  }
+}

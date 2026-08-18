@@ -1,0 +1,66 @@
+{
+  "checks": {
+    "historical_test_daily_nav_continuity": true,
+    "historical_test_final_gross_not_above_pre_action": true,
+    "historical_test_finite_accounting": true,
+    "historical_test_headline_metrics_tie": true,
+    "historical_test_monthly_nav_tie": true,
+    "historical_test_refill_not_above_removed": true,
+    "historical_test_survivor_adds_are_same_side": true,
+    "historical_test_warned_names_not_refilled": true,
+    "historical_test_warning_count_ties": true,
+    "validation_daily_nav_continuity": true,
+    "validation_final_gross_not_above_pre_action": true,
+    "validation_finite_accounting": true,
+    "validation_headline_metrics_tie": true,
+    "validation_monthly_nav_tie": true,
+    "validation_refill_not_above_removed": true,
+    "validation_survivor_adds_are_same_side": true,
+    "validation_warned_names_not_refilled": true,
+    "validation_warning_count_ties": true
+  },
+  "details": {
+    "historical_test": {
+      "daily_continuity_error_dollars": 0.0,
+      "events": 157,
+      "metric_delta": {
+        "annualized_net_excess_return": 0.0,
+        "annualized_realized_volatility": 0.0,
+        "maximum_drawdown": 0.0,
+        "net_sharpe": 0.0,
+        "total_return_cagr": 0.0
+      },
+      "monthly_nav_error": 0.0,
+      "refilled_gross": 1.133924613288328,
+      "removed_gross": 2.717067838317993,
+      "solver_status_counts": {
+        "NO_REFILL_CAPACITY": 33,
+        "optimal": 124
+      },
+      "trades": 731,
+      "warnings": 370
+    },
+    "validation": {
+      "daily_continuity_error_dollars": 0.0,
+      "events": 141,
+      "metric_delta": {
+        "annualized_net_excess_return": 0.0,
+        "annualized_realized_volatility": 0.0,
+        "maximum_drawdown": 0.0,
+        "net_sharpe": 0.0,
+        "total_return_cagr": 0.0
+      },
+      "monthly_nav_error": 0.0,
+      "refilled_gross": 3.0421570535256555,
+      "removed_gross": 5.276890742886076,
+      "solver_status_counts": {
+        "NO_REFILL_CAPACITY": 15,
+        "optimal": 126
+      },
+      "trades": 1273,
+      "warnings": 450
+    }
+  },
+  "schema": "research_v6_8_independent_audit_v1",
+  "status": "PASS"
+}

@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-accounting-missing-execution-cost-transport-v1",
+  "status": "STAGE12_ACCOUNTING_MISSING_EXECUTION_COST_TRANSPORT_AMENDMENT_AUTHORIZED",
+  "classification": "non_economic_rule_restoring_stage13_transport_correction_at_an_economic_safety_boundary",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_ACCOUNTING_MISSING_EXECUTION_COST_TRANSPORT_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "593c0da4c8a6997a06626b97fc51c3111ed470863394731bf4dac560c89bd80c",
+    "status": "STAGE12_ACCOUNTING_MISSING_EXECUTION_COST_TRANSPORT_AMENDMENT_AUTHORIZED"
+  },
+  "materiality_policy": {
+    "path": "artifacts/phase_06_final_test/ERROR_MATERIALITY_POLICY_20260727.json",
+    "sha256": "622d1335c540dfa84a4a396bade529e2e3632d1090a41ce66e1990dc582df03d",
+    "status": "THESIS_ERROR_MATERIALITY_POLICY_ACTIVE",
+    "source_message_text_sha256": "0b174c972f81469f73df4630786ba7d9f5cf024a170306e797fbc8b25883caf6",
+    "direct_adv_bypass_permitted": false,
+    "smallest_rule_restoring_correction_required": true
+  },
+  "prior_v7_authority": {
+    "policy_path": "configs/phase_06_final_test/stage_12_freeze_policy_v7.json",
+    "policy_sha256": "c174b7eae80c672355172fd95ac3de1502b815160f0b24ecfcce7e2ede5c1e0f",
+    "freeze_id": "stage12-freeze-58abf3e871270249636fd180",
+    "manifest_sha256": "18acebcbc1fe5fa12d3013338cf8a85a44533b2a64aff795c00d5e9db3506d09",
+    "file_inventory_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-58abf3e871270249636fd180/file_inventory.json",
+    "file_inventory_sha256": "9721c5f0370b6397cc443499663a54a014ac755d03631e71067a660c888db3d7",
+    "file_count": 604,
+    "project_tree_sha256": "f94c50b9d94f7ed88fd09081a95f75c04006b1d89c79fdd1dcdb2b81886e640c",
+    "primary_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_58ABF3E8.json",
+    "primary_pointer_sha256": "6f4680f06b3ba773e4ba814122778675e255e60a1d9d22805012112214c2749c",
+    "primary_success_sha256": "e06ea5b57ab012eb974537ad8b71c86e22ff7b4ef66c2461fdac7abe155949d5",
+    "verification_id": "stage12-verify-ffa730249f359f8462f9612e",
+    "verification_report_sha256": "76b6f7106bf90eb08b0b7aca86599067234197982654c002b1bf86c0ca93dac5",
+    "verified_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_58ABF3E8.json",
+    "verified_pointer_sha256": "761a7a114ed1aea2feb2bc3b9a0dbec12e003651d2b6c352f8194ac47b2204fc",
+    "verification_success_sha256": "06687dc7502a7964fc14b6b886b458fc549e4e65dfe572098e42c28467314647",
+    "stage12_binding_sha256": "f94ddb98873c8626fb20f0d8921e6624262ae4f4619710f8fe54567c3b390ff7",
+    "stage13_approval_archive_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_58ABF3E8.json",
+    "stage13_approval_sha256": "b53bb143fa03ffe93634b07211ad40ca92ff0436b7f7f42abd4c6d04dde16c51",
+    "stage13_approval_payload_sha256": "0f4aaf8770226b3559e8af9fe946a2f0a7fc36a3f0e79188c70d3f3471fd0670"
+  },
+  "incident_authorities": {
+    "blocker": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_ADV20_NULLABILITY_BLOCKER_20260727.json",
+      "sha256": "9468526f52dae7af4b60589a1efda362c562f2e0a4e739c0fb2a22997f6dc5e3",
+      "status": "STAGE13_FAILED_CLOSED_BEFORE_FIRST_OUTCOME_MONTH_ON_ADV20_NULLABILITY_CONTRADICTION"
+    },
+    "preflight": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_ACCOUNTING_MISSING_EXECUTION_COST_PREFLIGHT_20260727.json",
+      "sha256": "feb761454b5ca2ff2cd3b58faad4a902b67e3af57afcc25eed78eef081022deb",
+      "status": "STAGE13_ACCOUNTING_MISSING_EXECUTION_COST_PREFLIGHT_COMPLETE"
+    }
+  },
+  "diagnosis": {
+    "accounting_security_month_rows": 232034,
+    "missing_entry_close_rows": 27297,
+    "missing_full_spread_rows": 0,
+    "missing_adv_rows": 25,
+    "missing_adv_distinct_permnos": 23,
+    "missing_impact_volatility_rows": 0,
+    "missing_source_borrow_rows": 118596,
+    "short_eligible_missing_source_borrow_rows": 0,
+    "all_missing_adv_rows_authenticated_nontradable": true,
+    "stage8_or_stage11_repair_required": false,
+    "model_or_portfolio_rule_change_required": false
+  },
+  "transport_contract": {
+    "input_registry_path": "configs/phase_06_final_test/stage_13_input_registry_v1.json",
+    "input_registry_sha256": "bfef5266ec13af8377d3950fb70534b1ade27b599797cd72bbf315578b10994c",
+    "input_registry_unchanged": true,
+    "nan_transport_fields": [
+      "entry_close_usd_per_share",
+      "full_spread_20d",
+      "adv20_usd",
+      "impact_volatility_daily"
+    ],
+    "missing_numeric_state_encoding": "ieee_nan_in_existing_non_null_float64_transport",
+    "infinity_permitted": false,
+    "positive_adv_imputation_permitted": false,
+    "row_drop_permitted": false,
+    "missing_execution_or_cost_trade_capacity": 0,
+    "exact_unchanged_holding_with_missing_input_permitted": true,
+    "nonzero_trade_with_missing_input_permitted": false,
+    "entry_close_status_must_match_numeric_state": true,
+    "repeated_security_numeric_equality_nan_aware": true,
+    "prewrite_all_nonnullable_columns_audited": true,
+    "missing_accounting_borrow_default_annual": 0.01,
+    "non_null_source_borrow_required_annual": 0.01,
+    "borrow_mapping_reason": "borrow costs apply only to negative holdings; a universal frozen one-percent accounting rate leaves long costs at zero and preserves inherited-short charges"
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 2,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/final_source_replay.py",
+        "pre_amendment_sha256": "48f84559528749d8090858ad21de59f8a3e31a92aa6250a62ebfcb12a90b7253",
+        "post_amendment_sha256": "f88c9aa6532659c3d4b0cbddaa912a29d2d3d4594b01a5b184fa5edcfc99c664"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/input_materialization.py",
+        "pre_amendment_sha256": "1e2f8d7ce33782daccb5d7697f64c52e081279dffb9610bc93f37485e5e47e18",
+        "post_amendment_sha256": "23fcb0e5a0752ae376e6bc9584773051fe3e53d1992f430094b5aa1ab62dc925"
+      }
+    ]
+  },
+  "focused_test_evidence": {
+    "final_source_builder_post_sha256": "7acc6a7ac4b5ab2af1919ba70279d9355649fc0998120e793099ddecfcbd6e39",
+    "final_input_materialization_post_sha256": "bb6b094d48fd2f54127e18183147be37d67f965ab1830ce4c2d7c7a4d8239adc",
+    "agent_relevant_tests_passed": 89,
+    "independent_combined_runtime_tests_passed": 53,
+    "independent_stage11_missing_input_regressions_passed": 8,
+    "must_cover": [
+      "all_missing_numeric_transport_fields_round_trip_through_parquet",
+      "nan_aware_checkpoint_reuse",
+      "entry_close_status_numeric_consistency",
+      "missing_adv_exact_hold_succeeds",
+      "missing_adv_nonzero_trade_fails",
+      "source_null_borrow_maps_to_frozen_one_percent",
+      "nonfrozen_nonnull_borrow_rejected",
+      "aggregated_nonnullable_prewrite_audit"
+    ]
+  },
+  "access_disclosure": {
+    "prior_stage13_read_only_diagnostic_parquet_files_opened": 290,
+    "prior_stage13_return_payload_files_opened": 0,
+    "prior_stage13_model_weight_trade_pnl_or_result_files_opened": 0,
+    "stage12_v8_parent_checkpoint_payload_files_opened_required": 0,
+    "stage12_v8_outcome_or_economic_payload_files_opened_required": 0,
+    "stage12_v8_final_period_rows_read_required": 0,
+    "diagnostic_disclosure_must_be_bound_without_reopening_payloads": true
+  },
+  "checkpoint_reuse": {
+    "stage13_decision_checkpoint_rebind_v2_unchanged": true,
+    "authenticated_checkpoint_pairs_rebound": 431,
+    "only_rebuilt_decision_checkpoint": "final_market_inputs/2025-12",
+    "decision_barrier_recommitted_after_authentication": true,
+    "v7_context_and_432_receipts_preserved_immutably": true,
+    "direct_432_rebind_protocol_required": false,
+    "outcome_or_economic_checkpoint_reuse_available": false
+  },
+  "non_economic_boundary": {
+    "sample_rows_dates_features_models_candidates_weights_trades_cost_formulas_returns_pnl_or_inference_changed": false,
+    "rows_dropped": 0,
+    "positive_adv_imputations": 0,
+    "stage12_analysis_or_model_training_repeated": false,
+    "protected_payloads_opened_by_stage12_v8": 0,
+    "final_period_rows_read_by_stage12_v8": 0
+  },
+  "replacement_authority": {
+    "replacement_stage12_v8_identity_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_v7_stage13_approval_valid_for_v8": false,
+    "fresh_exact_binding_stage13_receipt_required": true,
+    "standing_approval_permits_receipt_after_verification": true,
+    "additional_user_prompt_after_v8_verification_required": false,
+    "stage13_execution_authorized_now": false
+  }
+}

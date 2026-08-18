@@ -1,0 +1,17 @@
+target,target_order,family,best_feature_view,mean_rank_ic,rank_ic_hac_t,rank_ic_hac_95_lower,positive_ic_fraction
+CAPM alpha,1,XGBoost,CAM-free,0.007436,0.340780,-0.035332,0.50
+CAPM alpha,1,MLP,Correlation-reduced,0.053392,3.114518,0.019792,0.75
+CAPM alpha,1,Elastic Net,Full,0.023733,1.202384,-0.014954,0.65
+CAPM alpha,1,CAM direct,CAM-only,0.041385,2.654538,0.010828,0.70
+FF5+momentum alpha,2,XGBoost,Correlation-reduced,-0.011542,-1.037224,-0.033353,0.40
+FF5+momentum alpha,2,MLP,CAM-free,0.036989,3.754651,0.017680,0.75
+FF5+momentum alpha,2,Elastic Net,Full,-0.023765,-1.601442,-0.052851,0.35
+FF5+momentum alpha,2,CAM direct,CAM-only,0.032905,3.960693,0.016622,0.70
+Long-net,3,XGBoost,Correlation-reduced,0.050543,2.740517,0.014395,0.70
+Long-net,3,MLP,CAM-free,0.045409,2.537147,0.010330,0.65
+Long-net,3,Elastic Net,Full,0.045101,1.920645,-0.000924,0.65
+Long-net,3,CAM direct,CAM-only,0.054713,3.668251,0.025479,0.70
+Short-net,4,XGBoost,Full,0.035467,1.243792,-0.020423,0.45
+Short-net,4,MLP,Correlation-reduced,0.043323,1.481712,-0.013984,0.50
+Short-net,4,Elastic Net,Full,0.020228,1.279726,-0.010753,0.60
+Short-net,4,CAM direct,CAM-only,-0.048815,-4.006687,-0.072694,0.30

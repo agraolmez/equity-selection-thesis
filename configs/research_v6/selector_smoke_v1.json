@@ -1,0 +1,43 @@
+{
+  "schema": "research_v6_selector_smoke_v1",
+  "status": "EXPLORATORY_SELECTOR_ONLY",
+  "capital": {
+    "nav_usd": 100000000,
+    "long_shadow_gross_usd": 100000000,
+    "short_shadow_gross_usd": 100000000
+  },
+  "features": {
+    "predecessor_registry_count": 163,
+    "structurally_empty_excluded": [
+      "business_segment_count",
+      "geographic_segment_count",
+      "business_segment_revenue_hhi",
+      "business_segment_revenue_hhi_change_1y"
+    ],
+    "usable_predecessor_count": 159,
+    "alpaca_news": "PENDING_COMPLETE_RAW_BACKFILL"
+  },
+  "targets": [
+    "capm_alpha_rank",
+    "ff5_plus_momentum_alpha_rank",
+    "long_net_opportunity_rank",
+    "short_net_opportunity_rank"
+  ],
+  "models": [
+    "xgboost_pairwise",
+    "mlp_ranknet_pairwise",
+    "causal_dynamic_ensemble",
+    "elastic_net_benchmark"
+  ],
+  "chronology": {
+    "initial_fit": "2015-01/2019-11",
+    "missing_predictor_month": "2019-12",
+    "validation": "2020-01/2023-12",
+    "historical_test": "2024-01/2025-08"
+  },
+  "scope": {
+    "portfolio_constructed": false,
+    "optimizer_run": false,
+    "thesis_grade_claim": false
+  }
+}

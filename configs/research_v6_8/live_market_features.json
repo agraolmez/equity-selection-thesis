@@ -1,0 +1,72 @@
+{
+  "schema": "research_v6_8_live_market_features_v1",
+  "purpose": "Materialize only provider-certified market formulas for one prospective V6.8 signal.",
+  "history_calendar_days": 800,
+  "batch_size": 75,
+  "eligibility": {
+    "minimum_price_usd": 5.0,
+    "minimum_market_cap_usd": 300000000.0,
+    "minimum_median_dollar_volume_60d": 5000000.0,
+    "minimum_positive_volume_share_60d": 0.9,
+    "minimum_usable_daily_returns": 126
+  },
+  "feature_disposition": {
+    "passing": [
+      "return_total_5d",
+      "return_total_63d",
+      "return_total_126d",
+      "return_total_252d",
+      "momentum_6_1",
+      "momentum_12_1",
+      "reversal_21d",
+      "price_to_ma_21d",
+      "price_to_ma_63d",
+      "log_price_trend_slope_63d",
+      "log_price_trend_r2_63d",
+      "max_drawdown_252d",
+      "realized_volatility_21d",
+      "realized_volatility_63d",
+      "realized_volatility_126d",
+      "realized_volatility_252d",
+      "downside_semivolatility_63d",
+      "downside_semivolatility_252d",
+      "return_skewness_252d",
+      "return_excess_kurtosis_252d",
+      "maximum_daily_return_21d",
+      "minimum_daily_return_21d",
+      "maximum_daily_return_63d",
+      "minimum_daily_return_63d",
+      "volatility_63d_vs_trailing_median_252d",
+      "log_absolute_price",
+      "median_dollar_volume_20d",
+      "median_dollar_volume_60d",
+      "amihud_illiquidity_20d",
+      "amihud_illiquidity_60d",
+      "median_estimated_full_spread_20d",
+      "zero_return_share_60d",
+      "zero_volume_share_60d",
+      "momentum_acceleration_6m"
+    ],
+    "provider_mismatch_missing": [
+      "momentum_24_12",
+      "price_to_ma_126d",
+      "price_to_ma_252d",
+      "distance_to_high_252d",
+      "log_price_trend_slope_126d",
+      "log_price_trend_r2_126d",
+      "log_price_trend_slope_252d",
+      "log_price_trend_r2_252d",
+      "log_market_cap",
+      "share_turnover_20d",
+      "share_turnover_60d",
+      "dollar_volume_shock_20d_vs_prior_252d",
+      "share_turnover_volatility_63d"
+    ],
+    "cross_sectional_pending_missing": [
+      "months_since_first_tradable",
+      "market_realized_volatility_21d",
+      "market_realized_volatility_63d",
+      "industry_momentum_12_1_vw"
+    ]
+  }
+}

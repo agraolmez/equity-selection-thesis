@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stage_11_source_materialization_approval_v1.schema.json",
+  "title": "Stage 11 Gate-A source-materialization approval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "contract_id", "stage", "gate", "scope", "approved",
+    "approved_by", "approved_at_utc", "approval_text", "approval_text_sha256",
+    "source_materialization_plan_sha256", "stage10_verified_pointer_sha256",
+    "methodology_source_sha256", "authorizations", "payload_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "contract_id": {"const": "phase05-stage11-source-materialization-approval-v1"},
+    "stage": {"const": 11},
+    "gate": {"const": "A"},
+    "scope": {"const": "stage11_validation_source_materialization_gate_a"},
+    "approved": {"type": "boolean"},
+    "approved_by": {"type": ["string", "null"]},
+    "approved_at_utc": {"type": ["string", "null"]},
+    "approval_text": {"type": ["string", "null"]},
+    "approval_text_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "source_materialization_plan_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "stage10_verified_pointer_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "methodology_source_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+    "authorizations": {"type": "object"},
+    "payload_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+  }
+}

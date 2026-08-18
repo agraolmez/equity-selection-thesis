@@ -1,0 +1,364 @@
+schema_version = 1
+policy_id = "phase04-allocation-policy-v1"
+contract_id = "phase04-allocation-v1"
+stage = 10
+status = "frozen_definition_only_before_allocator_implementation"
+
+[methodology]
+source = "outputs/methodology_v1_source.md"
+source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+freeze_receipt = "outputs/methodology_v1_freeze.json"
+freeze_receipt_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+interpretation = "This policy freezes Stage 10 physical boundaries only and cannot change Methodology v1."
+
+[authority]
+verified_stage09_pointer = "artifacts/phase_04_models/LATEST_SELECTOR_VERIFIED.json"
+verified_stage09_pointer_sha256 = "e4ffe4fdd999d15f2a1afa796c76155abb71708a26efbde135a70f6ca77ca2f5"
+required_stage09_build_id = "phase04-selector-results-09a59d61ed58e77d80448a97"
+required_stage09_verification_id = "verify-257784339805ef6a"
+required_stage09_status = "VERIFIED_PASSED"
+required_stage09_authorization = "stage_10_allocation_architectures_authorized"
+required_stage09_selector_authorization = "selector_results_authorized_for_stage_10"
+required_stage09_primary_manifest = "artifacts/phase_04_models/selector_builds/phase04-selector-results-09a59d61ed58e77d80448a97/manifest.json"
+required_stage09_primary_manifest_sha256 = "e25c06b473975aca6ff5299288aef0abec383f44c9d3e8b005d3464517be4bfa"
+verified_stage08_pointer = "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json"
+verified_stage08_pointer_sha256 = "491bf16f5ee5bf2b8ba197cd251a3e41cbbdacbed7442877eaa3493221831e7a"
+required_stage08_build_id = "phase04-risk-cost-8e2fe8061e776ff3aa527d09"
+required_stage08_verification_id = "verify-b109581df93e2c12"
+required_stage08_primary_manifest = "artifacts/phase_04_models/risk_cost_builds/phase04-risk-cost-8e2fe8061e776ff3aa527d09/manifest.json"
+required_stage08_primary_manifest_sha256 = "2d89919698bed5c5009b570295bfeaad9c78ce5ae0b85b9e019090ec2da655c5"
+stage11_or_later_authorized_by_input = false
+validation_or_final_access_authorized_by_input = false
+portfolios_pnl_or_backtests_authorized_by_input = false
+hash_bypass_permitted = false
+symlinked_authority_path_permitted = false
+
+[physical_rules]
+path = "configs/phase_04_models/allocation_build_rules_v1.json"
+sha256 = "a5113e0bdd2d62429312c81d78d5f06e55573bddb775881eb90826c24dcfd851"
+required_rules_id = "phase04-allocation-build-rules-v1"
+
+[scope]
+purpose = "implement_and_verify_three_frozen_allocation_architectures"
+development_information_period = "2000-2014"
+first_development_signal_date = "2000-01-31"
+last_development_signal_date = "2014-10-31"
+required_development_signal_dates = 178
+upstream_metadata_authentication_permitted = true
+synthetic_fixture_execution_permitted = true
+real_security_month_payload_access_permitted = false
+real_selector_forecast_payload_access_permitted = false
+real_risk_cost_payload_access_permitted = false
+real_portfolio_weights_or_trades_permitted = false
+real_pnl_or_performance_permitted = false
+sharpe_or_portfolio_performance_reporting_permitted = false
+selector_refit_or_selection_permitted = false
+ensemble_weight_selection_permitted = false
+decision_focused_real_data_training_permitted = false
+validation_2015_2019_payload_access_permitted = false
+final_2020_2025_payload_access_permitted = false
+stage11_or_later_execution_permitted = false
+
+[inputs]
+only_closed_allowlist_permitted = true
+upstream_payload_open_permitted = false
+unregistered_input_permitted = false
+synthetic_fixtures_must_be_generated_without_real_security_identifiers_or_values = true
+permitted_repository_metadata = [
+  "outputs/methodology_v1_source.md",
+  "outputs/methodology_v1_freeze.json",
+  "artifacts/phase_04_models/LATEST_SELECTOR_VERIFIED.json",
+  "artifacts/phase_04_models/selector_builds/phase04-selector-results-09a59d61ed58e77d80448a97/manifest.json",
+  "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json",
+  "artifacts/phase_04_models/risk_cost_builds/phase04-risk-cost-8e2fe8061e776ff3aa527d09/manifest.json",
+]
+prohibited_payload_roles = [
+  "real_selector_forecasts",
+  "real_risk_cost_rows",
+  "real_features_or_labels",
+  "validation_or_final_data",
+  "real_portfolio_weights",
+  "real_trades",
+  "real_pnl_or_performance",
+]
+
+[units]
+portfolio_weight = "fraction_of_current_nav"
+expected_return = "decimal_monthly"
+covariance = "decimal_monthly"
+cost = "decimal_monthly"
+daily_to_monthly_covariance_multiplier = 21.0
+monthly_periods_per_year = 12.0
+trading_sessions_per_year = 252.0
+
+[architectures]
+ordered_ids = [
+  "hybrid_alpha_risk_cost_convex",
+  "rank_volatility_projected",
+  "decision_focused_neural_projected",
+]
+confirmatory_primary_id = "hybrid_alpha_risk_cost_convex"
+challengers_may_replace_primary = false
+
+[architectures.hybrid]
+id = "hybrid_alpha_risk_cost_convex"
+role = "confirmatory_primary_fixed_before_validation"
+objective = "maximize calibrated_expected_residual_return minus transaction borrow and financing costs"
+risk_aversion_bisection_permitted = false
+cash_permitted = true
+
+[architectures.rank]
+id = "rank_volatility_projected"
+role = "challenger_only"
+long_strength = "positive score distance above q80 divided by forecast volatility"
+short_strength = "positive score distance below q20 divided by forecast volatility"
+normalize_legs_to_equal_absolute_raw_notional = true
+scale_toward_augmented_10_percent_annual_risk_budget = true
+raw_gross_maximum = 2.0
+projection = "common_cap_scaled_minimum_distance_conic_projection"
+
+[architectures.decision_focused]
+id = "decision_focused_neural_projected"
+role = "experimental_challenger_only"
+hidden_layers = [32, 16]
+activation = "relu"
+dropout = 0.10
+optimizer = "adam"
+learning_rate = 0.001
+maximum_epochs = 200
+early_stopping_patience = 20
+early_stopping_latest_completed_months = 24
+seeds = [11, 23, 47, 71, 101]
+architecture_or_penalty_grid_permitted = false
+gross_gate_count = 2
+each_gross_gate_nav_maximum = 1.0
+shared_trunk_outputs_per_security = ["allocation_logit", "long_gate_logit_contribution", "short_gate_logit_contribution"]
+long_gate_pooling = "mean_long_gate_contribution_over_fixed_sign_long_leg_then_sigmoid"
+short_gate_pooling = "mean_short_gate_contribution_over_fixed_sign_short_leg_then_sigmoid"
+gate_pooling_is_permutation_invariant = true
+empty_leg_gate = 0.0
+within_leg_allocation = "softmax_over_fixed_sign_candidates"
+training_loss = "negative_annualized_net_excess_sharpe_with_1e-8_variance_ridge"
+stop_gradient_through_prior_holding = true
+seed_combination = "average_seed_projected_weights_then_project_once_more"
+scheduled_update = "quarterly_weighted_expanding_with_10_year_half_life"
+training_return_accounting = "daily_fixed_share_weight_drift_with_daily_rf_borrow_financing_and_one_time_rebalance_transaction_cost"
+training_projection_infeasibility_rule = "fail_closed_report_challenger_inactive"
+training_zero_capacity_rule = "exact_stopped_pretrade_coordinate_before_cost_and_audit"
+inference_rule = "eval_mode_each_seed_CLARABEL_average_then_final_CLARABEL"
+approximate_unconstrained_fallback_permitted = false
+unsupported_differentiable_layer_rule = "report_challenger_inactive"
+
+[candidate_rules]
+long_boundary_quantile = 0.80
+short_boundary_quantile = 0.20
+minimum_new_names_each_side = 50
+score_tie_break = "permno_ascending"
+candidate_sets_must_be_disjoint = true
+disjoint_assignment_rule = "locked_tail_then_alternating_slots_with_deterministic_augmenting_paths"
+insufficient_either_side_rule = "no_new_risk_reduce_existing_risk_subject_to_trade_limits"
+fixed_candidate_signs = true
+off_tail_or_ineligible_holdings_are_reduction_only = true
+tradable_failed_screen_holding_target = "zero_position_cap_subject_to_turnover_and_adv"
+all_cash_empty_selection_rule = "zero_asset_deterministic_cash_bypass"
+nonfinite_ineligible_reduction_only_score_or_alpha_rule = "neutralize_to_zero_only_for_selected_noneligible_reduction_only_rows"
+mandatory_corporate_action_handoff = "resolve_payoff_positions_and_nav_in_upstream_accounting_before_allocation"
+one_rebalance_sign_reversal_permitted = false
+forced_holding_count_permitted = false
+forced_leg_gross_permitted = false
+
+[common_projection]
+objective = "0.5*sum(((w-raw_w)/position_cap)^2)+1e-8*sum(w^2)"
+strict_convexity_ridge = 1e-8
+long_cap_scale = 0.0100
+short_cap_scale = 0.0075
+training_layer = "CVXPYLayers_diffcp_SCS"
+training_layer_output_requires_independent_feasibility_gate = true
+deterministic_forward_and_inference_solver = "CLARABEL"
+final_executed_weight_must_be_CLARABEL_resolved = true
+
+[risk_budget]
+annualized_augmented_volatility_maximum = 0.10
+annualized_augmented_variance_maximum = 0.01
+formula = "12*(w' Sigma_monthly w + 4*sigma_market_monthly_squared*(beta_market' w)^2)"
+market_beta_soft_multiplier_increment = 4.0
+soft_beta_center = 0.0
+authoritative_inputs = "factor_betas_factor_covariance_monthly_specific_variance_monthly"
+risk_root_rule = "derive_internally_never_accept_caller_supplied_root"
+market_variance_rule = "equals_factor_covariance_mktrf_diagonal"
+rank_forecast_volatility_rule = "sqrt_diagonal_of_ordinary_BFB_transpose_plus_D"
+
+[constraints]
+gross_exposure_maximum = 2.0
+dynamic_net_absolute_nav_maximum = 0.10
+dynamic_net_absolute_gross_fraction_maximum = 0.05
+issuer_long_weight_maximum = 0.0100
+issuer_short_weight_minimum = -0.0075
+market_beta_absolute_maximum = 0.10
+each_smb_hml_rmw_cma_umd_beta_absolute_maximum = 0.10
+sector_net_absolute_maximum = 0.05
+sector_gross_maximum = 0.30
+each_non_us_country_net_absolute_maximum = 0.05
+aggregate_foreign_net_absolute_maximum = 0.10
+one_way_monthly_turnover_maximum = 0.50
+each_trade_adv_fraction_maximum = 0.10
+trade_capacity_input_rule = "may_be_stricter_but_never_above_recomputed_10_percent_adv_over_nav"
+minimum_gross_required = false
+forced_investment_required = false
+fixed_cardinality_required = false
+exact_dollar_neutrality_required = false
+exact_beta_zero_required = false
+forced_positive_net_required = false
+
+[costs]
+commission_and_operational_slippage_rate = 0.0001
+primary_spread_multiplier = 1.0
+primary_impact_coefficient = 0.10
+standard_stress_spread_multiplier = 2.0
+standard_stress_impact_coefficient = 0.20
+severe_impact_only_spread_multiplier = 1.0
+severe_impact_only_coefficient = 0.50
+new_trade_with_missing_spread_positive_adv_or_impact_volatility_permitted = false
+reference_nav_usd = 100000000.0
+nav_sensitivity_usd = [25000000.0, 500000000.0]
+
+[borrow]
+primary_annual_rate = 0.01
+stress_regular_annual_rate = 0.03
+stress_lowest_liquidity_quintile_annual_rate = 0.10
+stress_10_percent_is_total_not_additive = true
+optimizer_monthly_conversion = "annual_rate/12"
+liquidity_rank = "ascending_adv20_then_permno"
+rank_population = "current_short_candidates_union_current_short_holdings"
+rate_mapping_rule = "derive_from_stage10_union_quintile_and_scenario_never_accept_caller_rate"
+historical_locate_recall_claim_permitted = false
+
+[financing]
+primary_annual_spread = 0.005
+stress_annual_spread = 0.015
+charged_on = "max(gross_exposure_minus_one,zero)"
+optimizer_monthly_conversion = "annual_rate/12"
+
+[fallback]
+ordinary_first_attempt = "CLARABEL_primary"
+ordinary_retry = "same_problem_CLARABEL_retry"
+economic_objective_numerical_scale_basis_points = 10000.0
+alternate_forward_solver_permitted = false
+inaccurate_or_user_limit_status_accepted = false
+emergency_entry_requires_exact_infeasibility_certificate = true
+always_hard = ["fixed_signs", "reduction_only", "turnover", "10_percent_adv"]
+slack_only_for_inherited_violations = ["gross", "dynamic_net", "position_cap", "augmented_risk", "factor_beta", "sector", "country"]
+required_exit_slack_convention = "zero_target_position_cap_subtype_normalized_by_applicable_position_cap"
+new_or_worsened_normalized_violation_permitted = false
+challenger_emergency_final_objective = "net_alpha_minus_transaction_borrow_financing_cost"
+ordinary_numerical_failure_without_exact_infeasibility = "fail_closed_without_slack"
+mandatory_corporate_action_allocator_input_rule = "reject_pending_action_after_upstream_handoff"
+zero_asset_solver_rule = "deterministic_all_cash_bypass"
+lexicographic_steps = [
+  "minimize_maximum_normalized_violation",
+  "hold_first_optimum_and_minimize_sum_normalized_violations",
+  "hold_first_two_optima_and_maximize_net_alpha_minus_cost",
+]
+
+[runtime]
+python_minimum = "3.11"
+authoritative_device = "cpu"
+deterministic_threads = 1
+forward_solver = "CLARABEL"
+forward_solver_substitution_permitted = false
+differentiable_layer = "CVXPYLayers"
+differentiation_backend = "diffcp"
+differentiable_cone_solver = "SCS"
+gpu_or_mps_authoritative_solve_permitted = false
+
+[runtime.required_versions]
+cvxpy = "1.9.2"
+cvxpylayers = "1.2.0"
+clarabel = "0.11.1"
+scs = "3.2.11"
+diffcp = "1.1.9"
+
+[numerical.clarabel_primary]
+max_iter = 500
+tol_gap_abs = 1e-9
+tol_gap_rel = 1e-9
+tol_feas = 1e-9
+equilibrate_enable = true
+iterative_refinement_enable = true
+
+[numerical.clarabel_retry]
+max_iter = 2000
+tol_gap_abs = 1e-11
+tol_gap_rel = 1e-11
+tol_feas = 1e-11
+equilibrate_enable = true
+iterative_refinement_enable = true
+
+[numerical.scs_training]
+max_iters = 100000
+eps_abs = 1e-6
+eps_rel = 1e-6
+eps_infeas = 1e-7
+use_indirect = false
+normalize = true
+adaptive_scale = false
+acceleration_lookback = 0
+
+[numerical.independent_verification]
+absolute_constraint_violation_maximum = 5e-8
+relative_constraint_violation_maximum = 1e-8
+normalized_emergency_violation_worsening_maximum = 5e-8
+risk_psd_minimum_eigenvalue = -1e-10
+projection_primal_residual_maximum = 5e-8
+projection_dual_residual_maximum = 2e-7
+projection_stationarity_residual_maximum = 2e-7
+repeated_solve_weight_maximum_absolute_difference = 1e-9
+lexicographic_optimum_lock_absolute = 1e-9
+
+[numerical.differentiable_verification]
+training_projection_absolute_constraint_violation_maximum = 5e-5
+finite_difference_gradient_absolute_difference_maximum = 5e-4
+finite_difference_gradient_relative_difference_maximum = 5e-3
+nonfinite_forward_or_gradient_values_permitted = false
+
+[verification]
+independent_constraint_recomputation_required = true
+only_synthetic_allocator_cases_permitted = true
+real_data_payload_rows_read = 0
+validation_or_final_rows_read = 0
+real_portfolio_weights_or_trades_created = 0
+real_pnl_or_performance_rows_created = 0
+ordinary_case_slack_count = 0
+emergency_new_or_worsened_violation_count = 0
+all_three_architectures_required = true
+all_constraint_and_cost_families_required = true
+decision_focused_gradient_checks_required = true
+deterministic_replay_required = true
+focused_tests_required = true
+full_repository_regression_required = true
+independent_verification_required = true
+independent_verification_difference_count = 0
+
+[outputs]
+artifact_root = "artifacts/phase_04_models"
+primary_build_namespace = "allocator_builds"
+verification_namespace = "allocator_verifications"
+latest_primary_pointer = "artifacts/phase_04_models/LATEST_ALLOCATOR_PRIMARY.json"
+latest_verified_pointer = "artifacts/phase_04_models/LATEST_ALLOCATOR_VERIFIED.json"
+primary_required_files = ["manifest.json", "_SUCCESS.json"]
+verification_required_files = ["verification_checks.parquet", "verification_report.json", "_SUCCESS.json"]
+empirical_weight_trade_or_pnl_payload_permitted = false
+closed_file_sets_required = true
+
+[publication]
+content_addressed_build_id_required = true
+dependency_scoped_code_hashes_required = true
+pointer_replaced_last = true
+primary_pointer_authorizes_independent_verification_only = true
+primary_pointer_authorizes_stage11 = false
+independent_verification_required = true
+verified_pointer_may_authorize_stage11_validation_only = true
+verified_pointer_may_authorize_stage12_or_later = false
+verified_pointer_may_authorize_final_period_access = false
+stage11_still_requires_explicit_user_approval = true
+stop_after_verified_stage10_report = true

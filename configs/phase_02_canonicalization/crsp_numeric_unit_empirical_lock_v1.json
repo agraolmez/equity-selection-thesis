@@ -1,0 +1,1057 @@
+{
+  "downstream": {
+    "authorization_requires_independent_verification": true,
+    "blockers": [
+      "flag_specific_daily_return_availability_unresolved",
+      "P1_through_P9_factor_alignment_unresolved",
+      "DD_factor_alignment_unresolved",
+      "RETURN_DISTRIBUTION_DELISTING_EXACTLY_ONCE_not_run"
+    ],
+    "future_verified_profile_may_authorize": {
+      "backtests": false,
+      "beta_estimation": false,
+      "labels": false,
+      "return_history": false,
+      "typed_market_backbone": true,
+      "universe_unit_inputs": true
+    },
+    "this_lock_alone_authorizes_downstream_use": false
+  },
+  "evidence_origin": {
+    "discovery_binding_hashes_are_provenance_only": true,
+    "discovery_build_id": "crsp-numeric-discovery-fc091c8ce695111ec980e858",
+    "discovery_implementation_sha256": "7c3b4eeacc7fc123aa73b098f7368134ce57a42e7f74396324d4129816e8b385",
+    "discovery_mode": "discovery",
+    "discovery_policy_sha256": "cd4c461a427a1415deff745a42664b20bf8f2a0727621804e0eb44b826f06262",
+    "discovery_profile_config_sha256": "03e73c54bc81081a11d8fbfba898cb994d4f1f010121a101c89cdfa0bfacd5f9",
+    "discovery_snapshot_inventory_sha256": "af15be43ad606062aecebebd3104cfeeda7e6c88590c6ccb76a0b39fad9f187f",
+    "original_full_table_sha256": {
+      "capitalization_diagnostics": "8ddab3274de0d4b429d2804d0aa5fb890fb20a0d24dc477d780531a257aeb78d",
+      "checks": "4e2dc9f67e31f21de88fbc31c35a63d101c2384e21a6ebd3affc96c7728714fd",
+      "identity_inventory": "fce0d2c3997db05840112b86df25ef4d1798050169b58aeec6173d6984b599e0",
+      "numeric_inventory": "e497ca2b725e26f652c7d882fc847f34d7f20a7c80e345bfd2da9c5ce749cb91",
+      "return_inventory": "62b44823660ab556d45690bfca0ee7b4562c3e42f5a9eccaa33db4ddc55bfb07"
+    },
+    "original_full_table_sha256_is_lineage_only": true,
+    "production_profile_must_bind_current_policy_separately": true,
+    "review_artifact_filename": "crsp_numeric_unit_discovery_review_v1.json",
+    "review_artifact_sha256": "b6b3be8453c7fe5aac2089ccc91ba4ec17e3d18ca1b4fe1778fa868b75f05a08"
+  },
+  "exclusion_contract": {
+    "counts_are_exact_empirical_expectations": true,
+    "excluded_rows_must_equal_sum_of_reason_counts": true,
+    "mutually_exclusive_within_each_inventory_row": true,
+    "observed_reason_vocabulary": [
+      "DlyPrc_missing_or_invalid",
+      "DlyVol_missing_or_invalid",
+      "blank_MthPrcDt",
+      "daily_operand_missing_or_invalid",
+      "monthly_operand_missing_or_invalid",
+      "vendor_cap_missing_or_invalid",
+      "zero_share_interval_matches"
+    ],
+    "unclassified_exclusions_permitted": false
+  },
+  "first_discovery_false_positive_scope_correction": {
+    "affected_identity_id": "daily_price_volume",
+    "affected_inventory_check_id": "identity_inventory_hard_failures",
+    "corrected_gate_rule": {
+      "actual_comparable_mismatch_is_hard": true,
+      "pooled_active_group_with_zero_comparable_rows_is_hard": true,
+      "pooled_key": [
+        "identity_id",
+        "source",
+        "year",
+        "period_segment"
+      ],
+      "pooling_dimension_removed": "DlyPrcFlg",
+      "source_active_population_reference": "numeric_inventory daily DlyPrc population at source-year-period_segment grain",
+      "zero_comparable_flag_stratum_with_pooled_coverage_status": "DIAGNOSTIC"
+    },
+    "corrected_hard_gate_failure_count": 0,
+    "first_discovery_aggregate_failed_check_count": 1,
+    "first_discovery_fail_count": 1,
+    "first_discovery_failed_identity_status_rows": 105,
+    "first_discovery_hard_failure_count": 106,
+    "formula_mismatch_rows_in_affected_strata": 0,
+    "reason": "The first discovery treated exclusion-only DlyPrcFlg strata as hard failures even though every pooled source-year-period_segment group had comparable rows and every comparable row passed the quantization identity.",
+    "segment_evidence": {
+      "development_2000_2014_11": {
+        "active_comparable_strata": 30,
+        "excluded_rows_in_zero_comparable_strata": 536381,
+        "exclusion_reasons": {
+          "DlyPrc_missing_or_invalid": 533381,
+          "DlyVol_missing_or_invalid": 3000
+        },
+        "flag_stratum_counts": {
+          "DA": 15,
+          "DM": 14,
+          "DP": 15,
+          "HA": 13,
+          "MP": 15,
+          "NT": 15,
+          "SU": 13
+        },
+        "total_strata": 130,
+        "zero_comparable_strata": 100
+      },
+      "embargo_2014_12": {
+        "active_comparable_strata": 2,
+        "excluded_rows_in_zero_comparable_strata": 1487,
+        "exclusion_reasons": {
+          "DlyPrc_missing_or_invalid": 1482,
+          "DlyVol_missing_or_invalid": 5
+        },
+        "flag_stratum_counts": {
+          "DA": 1,
+          "DP": 1,
+          "MP": 1,
+          "NT": 1,
+          "SU": 1
+        },
+        "total_strata": 7,
+        "zero_comparable_strata": 5
+      }
+    },
+    "total_evidence": {
+      "active_comparable_strata": 32,
+      "excluded_rows_in_zero_comparable_strata": 537868,
+      "exclusion_reasons": {
+        "DlyPrc_missing_or_invalid": 534863,
+        "DlyVol_missing_or_invalid": 3005
+      },
+      "flag_stratum_counts": {
+        "DA": 16,
+        "DM": 14,
+        "DP": 16,
+        "HA": 13,
+        "MP": 16,
+        "NT": 16,
+        "SU": 14
+      },
+      "total_strata": 137,
+      "zero_comparable_strata": 105
+    }
+  },
+  "lock_id": "crsp-numeric-unit-empirical-lock-v1",
+  "measurement_projection_contract": {
+    "algorithm_id": "sha256_canonical_json_lf_projected_rows_v1",
+    "canonical_json": {
+      "allow_nan": false,
+      "ensure_ascii": false,
+      "exactly_one_trailing_lf": true,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "sort_keys": true
+    },
+    "cell_values_are_preserved_without_reparsing": true,
+    "checks_table_is_not_an_empirical_projection": true,
+    "checks_table_reason": "Checks, severities, rule labels, status values and production summary fields are derived from the locked policy and production mode.",
+    "rows_are_sorted_by_profile_output_sort_keys_before_projection": true
+  },
+  "measurement_projections": {
+    "capitalization_diagnostics": {
+      "policy_derived_fields_excluded": [
+        "severity",
+        "status",
+        "threshold_rule"
+      ],
+      "row_count": 1025,
+      "segments": {
+        "development_2000_2014_11": {
+          "row_count": 963,
+          "sha256": "f78f17329664b98bd72419415238be258d66b1d1e34b168c9f7acd250c3e3e72"
+        },
+        "embargo_2014_12": {
+          "row_count": 62,
+          "sha256": "fbf5e72086a63cbd71c90cb511261d35d75d6da025e6eb4e3e79b9cfbf743fef"
+        }
+      },
+      "sha256": "31f7b400344251fd7cb1cab43e40ffa7edf770aa0265fe4691f32707077c78c1"
+    },
+    "identity_inventory": {
+      "policy_derived_fields_excluded": [
+        "severity",
+        "status",
+        "tolerance_rule"
+      ],
+      "row_count": 697,
+      "segments": {
+        "development_2000_2014_11": {
+          "row_count": 661,
+          "sha256": "007169999c486402b6df91f4db09880e57a324879d3e26bedb9e3490e4562163"
+        },
+        "embargo_2014_12": {
+          "row_count": 36,
+          "sha256": "b6c6d14f90053f9c1e8d0aafc90202356967438fe3e4cb101a826fd572a1e03b"
+        }
+      },
+      "sha256": "cd8e3088ca1144f99a9d4808c7c0bf38c1d50d56aba59d7a2840468a3ac83de2"
+    },
+    "numeric_inventory": {
+      "policy_derived_fields_excluded": [
+        "severity",
+        "status"
+      ],
+      "row_count": 2085,
+      "segments": {
+        "development_2000_2014_11": {
+          "row_count": 1985,
+          "sha256": "cef49714a2dc08c455d94658b15e47e5dbd7c5d2e73f6ad790992b22dbcf645b"
+        },
+        "embargo_2014_12": {
+          "row_count": 100,
+          "sha256": "9bd16b90bea22cb99aae8deb141fef4f521dd7673ad2cd94e8de4b03ccfaac74"
+        }
+      },
+      "sha256": "4f180c59d8112f5b09be97861081160a6c20615ef5a5f37612a7bac32fb284eb"
+    },
+    "return_inventory": {
+      "policy_derived_fields_excluded": [
+        "semantic_rule",
+        "severity",
+        "status"
+      ],
+      "row_count": 461,
+      "segments": {
+        "development_2000_2014_11": {
+          "row_count": 442,
+          "sha256": "3f3ec6ad6406fea1cfb793cff6e6dc7683e0a69b44517549399e634abc7d4e5d"
+        },
+        "embargo_2014_12": {
+          "row_count": 19,
+          "sha256": "a9dfdbee75aeed6e15b28390caed3499678a099ef06b73bedb0703cab7081438"
+        }
+      },
+      "sha256": "ec388cc03cb3b7ee013fa10afd83c7ed8134a4a3191be62a84bcb2bdeee5a97b"
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "date_bounds_are_inclusive": true,
+    "segments": {
+      "development_2000_2014_11": {
+        "end_date": "2014-11-30",
+        "may_contribute_to_model_development": true,
+        "role": "development",
+        "start_date": "2000-01-01"
+      },
+      "embargo_2014_12": {
+        "end_date": "2014-12-31",
+        "may_contribute_to_model_development": false,
+        "may_rescue_a_failed_development_threshold": false,
+        "role": "quality_and_boundary_reconciliation_only",
+        "start_date": "2014-12-01"
+      }
+    },
+    "validation_or_final_test_rows_permitted": false
+  },
+  "source_expectations": {
+    "daily": {
+      "canonical_rows": 26778093,
+      "filename": "crsp_daily_ciz.csv",
+      "full_file_rows": 49886907,
+      "retained_rows": 26785087,
+      "segment_population_rows": {
+        "development_2000_2014_11": 26620859,
+        "embargo_2014_12": 157234
+      },
+      "sha256": "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9",
+      "size_bytes": 12740735288
+    },
+    "monthly": {
+      "canonical_rows": 1284297,
+      "filename": "crsp_monthly_ciz.csv",
+      "full_file_rows": 2423212,
+      "retained_rows": 1299612,
+      "segment_population_rows": {
+        "development_2000_2014_11": 1277113,
+        "embargo_2014_12": 7184
+      },
+      "sha256": "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf",
+      "size_bytes": 561296199
+    },
+    "shares": {
+      "canonical_rows": 1090812,
+      "filename": "crsp_shares_outstanding_ciz.csv",
+      "full_file_rows": 2241129,
+      "retained_rows": 1090812,
+      "segment_population_rows": {
+        "development_2000_2014_11": 1083374,
+        "embargo_2014_12": 7438
+      },
+      "sha256": "b66cb7f4b4d2e51b9cd79cad9306911267da35d6c521caa7f15426dc02e2e966",
+      "size_bytes": 120698952
+    }
+  },
+  "theory_first_rules": {
+    "capitalization_units": {
+      "DlyCap": "thousand_usd",
+      "DlyPrc": "usd_per_share",
+      "MthCap": "thousand_usd",
+      "MthPrc": "usd_per_share",
+      "ShrOut": "thousand_shares",
+      "comparison_formula": "price_usd_per_share * ShrOut_thousand_shares = capitalization_thousand_usd",
+      "extra_factor_of_one_thousand_inside_comparison": false
+    },
+    "empirical_expectation_behavior": {
+      "any_measurement_projection_drift_is_hard": true,
+      "diagnostic_formula_counts_are_still_reproduced_exactly": true,
+      "intentional_source_or_semantic_change_requires_new_lock_version": true,
+      "rates_or_quantiles_may_not_replace_exact_counts": true
+    },
+    "hard_invariants": {
+      "capitalization_population_equals_zero_plus_one_plus_multiple_matches": true,
+      "hard_numeric_domain_invalid_rows": 0,
+      "malformed_numeric_rows": 0,
+      "multiple_share_interval_match_rows": 0,
+      "nonfinite_numeric_rows": 0,
+      "overflow_numeric_rows": 0,
+      "unclassified_exclusion_rows": 0
+    },
+    "identity_pass_rule": {
+      "absolute_tolerance": 0,
+      "binary_float_may_decide_pass_fail": false,
+      "extra_relative_tolerance": 0,
+      "rule": "reported_and_calculated_quantization_intervals_overlap"
+    },
+    "required_zero_failure_identities": [
+      "daily_price_volume",
+      "monthly_daily_cap",
+      "monthly_daily_price"
+    ]
+  },
+  "transparent_aggregates": {
+    "capitalization": {
+      "adr_diagnostics": {
+        "daily_interval_AD_Y": {
+          "comparable_rows": 1437276,
+          "excluded_rows": 4937,
+          "formula_fail_rows": 0,
+          "formula_pass_rows": 1437276,
+          "population_rows": 1442213
+        },
+        "depositary_ratio_reconstruction_permitted": false,
+        "monthly_embedded_AD_Y": {
+          "comparable_rows": 68949,
+          "excluded_rows": 0,
+          "formula_fail_rows": 7,
+          "formula_pass_rows": 68942,
+          "population_rows": 68949
+        },
+        "monthly_interval_AD_Y": {
+          "comparable_rows": 68949,
+          "excluded_rows": 0,
+          "formula_fail_rows": 0,
+          "formula_pass_rows": 68949,
+          "population_rows": 68949
+        }
+      },
+      "formula_totals": {
+        "daily_interval_cap_price_shares": {
+          "comparable_rows": 25902651,
+          "excluded_rows": 875442,
+          "exclusions": {
+            "vendor_cap_missing_or_invalid": 360067,
+            "zero_share_interval_matches": 515375
+          },
+          "formula_fail_rows": 0,
+          "formula_pass_rows": 25902651,
+          "multiple_share_match_rows": 0,
+          "one_share_match_rows": 26262718,
+          "population_rows": 26778093,
+          "segments": {
+            "development_2000_2014_11": {
+              "comparable_rows": 25746904,
+              "excluded_rows": 873955,
+              "exclusions": {
+                "vendor_cap_missing_or_invalid": 358713,
+                "zero_share_interval_matches": 515242
+              },
+              "formula_fail_rows": 0,
+              "formula_pass_rows": 25746904,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 26105617,
+              "population_rows": 26620859,
+              "zero_share_match_rows": 515242
+            },
+            "embargo_2014_12": {
+              "comparable_rows": 155747,
+              "excluded_rows": 1487,
+              "exclusions": {
+                "vendor_cap_missing_or_invalid": 1354,
+                "zero_share_interval_matches": 133
+              },
+              "formula_fail_rows": 0,
+              "formula_pass_rows": 155747,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 157101,
+              "population_rows": 157234,
+              "zero_share_match_rows": 133
+            }
+          },
+          "zero_share_match_rows": 515375
+        },
+        "monthly_embedded_cap_price_shares": {
+          "comparable_rows": 1259513,
+          "excluded_rows": 24784,
+          "exclusions": {
+            "vendor_cap_missing_or_invalid": 24784
+          },
+          "formula_fail_rows": 27,
+          "formula_pass_rows": 1259486,
+          "multiple_share_match_rows": 0,
+          "one_share_match_rows": 1249809,
+          "population_rows": 1284297,
+          "segments": {
+            "development_2000_2014_11": {
+              "comparable_rows": 1252391,
+              "excluded_rows": 24722,
+              "exclusions": {
+                "vendor_cap_missing_or_invalid": 24722
+              },
+              "formula_fail_rows": 26,
+              "formula_pass_rows": 1252365,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 1242687,
+              "population_rows": 1277113,
+              "zero_share_match_rows": 34426
+            },
+            "embargo_2014_12": {
+              "comparable_rows": 7122,
+              "excluded_rows": 62,
+              "exclusions": {
+                "vendor_cap_missing_or_invalid": 62
+              },
+              "formula_fail_rows": 1,
+              "formula_pass_rows": 7121,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 7122,
+              "population_rows": 7184,
+              "zero_share_match_rows": 62
+            }
+          },
+          "zero_share_match_rows": 34488
+        },
+        "monthly_interval_cap_price_shares": {
+          "comparable_rows": 1249809,
+          "excluded_rows": 34488,
+          "exclusions": {
+            "zero_share_interval_matches": 34488
+          },
+          "formula_fail_rows": 0,
+          "formula_pass_rows": 1249809,
+          "multiple_share_match_rows": 0,
+          "one_share_match_rows": 1249809,
+          "population_rows": 1284297,
+          "segments": {
+            "development_2000_2014_11": {
+              "comparable_rows": 1242687,
+              "excluded_rows": 34426,
+              "exclusions": {
+                "zero_share_interval_matches": 34426
+              },
+              "formula_fail_rows": 0,
+              "formula_pass_rows": 1242687,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 1242687,
+              "population_rows": 1277113,
+              "zero_share_match_rows": 34426
+            },
+            "embargo_2014_12": {
+              "comparable_rows": 7122,
+              "excluded_rows": 62,
+              "exclusions": {
+                "zero_share_interval_matches": 62
+              },
+              "formula_fail_rows": 0,
+              "formula_pass_rows": 7122,
+              "multiple_share_match_rows": 0,
+              "one_share_match_rows": 7122,
+              "population_rows": 7184,
+              "zero_share_match_rows": 62
+            }
+          },
+          "zero_share_match_rows": 34488
+        }
+      },
+      "non_ADR_NS_N_primary_threshold": {
+        "authoritative_formula_id": "monthly_interval_cap_price_shares",
+        "development_threshold_must_be_evaluated_separately": true,
+        "diagnostic_embedded_formula": {
+          "segments": {
+            "development_2000_2014_11": {
+              "comparable_rows": 1091335,
+              "formula_fail_rows": 19,
+              "formula_pass_rows": 1091316
+            },
+            "embargo_2014_12": {
+              "comparable_rows": 6215,
+              "formula_fail_rows": 1,
+              "formula_pass_rows": 6214
+            }
+          },
+          "total_comparable_rows": 1097550,
+          "total_formula_fail_rows": 20,
+          "total_formula_pass_rows": 1097530
+        },
+        "periodicity": "monthly",
+        "required_comparable_rows_greater_than_zero": true,
+        "required_fail_rows": 0,
+        "required_multiple_share_match_rows": 0,
+        "required_pass_rate": "1",
+        "required_zero_share_match_rows": 0,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1091335,
+            "excluded_rows": 0,
+            "formula_fail_rows": 0,
+            "formula_pass_rows": 1091335,
+            "multiple_share_match_rows": 0,
+            "one_share_match_rows": 1091335,
+            "population_rows": 1091335,
+            "zero_share_match_rows": 0
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 6215,
+            "excluded_rows": 0,
+            "formula_fail_rows": 0,
+            "formula_pass_rows": 6215,
+            "multiple_share_match_rows": 0,
+            "one_share_match_rows": 6215,
+            "population_rows": 6215,
+            "zero_share_match_rows": 0
+          }
+        },
+        "segments_are_enforced_independently": true,
+        "selector": {
+          "ShareType": "NS",
+          "effective_interval_ShrAdrFlg": "N",
+          "interval_date": "MthPrcDt",
+          "interval_match_count": 1,
+          "primary_exchange_scope": "all_observed_no_exchange_filter",
+          "required_valid_operands": [
+            "MthCap",
+            "MthPrc",
+            "interval_ShrOut"
+          ]
+        },
+        "threshold_source": "theory_first_exact_quantization_overlap_not_empirical_rate_fitting",
+        "total_comparable_rows": 1097550,
+        "total_excluded_rows": 0,
+        "total_formula_fail_rows": 0,
+        "total_formula_pass_rows": 1097550,
+        "total_multiple_share_match_rows": 0,
+        "total_one_share_match_rows": 1097550,
+        "total_population_rows": 1097550,
+        "total_zero_share_match_rows": 0
+      },
+      "supporting_daily_non_ADR_NS_N": {
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 22742521,
+            "excluded_rows": 353210,
+            "formula_fail_rows": 0,
+            "formula_pass_rows": 22742521,
+            "population_rows": 23095731
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 136770,
+            "excluded_rows": 1332,
+            "formula_fail_rows": 0,
+            "formula_pass_rows": 136770,
+            "population_rows": 138102
+          }
+        },
+        "total_comparable_rows": 22879291,
+        "total_excluded_rows": 354542,
+        "total_formula_fail_rows": 0,
+        "total_formula_pass_rows": 22879291,
+        "total_population_rows": 23233833
+      }
+    },
+    "identities": {
+      "daily_price_volume": {
+        "comparable_rows": 26240176,
+        "excluded_rows": 537917,
+        "exclusions": {
+          "DlyPrc_missing_or_invalid": 534863,
+          "DlyVol_missing_or_invalid": 3054
+        },
+        "fail_rows": 0,
+        "pass_rows": 26240176,
+        "population_rows": 26778093,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 26084429,
+            "excluded_rows": 536430,
+            "exclusions": {
+              "DlyPrc_missing_or_invalid": 533381,
+              "DlyVol_missing_or_invalid": 3049
+            },
+            "fail_rows": 0,
+            "pass_rows": 26084429,
+            "population_rows": 26620859
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 155747,
+            "excluded_rows": 1487,
+            "exclusions": {
+              "DlyPrc_missing_or_invalid": 1482,
+              "DlyVol_missing_or_invalid": 5
+            },
+            "fail_rows": 0,
+            "pass_rows": 155747,
+            "population_rows": 157234
+          }
+        }
+      },
+      "monthly_daily_cap": {
+        "comparable_rows": 1259513,
+        "excluded_rows": 24784,
+        "exclusions": {
+          "blank_MthPrcDt": 24784
+        },
+        "fail_rows": 0,
+        "pass_rows": 1259513,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1252391,
+            "excluded_rows": 24722,
+            "fail_rows": 0,
+            "pass_rows": 1252391,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7122,
+            "excluded_rows": 62,
+            "fail_rows": 0,
+            "pass_rows": 7122,
+            "population_rows": 7184
+          }
+        }
+      },
+      "monthly_daily_price": {
+        "comparable_rows": 1259513,
+        "excluded_rows": 24784,
+        "exclusions": {
+          "blank_MthPrcDt": 24784
+        },
+        "fail_rows": 0,
+        "pass_rows": 1259513,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1252391,
+            "excluded_rows": 24722,
+            "fail_rows": 0,
+            "pass_rows": 1252391,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7122,
+            "excluded_rows": 62,
+            "fail_rows": 0,
+            "pass_rows": 7122,
+            "population_rows": 7184
+          }
+        }
+      },
+      "monthly_embedded_vs_interval_ShrOut": {
+        "comparable_rows": 1249809,
+        "excluded_rows": 34488,
+        "exclusions": {
+          "blank_MthPrcDt": 24784,
+          "zero_share_interval_matches": 9704
+        },
+        "fail_rows": 26,
+        "pass_rows": 1249783,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1242687,
+            "excluded_rows": 34426,
+            "fail_rows": 25,
+            "pass_rows": 1242662,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7122,
+            "excluded_rows": 62,
+            "fail_rows": 1,
+            "pass_rows": 7121,
+            "population_rows": 7184
+          }
+        }
+      },
+      "monthly_price_volume_missing_count_vs_daily": {
+        "comparable_rows": 1284297,
+        "excluded_rows": 0,
+        "fail_rows": 7369,
+        "maximum_absolute_difference": 1,
+        "pass_rows": 1276928,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1277113,
+            "excluded_rows": 0,
+            "fail_rows": 7324,
+            "pass_rows": 1269789,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7184,
+            "excluded_rows": 0,
+            "fail_rows": 45,
+            "pass_rows": 7139,
+            "population_rows": 7184
+          }
+        }
+      },
+      "monthly_price_volume_vs_daily_sum": {
+        "comparable_rows": 1250244,
+        "excluded_rows": 34053,
+        "exclusions": {
+          "daily_operand_missing_or_invalid": 9269,
+          "monthly_operand_missing_or_invalid": 24784
+        },
+        "fail_rows": 0,
+        "pass_rows": 1250244,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1243178,
+            "excluded_rows": 33935,
+            "fail_rows": 0,
+            "pass_rows": 1243178,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7066,
+            "excluded_rows": 118,
+            "fail_rows": 0,
+            "pass_rows": 7066,
+            "population_rows": 7184
+          }
+        }
+      },
+      "monthly_volume_vs_daily_sum": {
+        "comparable_rows": 1250297,
+        "excluded_rows": 34000,
+        "exclusions": {
+          "daily_operand_missing_or_invalid": 9216,
+          "monthly_operand_missing_or_invalid": 24784
+        },
+        "fail_rows": 0,
+        "pass_rows": 1250297,
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "comparable_rows": 1243231,
+            "excluded_rows": 33882,
+            "fail_rows": 0,
+            "pass_rows": 1243231,
+            "population_rows": 1277113
+          },
+          "embargo_2014_12": {
+            "comparable_rows": 7066,
+            "excluded_rows": 118,
+            "fail_rows": 0,
+            "pass_rows": 7066,
+            "population_rows": 7184
+          }
+        }
+      }
+    },
+    "numeric": {
+      "hard_state_totals": {
+        "hard_domain_invalid_rows": 0,
+        "malformed_rows": 0,
+        "nonfinite_rows": 0,
+        "overflow_rows": 0
+      },
+      "key_columns": {
+        "daily.DlyCap": {
+          "blank_rows": 537868,
+          "negative_zero_rows": 0,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26240225,
+          "valid_out_of_domain_rows": 0
+        },
+        "daily.DlyPrc": {
+          "blank_rows": 529653,
+          "negative_zero_rows": 0,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26243230,
+          "valid_out_of_domain_rows": 5210
+        },
+        "daily.DlyPrcVol": {
+          "blank_rows": 537917,
+          "negative_zero_rows": 0,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26240176,
+          "valid_out_of_domain_rows": 0
+        },
+        "daily.DlyRet": {
+          "blank_rows": 537534,
+          "negative_zero_rows": 6,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26240559,
+          "valid_out_of_domain_rows": 0
+        },
+        "daily.DlyRetx": {
+          "blank_rows": 537534,
+          "negative_zero_rows": 6,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26240559,
+          "valid_out_of_domain_rows": 0
+        },
+        "daily.DlyVol": {
+          "blank_rows": 537790,
+          "negative_zero_rows": 0,
+          "population_rows": 26778093,
+          "valid_in_domain_rows": 26240303,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthCap": {
+          "blank_rows": 24784,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259513,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthPrc": {
+          "blank_rows": 24784,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259513,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthPrcVol": {
+          "blank_rows": 24784,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259513,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthPrcVolMissCnt": {
+          "blank_rows": 0,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1284297,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthRet": {
+          "blank_rows": 25108,
+          "negative_zero_rows": 37,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259189,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthRetx": {
+          "blank_rows": 25108,
+          "negative_zero_rows": 36,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259189,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.MthVol": {
+          "blank_rows": 24784,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1259513,
+          "valid_out_of_domain_rows": 0
+        },
+        "monthly.ShrOut": {
+          "blank_rows": 0,
+          "negative_zero_rows": 0,
+          "population_rows": 1284297,
+          "valid_in_domain_rows": 1284297,
+          "valid_out_of_domain_rows": 0
+        },
+        "shares.ShrOut": {
+          "blank_rows": 0,
+          "negative_zero_rows": 0,
+          "population_rows": 1090812,
+          "valid_in_domain_rows": 1090812,
+          "valid_out_of_domain_rows": 0
+        }
+      }
+    },
+    "returns": {
+      "daily": {
+        "duration_mapping": {
+          "D1": 1,
+          "D2": 1,
+          "D3": 1,
+          "D4": 1,
+          "DD": -1,
+          "DU": 1,
+          "MR": 0,
+          "P1": 2,
+          "P2": 3,
+          "P3": 4,
+          "P4": 5,
+          "P5": 6,
+          "P6": 7,
+          "P7": 8,
+          "P8": 9,
+          "P9": 10
+        },
+        "observed_duration_counts": {
+          "D1": 20530311,
+          "D2": 258138,
+          "D3": 4764352,
+          "D4": 659605,
+          "DD": 5171,
+          "DU": 21072,
+          "MR": 537534,
+          "P1": 1356,
+          "P2": 222,
+          "P3": 100,
+          "P4": 57,
+          "P5": 38,
+          "P6": 37,
+          "P7": 54,
+          "P8": 24,
+          "P9": 22
+        },
+        "observed_return_flag_counts": {
+          "DG": 335,
+          "DM": 90,
+          "DP": 119,
+          "GP": 102,
+          "MP": 6698,
+          "MV": 67,
+          "NA": 26240492,
+          "NS": 6997,
+          "NT": 522784,
+          "RA": 409
+        },
+        "population_rows": 26778093,
+        "segments": {
+          "development_2000_2014_11": {
+            "blank_total_and_returnx_rows": 536049,
+            "duration_counts": {
+              "D1": 20417073,
+              "D2": 251063,
+              "D3": 4728969,
+              "D4": 659605,
+              "DD": 5131,
+              "DU": 21072,
+              "MR": 536049,
+              "P1": 1346,
+              "P2": 220,
+              "P3": 100,
+              "P4": 56,
+              "P5": 38,
+              "P6": 37,
+              "P7": 54,
+              "P8": 24,
+              "P9": 22
+            },
+            "na_coherent_rows": 26084743,
+            "na_incoherent_rows": 0,
+            "population_rows": 26620859,
+            "return_flag_counts": {
+              "DG": 335,
+              "DM": 90,
+              "DP": 119,
+              "GP": 101,
+              "MP": 6645,
+              "MV": 67,
+              "NA": 26084743,
+              "NS": 6959,
+              "NT": 521395,
+              "RA": 405
+            },
+            "valid_total_and_returnx_rows": 26084810
+          },
+          "embargo_2014_12": {
+            "blank_total_and_returnx_rows": 1485,
+            "duration_counts": {
+              "D1": 113238,
+              "D2": 7075,
+              "D3": 35383,
+              "DD": 40,
+              "MR": 1485,
+              "P1": 10,
+              "P2": 2,
+              "P4": 1
+            },
+            "na_coherent_rows": 155749,
+            "na_incoherent_rows": 0,
+            "population_rows": 157234,
+            "return_flag_counts": {
+              "GP": 1,
+              "MP": 53,
+              "NA": 155749,
+              "NS": 38,
+              "NT": 1389,
+              "RA": 4
+            },
+            "valid_total_and_returnx_rows": 155749
+          }
+        },
+        "state_counts": {
+          "blank_total_and_returnx_rows": 537534,
+          "na_coherent_rows": 26240492,
+          "na_incoherent_rows": 0,
+          "numeric_MV_rows_preserved_but_availability_unresolved": 67,
+          "valid_total_and_returnx_rows": 26240559
+        },
+        "unknown_duration_code_count": 0
+      },
+      "monthly": {
+        "observed_return_flag_counts": {
+          "CR": 1242271,
+          "DE": 8347,
+          "GP": 491,
+          "IP": 525,
+          "MP": 886,
+          "NS": 6669,
+          "NT": 25108
+        },
+        "population_rows": 1284297,
+        "segments": {
+          "development_2000_2014_11": {
+            "blank_total_and_returnx_rows": 25045,
+            "population_rows": 1277113,
+            "return_flag_counts": {
+              "CR": 1235247,
+              "DE": 8299,
+              "GP": 486,
+              "IP": 522,
+              "MP": 882,
+              "NS": 6632,
+              "NT": 25045
+            },
+            "valid_total_and_returnx_rows": 1252068
+          },
+          "embargo_2014_12": {
+            "blank_total_and_returnx_rows": 63,
+            "population_rows": 7184,
+            "return_flag_counts": {
+              "CR": 7024,
+              "DE": 48,
+              "GP": 5,
+              "IP": 3,
+              "MP": 4,
+              "NS": 37,
+              "NT": 63
+            },
+            "valid_total_and_returnx_rows": 7121
+          }
+        },
+        "state_counts": {
+          "blank_total_and_returnx_rows": 25108,
+          "numeric_GP_rows_preserved": 491,
+          "valid_total_and_returnx_rows": 1259189
+        }
+      }
+    }
+  }
+}

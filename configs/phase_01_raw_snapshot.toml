@@ -1,0 +1,23 @@
+[snapshot]
+name = "v1_raw_snapshot"
+expected_file_count = 25
+methodology_freeze = "outputs/methodology_v1_freeze.json"
+contract_directory = "configs/raw_contracts"
+artifact_root = "artifacts/phase_01_raw_manifest"
+staging_directory = "artifacts/phase_01_raw_manifest/_staging"
+final_directory = "artifacts/phase_01_raw_manifest/builds"
+verification_directory = "artifacts/phase_01_raw_manifest/verifications"
+freeze_directory = "artifacts/phase_01_raw_manifest/freezes"
+
+[parser]
+delimiter = ","
+quote_char = "\""
+encoding = "utf-8"
+block_size_mib = 64
+allow_quoted_newlines = true
+ignore_empty_lines = false
+sample_rows = 256
+progress_gib = 2
+
+[quality.open_ended_date_sentinels]
+LINKENDDT = ["E"]

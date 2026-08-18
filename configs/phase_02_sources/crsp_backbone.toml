@@ -1,0 +1,353 @@
+schema_version = 1
+contract_name = "crsp_ciz_market_identity_backbone"
+contract_version = "v1"
+source_family = "CRSP CIZ"
+authoritative_for = [
+  "security_master",
+  "historical_identifiers",
+  "listing_and_trading_status",
+  "prices_and_quotes",
+  "total_returns",
+  "volume_and_capitalization",
+  "distributions",
+  "shares_outstanding",
+  "delistings",
+]
+official_documentation = "https://www.crsp.org/crsp_pdf/crsp-us-stock-indexes-databases-guide-flat-file-format-2-0/"
+official_documentation_title = "CRSP US Stock & Indexes Databases Guide, Flat File Format 2.0 (CIZ)"
+official_documentation_last_modified = "2026-04-27"
+phase_01_raw_contract = "configs/raw_contracts/crsp.toml"
+
+[scope]
+first_slice = "development_only_2000_01_01_through_2014_12_31"
+contract_compilation_reads_raw_rows = false
+calendar_build_may_read_only = ["crsp_daily_ciz.csv:DlyCalDt"]
+backbone_build_may_read_final_test_outcomes = false
+targets_features_and_portfolios_prohibited = true
+
+[[outputs]]
+table = "trading_calendar"
+candidate_key = ["calendar_date"]
+primary_source = "crsp_daily_ciz.csv"
+status_after_contract_compile = "defined_not_built"
+allowed_first_slice = true
+
+[[outputs]]
+table = "rebalance_calendar"
+candidate_key = ["holding_month"]
+primary_source = "trading_calendar"
+status_after_contract_compile = "defined_not_built"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_security_day"
+candidate_key = ["PERMNO", "calendar_date"]
+primary_source = "crsp_daily_ciz.csv"
+status_after_contract_compile = "blocked_pending_duplicate_unit_flag_and_validity_gates"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_security_month_crosscheck"
+candidate_key = ["PERMNO", "calendar_month"]
+primary_source = "crsp_monthly_ciz.csv"
+status_after_contract_compile = "blocked_pending_duplicate_and_observation_date_gates"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_identity_interval"
+candidate_key = ["PERMNO", "start_date", "end_date"]
+primary_source = "crsp_names_ciz.csv"
+status_after_contract_compile = "defined_not_built"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_shares_interval"
+candidate_key = ["PERMNO", "start_date", "end_date"]
+primary_source = "crsp_shares_outstanding_ciz.csv"
+status_after_contract_compile = "defined_not_built"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_distribution_event"
+candidate_key = ["PERMNO", "ex_date", "sequence_number"]
+primary_source = "crsp_distribution_ciz.csv"
+status_after_contract_compile = "reconciliation_only_not_built"
+allowed_first_slice = true
+
+[[outputs]]
+table = "crsp_delisting_event"
+candidate_key = ["PERMNO", "delisting_date"]
+primary_source = "crsp_delisting_ciz.csv"
+status_after_contract_compile = "reconciliation_only_not_built"
+allowed_first_slice = true
+
+[[sources]]
+filename = "crsp_daily_ciz.csv"
+role = "authoritative security-day market, eligibility, return, and quote backbone"
+grain = "security_day_before_duplicate_resolution"
+candidate_key = ["PERMNO", "DlyCalDt"]
+coverage_axis = "DlyCalDt"
+availability_rule = "usable only after DlyCalDt close"
+calendar_owner = true
+expected_columns = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD", "NAICS",
+  "ICBIndustry", "IssuerNm", "DlyCalDt", "DlyPrc", "DlyPrcFlg", "DlyCap", "DlyRet",
+  "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg", "DlyVol", "DlyClose", "DlyLow", "DlyHigh",
+  "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol",
+]
+stage_columns = [
+  "PERMNO", "PERMCO", "SecInfoStartDt", "SecInfoEndDt", "CUSIP", "PrimaryExch",
+  "ConditionalType", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType",
+  "SecuritySubType", "ShareType", "Ticker", "SICCD", "NAICS", "ICBIndustry", "DlyCalDt",
+  "DlyPrc", "DlyPrcFlg", "DlyCap", "DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg",
+  "DlyVol", "DlyClose", "DlyLow", "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol",
+]
+identity_columns = ["PERMNO", "PERMCO", "CUSIP", "SecInfoStartDt", "SecInfoEndDt"]
+eligibility_columns = ["PrimaryExch", "ConditionalType", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SICCD", "DlyPrc", "DlyPrcFlg", "DlyCap", "DlyVol"]
+return_columns = ["DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg"]
+execution_columns = ["DlyClose", "DlyBid", "DlyAsk", "DlyOpen", "DlyHigh", "DlyLow"]
+reconciliation_columns = ["DlyPrc", "DlyPrcVol", "DlyVol", "DlyCap"]
+expected_vendor_fields_absent_from_extract = ["DlyDelFlg", "DlyCapFlg", "DlyDistRetFlg"]
+
+[[sources]]
+filename = "crsp_monthly_ciz.csv"
+role = "monthly return and market-data cross-check; never the daily calendar owner"
+grain = "security_month_information_interval_before_interval_selection"
+candidate_key = ["PERMNO", "MthCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+coverage_axis = "MthCalDt"
+availability_rule = "MthCalDt is the calendar-month axis; market data are dated by MthPrcDt and usable after that close"
+calendar_owner = false
+expected_columns = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD", "NAICS",
+  "ICBIndustry", "IssuerNm", "YYYYMM", "MthCalDt", "MthPrc", "MthPrcFlg", "MthPrcDt",
+  "MthCap", "MthRet", "MthRetx", "MthRetFlg", "MthDisCnt", "MthVol", "MthVolFlg",
+  "MthPrcVol", "MthFacShrFlg", "MthPrcVolMissCnt", "ShrOut",
+]
+stage_columns = [
+  "PERMNO", "PERMCO", "SecInfoStartDt", "SecInfoEndDt", "CUSIP", "PrimaryExch",
+  "ConditionalType", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType",
+  "SecuritySubType", "ShareType", "SICCD", "YYYYMM", "MthCalDt", "MthPrc", "MthPrcFlg",
+  "MthPrcDt", "MthCap", "MthRet", "MthRetx", "MthRetFlg", "MthDisCnt", "MthVol",
+  "MthVolFlg", "MthPrcVol", "MthPrcVolMissCnt", "ShrOut",
+]
+identity_columns = ["PERMNO", "PERMCO", "CUSIP", "SecInfoStartDt", "SecInfoEndDt"]
+date_columns = ["MthCalDt", "MthPrcDt"]
+return_columns = ["MthRet", "MthRetx", "MthRetFlg"]
+reconciliation_columns = ["MthPrc", "MthPrcDt", "MthCap", "MthDisCnt", "MthVol", "MthPrcVol", "MthPrcVolMissCnt", "ShrOut"]
+expected_vendor_fields_absent_from_extract = ["MthDelFlg", "MthCapFlg", "MthCompFlg", "MthCompSubFlg", "MthDtFlg"]
+
+[[sources]]
+filename = "crsp_names_ciz.csv"
+role = "authoritative effective-dated security identifier and classification history"
+grain = "security_information_interval"
+candidate_key = ["PERMNO", "SecInfoStartDt", "SecInfoEndDt"]
+coverage_axis = "SecInfoStartDt"
+availability_rule = "effective on the inclusive SecInfoStartDt through SecInfoEndDt interval"
+calendar_owner = false
+expected_columns = [
+  "PERMNO", "HdrPrimaryExch", "NASDIssuno", "HdrSICCD", "PERMCO", "SecInfoStartDt",
+  "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt", "CUSIP", "Ticker", "IssuerNm", "ShareClass",
+  "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SecurityActiveFlg",
+  "SICCD", "PrimaryExch", "TradingSymbol", "NAICS", "TradingStatusFlg",
+]
+stage_columns = [
+  "PERMNO", "PERMCO", "SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt",
+  "CUSIP", "Ticker", "IssuerNm", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType",
+  "ShareType", "SICCD", "PrimaryExch", "NAICS", "TradingStatusFlg",
+]
+identity_columns = ["PERMNO", "PERMCO", "CUSIP", "SecInfoStartDt", "SecInfoEndDt"]
+classification_columns = ["USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SICCD", "NAICS", "PrimaryExch", "TradingStatusFlg"]
+
+[[sources]]
+filename = "crsp_stock_header_ciz.csv"
+role = "current/reference security header used only for QA; never replaces effective-dated history"
+grain = "security_header"
+candidate_key = ["PERMNO"]
+coverage_axis = "SecInfoStartDt"
+availability_rule = "reference-only current header; prohibited as a historical as-of source"
+calendar_owner = false
+expected_columns = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt", "SecurityHdrFlg",
+  "HdrCUSIP", "HdrCUSIP9", "CUSIP", "CUSIP9", "PrimaryExch", "ConditionalType", "ExchangeTier",
+  "TradingStatusFlg", "SecurityNm", "ShareClass", "USIncFlg", "IssuerType", "SecurityType",
+  "SecuritySubType", "ShareType", "SecurityActiveFlg", "DelActionType", "DelStatusType",
+  "DelReasonType", "DelPaymentType", "Ticker", "TradingSymbol", "PERMCO", "SICCD", "NAICS",
+  "ICBIndustry", "UESIndustry", "NASDCompno", "NASDIssuno", "IssuerNm",
+]
+stage_columns = ["PERMNO", "PERMCO", "SecurityBegDt", "SecurityEndDt", "HdrCUSIP", "CUSIP", "SecurityHdrFlg"]
+identity_columns = ["PERMNO", "PERMCO", "HdrCUSIP", "CUSIP", "SecurityBegDt", "SecurityEndDt"]
+prohibited_historical_feature_columns = ["PrimaryExch", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SICCD", "NAICS", "ICBIndustry"]
+
+[[sources]]
+filename = "crsp_shares_outstanding_ciz.csv"
+role = "effective-dated shares-outstanding history and ADR-share diagnostic"
+grain = "security_shares_interval"
+candidate_key = ["PERMNO", "ShrStartDt", "ShrEndDt"]
+coverage_axis = "ShrStartDt"
+availability_rule = "effective on the inclusive ShrStartDt through ShrEndDt interval"
+calendar_owner = false
+expected_columns = ["PERMNO", "ShrStartDt", "ShrEndDt", "ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg", "PrimaryExch", "SICCD", "NASDIssuno"]
+stage_columns = ["PERMNO", "ShrStartDt", "ShrEndDt", "ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg"]
+identity_columns = ["PERMNO", "ShrStartDt", "ShrEndDt"]
+reconciliation_columns = ["ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg"]
+
+[[sources]]
+filename = "crsp_distribution_ciz.csv"
+role = "distribution-event ledger used only to prove exactly-once total-return treatment"
+grain = "security_distribution_sequence"
+candidate_key = ["PERMNO", "DisExDt", "DisSeqNbr"]
+coverage_axis = "DisExDt"
+availability_rule = "event ledger; reconciliation follows the CRSP return posting and ex-date semantics"
+calendar_owner = false
+expected_columns = [
+  "PERMNO", "DisExDt", "DisSeqNbr", "DisOrdinaryFlg", "DisType", "DisFreqType",
+  "DisPaymentType", "DisDetailType", "DisTaxType", "DisOrigCurType", "DisDivAmt", "DisFacPr",
+  "DisFacShr", "DisDeclareDt", "DisRecordDt", "DisPayDt", "DisPERMNO", "DisPERMCO",
+  "DisAmountSourceType", "PrimaryExch", "SICCD", "NASDIssuno",
+]
+stage_columns = [
+  "PERMNO", "DisExDt", "DisSeqNbr", "DisOrdinaryFlg", "DisType", "DisFreqType",
+  "DisPaymentType", "DisDetailType", "DisDivAmt", "DisFacPr", "DisFacShr", "DisDeclareDt",
+  "DisRecordDt", "DisPayDt", "DisPERMNO", "DisPERMCO",
+]
+identity_columns = ["PERMNO", "DisExDt", "DisSeqNbr"]
+reconciliation_columns = ["DisOrdinaryFlg", "DisType", "DisFreqType", "DisPaymentType", "DisDetailType", "DisDivAmt", "DisFacPr", "DisFacShr", "DisPERMNO", "DisPERMCO"]
+
+[[sources]]
+filename = "crsp_delisting_ciz.csv"
+role = "delisting event, payoff, successor, and missing-return ledger"
+grain = "security_delisting_event"
+candidate_key = ["PERMNO", "DelistingDt"]
+coverage_axis = "DelistingDt"
+availability_rule = "DelistingDt is last exchange price date; DelDlyDt is the return-posting date"
+calendar_owner = false
+expected_columns = [
+  "PERMNO", "DelistingDt", "DelDtPrc", "DelDtPrcFlg", "DelActionType", "DelStatusType",
+  "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelRet", "DelRetMissType",
+  "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType",
+  "DelDlyDt", "PrimaryExch", "SICCD", "NASDIssuno",
+]
+stage_columns = [
+  "PERMNO", "DelistingDt", "DelDtPrc", "DelDtPrcFlg", "DelActionType", "DelStatusType",
+  "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelRet", "DelRetMissType",
+  "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType", "DelDlyDt",
+  "PrimaryExch",
+]
+identity_columns = ["PERMNO", "DelistingDt"]
+return_columns = ["DelRet", "DelRetMissType"]
+reconciliation_columns = ["DelDtPrc", "DelDtPrcFlg", "DelActionType", "DelStatusType", "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType", "DelDlyDt", "PrimaryExch"]
+
+[[vendor_fields]]
+field = "DlyPrc"
+unit = "usd_per_share"
+definition = "last regular-session trade; bid-ask-average fallback when a trade price is unavailable"
+
+[[vendor_fields]]
+field = "DlyClose"
+unit = "usd_per_share"
+definition = "last regular-session trade only"
+
+[[vendor_fields]]
+field = "DlyCap"
+unit = "thousand_usd"
+definition = "daily market capitalization from DlyPrc times shares outstanding"
+
+[[vendor_fields]]
+field = "MthCap"
+unit = "thousand_usd"
+definition = "market capitalization on MthPrcDt"
+
+[[vendor_fields]]
+field = "ShrOut"
+unit = "thousand_shares"
+definition = "unadjusted or corporate-action-adjusted shares outstanding observation"
+
+[[vendor_fields]]
+field = "DlyVol"
+unit = "shares"
+definition = "raw shares traded during the day, not split-adjusted within month"
+
+[[vendor_fields]]
+field = "DlyPrcVol"
+unit = "usd"
+definition = "DlyPrc multiplied by DlyVol; a proxy, not transaction-level dollar volume"
+
+[[vendor_fields]]
+field = "DlyRet"
+unit = "decimal_ratio"
+definition = "daily total return"
+
+[[vendor_fields]]
+field = "MthRet"
+unit = "decimal_ratio"
+definition = "daily total returns compounded for the month, including delisting return when appropriate"
+
+[[gates]]
+gate_id = "CRSP_SCHEMA_EXACT"
+stage = "contract_compile"
+severity = "hard"
+requirement = "all seven observed Phase 1 headers exactly equal this contract"
+
+[[gates]]
+gate_id = "PHASE_01_BOUNDARY_AUTHENTIC"
+stage = "contract_compile"
+severity = "hard"
+requirement = "Phase 1 freeze and recovery attestation hashes and identifiers match"
+
+[[gates]]
+gate_id = "GLOBAL_DUPLICATE_CLASSIFICATION"
+stage = "before_canonical_market_rows"
+severity = "hard"
+requirement = "full-key counts classify exact and conflicting duplicates; conflicting rows remain fatal"
+
+[[gates]]
+gate_id = "CRSP_UNIT_IDENTITIES"
+stage = "before_universe_thresholds"
+severity = "hard"
+requirement = "documented units reconcile empirically for price-volume, price-shares-cap, and daily-monthly fields"
+
+[[gates]]
+gate_id = "RETURN_DISTRIBUTION_DELISTING_EXACTLY_ONCE"
+stage = "before_labels"
+severity = "hard"
+requirement = "daily and monthly returns reconcile with distribution and delisting ledgers despite absent delisting flags"
+
+[[gates]]
+gate_id = "CALENDAR_BOUNDARIES_EXACT"
+stage = "before_holding_intervals"
+severity = "hard"
+requirement = "derived signal, entry, exit, embargo, and full-feature cutoff dates equal Methodology v1"
+
+[[gates]]
+gate_id = "ADR_CAPITALIZATION_DIAGNOSTIC"
+stage = "before_universe_thresholds"
+severity = "hard"
+requirement = "ShrAdrFlg and CRSP capitalization behavior are reported; no unsupported issuer-cap reconstruction"
+
+[[gates]]
+gate_id = "MONTHLY_OBSERVATION_DATE_VALID"
+stage = "before_monthly_crosscheck"
+severity = "hard"
+requirement = "MthPrcDt, not MthCalDt alone, controls the market observation date; missing MthPrcDt is explicit"
+
+[[gates]]
+gate_id = "MARKET_OBSERVATION_VALIDITY_AND_FLAG_DOMAINS"
+stage = "before_canonical_market_rows"
+severity = "hard"
+requirement = "finite-value rules and every used CRSP price, return, volume, and status flag domain are inventoried and tested"
+
+[[gates]]
+gate_id = "MISSING_EXECUTION_CLOSE_POLICY"
+stage = "before_backtest_execution"
+severity = "hard"
+requirement = "a deterministic no-trade or fallback rule is frozen for a missing scheduled DlyClose"
+
+[[gates]]
+gate_id = "SOURCE_AUTHORITY_UNIQUE"
+stage = "contract_compile"
+severity = "hard"
+requirement = "every output table has exactly one primary source and current-header fields are prohibited as historical sources"

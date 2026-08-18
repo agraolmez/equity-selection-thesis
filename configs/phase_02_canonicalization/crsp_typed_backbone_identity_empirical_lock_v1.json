@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "lock_id": "crsp-typed-identity-joins-v1",
+  "status": "locked_after_aggregate_only_development_discovery",
+  "locked_at_utc": "2026-07-15T10:05:02Z",
+  "discovery": {
+    "mode": "production_discovery",
+    "result_status": "aggregate_identity_join_discovery_complete_not_authoritative",
+    "command_entrypoint": "scripts/discover_crsp_typed_backbone.py",
+    "command_entrypoint_sha256": "67603c9f95dd6d8cc0a852e3b486c2ebdd79a564509fa8ca3e473412e6b529b9",
+    "implementation": "src/portfolio_bot/data/phase_02_crsp_typed_backbone_discovery.py",
+    "implementation_sha256": "fe5d94b534849f6d08c826a8faf5377dbaa3529845d73699801a29793e4c7f60",
+    "prelock_typed_policy_sha256": "3769d8c130169914cfbac7e577c674c4cce8d625d384fc18bb4276c6d7f0934b",
+    "typed_schema_sha256": "62ad603c88798212f60ea4ec9796bffbf65008c6cfd87a08239cddf057e31391",
+    "development_config_sha256": "645b6ff51480d4e3cbcad313e3488c5a8d45df272ca4af6e7010e870296b4c35",
+    "supporting_config_sha256": "6117495f76106a9a89922c1d2a01d23c824e9e94f783ffd8a8290a99bec11cf1",
+    "paths_config_sha256": "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878",
+    "database_relocation_receipt_sha256": "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+  },
+  "reproducible_confirmation": {
+    "confirmation_id": "identity-confirmation-d17a575c1f2b994b",
+    "status": "aggregate_confirmation_passed_zero_differences",
+    "manifest": "artifacts/phase_02_canonical_panel/identity_discovery_confirmation/manifest.json",
+    "manifest_sha256": "8d8d767d5588fd24c2a4d3df0a1b8b3ecded1733892b68b3b0342d8d00a90d59",
+    "implementation": "artifacts/phase_02_canonical_panel/identity_discovery_prelock/phase_02_crsp_typed_backbone_discovery.prelock.py",
+    "implementation_sha256": "f1ced685ded32406ab2cdc21ea31883cda4ce09dfea1e591fa1cc74b093fa157",
+    "prelock_policy": "artifacts/phase_02_canonical_panel/identity_discovery_prelock/crsp_typed_backbone_policy_v1.prelock.toml",
+    "prelock_policy_sha256": "3769d8c130169914cfbac7e577c674c4cce8d625d384fc18bb4276c6d7f0934b",
+    "canonical_result": "artifacts/phase_02_canonical_panel/identity_discovery_confirmation/aggregate_identity_discovery.json",
+    "canonical_result_sha256": "d17a575c1f2b994b9cf6641ef564975097fa8ab7dd6cedaa63872ca258354713",
+    "difference_count": 0
+  },
+  "scope": {
+    "start_date": "2000-01-01",
+    "development_end_date": "2014-11-30",
+    "quality_end_date": "2014-12-31",
+    "date_bounds_are_inclusive": true,
+    "december_2014_role": "embargo_quality_and_boundary_reconciliation_only",
+    "validation_or_final_test_accessed": false
+  },
+  "source_authentication": {
+    "daily": {
+      "filename": "crsp_daily_ciz.csv",
+      "sha256": "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9",
+      "size_bytes": 12740735288,
+      "full_file_rows": 49886907
+    },
+    "monthly": {
+      "filename": "crsp_monthly_ciz.csv",
+      "sha256": "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf",
+      "size_bytes": 561296199,
+      "full_file_rows": 2423212
+    },
+    "identity": {
+      "filename": "crsp_names_ciz.csv",
+      "sha256": "ee791429169b380b5fcacd896d76a16795861ce42d703d0d188d2c4fc9c26e24",
+      "size_bytes": 26876522,
+      "full_file_rows": 191048
+    }
+  },
+  "aggregate_expectations": {
+    "daily_to_identity": {
+      "population_rows": 26778093,
+      "blank_as_of_date_rows": 0,
+      "one_match_rows": 26778093,
+      "zero_match_rows": 0,
+      "multiple_match_rows": 0,
+      "embedded_interval_exact_key_match_rows": 26778093,
+      "embedded_interval_exact_key_missing_rows": 0,
+      "as_of_interval_key_equal_rows": 26778093,
+      "as_of_interval_key_different_rows": 0,
+      "as_of_payload_all_fields_equal_rows": 26778093,
+      "as_of_payload_one_or_more_fields_different_rows": 0
+    },
+    "monthly_to_identity": {
+      "population_rows": 1284297,
+      "blank_as_of_date_rows": 24784,
+      "nonblank_as_of_date_rows": 1259513,
+      "one_match_rows": 1259513,
+      "zero_match_rows": 24784,
+      "zero_match_rows_with_nonblank_as_of_date": 0,
+      "multiple_match_rows": 0,
+      "calendar_month_substitution_for_blank_as_of_date_permitted": false,
+      "embedded_interval_exact_key_match_rows": 1284297,
+      "embedded_interval_exact_key_missing_rows": 0,
+      "as_of_interval_key_equal_rows": 1251772,
+      "as_of_interval_key_different_rows": 7741,
+      "as_of_payload_all_fields_equal_rows": 1251777,
+      "as_of_payload_one_or_more_fields_different_rows": 7736
+    },
+    "identity_intervals": {
+      "retained_rows": 65602,
+      "unique_permnos": 15555,
+      "duplicate_key_groups": 0,
+      "contiguous_edges": 50047,
+      "gap_edges": 0,
+      "overlap_edges": 0
+    }
+  },
+  "interpretation": {
+    "daily_join_is_total_and_single_match": true,
+    "monthly_nonblank_join_is_total_and_single_match": true,
+    "monthly_zero_matches_are_exactly_blank_observation_dates": true,
+    "multiple_identity_matches_are_absent": true,
+    "monthly_embedded_descriptors_may_differ_from_observation_date_identity": true,
+    "monthly_authoritative_identity_source": "inclusive crsp_names_ciz interval joined on MthPrcDt",
+    "monthly_embedded_descriptors_are_audit_only": true
+  },
+  "privacy": {
+    "raw_security_keys_published": false,
+    "canonical_rows_published": false,
+    "raw_row_examples_published": false,
+    "aggregate_counts_only": true,
+    "scratch_destroyed_before_return": true
+  },
+  "authorizations": {
+    "typed_backbone_build_may_consume_these_counts_as_hard_expectations": true,
+    "typed_backbone_publication_authorized_by_discovery_alone": false,
+    "return_history_authorized": false,
+    "features_models_portfolios_or_backtests_authorized": false
+  }
+}

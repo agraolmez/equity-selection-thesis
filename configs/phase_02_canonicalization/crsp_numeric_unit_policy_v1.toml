@@ -1,0 +1,301 @@
+schema_version = 1
+policy_name = "crsp_numeric_unit_and_return_inventory"
+policy_version = "v1"
+status = "policy_and_empirical_expectations_locked_pending_primary_verification"
+purpose = "Freeze numeric parsing, unit identities, return-flag inventory, duration preservation, monthly observation-date, and ADR diagnostics without authorizing labels or backtests."
+
+[scope]
+start_date = "2000-01-01"
+end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+model_development_last_holding_month = "2014-11"
+model_development_last_exit_date = "2014-12-01"
+december_2014_stage = "embargo_quality_and_boundary_reconciliation_only"
+december_2014_must_be_reported_separately = true
+validation_and_final_test_rows_may_be_inspected = false
+raw_security_keys_may_be_published = false
+discovery_outputs_are_authoritative = false
+
+[bindings]
+methodology_freeze = "outputs/methodology_v1_freeze.json"
+methodology_freeze_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+methodology_source = "outputs/methodology_v1_source.md"
+methodology_source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+crsp_backbone_contract = "configs/phase_02_sources/crsp_backbone.toml"
+crsp_backbone_contract_sha256 = "ee9be29c6e10572c65c3e35cab162431363c67e059fc17c233666f1dc2b7fdb0"
+verified_contract_pointer = "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json"
+verified_contract_pointer_sha256 = "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+verified_calendar_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_calendar_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+daily_monthly_profile_build_id = "crsp-profile-45422a7d1d2b38ca"
+daily_monthly_profile_verification_id = "verify-c0621f6d96316f0f"
+daily_monthly_profile_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_DEVELOPMENT_PROFILE_VERIFIED.json"
+daily_monthly_profile_pointer_sha256 = "cc716a5461432f24f722fc613be628446bbaa1fed53734367d7b61d32cfed17d"
+daily_monthly_profile_manifest_sha256 = "98b215946cdace652fa101248a06d85f99b11e063a3b602cb769f0be2e3830ca"
+supporting_profile_build_id = "crsp-support-5fce388e8edbc75c437977e7"
+supporting_profile_verification_id = "verify-fa14980826f5b235"
+supporting_profile_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+supporting_profile_pointer_sha256 = "1df31283660a65f5c00774b6a9940c2bdedca68207341272abe0620d393162ba"
+supporting_profile_manifest_sha256 = "4f73f43fdb95bcdc843d519b46b57b71659d145145ef4846154b1e324f840f39"
+
+[parsing]
+decimal_grammar = '[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[Ee][+-]?[0-9]+)?'
+nonnegative_integer_grammar = '[0-9]+'
+positive_integer_grammar = '[1-9][0-9]*'
+regex_match_mode = "full_decoded_field_string"
+valid_numeric_substring_inside_other_text_is_rejected = true
+blank_string_is_only_numeric_null = true
+trim_whitespace = false
+normalize_case = false
+normalize_null_tokens = false
+coerce_invalid_to_null = false
+coerce_invalid_to_zero = false
+literal_na_is_numeric_null = false
+literal_n_slash_a_is_numeric_null = false
+nan_and_infinity_are_valid = false
+decimal_engine = "arbitrary_precision_Decimal"
+binary_float_may_decide_pass_fail = false
+integer_bounds = "signed_int64"
+malformed_nonfinite_or_integer_overflow_is_hard = true
+negative_zero_is_reported_separately = true
+negative_zero_is_automatically_fatal = false
+
+[fields.daily]
+date_column = "DlyCalDt"
+decimal_columns = [
+  "DlyPrc", "DlyCap", "DlyRet", "DlyRetx", "DlyClose", "DlyLow",
+  "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol",
+]
+nonnegative_integer_columns = ["DlyVol"]
+price_and_quote_columns = [
+  "DlyPrc", "DlyClose", "DlyLow", "DlyHigh", "DlyBid", "DlyAsk",
+  "DlyOpen",
+]
+return_columns = ["DlyRet", "DlyRetx"]
+capitalization_columns = ["DlyCap"]
+
+[fields.monthly]
+date_column = "MthCalDt"
+observation_date_column = "MthPrcDt"
+year_month_column = "YYYYMM"
+decimal_columns = ["MthPrc", "MthCap", "MthRet", "MthRetx", "MthPrcVol"]
+nonnegative_integer_columns = ["MthDisCnt", "MthVol", "MthPrcVolMissCnt"]
+positive_integer_when_present_columns = ["ShrOut"]
+return_columns = ["MthRet", "MthRetx"]
+
+[numeric_domains]
+negative_daily_or_monthly_volume_is_hard = true
+negative_monthly_counts_are_hard = true
+nonpositive_present_shares_outstanding_is_hard = true
+return_below_minus_one_is_hard_profile_failure_requiring_review = true
+return_upper_bound = "none"
+present_price_or_quote_nonpositive_outcome = "diagnostic_and_future_typed_validity_flag_false"
+present_capitalization_nonpositive_outcome = "diagnostic_and_future_typed_cap_valid_false"
+nonpositive_price_or_cap_outside_eligibility_does_not_delete_canonical_row = true
+DlyClose_nonpositive_outcome = "not_a_valid_liquidity_session_but_not_a_raw_row_failure"
+malformed_nonfinite_or_overflow_outcome = "hard_profile_failure"
+negative_volume_or_count_outcome = "hard_profile_failure"
+nonpositive_present_ShrOut_outcome = "hard_profile_failure"
+return_below_minus_one_outcome = "hard_profile_failure"
+ohlc_ordering_is_diagnostic_until_feature_use = true
+bid_greater_than_ask_is_diagnostic_until_spread_feature_use = true
+
+[return_availability.daily]
+available_missing_flag = "NA"
+NA_flag_coherence_requires = ["DlyRet_is_present_finite_and_not_below_minus_one", "DlyRetDurFlg_is_not_MR"]
+non_NA_flag_mapping = "flag_specific_empirical_cross_tab_required_before_availability_derivation"
+known_special_numeric_non_NA_flags = ["MV"]
+MV_rows_must_preserve_observed_numeric_returns_and_durations = true
+MV_is_valid_for_126_return_history = "unresolved"
+non_NA_does_not_universally_require_blank_DlyRet_or_MR = true
+dlyretx_is_required_for_total_return_availability = false
+dlyretx_presence_and_domain_are_reported_separately = true
+NA_flag_coherence_mismatches_are_hard = true
+other_flag_coherence_is_inventory_until_profile_mapping_is_locked = true
+return_history_count_is_built_in_this_gate = false
+official_missing_flag_metadata = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_RM.html"
+official_duration_flag_metadata = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_RD.html"
+production_profile_must_lock_observed_cross_tab_counts = true
+production_profile_must_lock_flag_specific_availability_mapping_before_return_history = true
+
+[return_duration]
+D1 = 1
+D2 = 1
+D3 = 1
+D4 = 1
+DU = 1
+P1 = 2
+P2 = 3
+P3 = 4
+P4 = 5
+P5 = 6
+P6 = 7
+P7 = 8
+P8 = 9
+P9 = 10
+MR = 0
+DD = -1
+unknown_period_sentinel = -1
+single_trading_period_flags = ["D1", "D2", "D3", "D4", "DU"]
+multi_trading_period_flags = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"]
+unknown_delisting_duration_flags = ["DD"]
+missing_duration_flags = ["MR"]
+preserve_every_duration_flag_in_future_typed_rows = true
+silently_treat_multi_period_as_one_day = false
+P1_through_P9_factor_alignment = "unresolved_hard_gate_before_return_history_beta_or_labels"
+DD_factor_alignment = "unresolved_hard_gate_before_return_history_beta_or_labels"
+
+[return_semantics.monthly]
+observed_flags = ["CR", "DE", "GP", "IP", "MP", "NS", "NT"]
+flag_null_mapping_is_predeclared = false
+reason = "The frozen extract contains numeric GP returns, so vendor flag descriptions do not justify overwriting or nulling observed numeric fields."
+return_and_returnx_presence_are_profiled_by_flag = true
+daily_to_monthly_return_reconciliation_is_completed_in_this_gate = false
+distribution_and_delisting_exactly_once_is_completed_in_this_gate = false
+monthly_rows_are_crosschecks_not_primary_return_source = true
+
+[liquidity]
+valid_session_rule = "finite_positive_DlyClose_and_finite_nonnegative_DlyVol"
+screening_dollar_volume_formula = "DlyClose * DlyVol"
+DlyPrcFlg_TR_is_additional_eligibility_filter = false
+DlyPrcFlg_coherence_may_be_profiled = true
+DlyPrcVol_may_replace_screening_dollar_volume = false
+DlyPrc_is_diagnostic_not_execution_close = true
+
+[units]
+DlyPrc = "usd_per_share"
+DlyClose = "usd_per_share"
+DlyVol = "shares"
+DlyPrcVol = "usd"
+DlyCap = "thousand_usd"
+MthPrc = "usd_per_share"
+MthVol = "shares"
+MthPrcVol = "usd"
+MthCap = "thousand_usd"
+ShrOut = "thousand_shares"
+DlyRet = "decimal_ratio"
+DlyRetx = "decimal_ratio"
+MthRet = "decimal_ratio"
+MthRetx = "decimal_ratio"
+capitalization_to_nominal_usd_multiplier = 1000
+shares_to_nominal_shares_multiplier = 1000
+
+[quantization]
+source = "original_numeric_lexeme"
+quantum_definition = "place value of the final displayed significand digit after applying any decimal exponent"
+reported_interval = "closed interval value minus quantum/2 through value plus quantum/2"
+exact_integer_point_interval_columns = ["DlyVol", "MthVol", "MthDisCnt", "MthPrcVolMissCnt"]
+ShrOut_interval = "reported thousand-share integer minus 0.5 through plus 0.5 thousand shares"
+ShrOut_reason = "ShrOut is reported in thousand-share units and is not treated as an exact single-share count."
+calculated_intervals_use_outward_rounded_Decimal_arithmetic = true
+identity_pass_rule = "reported and calculated closed intervals overlap"
+extra_relative_tolerance = 0
+extra_absolute_tolerance = 0
+binary_float_guard = 0
+
+[identities.daily_price_volume]
+formula = "DlyPrc * DlyVol"
+reported_field = "DlyPrcVol"
+audit_population = "all canonical daily rows"
+comparable_population = "canonical daily rows with valid present DlyPrc and valid present DlyVol"
+missing_or_invalid_DlyPrcVol_with_valid_operands = "identity_failure"
+missing_or_invalid_DlyPrc_or_DlyVol = "mutually_exclusive_exclusion"
+zero_comparable_rows_overall_or_in_source_active_year_period_segment = "hard_failure"
+zero_comparable_rows_in_flag_stratum_with_pooled_segment_coverage = "diagnostic_explicit_exclusion"
+required_fail_rows_for_pass = 0
+tolerance = "quantization_interval_overlap"
+severity = "hard"
+screening_substitution_permitted = false
+
+[identities.nominal_scale]
+DlyCap = "multiply by 1000 exactly"
+MthCap = "multiply by 1000 exactly"
+ShrOut = "multiply by 1000 exactly"
+severity = "hard"
+
+[identities.daily_monthly_price_cap]
+monthly_join_fields = ["PERMNO", "MthPrcDt"]
+daily_join_fields = ["PERMNO", "DlyCalDt"]
+join_mapping = "monthly.PERMNO = daily.PERMNO and monthly.MthPrcDt = daily.DlyCalDt"
+blank_MthPrcDt_is_explicit_exclusion = true
+MthCalDt_may_substitute_for_blank_MthPrcDt = false
+nonblank_MthPrcDt_must_be_strict_date = true
+nonblank_MthPrcDt_must_equal_YYYYMM_period = true
+nonblank_MthPrcDt_must_be_in_verified_trading_calendar = true
+price_comparison = "MthPrc versus canonical DlyPrc using quantization_interval_overlap"
+capitalization_comparison = "MthCap versus canonical DlyCap using quantization_interval_overlap"
+multiple_daily_matches_are_hard = true
+missing_daily_match_outcome = "diagnostic_explicit_exclusion"
+missing_or_invalid_monthly_operand_outcome = "explicit_exclusion_also_reported_by_numeric_inventory"
+missing_or_invalid_daily_operand_outcome = "explicit_exclusion_also_reported_by_numeric_inventory"
+identity_failure_where_both_operands_are_valid = "hard_failure"
+required_fail_rows_for_pass = 0
+zero_comparable_rows_overall_or_in_source_active_year_period_segment = "hard_failure"
+severity_where_comparable = "hard"
+
+[identities.monthly_aggregates]
+MthVol_vs_sum_DlyVol = "discovery_diagnostic_stratified_by_MthVolFlg_and_MthFacShrFlg"
+MthPrcVol_vs_sum_DlyPrcVol = "discovery_diagnostic_stratified_by_MthVolFlg_and_MthFacShrFlg"
+MthPrcVolMissCnt_vs_daily_missing_operands = "discovery_diagnostic"
+hard_formula_is_predeclared = false
+reason = "The frozen methodology requires empirical reconciliation but does not define the flag-stratified aggregate formulas."
+these_diagnostics_cannot_authorize_the_hard_capitalization_or_unit_gate = true
+
+[capitalization]
+vendor_cap_is_security_line_cap_not_PERMCO_issuer_cap = true
+price_times_shares_is_empirical_unit_diagnostic = true
+universal_row_equality_is_hard = false
+reason = "DlyCapFlg and MthCapFlg are absent from the frozen extract."
+per_row_tolerance = "quantization_interval_overlap"
+non_ADR_hard_scale_population_and_pass_threshold = "must_be_locked_after_aggregate_discovery_before_production_profile"
+depositary_ratio_reconstruction_permitted = false
+PERMCO_issuer_cap_reconstruction_permitted = false
+
+[adr]
+eligible_share_types_remain = ["NS", "AD"]
+diagnostic_dimensions = ["year", "PrimaryExch", "ShareType", "ShrAdrFlg"]
+report_share_interval_join_coverage = true
+report_ShareType_AD_by_ShrAdrFlg_Y_matrix = true
+report_cap_price_shares_ratio_quantiles = true
+ADR_formula_mismatch_is_universal_row_failure = false
+missing_or_nonpositive_vendor_cap_fails_later_universe_screen = true
+
+[coverage]
+population_rows_must_equal_comparable_plus_mutually_exclusive_exclusions = true
+unclassified_exclusions_are_hard = true
+report_population_comparable_pass_fail_and_each_exclusion = true
+report_by_year = true
+report_december_2014_separately = true
+raw_keys_or_row_examples_are_prohibited = true
+
+[gate_separation]
+this_gate_may_validate = [
+  "numeric_lexemes", "numeric_domains", "unit_scales", "daily_price_volume",
+  "monthly_observation_date", "daily_monthly_price_and_cap", "return_flag_inventory",
+  "return_duration_mapping", "ADR_capitalization_behavior",
+]
+this_gate_may_not_claim = [
+  "return_history_eligibility", "factor_aligned_daily_returns", "distribution_exactly_once",
+  "delisting_exactly_once", "canonical_labels", "features", "portfolios", "PnL",
+  "performance",
+]
+later_hard_gate = "RETURN_DISTRIBUTION_DELISTING_EXACTLY_ONCE"
+
+[downstream]
+typed_market_backbone_may_be_authorized_only_after_independent_verification = true
+typed_rows_must_preserve_raw_return_flags_and_duration_fields = true
+universe_thresholds_require_verified_unit_and_capitalization_gate = true
+return_history_screen_is_blocked = true
+beta_estimation_is_blocked = true
+labels_are_blocked = true
+backtests_are_blocked = true
+
+[publication]
+production_profile_config_required = true
+production_profile_config_required_status = "locked_after_aggregate_discovery_before_primary_profile"
+production_profile_must_bind_this_policy_sha256 = true
+production_profile_must_lock_non_ADR_scale_population_and_threshold = true
+primary_publication_permitted_by_this_policy_alone = false
+independent_verification_permitted_by_this_policy_alone = false

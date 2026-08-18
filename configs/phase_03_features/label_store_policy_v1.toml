@@ -1,0 +1,215 @@
+schema_version = 1
+policy_id = "phase03-label-store-policy-v1"
+contract_id = "phase03-feature-label-split-v1"
+stage = 7
+status = "frozen_development_only_before_primary_label_build"
+
+[semantic_contract]
+policy_path = "configs/phase_03_features/phase_03_contract_v1.toml"
+policy_sha256 = "85cff2869ee4a02352f6a2ba944668c642963bfd3f82e8d9b07199a66b65c21e"
+verified_pointer = "artifacts/phase_03_features/LATEST_CONTRACT_VERIFIED.json"
+verified_pointer_sha256 = "9686580ebfde50773c1417e5eb5319f5a4bab44a650694282e2c0e312c6c3741"
+required_contract_build_id = "phase03-contract-f972947de8284d6f"
+required_contract_verification_id = "verify-844daca9cfd107fe"
+required_authorization = "development_feature_and_label_build_authorized"
+
+[verified_feature_store]
+policy_path = "configs/phase_03_features/feature_store_policy_v1.toml"
+policy_sha256 = "1a66bfa4ad537e06829f585e080c356750c7360d486414a40a895de6f6b5380f"
+verified_pointer = "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json"
+verified_pointer_sha256 = "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+primary_manifest = "artifacts/phase_03_features/feature_store_builds/phase03-features-fda21f0e51b8276c10246f9f/manifest.json"
+primary_manifest_sha256 = "96ab135c0628054699fa3f27a76abd1cb30f3e3e46279a84052a29c895b51375"
+required_build_id = "phase03-features-fda21f0e51b8276c10246f9f"
+required_verification_id = "verify-350915782d3ef12e"
+required_authorization = "stage_07_labels_authorized"
+
+[physical_rules]
+path = "configs/phase_03_features/label_build_rules_v1.json"
+sha256 = "f93f006062ba441f61c9cdda3a5d4fc1cb7b8b5ffdf422f1bebe7ea3057d2947"
+required_rules_id = "phase03-label-build-rules-v1"
+
+[scope]
+first_signal_date = "2000-01-31"
+last_signal_date = "2014-10-31"
+last_permitted_exit_date = "2014-12-01"
+required_audit_rows = 1263048
+required_long_eligible_rows = 286628
+required_signal_dates = 178
+required_folds = 4
+required_split_membership_rows = 712
+minimum_valid_labels_per_signal = 100
+model_fitting_permitted = false
+portfolio_or_backtest_permitted = false
+pnl_or_performance_permitted = false
+validation_2015_2019_payload_access_permitted = false
+final_2020_2025_payload_access_permitted = false
+
+[database]
+root = "/Users/agraemirolmez/Desktop/Thesis"
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+relocation_receipt = "data/database_relocation_v1.json"
+relocation_receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+raw_is_read_only = true
+interim_build_root = "interim/phase_03_features/phase03-feature-label-split-v1/label_store_builds"
+processed_build_root = "processed/phase_03_features/phase03-feature-label-split-v1/label_store_builds"
+quality_build_root = "quality/phase_03_features/phase03-feature-label-split-v1/label_store_builds"
+cache_root = "cache/phase_03_features/phase03-feature-label-split-v1/label_store"
+
+[inputs]
+calendar_build_id = "calendar-ae2e4ba4a280d66e"
+return_build_id = "crsp-return-c6ba39536fb9654781f260eb"
+signal_universe_build_id = "signal-universe-51b26dd77e60988269cfd902"
+auxiliary_build_id = "auxiliary-b98bab2947570e9b1c8001d8"
+feature_store_build_id = "phase03-features-fda21f0e51b8276c10246f9f"
+feature_store_verification_id = "verify-350915782d3ef12e"
+required_table_names = [
+  "feature_store_raw.parquet",
+  "crsp_signal_date_universe.parquet",
+  "rebalance_calendar.parquet",
+  "trading_calendar.parquet",
+  "crsp_security_day_return.parquet",
+  "ff_factor_daily_observation.parquet",
+]
+only_closed_allowlist_tables_permitted = true
+authenticate_pointer_manifest_hash_size_schema_and_rows_before_use = true
+return_rows_must_be_predicate_filtered_before_delivery = true
+production_hash_bypass_permitted = false
+symlinked_root_or_path_component_permitted = false
+identity_check_before_each_payload_read_required = true
+rehash_inputs_after_build_before_publication = true
+stable_stat_and_full_rehash_before_publication_required = true
+
+[inputs.verified_pointers]
+calendar = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+calendar_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+returns = "artifacts/phase_02_canonical_panel/LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json"
+returns_sha256 = "c6d6ebacd418f01bddf64c6f0c36903ec083c358f7506867f1c06da0328ea835"
+signal_universe = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json"
+signal_universe_sha256 = "07cd6dc90b48b150b9900884e7ffa6ba01445a9bab3cd847e237eb785e3993d2"
+auxiliary = "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_VERIFIED.json"
+auxiliary_sha256 = "ea58ee795a1ca5540a6da314ffde11dcde71d22d719d09d7ba69ec35bd0e3e59"
+
+[build]
+row_group_size = 131072
+compression = "zstd"
+dictionary_encode_strings = true
+return_scan_batch_rows = 65536
+output_compare_batch_rows = 16384
+deterministic_threads = 1
+daily_sum_primitive = "math.fsum"
+content_addressed_build_id_required = true
+dependency_scoped_code_hashes_required = true
+resume_requires_authenticated_receipt = true
+
+[outputs.interim]
+required_files = [
+  "_SUCCESS.json",
+  "development_label_audit.parquet",
+  "development_label_leg_lineage.parquet",
+]
+
+[outputs.processed]
+required_files = [
+  "_SUCCESS.json",
+  "development_labels.parquet",
+  "development_label_month_summary.parquet",
+  "label_split_membership.parquet",
+]
+model_matrix_permitted = false
+
+[outputs.quality]
+required_files = [
+  "_SUCCESS.json",
+  "quality_summary.json",
+  "label_coverage.parquet",
+  "label_status_counts.parquet",
+  "label_timing_checks.parquet",
+  "label_distribution.parquet",
+]
+
+[quality_gates]
+duplicate_audit_keys = 0
+audit_key_order_mismatches = 0
+audit_rows = 1263048
+duplicate_processed_keys = 0
+processed_key_domain_mismatches = 0
+processed_key_order_mismatches = 0
+processed_rows = 286628
+duplicate_leg_lineage_keys = 0
+leg_lineage_key_domain_mismatches = 0
+leg_lineage_sort_mismatches = 0
+duplicate_month_summary_keys = 0
+month_summary_key_domain_mismatches = 0
+month_summary_sort_mismatches = 0
+month_summary_rows = 178
+duplicate_split_membership_keys = 0
+split_membership_key_domain_mismatches = 0
+split_membership_sort_mismatches = 0
+split_membership_rows = 712
+duplicate_coverage_keys = 0
+coverage_key_domain_mismatches = 0
+coverage_sort_mismatches = 0
+duplicate_status_count_keys = 0
+status_count_key_domain_mismatches = 0
+status_count_sort_mismatches = 0
+duplicate_timing_check_keys = 0
+timing_check_key_domain_mismatches = 0
+timing_check_sort_mismatches = 0
+duplicate_distribution_keys = 0
+distribution_key_domain_mismatches = 0
+distribution_sort_mismatches = 0
+spine_key_or_audit_field_mismatches = 0
+nonlong_nonnull_target_values = 0
+short_eligibility_influence_violations = 0
+beta_value_mismatches = 0
+post_cutoff_return_rows_used = 0
+post_cutoff_factor_rows_used = 0
+signal_to_entry_legs_used = 0
+after_exit_legs_used = 0
+duplicate_or_overlapping_legs_used = 0
+multi_session_or_straddling_legs_used = 0
+unusable_return_legs_used = 0
+unresolved_delisting_legs_used = 0
+terminal_delisting_double_counts = 0
+missing_factor_legs_used = 0
+factor_date_mismatches = 0
+residual_value_mismatches = 0
+excess_value_mismatches = 0
+rank_population_mismatches = 0
+rank_formula_mismatches = 0
+nonzero_rank_numerator_month_sums = 0
+excess_primary_mask_mismatches = 0
+mad_value_mismatches = 0
+security_availability_mismatches = 0
+month_availability_mismatches = 0
+split_or_embargo_mismatches = 0
+unknown_statuses = 0
+nonfinite_published_values = 0
+label_coverage_is_descriptive_not_pass_fail = true
+missing_outcomes_are_never_zero_filled = true
+
+[publication]
+artifact_root = "artifacts/phase_03_features"
+primary_build_namespace = "label_store_builds"
+verification_namespace = "label_store_verifications"
+latest_primary_pointer = "artifacts/phase_03_features/LATEST_LABEL_STORE_PRIMARY.json"
+latest_verified_pointer = "artifacts/phase_03_features/LATEST_LABEL_STORE_VERIFIED.json"
+primary_pointer_authorizes_downstream_use = false
+independent_verification_required = true
+verified_pointer_authorizes_stage_08_risk_and_cost_models = true
+verified_pointer_authorizes_stage_09_model_training = false
+verified_pointer_authorizes_portfolios_pnl_or_backtests = false
+verified_pointer_authorizes_validation_or_final_access = false
+closed_file_sets_required = true
+pointer_replaced_last = true
+
+[notebook]
+path = "notebooks/07_stage_07_label_store_quality.ipynb"
+must_execute_top_to_bottom = true
+must_bind_verified_build_and_verification_ids = true
+
+[report]
+technical_report_path = "reports/stage_07_label_store/index.html"
+must_bind_verified_build_and_verification_ids = true

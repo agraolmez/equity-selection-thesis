@@ -1,0 +1,455 @@
+{
+  "schema_version": 1,
+  "policy_id": "stage12-equal-weight-missing-cost-gate-replacement-freeze-policy-v11",
+  "stage": 12,
+  "status_before_publication": "approved_for_rule_restoring_economic_post_unblind_replacement_freeze",
+  "methodology": {
+    "source": "outputs/methodology_v1_source.md",
+    "source_sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81",
+    "freeze_receipt": "outputs/methodology_v1_freeze.json",
+    "freeze_receipt_sha256": "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+  },
+  "stage12_approval": {
+    "path": "configs/phase_06_final_test/stage_12_freeze_approval_v1.json",
+    "sha256": "59adb4639d538b13508c0253e69bb8dbdc4b70f7f6e5bdc0ab8df7df286e5678"
+  },
+  "scope": {
+    "purpose": "refreeze_the_complete_v1_final_system_after_the_authorized_rule_restoring_stage13_equal_weight_missing_cost_gate_without_opening_parent_or_outcome_payloads",
+    "repository_metadata_reads_permitted": true,
+    "authenticated_development_trial_metadata_reads_permitted": true,
+    "stage11_verified_metadata_reads_permitted": true,
+    "raw_payload_file_opens_permitted": false,
+    "final_period_payload_file_opens_permitted": false,
+    "final_period_rows_read_required": 0,
+    "final_forecasts_weights_trades_pnl_or_performance_created_required": 0,
+    "stage13_execution_authorized_now": false,
+    "stage13_requires_separate_user_approval": true
+  },
+  "required_authorities": [
+    {
+      "role": "raw_snapshot_freeze",
+      "path": "artifacts/phase_01_raw_manifest/LATEST_FROZEN.json",
+      "sha256": "b11436c10eafbabd52e2fd3d230bb3e48e97529282ba6fd81315c25396455299"
+    },
+    {
+      "role": "raw_snapshot_verification",
+      "path": "artifacts/phase_01_raw_manifest/LATEST_VERIFIED.json",
+      "sha256": "ba8070e3a282ac8c4e389254e2b848724a57d85b30130ecd44649c9c16b88b1a"
+    },
+    {
+      "role": "canonical_contract",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json",
+      "sha256": "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+    },
+    {
+      "role": "typed_crsp_backbone",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json",
+      "sha256": "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf"
+    },
+    {
+      "role": "return_engine",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json",
+      "sha256": "c6d6ebacd418f01bddf64c6f0c36903ec083c358f7506867f1c06da0328ea835"
+    },
+    {
+      "role": "holding_calendar",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json",
+      "sha256": "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+    },
+    {
+      "role": "signal_date_universe",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json",
+      "sha256": "07cd6dc90b48b150b9900884e7ffa6ba01445a9bab3cd847e237eb785e3993d2"
+    },
+    {
+      "role": "auxiliary_availability_linkage",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_VERIFIED.json",
+      "sha256": "ea58ee795a1ca5540a6da314ffde11dcde71d22d719d09d7ba69ec35bd0e3e59"
+    },
+    {
+      "role": "feature_store",
+      "path": "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json",
+      "sha256": "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+    },
+    {
+      "role": "label_store",
+      "path": "artifacts/phase_03_features/LATEST_LABEL_STORE_VERIFIED.json",
+      "sha256": "119a20dffafeb348022de373e2c4aedd790f5a03ef7cd6be8550bbf8278ce5b1"
+    },
+    {
+      "role": "risk_and_cost_models",
+      "path": "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json",
+      "sha256": "491bf16f5ee5bf2b8ba197cd251a3e41cbbdacbed7442877eaa3493221831e7a"
+    },
+    {
+      "role": "development_selector_search",
+      "path": "artifacts/phase_04_models/LATEST_SELECTOR_VERIFIED.json",
+      "sha256": "e4ffe4fdd999d15f2a1afa796c76155abb71708a26efbde135a70f6ca77ca2f5"
+    },
+    {
+      "role": "allocator_implementation",
+      "path": "artifacts/phase_04_models/LATEST_ALLOCATOR_VERIFIED.json",
+      "sha256": "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2"
+    },
+    {
+      "role": "validation_selection",
+      "path": "artifacts/phase_05_validation/LATEST_STAGE_11_EXECUTION_VERIFIED.json",
+      "sha256": "abb9153df655f6ace66c6bd2729f065c6bb381ddf925f19e6d7bee4f061c2232"
+    },
+    {
+      "role": "pre_unblind_calibration_scope_amendment",
+      "path": "configs/phase_06_final_test/stage_12_calibration_scope_amendment_v1.json",
+      "sha256": "6c44ab873f7c7c6ff69db4661a0edf1ad9d05f36ff9386f3eb96f6000febccf1"
+    },
+    {
+      "role": "post_unblind_technical_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_nullability_transport_amendment_v1.json",
+      "sha256": "6068df1a98ecdb47979a107e0370f0ac84c18b24a0a89dd69f9940d086991ca6"
+    },
+    {
+      "role": "post_unblind_hash_audit_incident",
+      "path": "artifacts/phase_06_final_test/STAGE_12_POST_UNBLIND_HASH_AUDIT_INCIDENT.json",
+      "sha256": "e0b9ad71bb6a42f8bd0cefdcd08aaaa1e44d0cbb440814de80e626f678edbb36"
+    },
+    {
+      "role": "post_unblind_scratch_topology_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_scratch_topology_amendment_v1.json",
+      "sha256": "8e394a97d61e7f18b16baef65a29402960a73f83871151047012a3ee48ea97fb"
+    },
+    {
+      "role": "stage13_parent_scratch_topology_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_PARENT_SCRATCH_TOPOLOGY_BLOCKER.json",
+      "sha256": "927fd04990a93ac01faf67bee9e600cf345d830e323c708420fd0d1ab1c6069e"
+    },
+    {
+      "role": "stage13_source_checkpoint_context_migration",
+      "path": "configs/phase_06_final_test/stage_13_source_checkpoint_context_migration_v2.json",
+      "sha256": "d504e2dc75c58645b458d255db4f140bd0c9d8a9fa20022b021b4098f586613e"
+    },
+    {
+      "role": "post_unblind_zero_row_merge_provenance_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_zero_row_merge_provenance_amendment_v1.json",
+      "sha256": "ed224a251c99c6ec5c47a5856f872e052e903ac8959f50204636efe9e1abc7aa"
+    },
+    {
+      "role": "stage13_zero_row_copy_guard_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_ZERO_ROW_COPY_GUARD_BLOCKER.json",
+      "sha256": "7fc5fecfefd4c291bc6196e16d7fd2f14f0763cf0cefcc1475ef869c44465bd7"
+    },
+    {
+      "role": "post_unblind_december_market_input_scope_partition_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_december_market_input_scope_partition_amendment_v1.json",
+      "sha256": "302d4994195f77d2fe554e0411915a676e41a1ba1f2800634f805e344a9827a7"
+    },
+    {
+      "role": "stage13_december_market_input_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_DECEMBER_MARKET_INPUT_BLOCKER_20260727.json",
+      "sha256": "82a08d940c3b7f6f54bdbd4bc3e6690754f8298c70e4ce57ad366ea80528329b"
+    },
+    {
+      "role": "stage13_decision_checkpoint_rebind",
+      "path": "configs/phase_06_final_test/stage_13_decision_checkpoint_rebind_v2.json",
+      "sha256": "1453e467c622913660a9097fc260c5632bbd963474f5b99c167478212ee70908"
+    },
+    {
+      "role": "checkpoint_rebind_metadata_correction_authorization",
+      "path": "artifacts/phase_06_final_test/STAGE_12_CHECKPOINT_REBIND_METADATA_CORRECTION_AMENDMENT_AUTHORIZATION.json",
+      "sha256": "206c3623db5c702f04aea4d6d9c8fd76225a29a9e20f8dca77cd8884cfb3f5b5"
+    },
+    {
+      "role": "stage13_checkpoint_rebind_metadata_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_CHECKPOINT_REBIND_METADATA_BLOCKER_20260727.json",
+      "sha256": "f7ef225b6c6941b399d806b23525d50784b185d00b1ee178124165f763ec93f5"
+    },
+    {
+      "role": "stage13_checkpoint_rebind_metadata_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_CHECKPOINT_REBIND_METADATA_PREFLIGHT_20260727.json",
+      "sha256": "b533cc91f12d8a92fdc9ac510d3f8b416b02e6827bbc5e1e8fc4d91af213acdd"
+    },
+    {
+      "role": "post_unblind_entry_market_canonicalization_scope_alignment_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_entry_market_canonicalization_scope_alignment_amendment_v1.json",
+      "sha256": "fb01f060431c4b568053f1588b5c4d21e35371751762c87f76cc566dfa007626"
+    },
+    {
+      "role": "stage13_entry_market_projection_contract_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_ENTRY_MARKET_PROJECTION_CONTRACT_BLOCKER_20260727.json",
+      "sha256": "80eec8044486f63b92b12f63de3a39d3ba2840561b0f318874963e1e2ec121ac"
+    },
+    {
+      "role": "stage13_entry_market_share_coverage_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_ENTRY_MARKET_SHARE_COVERAGE_PREFLIGHT_20260727.json",
+      "sha256": "f53e09331597f8197eb38648ed280032ee89601b821e050cab930f0c3e3205a0"
+    },
+    {
+      "role": "thesis_error_materiality_policy",
+      "path": "artifacts/phase_06_final_test/ERROR_MATERIALITY_POLICY_20260727.json",
+      "sha256": "622d1335c540dfa84a4a396bade529e2e3632d1090a41ce66e1990dc582df03d"
+    },
+    {
+      "role": "post_unblind_accounting_missing_execution_cost_transport_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_accounting_missing_execution_cost_transport_amendment_v1.json",
+      "sha256": "2539bdc9b402be3df192690571e01b50ba83f90a381a9860066c62ee874d3b02"
+    },
+    {
+      "role": "accounting_missing_execution_cost_transport_authorization",
+      "path": "artifacts/phase_06_final_test/STAGE_12_ACCOUNTING_MISSING_EXECUTION_COST_TRANSPORT_AMENDMENT_AUTHORIZATION.json",
+      "sha256": "593c0da4c8a6997a06626b97fc51c3111ed470863394731bf4dac560c89bd80c"
+    },
+    {
+      "role": "stage13_adv20_nullability_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_ADV20_NULLABILITY_BLOCKER_20260727.json",
+      "sha256": "9468526f52dae7af4b60589a1efda362c562f2e0a4e739c0fb2a22997f6dc5e3"
+    },
+    {
+      "role": "stage13_accounting_missing_execution_cost_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_ACCOUNTING_MISSING_EXECUTION_COST_PREFLIGHT_20260727.json",
+      "sha256": "feb761454b5ca2ff2cd3b58faad4a902b67e3af57afcc25eed78eef081022deb"
+    },
+    {
+      "role": "post_unblind_logical_fingerprint_transport_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_logical_fingerprint_transport_amendment_v1.json",
+      "sha256": "b1fe0a1c9064bd26a025b21ac0a6d88d50a2050677a5779b25e822b68ab6a6c7"
+    },
+    {
+      "role": "logical_fingerprint_transport_authorization",
+      "path": "artifacts/phase_06_final_test/STAGE_12_LOGICAL_FINGERPRINT_TRANSPORT_AMENDMENT_AUTHORIZATION.json",
+      "sha256": "cbfa2ee2afd71294d71ea201c83c79a845ae4f87ace205a2f19e5c7d9dbac5e5"
+    },
+    {
+      "role": "stage13_final_market_input_logical_fingerprint_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_FINAL_MARKET_INPUT_LOGICAL_FINGERPRINT_BLOCKER_20260727.json",
+      "sha256": "5b14591d9c559cb01f27262ceb7e7eaa12af2702e0575ccbf57b39a227c5d197"
+    },
+    {
+      "role": "stage13_final_market_input_logical_fingerprint_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_FINAL_MARKET_INPUT_LOGICAL_FINGERPRINT_PREFLIGHT_20260727.json",
+      "sha256": "8daa9c7e078072bc9fcc73249086eeaf9c608192dd33331942b6896ea3013cf4"
+    },
+    {
+      "role": "post_unblind_factor_covariance_ordinal_basis_alignment_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_factor_covariance_ordinal_basis_alignment_amendment_v1.json",
+      "sha256": "9d1f8e93ef49b1621df442fd1760fe24fd6f405bcf06e7f1bd6d67b574f01f76"
+    },
+    {
+      "role": "factor_covariance_ordinal_basis_alignment_authorization",
+      "path": "artifacts/phase_06_final_test/STAGE_12_FACTOR_COVARIANCE_ORDINAL_BASIS_ALIGNMENT_AMENDMENT_AUTHORIZATION.json",
+      "sha256": "9c762291ce317c92837380ab02ccdf820d82c254f0c10252f5f3f715b40eb001"
+    },
+    {
+      "role": "stage13_factor_covariance_ordinal_basis_blocker",
+      "path": "artifacts/phase_06_final_test/STAGE_13_FACTOR_COVARIANCE_ORDINAL_BASIS_BLOCKER_20260727.json",
+      "sha256": "3d8e1a80741aadae7773368d17bc04541e01b4aee21a48e8ebe2f3b278630a18"
+    },
+    {
+      "role": "stage13_factor_covariance_ordinal_basis_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_FACTOR_COVARIANCE_ORDINAL_BASIS_PREFLIGHT_20260727.json",
+      "sha256": "49e043391a4ea27f8392a55685cfd72151d4ebd9c1119f7b2f05b698c6926530"
+    },
+    {
+      "role": "stage13_resume3_failure",
+      "path": "artifacts/phase_06_final_test/STAGE_13_RESUME3_FAILURE_V10_BE92D206.json",
+      "sha256": "d0e4b76bf16bc2caa56e218b8af7159abb9dfaa0992e9b0a14104a6239112056"
+    },
+    {
+      "role": "stage13_equal_weight_missing_cost_preflight",
+      "path": "artifacts/phase_06_final_test/STAGE_13_EQUAL_WEIGHT_MISSING_COST_PREFLIGHT_20260727.json",
+      "sha256": "08c43ef17fad63878f3c996a8f863f75039ba707a849d6adc5235e30d9e1e5cf"
+    },
+    {
+      "role": "equal_weight_missing_cost_gate_authorization",
+      "path": "artifacts/phase_06_final_test/STAGE_12_EQUAL_WEIGHT_MISSING_COST_GATE_AMENDMENT_AUTHORIZATION.json",
+      "sha256": "6f8063509a88792cb22d4d446a3633dc040a8a53030f6b79ae7e5076a8850a95"
+    },
+    {
+      "role": "post_unblind_equal_weight_missing_cost_gate_amendment",
+      "path": "configs/phase_06_final_test/stage_12_post_unblind_equal_weight_missing_cost_gate_amendment_v1.json",
+      "sha256": "72a94490bf1c835871104c966991ce42ef5a5ee5ee33ab7aabb20570d3de8ffa"
+    }
+  ],
+  "inventory": {
+    "logical_project_root": "project://",
+    "include_python_under": [
+      "src",
+      "scripts",
+      "tests/unit",
+      "tests/integration"
+    ],
+    "include_test_fixture_under": [
+      "tests/fixtures"
+    ],
+    "include_configuration_under": [
+      "configs"
+    ],
+    "include_exact_files": [
+      "pyproject.toml",
+      "outputs/methodology_v1_source.md",
+      "outputs/methodology_v1_freeze.json"
+    ],
+    "exclude_components": [
+      "__pycache__",
+      ".pytest_cache"
+    ],
+    "git_revision_required": false,
+    "revision_identity": "canonical_sha256_file_inventory_and_tree_digest"
+  },
+  "development_trial_source": {
+    "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_04_models/phase04-selector-v1/selector_builds/phase04-selector-results-09a59d61ed58e77d80448a97/selector_configuration_metrics.parquet",
+    "sha256": "28bd5def81d7ef738a00e55f085d242668bceb004238a63cd8850ff3ccf3dda4",
+    "rows": 346,
+    "final_period_content": false
+  },
+  "structured_final_system": {
+    "path": "configs/phase_06_final_test/stage_12_final_system_v1.json"
+  },
+  "final_input_registry": {
+    "path": "configs/phase_06_final_test/stage_13_input_registry_v1.json"
+  },
+  "report_templates": [
+    "configs/phase_06_final_test/stage_13_report_template_v1.md",
+    "configs/phase_06_final_test/stage_14_report_template_v1.md"
+  ],
+  "tests": {
+    "focused_command": [
+      ".venv/bin/python",
+      "scripts/run_stage_12_safe_regression.py",
+      "-q",
+      "tests/unit/test_stage12_final_freeze.py",
+      "tests/unit/test_stage12_trial_ledger.py::test_synthetic_ledger_is_complete_deterministic_and_nonduplicative",
+      "tests/unit/test_stage12_trial_ledger.py::test_trial_source_hash_and_configuration_identity_fail_closed",
+      "tests/unit/test_final_test_calendar.py",
+      "tests/unit/test_final_test_authorization.py",
+      "tests/unit/test_final_test_access.py",
+      "tests/unit/test_final_input_construction.py",
+      "tests/unit/test_final_input_materialization.py",
+      "tests/unit/test_final_raw_source_publication.py",
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_final_test_checkpoint.py",
+      "tests/unit/test_final_test_benchmarks.py",
+      "tests/unit/test_final_test_economic_kernel.py",
+      "tests/unit/test_final_test_production_runtime.py",
+      "tests/unit/test_final_test_production_results.py",
+      "tests/unit/test_final_test_results.py",
+      "tests/unit/test_stage14_inference.py",
+      "tests/unit/test_final_test_orchestration.py",
+      "tests/unit/test_final_test_publication.py",
+      "tests/unit/test_numerical_materiality.py",
+      "tests/unit/test_stage12_numerical_materiality_amendment.py",
+      "tests/unit/test_stage11_validation_empirical_feature_stream.py",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py",
+      "tests/unit/test_stage11_validation_market_extension.py::test_entry_projection_schema_is_exact_entry_consumer_only",
+      "tests/unit/test_stage11_validation_market_extension.py::test_entry_consumer_transform_matches_frozen_stage2_without_return_fields",
+      "tests/unit/test_stage13_decision_checkpoint_rebind.py"
+    ],
+    "independent_synthetic_command": [
+      ".venv/bin/python",
+      "scripts/run_stage_12_safe_regression.py",
+      "-q",
+      "--strict-config",
+      "tests/unit/test_stage12_numerical_materiality_amendment.py",
+      "tests/unit/test_numerical_materiality.py",
+      "tests/unit/test_final_test_publication.py",
+      "tests/unit/test_final_test_orchestration.py",
+      "tests/unit/test_stage14_inference.py",
+      "tests/unit/test_final_test_results.py",
+      "tests/unit/test_final_test_production_runtime.py",
+      "tests/unit/test_final_test_production_results.py",
+      "tests/unit/test_final_test_economic_kernel.py",
+      "tests/unit/test_final_test_benchmarks.py",
+      "tests/unit/test_final_test_checkpoint.py",
+      "tests/unit/test_final_input_construction.py",
+      "tests/unit/test_final_input_materialization.py",
+      "tests/unit/test_final_raw_source_publication.py",
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_final_test_access.py",
+      "tests/unit/test_final_test_authorization.py",
+      "tests/unit/test_final_test_calendar.py",
+      "tests/unit/test_stage12_trial_ledger.py::test_trial_source_hash_and_configuration_identity_fail_closed",
+      "tests/unit/test_stage12_trial_ledger.py::test_synthetic_ledger_is_complete_deterministic_and_nonduplicative",
+      "tests/unit/test_stage12_final_freeze.py",
+      "tests/unit/test_stage11_validation_empirical_feature_stream.py",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py",
+      "tests/unit/test_stage11_validation_market_extension.py::test_entry_projection_schema_is_exact_entry_consumer_only",
+      "tests/unit/test_stage11_validation_market_extension.py::test_entry_consumer_transform_matches_frozen_stage2_without_return_fields",
+      "tests/unit/test_stage13_decision_checkpoint_rebind.py"
+    ],
+    "both_must_pass": true
+  },
+  "outputs": {
+    "artifact_root": "artifacts/phase_06_final_test",
+    "primary_namespace": "stage_12_freezes",
+    "verification_namespace": "stage_12_verifications",
+    "checkpoint_namespace": "stage_12_checkpoints",
+    "latest_primary_pointer": "artifacts/phase_06_final_test/LATEST_STAGE_12_PRIMARY.json",
+    "latest_verified_pointer": "artifacts/phase_06_final_test/LATEST_STAGE_12_VERIFIED.json",
+    "primary_status": "STAGE12_POST_UNBLIND_REPLACEMENT_FREEZE_COMPLETE_PENDING_INDEPENDENT_VERIFICATION",
+    "verified_status": "STAGE12_POST_UNBLIND_REPLACEMENT_FREEZE_VERIFIED"
+  },
+  "memoization": {
+    "content_addressed_nodes": [
+      "authority_graph",
+      "source_configuration_and_test_inventory",
+      "environment_lock",
+      "trial_ledger",
+      "focused_stage12_protocol",
+      "independent_synthetic_regression",
+      "primary_bundle",
+      "independent_verification"
+    ],
+    "resume_rule": "reuse_only_after_hash_schema_and_semantic_reauthentication",
+    "recompute_rule": "recompute_only_the_failed_node_and_its_descendants",
+    "completed_stage11_may_be_replayed": false
+  },
+  "base_policy": {
+    "path": "configs/phase_06_final_test/stage_12_freeze_policy_v1.json",
+    "sha256": "68b47869472a51453856822283bc68e065640fb0c447d1a87f409ad9c422bf31"
+  },
+  "prior_replacement_policy": {
+    "path": "configs/phase_06_final_test/stage_12_freeze_policy_v10.json",
+    "sha256": "fb2d0f27020c1ec842fddbbb73bc6b1836088f5fef417a40974509d74827138f"
+  },
+  "post_unblind_technical_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_nullability_transport_amendment_v1.json",
+    "sha256": "6068df1a98ecdb47979a107e0370f0ac84c18b24a0a89dd69f9940d086991ca6"
+  },
+  "post_unblind_scratch_topology_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_scratch_topology_amendment_v1.json",
+    "sha256": "8e394a97d61e7f18b16baef65a29402960a73f83871151047012a3ee48ea97fb"
+  },
+  "post_unblind_zero_row_merge_provenance_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_zero_row_merge_provenance_amendment_v1.json",
+    "sha256": "ed224a251c99c6ec5c47a5856f872e052e903ac8959f50204636efe9e1abc7aa"
+  },
+  "stage13_source_checkpoint_context_migration": {
+    "path": "configs/phase_06_final_test/stage_13_source_checkpoint_context_migration_v2.json",
+    "sha256": "d504e2dc75c58645b458d255db4f140bd0c9d8a9fa20022b021b4098f586613e"
+  },
+  "post_unblind_december_market_input_scope_partition_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_december_market_input_scope_partition_amendment_v1.json",
+    "sha256": "302d4994195f77d2fe554e0411915a676e41a1ba1f2800634f805e344a9827a7"
+  },
+  "stage13_decision_checkpoint_rebind": {
+    "path": "configs/phase_06_final_test/stage_13_decision_checkpoint_rebind_v2.json",
+    "sha256": "1453e467c622913660a9097fc260c5632bbd963474f5b99c167478212ee70908"
+  },
+  "post_unblind_entry_market_canonicalization_scope_alignment_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_entry_market_canonicalization_scope_alignment_amendment_v1.json",
+    "sha256": "fb01f060431c4b568053f1588b5c4d21e35371751762c87f76cc566dfa007626"
+  },
+  "post_unblind_accounting_missing_execution_cost_transport_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_accounting_missing_execution_cost_transport_amendment_v1.json",
+    "sha256": "2539bdc9b402be3df192690571e01b50ba83f90a381a9860066c62ee874d3b02"
+  },
+  "post_unblind_logical_fingerprint_transport_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_logical_fingerprint_transport_amendment_v1.json",
+    "sha256": "b1fe0a1c9064bd26a025b21ac0a6d88d50a2050677a5779b25e822b68ab6a6c7"
+  },
+  "post_unblind_factor_covariance_ordinal_basis_alignment_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_factor_covariance_ordinal_basis_alignment_amendment_v1.json",
+    "sha256": "9d1f8e93ef49b1621df442fd1760fe24fd6f405bcf06e7f1bd6d67b574f01f76"
+  },
+  "post_unblind_equal_weight_missing_cost_gate_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_equal_weight_missing_cost_gate_amendment_v1.json",
+    "sha256": "72a94490bf1c835871104c966991ce42ef5a5ee5ee33ab7aabb20570d3de8ffa"
+  }
+}

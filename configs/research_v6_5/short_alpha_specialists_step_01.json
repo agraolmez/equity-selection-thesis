@@ -1,0 +1,78 @@
+{
+  "schema": "research_v6_5_short_alpha_specialists_step_01_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-15",
+  "scope": {
+    "selector_only": true,
+    "portfolio_or_optimizer_authorized": false,
+    "separate_from_closed_v6_v6_1_v6_3_v6_4": true,
+    "research_question": "Can genuinely side-specific CAPM and FF5-plus-momentum short-alpha selectors identify the negative-alpha tail better than reversing the corresponding frozen long-alpha selector?",
+    "historical_development_not_untouched_confirmation": true,
+    "predecessor_fitted_models_or_checkpoints_reused": false,
+    "frozen_predecessor_predictions_used_only_as_named_controls": true
+  },
+  "base_selector_contract": {
+    "path": "configs/research_v6_1/selector_step_01.json",
+    "sha256": "481e306553c2f5b9d4fc7309f7c7a122d92d3489d39d0f0f4c772a5eeffcca92"
+  },
+  "targets": {
+    "short_capm_alpha": {
+      "source_target_id": "capm",
+      "source_alpha_column": "alpha_capm",
+      "rank_column": "target_rank_short_capm_alpha",
+      "economic_column": "short_capm_alpha_payoff",
+      "construction": "Within each month, rank max(-CAPM alpha, 0). Positive or zero alpha observations tie at zero; increasingly negative alpha receives increasingly high short-opportunity rank.",
+      "frozen_control": {
+        "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/capm/official_predictions.parquet",
+        "sha256": "02939b97601114fafbbcc967309070c0bd136cb7790e2998c479693d5b8414b1",
+        "score_column": "ensemble__cam_free_mlp_plus_cam__equal",
+        "control_column": "frozen_capm_alpha_reversed"
+      }
+    },
+    "short_ff5_alpha": {
+      "source_target_id": "ff5_momentum",
+      "source_alpha_column": "alpha_ff5_momentum",
+      "rank_column": "target_rank_short_ff5_alpha",
+      "economic_column": "short_ff5_alpha_payoff",
+      "construction": "Within each month, rank max(-FF5-plus-momentum alpha, 0). Positive or zero alpha observations tie at zero; increasingly negative alpha receives increasingly high short-opportunity rank.",
+      "frozen_control": {
+        "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/ff5_momentum/official_predictions.parquet",
+        "sha256": "2ec9be95ccbb48199bc896d01cb46a6c5a5326ce7a9b42ce9877da22dbd8ccf8",
+        "score_column": "ensemble__cam_free_mlp_plus_cam__equal",
+        "control_column": "frozen_ff5_alpha_reversed"
+      }
+    }
+  },
+  "search": {
+    "feature_views": ["full", "cam_free", "correlation_reduced"],
+    "families": ["xgboost", "neural_network", "elastic_net"],
+    "objectives": ["pairwise", "continuous_rank"],
+    "ensembles": "Reuse every prespecified V6.1 equal and causal dynamic ensemble; direct CAM is oriented toward negative alpha.",
+    "operating_schedule": "For each alpha definition, reuse its frozen V6.1 refit, history, and retune schedules so the experiment isolates side specialization.",
+    "historical_test_cannot_change_feature_view_family_objective_profile_or_ensemble": true
+  },
+  "selection": {
+    "period": "2020-01 through 2023-12",
+    "primary_metric": "equal-month mean cross-sectional Spearman rank IC against the downside-specific short-alpha target",
+    "challenger_rule": "Choose the highest validation mean IC among all new components and prespecified ensembles; break an exact tie by model_id.",
+    "tail_diagnostics": [0.10, 0.20],
+    "promotion_vs_reversed_control": {
+      "minimum_mean_ic_improvement": 0.005,
+      "minimum_paired_hac_t": 1.0,
+      "top_decile_mean_source_alpha_must_be_more_negative": true,
+      "top_decile_negative_alpha_fraction_must_not_decline": true
+    },
+    "historical_test_cannot_select_an_unselected_model": true
+  },
+  "checkpointing": {
+    "natural_unit": "target/feature-view/model/objective/refit-block",
+    "atomic": true,
+    "resume": true,
+    "identity_mismatch": "fail closed into a new V6.5 output lineage"
+  },
+  "execution": {
+    "stable_python": "/opt/anaconda3/envs/finance/bin/python",
+    "parallel_targets": true,
+    "full_run_allowed_by_current_status": true
+  }
+}

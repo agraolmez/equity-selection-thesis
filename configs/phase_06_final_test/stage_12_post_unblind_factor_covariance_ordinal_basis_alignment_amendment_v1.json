@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-factor-covariance-ordinal-basis-alignment-v1",
+  "status": "STAGE12_FACTOR_COVARIANCE_ORDINAL_BASIS_ALIGNMENT_AMENDMENT_AUTHORIZED",
+  "classification": "non_economic_rule_restoring_zero_based_factor_covariance_ordinal_contract_alignment",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_FACTOR_COVARIANCE_ORDINAL_BASIS_ALIGNMENT_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "9c762291ce317c92837380ab02ccdf820d82c254f0c10252f5f3f715b40eb001",
+    "status": "STAGE12_FACTOR_COVARIANCE_ORDINAL_BASIS_ALIGNMENT_AMENDMENT_AUTHORIZED"
+  },
+  "materiality_policy": {
+    "path": "artifacts/phase_06_final_test/ERROR_MATERIALITY_POLICY_20260727.json",
+    "sha256": "622d1335c540dfa84a4a396bade529e2e3632d1090a41ce66e1990dc582df03d",
+    "status": "THESIS_ERROR_MATERIALITY_POLICY_ACTIVE"
+  },
+  "prior_v9_authority": {
+    "policy_path": "configs/phase_06_final_test/stage_12_freeze_policy_v9.json",
+    "policy_sha256": "ffc0aa63850635f6bd2004db7001d6623bc819ef52755ca33f62d0c13eee70a4",
+    "file_inventory_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-bdf5a063d5fee375556d3d88/file_inventory.json",
+    "file_inventory_sha256": "ef709f1920723fe8deba82c55622f231fdfa9f9cd7780047abebadb2a6c151b5",
+    "file_count": 608,
+    "project_tree_sha256": "bf11ae118f4e39aa74834db70d8e157f0e797f22f7ec17c0199a9b309ce07ef1",
+    "freeze_id": "stage12-freeze-bdf5a063d5fee375556d3d88",
+    "primary_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_BDF5A063.json",
+    "primary_pointer_sha256": "a9799dbf0e033c9ffb0acf771037bb31fd7bd5b50cb4434272d9cd9857755117",
+    "manifest_sha256": "0242b9b86edb208950ce3e8ce522f7912672f9ee6ae57c514cbd474cbef4c503",
+    "primary_success_sha256": "8d9aababe804c3a0170baf26c7add967e207c1f6700e8400d41849a93fde4e4c",
+    "verification_id": "stage12-verify-f47beadcb21575341cfaefff",
+    "verified_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_BDF5A063.json",
+    "verified_pointer_sha256": "69bc5ad1514fefd5a21a1ab9b7318a26ecd89862f3f07e86f8d8ad166bea4ec0",
+    "verification_report_sha256": "82919322b647a92f5a146ef459ed4f82e83bbf4587c338254e615003c418c98e",
+    "verification_success_sha256": "f043e8f57e86526de4f5e4b694587220644c0880846837767c4e45ed6d53b13f",
+    "stage12_binding_sha256": "d7f20e9355ee8ba0f3be152dc8534ae5172a7d40a465f58d0519c2019e5604b3",
+    "stage13_approval_archive_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_BDF5A063.json",
+    "stage13_approval_sha256": "ac4432190a5b0a33b8c892f14e13cde0f06bb97b5d4b49878b2e613061202408",
+    "stage13_approval_payload_sha256": "80b8d5021cac217fd5641d7afd67af3be0637f3b6d85d74faf3d81df42fa8cb8"
+  },
+  "incident_authorities": {
+    "blocker": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_FACTOR_COVARIANCE_ORDINAL_BASIS_BLOCKER_20260727.json",
+      "sha256": "3d8e1a80741aadae7773368d17bc04541e01b4aee21a48e8ebe2f3b278630a18",
+      "status": "STAGE13_FAILED_CLOSED_BEFORE_NORMALIZED_SOURCE_PUBLICATION_ON_FACTOR_COVARIANCE_ORDINAL_BASIS_MISMATCH"
+    },
+    "preflight": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_FACTOR_COVARIANCE_ORDINAL_BASIS_PREFLIGHT_20260727.json",
+      "sha256": "49e043391a4ea27f8392a55685cfd72151d4ebd9c1119f7b2f05b698c6926530",
+      "status": "STAGE13_FACTOR_COVARIANCE_ORDINAL_BASIS_PREFLIGHT_COMPLETE"
+    },
+    "failed_launch_memo": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_LAUNCH_V9_D7F20E93.json",
+      "sha256": "9c0c3d1b675e86b8dad97bfcb5361c1f7fae212e73710f8afe84448ac9d3db3e"
+    }
+  },
+  "diagnosis": {
+    "months": 72,
+    "covariance_rows": 2592,
+    "source_ordinal_domain": [0, 1, 2, 3, 4, 5],
+    "incorrect_stage13_guard_domain": [1, 2, 3, 4, 5, 6],
+    "factor_name_or_order_mismatches": 0,
+    "covariance_daily_bit_differences": 0,
+    "covariance_monthly_bit_differences": 0,
+    "nonfinite_cells": 0,
+    "asymmetric_months": 0,
+    "non_psd_months": 0,
+    "minimum_monthly_eigenvalue": 0.00007802845357290469,
+    "monthly_scale_bit_differences_from_21_times_daily": 0
+  },
+  "ordinal_contract": {
+    "authoritative_basis": "zero_based_0_through_5",
+    "stage8_generator_uses_zero_based_enumerate": true,
+    "stage8_independent_verifier_requires_zero_based": true,
+    "stage11_materialization_verifier_requires_zero_based": true,
+    "stage11_portfolio_backend_requires_zero_based": true,
+    "stage13_compiler_must_require_zero_based": true,
+    "stage13_runtime_must_require_zero_based": true,
+    "accept_both_bases_permitted": false,
+    "renumber_stored_source_permitted": false
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 2,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/final_input_construction.py",
+        "pre_amendment_sha256": "70dc0492e0538051a027c4f9b75bacebd307554cd16a383ba7143b00259ae082",
+        "post_amendment_sha256": "21cc65d99c872c7fb6988da63412790d091c666b2caadd9b0859d21f718e1a8f"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/production_runtime.py",
+        "pre_amendment_sha256": "f36f07b00808eb4abcca5692c2b5732b67feaac15bb9369f36892cfdc4ef319b",
+        "post_amendment_sha256": "f7ed29de71bd2b3731bc9e3bc6385414ce264bebb499f9faa3a4ddef3657e929"
+      }
+    ]
+  },
+  "focused_test_evidence": {
+    "tests_passed": 60,
+    "test_files": [
+      {
+        "path": "tests/unit/test_final_input_construction.py",
+        "pre_amendment_sha256": "d34cacd45cf2b8bd520d1a656dbd2a6ff4ff510113beb298cadb756fc0f151ea",
+        "post_amendment_sha256": "a3fc7548a75c27a76a3b68bc68cfa8ab338ffb14ae47bfeaad58554bb7f5b4cf"
+      },
+      {
+        "path": "tests/unit/test_final_source_builder.py",
+        "pre_amendment_sha256": "828d86021a4b511c1a892817ef56dd56f91b0b41f0cf558ab2cd5ca757755824",
+        "post_amendment_sha256": "49084d2ce45ca83ac7782140f1219ce33a3f161b3048c9a478c2372e6fecd9e1"
+      },
+      {
+        "path": "tests/unit/test_final_test_production_runtime.py",
+        "pre_amendment_sha256": "559ca9cd58cb45cb1f5f033defad59b97577e035abad68909fe1b9b5a2303904",
+        "post_amendment_sha256": "3458d95cf8fae3bbb9401657dbcbcdc30894f348113c629a9db9163d2880b016"
+      }
+    ]
+  },
+  "checkpoint_reuse": {
+    "failed_v9_context_preserved_immutably": true,
+    "failed_v9_context_sha256": "6e7202979f478fe99a5082a9d762f13c31332d0da793e579cd9033f6ff47834a",
+    "failed_v9_decision_checkpoint_count": 432,
+    "failed_v9_source_checkpoint_count": 790,
+    "existing_decision_checkpoint_rebind_v2_unchanged": true,
+    "authenticated_parent_decision_checkpoint_pairs_to_rebind": 431,
+    "only_decision_checkpoint_to_rebuild": "final_market_inputs/2025-12",
+    "new_full_source_migration_authority_added": false,
+    "reason_full_source_migration_omitted": "small_rebuild_is_narrower_and_faster_than_new_migration_governance",
+    "economic_checkpoint_reuse_available": false
+  },
+  "access_disclosure": {
+    "diagnostic_factor_covariance_parquet_files_opened": 72,
+    "diagnostic_covariance_rows_read": 2592,
+    "economic_checkpoint_files_opened": 0,
+    "model_forecast_weight_trade_return_or_pnl_files_created": 0,
+    "stage12_v10_parent_or_final_payload_files_opened_required": 0
+  },
+  "non_economic_boundary": {
+    "covariance_values_changed": false,
+    "factor_names_or_order_changed": false,
+    "schemas_changed": false,
+    "matrix_sort_or_reshape_changed": false,
+    "risk_formulas_models_weights_trades_returns_pnl_or_inference_changed": false,
+    "economic_month_checkpoints_before_failure": 0
+  },
+  "replacement_authority": {
+    "replacement_stage12_v10_identity_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_v9_stage13_approval_valid_for_v10": false,
+    "fresh_exact_binding_stage13_receipt_required": true,
+    "standing_approval_permits_receipt_after_verification": true,
+    "additional_user_prompt_after_v10_verification_required": false,
+    "stage13_execution_authorized_now": false
+  }
+}

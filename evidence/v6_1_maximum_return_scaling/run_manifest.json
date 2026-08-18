@@ -1,0 +1,26 @@
+{
+  "historical_test_profiles": [
+    "constant_1.00",
+    "constant_1.20",
+    "constant_2.05",
+    "constant_5.85",
+    "constant_9.35"
+  ],
+  "identity": {
+    "benchmarks_sha256": "b7041648b15d345910b6b3810bfd5ad31b3eebfc6bf7a18b7a5d33a31f491c03",
+    "code_identity": "e5468ec50cbfbefb7719f9c69097998e44d1f73d8cc15158cb43f73ba2a01ec8",
+    "config_sha256": "b50c39dfbd62e1c924a95f923bbac55809b8a899e13434b9b602244d00da0401",
+    "risk_cost_sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e",
+    "source_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2"
+  },
+  "schema": "research_v6_1_maximum_return_scaling_frontier_run_v1",
+  "status": "COMPLETE",
+  "tier_winners": {
+    "absolute_return_ceiling": "constant_9.35",
+    "balanced_high_return": "constant_2.05",
+    "expanded_institutional_100m": "constant_1.20",
+    "realistic_100m": "constant_1.00",
+    "stress_positive_ceiling": "constant_5.85"
+  },
+  "validation_profiles_total": 263
+}

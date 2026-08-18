@@ -1,0 +1,71 @@
+[[files]]
+filename = "crsp_daily_ciz.csv"
+family = "CRSP CIZ"
+role = "Security-day prices, total returns, quotes, volume, capitalization, and eligibility descriptors"
+coverage_date = "DlyCalDt"
+date_columns = ["DlyCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+key_columns = ["PERMNO", "DlyCalDt"]
+grain = "security_day; candidate key should be unique after exact-row diagnostics"
+required_columns = ["PERMNO", "PERMCO", "CUSIP", "PrimaryExch", "ConditionalType", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SICCD", "DlyCalDt", "DlyPrc", "DlyPrcFlg", "DlyCap", "DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyVol", "DlyClose", "DlyLow", "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol"]
+
+[[files]]
+filename = "crsp_monthly_ciz.csv"
+family = "CRSP CIZ"
+role = "Security-month returns and market-data cross-check with effective security-information intervals"
+coverage_date = "MthCalDt"
+availability_note = "MthCalDt is the coverage axis; the actual market observation is dated MthPrcDt and becomes usable only after that close."
+date_columns = ["MthCalDt", "MthPrcDt", "SecInfoStartDt", "SecInfoEndDt"]
+key_columns = ["PERMNO", "MthCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+grain = "security_month_information_interval; repeated PERMNO-month may be legitimate before interval selection"
+required_columns = ["PERMNO", "PERMCO", "CUSIP", "PrimaryExch", "ConditionalType", "TradingStatusFlg", "USIncFlg", "SecurityType", "SecuritySubType", "ShareType", "YYYYMM", "MthCalDt", "MthPrc", "MthPrcFlg", "MthPrcDt", "MthCap", "MthRet", "MthRetx", "MthRetFlg", "MthVol", "MthVolFlg", "MthPrcVol", "MthPrcVolMissCnt", "ShrOut"]
+
+[[files]]
+filename = "crsp_names_ciz.csv"
+family = "CRSP CIZ"
+role = "Effective-dated historical security master and identifiers"
+coverage_date = "SecInfoStartDt"
+date_columns = ["SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt"]
+key_columns = ["PERMNO", "SecInfoStartDt", "SecInfoEndDt"]
+grain = "security_information_interval"
+required_columns = ["PERMNO", "PERMCO", "SecInfoStartDt", "SecInfoEndDt", "CUSIP", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "PrimaryExch", "TradingStatusFlg"]
+
+[[files]]
+filename = "crsp_stock_header_ciz.csv"
+family = "CRSP CIZ"
+role = "One reference header row per security; never substitutes for historical names"
+coverage_date = "SecInfoStartDt"
+date_columns = ["SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt"]
+key_columns = ["PERMNO"]
+grain = "security_header"
+required_columns = ["PERMNO", "PERMCO", "SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch", "SecurityType", "SecuritySubType", "ShareType"]
+
+[[files]]
+filename = "crsp_shares_outstanding_ciz.csv"
+family = "CRSP CIZ"
+role = "Effective-dated shares-outstanding history"
+coverage_date = "ShrStartDt"
+date_columns = ["ShrStartDt", "ShrEndDt"]
+key_columns = ["PERMNO", "ShrStartDt", "ShrEndDt"]
+grain = "security_shares_interval"
+required_columns = ["PERMNO", "ShrStartDt", "ShrEndDt", "ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg"]
+
+[[files]]
+filename = "crsp_distribution_ciz.csv"
+family = "CRSP CIZ"
+role = "Distribution events used for return reconciliation"
+coverage_date = "DisExDt"
+date_columns = ["DisExDt", "DisDeclareDt", "DisRecordDt", "DisPayDt"]
+key_columns = ["PERMNO", "DisExDt", "DisSeqNbr"]
+grain = "security_distribution_sequence"
+required_columns = ["PERMNO", "DisExDt", "DisSeqNbr", "DisType", "DisDivAmt", "DisFacPr", "DisFacShr", "DisDeclareDt", "DisRecordDt", "DisPayDt"]
+
+[[files]]
+filename = "crsp_delisting_ciz.csv"
+family = "CRSP CIZ"
+role = "Delisting event, payoff, and missing-return information"
+coverage_date = "DelistingDt"
+availability_note = "DelistingDt is the event coverage axis; DelDlyDt records the daily return-posting date and Phase 2 applies the locked payoff timing rules."
+date_columns = ["DelistingDt", "DelNextDt", "DelAmtDt", "DelDlyDt"]
+key_columns = ["PERMNO", "DelistingDt"]
+grain = "security_delisting_event"
+required_columns = ["PERMNO", "DelistingDt", "DelActionType", "DelStatusType", "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelRet", "DelRetMissType", "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType", "DelDlyDt"]

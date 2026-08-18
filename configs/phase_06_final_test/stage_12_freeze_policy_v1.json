@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "policy_id": "stage12-pre-final-freeze-policy-v1",
+  "stage": 12,
+  "status_before_publication": "approved_for_metadata_only_pre_final_freeze",
+  "methodology": {
+    "source": "outputs/methodology_v1_source.md",
+    "source_sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81",
+    "freeze_receipt": "outputs/methodology_v1_freeze.json",
+    "freeze_receipt_sha256": "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+  },
+  "stage12_approval": {
+    "path": "configs/phase_06_final_test/stage_12_freeze_approval_v1.json",
+    "sha256": "59adb4639d538b13508c0253e69bb8dbdc4b70f7f6e5bdc0ab8df7df286e5678"
+  },
+  "scope": {
+    "purpose": "freeze_the_complete_v1_final_system_before_any_confirmatory_period_result_is_opened",
+    "repository_metadata_reads_permitted": true,
+    "authenticated_development_trial_metadata_reads_permitted": true,
+    "stage11_verified_metadata_reads_permitted": true,
+    "raw_payload_file_opens_permitted": false,
+    "final_period_payload_file_opens_permitted": false,
+    "final_period_rows_read_required": 0,
+    "final_forecasts_weights_trades_pnl_or_performance_created_required": 0,
+    "stage13_execution_authorized_now": false,
+    "stage13_requires_separate_user_approval": true
+  },
+  "required_authorities": [
+    {
+      "role": "raw_snapshot_freeze",
+      "path": "artifacts/phase_01_raw_manifest/LATEST_FROZEN.json",
+      "sha256": "b11436c10eafbabd52e2fd3d230bb3e48e97529282ba6fd81315c25396455299"
+    },
+    {
+      "role": "raw_snapshot_verification",
+      "path": "artifacts/phase_01_raw_manifest/LATEST_VERIFIED.json",
+      "sha256": "ba8070e3a282ac8c4e389254e2b848724a57d85b30130ecd44649c9c16b88b1a"
+    },
+    {
+      "role": "canonical_contract",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json",
+      "sha256": "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+    },
+    {
+      "role": "typed_crsp_backbone",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json",
+      "sha256": "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf"
+    },
+    {
+      "role": "return_engine",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json",
+      "sha256": "c6d6ebacd418f01bddf64c6f0c36903ec083c358f7506867f1c06da0328ea835"
+    },
+    {
+      "role": "holding_calendar",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json",
+      "sha256": "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+    },
+    {
+      "role": "signal_date_universe",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json",
+      "sha256": "07cd6dc90b48b150b9900884e7ffa6ba01445a9bab3cd847e237eb785e3993d2"
+    },
+    {
+      "role": "auxiliary_availability_linkage",
+      "path": "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_VERIFIED.json",
+      "sha256": "ea58ee795a1ca5540a6da314ffde11dcde71d22d719d09d7ba69ec35bd0e3e59"
+    },
+    {
+      "role": "feature_store",
+      "path": "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json",
+      "sha256": "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+    },
+    {
+      "role": "label_store",
+      "path": "artifacts/phase_03_features/LATEST_LABEL_STORE_VERIFIED.json",
+      "sha256": "119a20dffafeb348022de373e2c4aedd790f5a03ef7cd6be8550bbf8278ce5b1"
+    },
+    {
+      "role": "risk_and_cost_models",
+      "path": "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json",
+      "sha256": "491bf16f5ee5bf2b8ba197cd251a3e41cbbdacbed7442877eaa3493221831e7a"
+    },
+    {
+      "role": "development_selector_search",
+      "path": "artifacts/phase_04_models/LATEST_SELECTOR_VERIFIED.json",
+      "sha256": "e4ffe4fdd999d15f2a1afa796c76155abb71708a26efbde135a70f6ca77ca2f5"
+    },
+    {
+      "role": "allocator_implementation",
+      "path": "artifacts/phase_04_models/LATEST_ALLOCATOR_VERIFIED.json",
+      "sha256": "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2"
+    },
+    {
+      "role": "validation_selection",
+      "path": "artifacts/phase_05_validation/LATEST_STAGE_11_EXECUTION_VERIFIED.json",
+      "sha256": "abb9153df655f6ace66c6bd2729f065c6bb381ddf925f19e6d7bee4f061c2232"
+    },
+    {
+      "role": "pre_unblind_calibration_scope_amendment",
+      "path": "configs/phase_06_final_test/stage_12_calibration_scope_amendment_v1.json",
+      "sha256": "6c44ab873f7c7c6ff69db4661a0edf1ad9d05f36ff9386f3eb96f6000febccf1"
+    }
+  ],
+  "inventory": {
+    "logical_project_root": "project://",
+    "include_python_under": [
+      "src",
+      "scripts",
+      "tests/unit",
+      "tests/integration"
+    ],
+    "include_test_fixture_under": [
+      "tests/fixtures"
+    ],
+    "include_configuration_under": [
+      "configs"
+    ],
+    "include_exact_files": [
+      "pyproject.toml",
+      "outputs/methodology_v1_source.md",
+      "outputs/methodology_v1_freeze.json"
+    ],
+    "exclude_components": [
+      "__pycache__",
+      ".pytest_cache"
+    ],
+    "git_revision_required": false,
+    "revision_identity": "canonical_sha256_file_inventory_and_tree_digest"
+  },
+  "development_trial_source": {
+    "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_04_models/phase04-selector-v1/selector_builds/phase04-selector-results-09a59d61ed58e77d80448a97/selector_configuration_metrics.parquet",
+    "sha256": "28bd5def81d7ef738a00e55f085d242668bceb004238a63cd8850ff3ccf3dda4",
+    "rows": 346,
+    "final_period_content": false
+  },
+  "structured_final_system": {
+    "path": "configs/phase_06_final_test/stage_12_final_system_v1.json"
+  },
+  "final_input_registry": {
+    "path": "configs/phase_06_final_test/stage_13_input_registry_v1.json"
+  },
+  "report_templates": [
+    "configs/phase_06_final_test/stage_13_report_template_v1.md",
+    "configs/phase_06_final_test/stage_14_report_template_v1.md"
+  ],
+  "tests": {
+    "focused_command": [
+      ".venv/bin/python",
+      "scripts/run_stage_12_safe_regression.py",
+      "-q",
+      "tests/unit/test_stage12_final_freeze.py",
+      "tests/unit/test_stage12_trial_ledger.py::test_synthetic_ledger_is_complete_deterministic_and_nonduplicative",
+      "tests/unit/test_stage12_trial_ledger.py::test_trial_source_hash_and_configuration_identity_fail_closed",
+      "tests/unit/test_final_test_calendar.py",
+      "tests/unit/test_final_test_authorization.py",
+      "tests/unit/test_final_test_access.py",
+      "tests/unit/test_final_input_construction.py",
+      "tests/unit/test_final_input_materialization.py",
+      "tests/unit/test_final_raw_source_publication.py",
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_final_test_checkpoint.py",
+      "tests/unit/test_final_test_benchmarks.py",
+      "tests/unit/test_final_test_economic_kernel.py",
+      "tests/unit/test_final_test_production_runtime.py",
+      "tests/unit/test_final_test_production_results.py",
+      "tests/unit/test_final_test_results.py",
+      "tests/unit/test_stage14_inference.py",
+      "tests/unit/test_final_test_orchestration.py",
+      "tests/unit/test_final_test_publication.py",
+      "tests/unit/test_numerical_materiality.py",
+      "tests/unit/test_stage12_numerical_materiality_amendment.py"
+    ],
+    "independent_synthetic_command": [
+      ".venv/bin/python",
+      "scripts/run_stage_12_safe_regression.py",
+      "-q",
+      "--strict-config",
+      "tests/unit/test_stage12_numerical_materiality_amendment.py",
+      "tests/unit/test_numerical_materiality.py",
+      "tests/unit/test_final_test_publication.py",
+      "tests/unit/test_final_test_orchestration.py",
+      "tests/unit/test_stage14_inference.py",
+      "tests/unit/test_final_test_results.py",
+      "tests/unit/test_final_test_production_runtime.py",
+      "tests/unit/test_final_test_production_results.py",
+      "tests/unit/test_final_test_economic_kernel.py",
+      "tests/unit/test_final_test_benchmarks.py",
+      "tests/unit/test_final_test_checkpoint.py",
+      "tests/unit/test_final_input_construction.py",
+      "tests/unit/test_final_input_materialization.py",
+      "tests/unit/test_final_raw_source_publication.py",
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_final_test_access.py",
+      "tests/unit/test_final_test_authorization.py",
+      "tests/unit/test_final_test_calendar.py",
+      "tests/unit/test_stage12_trial_ledger.py::test_trial_source_hash_and_configuration_identity_fail_closed",
+      "tests/unit/test_stage12_trial_ledger.py::test_synthetic_ledger_is_complete_deterministic_and_nonduplicative",
+      "tests/unit/test_stage12_final_freeze.py"
+    ],
+    "both_must_pass": true
+  },
+  "outputs": {
+    "artifact_root": "artifacts/phase_06_final_test",
+    "primary_namespace": "stage_12_freezes",
+    "verification_namespace": "stage_12_verifications",
+    "checkpoint_namespace": "stage_12_checkpoints",
+    "latest_primary_pointer": "artifacts/phase_06_final_test/LATEST_STAGE_12_PRIMARY.json",
+    "latest_verified_pointer": "artifacts/phase_06_final_test/LATEST_STAGE_12_VERIFIED.json",
+    "primary_status": "STAGE12_PRE_FINAL_FREEZE_COMPLETE_PENDING_INDEPENDENT_VERIFICATION",
+    "verified_status": "STAGE12_PRE_FINAL_FREEZE_VERIFIED"
+  },
+  "memoization": {
+    "content_addressed_nodes": [
+      "authority_graph",
+      "source_configuration_and_test_inventory",
+      "environment_lock",
+      "trial_ledger",
+      "focused_stage12_protocol",
+      "independent_synthetic_regression",
+      "primary_bundle",
+      "independent_verification"
+    ],
+    "resume_rule": "reuse_only_after_hash_schema_and_semantic_reauthentication",
+    "recompute_rule": "recompute_only_the_failed_node_and_its_descendants",
+    "completed_stage11_may_be_replayed": false
+  }
+}

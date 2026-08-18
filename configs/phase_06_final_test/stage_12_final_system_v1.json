@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "system_id": "portfolio-bot-final-system-v1.1-prefinal",
+  "methodology_version": "v1",
+  "pre_unblind_implementation_amendment": "v1.1-numerical-materiality-and-final-execution-infrastructure",
+  "pre_unblind_calibration_scope_amendment": "stage12-prefinal-shared-calibration-scope-v1",
+  "implementation_readiness": {
+    "specification_frozen": true,
+    "segment_checkpoint_and_publication_infrastructure_certified_synthetically": true,
+    "final_economic_kernel_certified": true,
+    "schema_bound_registration_materializer_certified": true,
+    "complete_final_input_arrow_schemas_frozen": true,
+    "pre_unblind_calibration_scope_amendment_frozen": true,
+    "stage13_technical_gate_passed": true,
+    "final_period_access_authorized": false,
+    "blockers": []
+  },
+  "chronology": {
+    "development": "2000-01 through 2014-12",
+    "validation_selection_holding_months": "2015-01 through 2019-11",
+    "excluded_embargo_holding_month": "2019-12",
+    "primary_final_holding_months": "2020-01 through 2025-08",
+    "primary_final_month_count": 68,
+    "core_extension_holding_months": "2025-09 through 2025-11",
+    "core_extension_month_count": 3,
+    "partial_descriptive_holding_month": "2025-12",
+    "partial_descriptive_in_annualized_statistics": false,
+    "partial_descriptive_in_inference": false,
+    "primary_and_core_series_may_be_spliced": false
+  },
+  "selected_models": {
+    "neural_network_config_id": "nn_001",
+    "xgboost_config_id": "xgb_core_038_g10",
+    "conditional_elastic_net_config_id": "enet_r004_l005",
+    "final_seed_order": [
+      11,
+      23,
+      47,
+      71,
+      101
+    ],
+    "seed_aggregation": "mean_raw_forecasts_before_monthly_score",
+    "component_score_transform": "centered_average_percentile_rank",
+    "ensemble_reranked": false,
+    "neural_network_weight": 0.5,
+    "xgboost_weight": 0.5,
+    "selection_source_build_id": "stage11-validation-8d5e7f863ee093089520457e",
+    "selection_sha256": "fbd0f5a1e622bfa5725551d283bdc36de2bb14fd77e68be9ba1a5d6f05952ba8"
+  },
+  "features_and_learning": {
+    "full_feature_registry": "configs/phase_03_features/feature_registry_v1.json",
+    "feature_build_rules": "configs/phase_03_features/feature_build_rules_v1.json",
+    "label_build_rules": "configs/phase_03_features/label_build_rules_v1.json",
+    "selector_rules": "configs/phase_04_models/selector_build_rules_v1.json",
+    "primary_target": "within_month_rank_of_next_period_ff5_plus_momentum_residual_return",
+    "primary_loss": "mse",
+    "preprocessing": "frozen_stage9_common_preprocessing",
+    "missingness": "frozen_stage9_missing_value_and_indicator_rules",
+    "observation_weights": "equal_calendar_month_mass_then_memory_weight",
+    "primary_refit_cadence": "quarterly",
+    "primary_memory": "weighted_expanding",
+    "primary_memory_half_life_months": 120,
+    "calibration": "zero_intercept_huber_delta_1.345_nonnegative",
+    "calibration_scope_policy_id": "full-feature-prefinal-and-prior-live-shared-by-strategy-v1",
+    "calibration_source_scope": "full_feature_primary",
+    "same_strategy_calibration_slope_shared_across_feature_scopes": true,
+    "reduced_core_scores_relabelled_as_prefinal_oof": false,
+    "completed_labels_only": true
+  },
+  "portfolio": {
+    "primary_strategy_id": "ensemble_hybrid_primary",
+    "mandatory_linear_comparator_id": "elastic_net_hybrid_challenger",
+    "rank_challenger_id": "ensemble_rank_challenger",
+    "decision_focused_challenger_id": "decision_focused_neural_projected",
+    "decision_focused_active": false,
+    "decision_focused_inactive_reason": "production_training_runtime_not_certified",
+    "decision_focused_romano_wolf_p_value": 1.0,
+    "candidate_long_quantile": 0.8,
+    "candidate_short_quantile": 0.2,
+    "minimum_new_names_each_side": 50,
+    "reference_nav_usd": 100000000.0,
+    "starts_from_cash": true,
+    "allocation_policy": "configs/phase_04_models/allocation_policy_v1.toml",
+    "allocation_rules": "configs/phase_04_models/allocation_build_rules_v1.json",
+    "risk_cost_policy": "configs/phase_04_models/risk_cost_policy_v1.toml",
+    "risk_cost_rules": "configs/phase_04_models/risk_cost_build_rules_v1.json"
+  },
+  "constraints": {
+    "gross_maximum": 2.0,
+    "dynamic_net_absolute_nav_maximum": 0.1,
+    "dynamic_net_absolute_gross_fraction_maximum": 0.05,
+    "issuer_long_maximum": 0.01,
+    "issuer_short_minimum": -0.0075,
+    "market_beta_absolute_maximum": 0.1,
+    "nonmarket_factor_beta_absolute_maximum": 0.1,
+    "sector_net_absolute_maximum": 0.05,
+    "sector_gross_maximum": 0.3,
+    "non_us_country_net_absolute_maximum": 0.05,
+    "aggregate_foreign_net_absolute_maximum": 0.1,
+    "one_way_monthly_turnover_maximum": 0.5,
+    "each_trade_adv_fraction_maximum": 0.1,
+    "annualized_augmented_volatility_maximum": 0.1,
+    "exact_dollar_neutrality_required": false,
+    "exact_beta_zero_required": false
+  },
+  "costs": {
+    "commission_and_operational_slippage_rate": 0.0001,
+    "primary_spread_multiplier": 1.0,
+    "primary_impact_coefficient": 0.1,
+    "standard_stress_spread_multiplier": 2.0,
+    "standard_stress_impact_coefficient": 0.2,
+    "severe_impact_only_coefficient": 0.5,
+    "primary_borrow_annual_rate": 0.01,
+    "primary_financing_annual_spread": 0.005,
+    "nav_sensitivity_usd": [
+      25000000.0,
+      500000000.0
+    ]
+  },
+  "numerical_materiality": {
+    "policy_id": "portfolio-bot-strict-five-cent-materiality-v2",
+    "per_position_dollar_threshold_strict_upper_bound": 0.05,
+    "exactly_threshold_is_material": true,
+    "aggregate_residue_audit_required": true,
+    "aggregate_residue_dollars_per_strategy_month_maximum": 1.0,
+    "solver_feasibility_atol": 5e-08,
+    "schemas_keys_dates_hashes_missing_inputs_psd_checks_and_solver_certificates_buffered": false
+  },
+  "benchmarks": {
+    "confirmatory": [
+      "conditional_elastic_net_identical_downstream_system"
+    ],
+    "secondary_strategy_comparators": [
+      "trailing_residual_mean_markowitz",
+      "fixed_value_quality_momentum",
+      "rank_allocator",
+      "decision_focused_allocator"
+    ],
+    "descriptive": [
+      "cash_or_one_month_tbill",
+      "spy_total_return",
+      "qqq_total_return",
+      "equal_weight_long_only_scoring_universe"
+    ],
+    "trailing_residual_months_maximum": 60,
+    "trailing_residual_months_minimum": 36,
+    "trailing_residual_shrinkage": "n_over_n_plus_60",
+    "value_quality_momentum_sleeve_weights": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ]
+  },
+  "metrics": {
+    "primary": "fully_net_annualized_sharpe_of_calendar_month_excess_nav_return",
+    "annualization_periods": 12,
+    "required": [
+      "arithmetic_annualized_net_excess_return",
+      "net_cagr",
+      "annualized_volatility",
+      "sharpe",
+      "sortino",
+      "calmar",
+      "maximum_drawdown",
+      "drawdown_duration",
+      "hit_rate",
+      "worst_month",
+      "ff5_plus_momentum_alpha_and_betas",
+      "residual_volatility",
+      "factor_adjusted_information_ratio",
+      "mean_monthly_spearman_ic",
+      "ic_information_ratio",
+      "annual_ic",
+      "score_decile_monotonicity",
+      "attribution",
+      "exposures_and_concentration",
+      "gross_to_net_drag",
+      "liquidity_and_capacity"
+    ]
+  },
+  "inference": {
+    "confidence_level": 0.95,
+    "hac_lags_primary": 6,
+    "hac_automatic_bandwidth_robustness": true,
+    "stationary_bootstrap_outer_replicates": 10000,
+    "stationary_bootstrap_inner_replicates": 1000,
+    "stationary_bootstrap_expected_block_months": 6,
+    "bootstrap_master_seed": 20260714,
+    "studentized_sharpe_levels_and_paired_differences": true,
+    "joint_month_rows": true,
+    "invalid_outer_fraction_maximum": 0.01,
+    "romano_wolf_family": [
+      "hybrid_minus_elastic_net",
+      "hybrid_minus_trailing_residual_mean_markowitz",
+      "hybrid_minus_value_quality_momentum",
+      "hybrid_minus_rank_allocator",
+      "hybrid_minus_decision_focused_allocator"
+    ],
+    "romano_wolf_two_sided": true,
+    "romano_wolf_recentered_studentized_max_t": true,
+    "holm_fallback_only_if_faithful_romano_wolf_impossible": true,
+    "deflated_sharpe_primary_trial_count": "raw_frozen_ledger_count",
+    "correlation_adjusted_trial_count_secondary_only": true
+  },
+  "robustness": {
+    "one_at_a_time_only": true,
+    "unrestricted_cartesian_product_permitted": false,
+    "registry": [
+      "target_excess_return_rank",
+      "target_huber_standardized_residual_magnitude",
+      "loss_pairwise_ranking",
+      "features_core_only",
+      "features_options_ablation",
+      "features_pastor_stambaugh_ablation",
+      "ensemble_dynamic_trailing_ic",
+      "refit_memory_grid_3_by_3",
+      "frozen_december_2019_model",
+      "allocator_rank",
+      "allocator_decision_focused",
+      "risk_504_session",
+      "covariance_ledoit_wolf",
+      "cost_standard",
+      "impact_severe_0.50",
+      "borrow_stress",
+      "financing_stress",
+      "execution_delay_one_additional_day",
+      "volatility_target_0.08",
+      "volatility_target_0.12",
+      "nav_25_million",
+      "nav_500_million",
+      "missing_performance_delisting_minus_100_percent",
+      "features_market_price_liquidity_core",
+      "descriptive_regime_and_subperiod_tables"
+    ],
+    "refit_cadences": [
+      "monthly",
+      "quarterly",
+      "annual"
+    ],
+    "memory_rules": [
+      "weighted_expanding_120_month_half_life",
+      "unweighted_expanding",
+      "trailing_180_months"
+    ],
+    "best_cell_may_replace_primary": false
+  },
+  "post_unblind": {
+    "new_features_labels_lags_filters_sources_architectures_hyperparameters_weights_losses_cadences_memories_constraints_costs_benchmarks_metrics_tests_or_success_definitions_permitted": false,
+    "challenger_may_replace_primary": false,
+    "robustness_may_be_promoted_to_primary": false,
+    "favorable_date_selection_permitted": false,
+    "unfavorable_model_suppression_permitted": false,
+    "judgment_based_redesign_classification": "exploratory_v2"
+  },
+  "memoization": {
+    "stage13_monthly_content_addressed_checkpoints_required": true,
+    "checkpoint_binds_previous_checkpoint": true,
+    "checkpoint_binds_inputs_code_environment_and_state": true,
+    "resume_from_latest_authenticated_month": true,
+    "restart_completed_prior_stage_permitted": false,
+    "incompatible_or_corrupt_checkpoint_rule": "fail_closed_without_deleting_evidence"
+  }
+}

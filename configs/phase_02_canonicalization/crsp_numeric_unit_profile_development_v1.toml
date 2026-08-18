@@ -1,0 +1,283 @@
+schema_version = 1
+profile_name = "crsp_development_numeric_unit_profile"
+profile_version = "v1"
+status = "locked_after_aggregate_discovery_before_primary_profile"
+purpose = "Bind authenticated inputs, theory-first rules, exact aggregate empirical expectations, and production publication gates for the CRSP numeric/unit profile without authorizing return history or backtests."
+
+[policy]
+path = "configs/phase_02_canonicalization/crsp_numeric_unit_policy_v1.toml"
+sha256 = "9d979aa016bdf6acc90a98b2168e4d1b15cdeb120715168d55a3bb0466d377be"
+required_status = "policy_and_empirical_expectations_locked_pending_primary_verification"
+
+[empirical_lock]
+path = "configs/phase_02_canonicalization/crsp_numeric_unit_empirical_lock_v1.json"
+sha256 = "fb643406c4bb36c7f28bb5bf07e625117db8d44c14599512693fc4de2f498b2a"
+lock_id = "crsp-numeric-unit-empirical-lock-v1"
+schema_version = 1
+
+[scope]
+start_date = "2000-01-01"
+development_end_date = "2014-11-30"
+quality_end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+development_period_segment = "development_2000_2014_11"
+december_period_segment = "embargo_2014_12"
+december_2014_is_quality_only = true
+validation_or_final_test_access_permitted = false
+raw_security_keys_may_be_published = false
+whole_file_byte_hash_and_row_count_are_authentication_only_exceptions = true
+full_file_scope_date_may_be_decoded_only_to_route_rows = true
+monolithic_CSV_syntax_decoding_is_operational_not_analytical = true
+date_gate_must_precede_non_date_field_access_conversion_or_comparison = true
+post_2014_non_date_fields_may_be_inspected = false
+post_2014_non_date_fields_may_be_aggregated_counted_retained_sampled_or_published = false
+all_discovery_statistics_end_on = "2014-12-31"
+
+[upstream.methodology]
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[upstream.phase_01]
+freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+
+[upstream.phase_02]
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+crsp_backbone_contract = "configs/phase_02_sources/crsp_backbone.toml"
+crsp_backbone_contract_sha256 = "ee9be29c6e10572c65c3e35cab162431363c67e059fc17c233666f1dc2b7fdb0"
+
+[upstream.contract]
+contract_id = "phase02-crsp-b03263a970e52fbd"
+verification_id = "verify-6640223bff5ef6bc"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json"
+verified_pointer_sha256 = "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+required_status = "verified_passed"
+
+[upstream.calendar]
+build_id = "calendar-ae2e4ba4a280d66e"
+verification_id = "verify-7dc718e9be47873c"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+required_status = "verified_passed"
+
+[upstream.daily_monthly_profile]
+build_id = "crsp-profile-45422a7d1d2b38ca"
+verification_id = "verify-c0621f6d96316f0f"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_DEVELOPMENT_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "cc716a5461432f24f722fc613be628446bbaa1fed53734367d7b61d32cfed17d"
+primary_manifest_sha256 = "98b215946cdace652fa101248a06d85f99b11e063a3b602cb769f0be2e3830ca"
+required_status = "verified_passed"
+
+[upstream.supporting_profile]
+build_id = "crsp-support-5fce388e8edbc75c437977e7"
+verification_id = "verify-fa14980826f5b235"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "1df31283660a65f5c00774b6a9940c2bdedca68207341272abe0620d393162ba"
+primary_manifest_sha256 = "4f73f43fdb95bcdc843d519b46b57b71659d145145ef4846154b1e324f840f39"
+required_status = "verified_passed"
+
+[sources.daily]
+filename = "crsp_daily_ciz.csv"
+sha256 = "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9"
+size_bytes = 12740735288
+full_file_rows = 49886907
+scope_date_column = "DlyCalDt"
+raw_key = ["PERMNO", "DlyCalDt"]
+verified_retained_rows = 26785087
+verified_canonical_rows = 26778093
+header = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD",
+  "NAICS", "ICBIndustry", "IssuerNm", "DlyCalDt", "DlyPrc", "DlyPrcFlg", "DlyCap",
+  "DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg", "DlyVol", "DlyClose",
+  "DlyLow", "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol",
+]
+
+[sources.monthly]
+filename = "crsp_monthly_ciz.csv"
+sha256 = "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf"
+size_bytes = 561296199
+full_file_rows = 2423212
+scope_date_column = "MthCalDt"
+observation_date_column = "MthPrcDt"
+raw_key = ["PERMNO", "MthCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+canonical_key = ["PERMNO", "MthCalDt"]
+verified_retained_rows = 1299612
+verified_canonical_rows = 1284297
+header = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD",
+  "NAICS", "ICBIndustry", "IssuerNm", "YYYYMM", "MthCalDt", "MthPrc", "MthPrcFlg",
+  "MthPrcDt", "MthCap", "MthRet", "MthRetx", "MthRetFlg", "MthDisCnt", "MthVol",
+  "MthVolFlg", "MthPrcVol", "MthFacShrFlg", "MthPrcVolMissCnt", "ShrOut",
+]
+
+[sources.shares]
+filename = "crsp_shares_outstanding_ciz.csv"
+sha256 = "b66cb7f4b4d2e51b9cd79cad9306911267da35d6c521caa7f15426dc02e2e966"
+size_bytes = 120698952
+full_file_rows = 2241129
+scope_rule = "inclusive_interval_overlap"
+raw_key = ["PERMNO", "ShrStartDt", "ShrEndDt"]
+verified_retained_rows = 1090812
+header = ["PERMNO", "ShrStartDt", "ShrEndDt", "ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg", "PrimaryExch", "SICCD", "NASDIssuno"]
+
+[canonicalization]
+daily_exact_duplicate_collapse_is_bound_to_verified_profile = true
+monthly_exact_duplicate_collapse_and_effective_interval_selection_are_bound_to_verified_profile = true
+shares_intervals_are_inclusive_nonoverlapping_and_bound_to_verified_profile = true
+reproduce_verified_row_counts_in_this_gate = true
+conflicting_duplicates_or_multiple_interval_matches_are_hard = true
+source_order_is_not_a_semantic_tiebreaker = true
+
+[joins.daily_to_shares]
+left_key = "daily.PERMNO"
+left_date = "daily.DlyCalDt"
+right_key = "shares.PERMNO"
+right_interval_start = "shares.ShrStartDt"
+right_interval_end = "shares.ShrEndDt"
+interval_bounds_are_inclusive = true
+zero_matches = "explicit_diagnostic_exclusion"
+one_match = "comparable"
+multiple_matches = "hard_failure"
+
+[joins.monthly_to_shares]
+left_key = "monthly.PERMNO"
+left_date = "monthly.MthPrcDt"
+right_key = "shares.PERMNO"
+right_interval_start = "shares.ShrStartDt"
+right_interval_end = "shares.ShrEndDt"
+interval_bounds_are_inclusive = true
+blank_MthPrcDt = "explicit_exclusion"
+MthCalDt_substitution_permitted = false
+zero_matches = "explicit_diagnostic_exclusion"
+one_match = "comparable"
+multiple_matches = "hard_failure"
+
+[capitalization_formulas]
+daily_interval_formula = "daily.DlyCap / (daily.DlyPrc * shares.ShrOut)"
+daily_interval_ShrOut_source = "crsp_shares_outstanding_ciz.csv effective interval at DlyCalDt"
+monthly_embedded_formula = "monthly.MthCap / (monthly.MthPrc * monthly.ShrOut)"
+monthly_embedded_ShrOut_source = "crsp_monthly_ciz.csv same canonical monthly row"
+monthly_interval_formula = "monthly.MthCap / (monthly.MthPrc * shares.ShrOut)"
+monthly_interval_ShrOut_source = "crsp_shares_outstanding_ciz.csv effective interval at MthPrcDt"
+monthly_embedded_and_interval_ShrOut_are_distinct_inputs = true
+monthly_embedded_vs_interval_ShrOut_is_reported = true
+monthly_embedded_vs_interval_ShrOut_output = "identity_inventory.csv"
+monthly_embedded_vs_interval_ShrOut_identity_id = "monthly_embedded_vs_interval_ShrOut"
+primary_non_ADR_scale_formula = "monthly_interval_formula"
+primary_non_ADR_scale_formula_reason = "The effective interval shares source is point-in-time authoritative and achieves exact quantization overlap on every comparable NS/N development and December row."
+monthly_embedded_formula_role = "locked_diagnostic_crosscheck_not_authoritative_for_scale"
+daily_ADR_stratification_flag_source = "shares.ShrAdrFlg from unique daily interval match"
+monthly_ADR_stratification_flag_source = "shares.ShrAdrFlg from unique monthly interval match"
+universal_row_equality_is_hard = false
+
+[production_locks]
+daily_numeric_expectations_locked = true
+daily_return_cross_tabs_locked = true
+daily_price_volume_expectations_locked = true
+monthly_numeric_expectations_locked = true
+monthly_observation_date_expectations_locked = true
+monthly_crosscheck_expectations_locked = true
+shares_join_expectations_locked = true
+capitalization_diagnostics_locked = true
+non_ADR_scale_population_locked = true
+non_ADR_scale_threshold_locked = true
+all_required_locks_true = true
+
+[downstream]
+current_unlocked_config_authorizes_any_downstream_action = false
+future_verified_production_profile_may_authorize_typed_market_backbone = true
+future_verified_production_profile_may_authorize_universe_unit_inputs = true
+future_verified_production_profile_may_authorize_return_history = false
+future_verified_production_profile_may_authorize_beta_estimation = false
+future_verified_production_profile_may_authorize_labels = false
+future_verified_production_profile_may_authorize_backtests = false
+blockers = [
+  "flag_specific_daily_return_availability_unresolved",
+  "P1_through_P9_factor_alignment_unresolved",
+  "DD_factor_alignment_unresolved",
+  "RETURN_DISTRIBUTION_DELISTING_EXACTLY_ONCE_not_run",
+]
+
+[outputs]
+quality_subdirectory = "crsp_numeric_unit_profile"
+artifact_subdirectory = "crsp_numeric_unit_profiles"
+verification_subdirectory = "crsp_numeric_unit_profile_verifications"
+primary_pointer = "LATEST_CRSP_NUMERIC_UNIT_PRIMARY.json"
+verified_pointer = "LATEST_CRSP_NUMERIC_UNIT_VERIFIED.json"
+closed_quality_file_set = [
+  "_SUCCESS.json", "capitalization_diagnostics.csv", "checks.csv",
+  "downstream_gate_status.json", "identity_inventory.csv", "input_receipt.json",
+  "numeric_inventory.csv", "profile_contract.json", "return_inventory.csv",
+  "summary.json",
+]
+closed_artifact_file_set = ["manifest.json", "output_hashes.sha256"]
+closed_verification_file_set = ["differences.csv", "independent_check.json"]
+discovery_may_write_quality_directory = false
+discovery_may_write_artifact_directory = false
+discovery_may_write_primary_pointer = false
+discovery_may_write_verification_directory = false
+discovery_may_write_verified_pointer = false
+production_publication_requires_status = "locked_after_aggregate_discovery_before_primary_profile"
+production_publication_requires_all_production_locks_true = true
+pointer_names_are_reserved_for_future_locked_production_only = true
+
+[outputs.schemas]
+checks = ["check_id", "stage", "family", "source", "stratum", "severity", "expected", "actual", "tolerance_rule", "status", "downstream_consequence"]
+numeric_inventory = ["source", "column", "year", "period_segment", "stratum", "numeric_kind", "population_rows", "blank_rows", "valid_in_domain_rows", "valid_out_of_domain_rows", "malformed_rows", "nonfinite_rows", "overflow_rows", "negative_zero_rows", "min_value", "max_value", "quantum_counts", "status", "severity"]
+return_inventory = ["source", "periodicity", "year", "period_segment", "return_flag", "duration_flag", "total_return_state", "returnx_state", "mapped_trading_periods", "semantic_rule", "population_rows", "coherent_rows", "incoherent_rows", "status", "severity"]
+identity_inventory = ["identity_id", "source", "year", "period_segment", "stratum", "severity", "population_rows", "comparable_rows", "pass_rows", "fail_rows", "excluded_rows", "exclusions", "coverage_rate", "pass_rate", "max_absolute_error", "max_relative_error", "tolerance_rule", "status"]
+capitalization_diagnostics = ["formula_id", "periodicity", "year", "period_segment", "primary_exchange", "share_type", "shr_adr_flag", "security_line_count", "population_rows", "comparable_rows", "excluded_rows", "exclusions", "zero_share_match_rows", "one_share_match_rows", "multiple_share_match_rows", "formula_pass_rows", "formula_fail_rows", "ratio_p01", "ratio_p05", "ratio_p25", "ratio_p50", "ratio_p75", "ratio_p95", "ratio_p99", "formula_pass_rate", "threshold_rule", "status", "severity"]
+
+[outputs.sort_keys]
+checks = ["check_id"]
+numeric_inventory = ["source", "column", "period_segment", "year", "stratum"]
+return_inventory = ["source", "periodicity", "period_segment", "year", "return_flag", "duration_flag", "total_return_state", "returnx_state"]
+identity_inventory = ["identity_id", "source", "period_segment", "year", "stratum"]
+capitalization_diagnostics = ["formula_id", "periodicity", "period_segment", "year", "primary_exchange", "share_type", "shr_adr_flag"]
+string_sort_rule = "ascending UTF-8 byte order"
+integer_sort_rule = "ascending numeric order"
+
+[outputs.vocabularies]
+period_segment = ["development_2000_2014_11", "embargo_2014_12"]
+numeric_kind = ["decimal", "nonnegative_integer", "positive_integer_when_present"]
+value_state = ["blank", "valid_in_domain", "valid_out_of_domain", "malformed", "nonfinite", "overflow"]
+status = ["PASS", "FAIL", "DIAGNOSTIC"]
+severity = ["hard", "diagnostic"]
+capitalization_formula_id = ["daily_interval_cap_price_shares", "monthly_embedded_cap_price_shares", "monthly_interval_cap_price_shares"]
+blank_dimension_value = ""
+
+[outputs.balance_equations]
+numeric_inventory = "population_rows = blank_rows + valid_in_domain_rows + valid_out_of_domain_rows + malformed_rows + nonfinite_rows + overflow_rows"
+numeric_negative_zero = "negative_zero_rows is a subset of valid_in_domain_rows plus valid_out_of_domain_rows"
+daily_return_inventory = "population_rows = coherent_rows + incoherent_rows for a locked flag-specific semantic rule; discovery-only unresolved rules leave both fields empty"
+identity_inventory_population = "population_rows = comparable_rows + excluded_rows"
+identity_inventory_comparable = "comparable_rows = pass_rows + fail_rows"
+identity_inventory_exclusions = "excluded_rows = sum of mutually exclusive exclusions JSON values"
+capitalization_population = "population_rows = comparable_rows + excluded_rows"
+capitalization_comparable = "comparable_rows = formula_pass_rows + formula_fail_rows"
+capitalization_exclusions = "excluded_rows = sum of mutually exclusive exclusions JSON values"
+unclassified_exclusions_permitted = false
+
+[outputs.decimal_rendering]
+engine = "Decimal"
+scientific_notation_permitted = false
+negative_zero_normalizes_to = "0"
+rates_and_quantiles_max_fractional_digits = 12
+rounding = "ROUND_HALF_EVEN"
+trailing_fractional_zeros_are_removed = true
+decimal_point_is_removed_when_fraction_is_empty = true
+zero_denominator_rate = "empty field"
+nan_or_infinity_rendering_permitted = false
+
+[outputs.serialization]
+text_encoding = "UTF-8 without BOM"
+json = "Canonical JSON objects use sorted keys, compact separators, ensure_ascii=false, and exactly one trailing LF."
+csv = "RFC-4180-compatible CSV with header, minimal quoting, and LF record terminators."
+csv_null = "empty field"
+csv_boolean = "lowercase true or false"
+canonical_json_cells = ["stratum", "expected", "actual", "quantum_counts", "exclusions"]

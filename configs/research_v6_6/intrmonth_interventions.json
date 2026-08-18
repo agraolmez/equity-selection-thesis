@@ -1,0 +1,157 @@
+{
+  "schema": "research_v6_6_intramonth_interventions_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_STUDY",
+  "approved_on": "2026-08-16",
+  "question": "Can a causal intramonth hold, trim, or exit layer improve the frozen monthly V6.1 1.80x Alpaca-compatible portfolio after realistic costs, without changing stock selection, monthly target weights, or the monthly optimizer?",
+  "scope": {
+    "new_lineage": "research_v6_6",
+    "frozen_monthly_selectors": true,
+    "frozen_monthly_optimizer": true,
+    "frozen_monthly_relative_targets": true,
+    "monthly_targets_scaled_uniformly_to_gross_cap": 1.8,
+    "active_weight_tolerance": 1e-8,
+    "daily_interventions_only_reduce_existing_positions": true,
+    "no_intramonth_new_positions": true,
+    "no_reentry_before_next_monthly_rebalance": true,
+    "historical_development_not_untouched_confirmation": true
+  },
+  "chronology": {
+    "initial_fit_start": "2022-02",
+    "initial_fit_end": "2022-12",
+    "selection_start": "2023-01",
+    "selection_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "predictive_refit": "quarterly_expanding",
+    "label_embargo_trading_days": 5,
+    "decision_time": "16:00 America/New_York after the official close",
+    "execution_time": "next trading-session close",
+    "quarantined_outcomes_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "sources": {
+    "frozen_frontier": {
+      "run_manifest": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/run_manifest.json",
+      "sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+      "validation_month_root": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/validation/position_1p5/months",
+      "historical_test_month_root": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/historical_test/position_1p5/months"
+    },
+    "alpaca_translation_config": {
+      "path": "configs/research_v6_1/alpaca_paper_translation.json",
+      "sha256": "7a85da08ca8ce6869d67256d0a38e1159ce912f5f4cf02bd01ff6a1acc7e500d"
+    },
+    "v6_encoded_inputs": {
+      "rows": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet",
+      "rows_sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056",
+      "matrix": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/encoded_values.npy",
+      "matrix_sha256": "0404afe9af600ce02d7461c56a357dd6da5f79a91a82a84da1e19795607570fd",
+      "input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd",
+      "encoded_feature_count": 850
+    },
+    "primary_outcomes": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_outcomes.parquet",
+      "sha256": "b844e1880199bfadf7ec774c18fb2fa25e2a9cbd2b05133ede4fa60c707b37dd"
+    },
+    "risk_cost": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet",
+      "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"
+    },
+    "daily_returns": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/cache/phase_06_final_test/stage13-final-source-replay-v1/fb0ea36576b84c24eba7cca19e155b93d935deb6ac0e098612e37726d834627a/formula_work/decision_market/returns/interim/stage11-return-extension-f1b2f54282fa289aa6e59c97/crsp_security_day_return.parquet",
+      "sha256": "45a0abdadc50ac05945a55b68672ed7723fc88d4e281df645a26b656a8b1d512"
+    },
+    "daily_market": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/cache/phase_06_final_test/stage13-final-source-replay-v1/fb0ea36576b84c24eba7cca19e155b93d935deb6ac0e098612e37726d834627a/formula_work/decision_market/typed/crsp_security_day.parquet",
+      "sha256": "441fe20d74409fd2e872c39a41873da9297e246868e684b3aa8754e8f780d665"
+    },
+    "daily_factors": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/cache/phase_06_final_test/stage13-final-source-replay-v1/fb0ea36576b84c24eba7cca19e155b93d935deb6ac0e098612e37726d834627a/formula_work/feature_sources/auxiliary/tables/ff_factor_daily_observation.parquet",
+      "sha256": "fc63c0d894c37e52cb770c4a0f1f7b01de7f330f559ff821374be88a29b1223f"
+    },
+    "monthly_news_manifest": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/research_v6/news_features_v2/manifest.json",
+      "sha256": "5b70fb4476f10b60de4dbea9ffeab98f3aeb4901fe6f17ed02da6784060d176d"
+    }
+  },
+  "account_and_costs": {
+    "starting_nav_dollars": 100000.0,
+    "rebalance_gross_cap": 1.8,
+    "operational_safety_trigger": 1.95,
+    "operational_safety_target": 1.9,
+    "financing_rate_annual": 0.0625,
+    "borrow_column": "primary_borrow_rate_annual",
+    "spread_multiplier": 1.0,
+    "impact_coefficient": 0.1,
+    "commission_rate": 0.0001,
+    "cost_accrual": "daily using current post-drift weights; annual rates divided by 12 and the number of holding sessions in that month"
+  },
+  "daily_features": {
+    "complete_encoded_monthly_information_set": true,
+    "position_state": [
+      "position_side", "initial_weight", "current_fraction", "days_held",
+      "signed_position_return", "signed_peak_to_current_drawdown",
+      "monthly_expected_stock_excess_return"
+    ],
+    "price_liquidity": [
+      "signed_return_1d", "signed_return_2d", "signed_return_5d",
+      "signed_return_10d", "realized_volatility_5d", "realized_volatility_20d",
+      "intraday_range", "log_dollar_volume", "volume_shock_5d"
+    ],
+    "market_state": [
+      "mktrf_1d", "mktrf_5d", "market_volatility_5d", "umd_1d"
+    ],
+    "monthly_point_in_time_news_is_in_encoded_inputs": true
+  },
+  "transparent_rules": [
+    {"id": "take_profit_20_trim", "take_profit": 0.20, "take_profit_fraction": 0.50},
+    {"id": "take_profit_30_exit", "take_profit": 0.30, "take_profit_fraction": 0.00},
+    {"id": "stop_loss_10_exit", "stop_loss": -0.10, "stop_loss_fraction": 0.00},
+    {"id": "stop_loss_15_exit", "stop_loss": -0.15, "stop_loss_fraction": 0.00},
+    {"id": "trailing_10_exit", "trailing_drawdown": -0.10, "trailing_fraction": 0.00},
+    {"id": "trailing_15_exit", "trailing_drawdown": -0.15, "trailing_fraction": 0.00},
+    {"id": "profit20_stop10", "take_profit": 0.20, "take_profit_fraction": 0.50, "stop_loss": -0.10, "stop_loss_fraction": 0.00},
+    {"id": "profit20_trailing10", "take_profit": 0.20, "take_profit_fraction": 0.50, "trailing_drawdown": -0.10, "trailing_fraction": 0.00}
+  ],
+  "predictive_models": {
+    "targets": [1, 5],
+    "xgboost_profiles": [
+      {"id": "xgb_depth_2", "max_depth": 2, "n_estimators": 350, "learning_rate": 0.03, "min_child_weight": 50.0, "subsample": 0.8, "colsample_bytree": 0.65, "reg_alpha": 0.1, "reg_lambda": 25.0},
+      {"id": "xgb_depth_3", "max_depth": 3, "n_estimators": 350, "learning_rate": 0.03, "min_child_weight": 50.0, "subsample": 0.8, "colsample_bytree": 0.65, "reg_alpha": 0.1, "reg_lambda": 25.0}
+    ],
+    "elastic_net_profiles": [
+      {"id": "enet_regularized", "alpha": 0.0005, "l1_ratio": 0.10, "max_iter": 5000}
+    ],
+    "ensembles": ["equal_xgb_enet"],
+    "decision_intensities": [
+      {"id": "selective", "trim_quantile": 0.10, "exit_quantile": 0.05},
+      {"id": "broad", "trim_quantile": 0.20, "exit_quantile": 0.10}
+    ],
+    "require_predicted_adverse_return": true,
+    "action_fractions": {"trim": 0.50, "exit": 0.00},
+    "quarterly_expanding_refits_in_historical_test": true,
+    "hyperparameters_and_numeric_thresholds_frozen_from_selection": true
+  },
+  "selection": {
+    "primary_metric": "monthly net Sharpe under broker-current financing",
+    "tie_breakers": ["annualized_net_excess_return", "maximum_drawdown", "lower_intervention_turnover"],
+    "select_one_rule_winner": true,
+    "select_one_predictive_winner": true,
+    "historical_test_profiles": ["monthly_control", "safety_only", "selected_rule", "selected_predictive", "selected_predictive_plus_safety"],
+    "historical_test_cannot_select_or_modify_a_profile": true
+  },
+  "promotion": {
+    "minimum_validation_sharpe_improvement": 0.10,
+    "validation_annualized_net_excess_return_not_lower_than_control": true,
+    "historical_test_net_sharpe_strictly_higher_than_control": true,
+    "historical_test_annualized_net_excess_return_strictly_higher_than_control": true,
+    "historical_test_maximum_drawdown_not_worse_by_more_than": 0.005,
+    "paired_monthly_difference_hac_t_minimum": 1.96,
+    "require_economic_mechanism_and_cost_capacity_feasibility": true
+  },
+  "checkpointing": {
+    "natural_unit": "prepared month / fitted model-horizon-refit block / replayed policy-month",
+    "atomic": true,
+    "resume": true,
+    "identity_bound": true
+  }
+}

@@ -1,0 +1,14 @@
+[database]
+# Override with PORTFOLIO_DATABASE_ROOT on another machine.
+root = "/Users/agraemirolmez/Desktop/database"
+raw = "raw"
+interim = "interim"
+processed = "processed"
+quality = "quality"
+cache = "cache"
+
+[project]
+artifacts = "artifacts"
+reports = "reports"
+notebooks = "notebooks"
+runs = "runs"

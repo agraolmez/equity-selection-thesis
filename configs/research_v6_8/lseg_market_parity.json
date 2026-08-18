@@ -1,0 +1,31 @@
+{
+  "schema": "research_v6_8_lseg_market_parity_v1",
+  "holding_month_start": "2024-01",
+  "holding_month_end": "2025-08",
+  "sample_size_per_month": 20,
+  "sample_rule": "equally_spaced_after_ascending_signal_market_cap_sort",
+  "instrument_rule": "LSEG Equity Quotes discovery result explicitly labelled Consolidated; venue-only quote RICs are forbidden",
+  "features": [
+    "return_total_5d",
+    "return_total_63d",
+    "return_total_126d",
+    "return_total_252d",
+    "realized_volatility_21d",
+    "realized_volatility_63d",
+    "realized_volatility_126d",
+    "realized_volatility_252d",
+    "log_absolute_price",
+    "median_dollar_volume_60d"
+  ],
+  "monthly_gate": {
+    "minimum_resolved_instrument_share": 0.95,
+    "minimum_spearman_rank_correlation": 0.95,
+    "maximum_median_absolute_rank_difference": 0.05,
+    "maximum_absolute_missingness_difference": 0.02
+  },
+  "full_window_gate": {
+    "minimum_passing_month_share": 0.95,
+    "minimum_all_month_resolved_instrument_share": 0.95
+  },
+  "scope_note": "This gate validates representative market primitives and the date-effective consolidated-instrument bridge. It does not by itself certify all 51 derived market-family features or any fundamental, identity, ownership, option, or factor feature."
+}

@@ -1,0 +1,62 @@
+[[files]]
+filename = "ccm_link_table.csv"
+family = "Compustat/CCM"
+role = "Effective-dated Compustat security to CRSP link table"
+coverage_date = "LINKDT"
+date_columns = ["LINKDT", "LINKENDDT", "ipodate", "dldte"]
+key_columns = ["gvkey", "LIID", "LINKPRIM", "LINKTYPE", "LPERMNO", "LINKDT", "LINKENDDT"]
+grain = "gvkey_security_link_interval; overlapping candidates require later deterministic resolution"
+required_columns = ["gvkey", "LIID", "LINKPRIM", "LINKTYPE", "LPERMNO", "LPERMCO", "LINKDT", "LINKENDDT", "cusip", "cik", "FIC", "LOC", "INCORP"]
+
+[[files]]
+filename = "ccm_security_daily.csv"
+family = "Compustat/CCM"
+role = "CCM-linked Compustat security-day market-data cross-check"
+coverage_date = "datadate"
+date_columns = ["datadate", "LINKDT", "LINKENDDT"]
+key_columns = ["GVKEY", "iid", "datadate", "LPERMNO", "LINKDT", "LINKENDDT"]
+grain = "gvkey_security_day_link_interval"
+required_columns = ["GVKEY", "iid", "datadate", "LPERMNO", "LPERMCO", "LINKPRIM", "LINKTYPE", "LINKDT", "LINKENDDT", "cusip", "curcdd", "prccd", "cshtrd", "cshoc"]
+
+[[files]]
+filename = "ccm_security_monthly.csv"
+family = "Compustat/CCM"
+role = "CCM-linked Compustat security-month market-data cross-check"
+coverage_date = "datadate"
+date_columns = ["datadate", "LINKDT", "LINKENDDT"]
+key_columns = ["GVKEY", "iid", "datadate", "LPERMNO", "LINKDT", "LINKENDDT"]
+grain = "gvkey_security_month_link_interval"
+required_columns = ["GVKEY", "iid", "datadate", "LPERMNO", "LPERMCO", "LINKPRIM", "LINKTYPE", "LINKDT", "LINKENDDT", "cusip", "curcdm", "prccm", "cshtrm", "cshom", "trt1m"]
+
+[[files]]
+filename = "comp_funda_ccm.csv"
+family = "Compustat/CCM"
+role = "Annual company fundamentals with CCM link metadata"
+coverage_date = "datadate"
+availability_note = "datadate is an accounting-period coverage axis, never public availability; Phase 2 uses matched 10-K/20-F/40-F plus one trading day or the locked 180-day fallback."
+date_columns = ["datadate", "LINKDT", "LINKENDDT", "dldte", "ipodate"]
+key_columns = ["GVKEY", "datadate", "indfmt", "consol", "popsrc", "datafmt", "LPERMNO", "LINKDT"]
+grain = "annual_company_format_link_interval"
+required_columns = ["GVKEY", "datadate", "fyear", "indfmt", "consol", "popsrc", "datafmt", "LPERMNO", "LPERMCO", "LINKPRIM", "LINKTYPE", "LINKDT", "LINKENDDT", "curcd", "act", "at", "capx", "ceq", "che", "cogs", "csho", "dlc", "dltt", "dvc", "ebit", "ebitda", "ib", "lct", "lt", "oancf", "oiadp", "oibdp", "ppent", "prstkc", "revt", "sale", "sstk", "xrd", "cik", "fic", "loc"]
+
+[[files]]
+filename = "comp_fundq_ccm.csv"
+family = "Compustat/CCM"
+role = "Quarterly company fundamentals with report date and CCM link metadata"
+coverage_date = "datadate"
+availability_note = "datadate is an accounting-period coverage axis, never public availability; Phase 2 uses rdq plus one trading day or the locked 120-day fallback."
+date_columns = ["datadate", "rdq", "LINKDT", "LINKENDDT"]
+key_columns = ["GVKEY", "datadate", "fyearq", "fqtr", "fyr", "datafqtr", "indfmt", "consol", "popsrc", "datafmt", "LPERMNO", "LINKDT"]
+grain = "quarterly_company_format_link_interval"
+required_columns = ["GVKEY", "datadate", "fyearq", "fqtr", "fyr", "datafqtr", "rdq", "indfmt", "consol", "popsrc", "datafmt", "LPERMNO", "LPERMCO", "LINKPRIM", "LINKTYPE", "LINKDT", "LINKENDDT", "curcdq", "actq", "atq", "capxy", "ceqq", "cheq", "cogsq", "dlcq", "dlttq", "dvy", "ibq", "lctq", "ltq", "oancfy", "oiadpq", "oibdpq", "ppentq", "prstkcy", "revtq", "saleq", "sstky", "xrdq", "cik", "fic", "loc"]
+
+[[files]]
+filename = "comp_segments_ccm.csv"
+family = "Compustat/CCM"
+role = "Business and geographic segment observations and revisions"
+coverage_date = "datadate"
+availability_note = "datadate is the segment-period coverage axis; Phase 2 uses srcdate plus one trading day or the locked 180-day fallback."
+date_columns = ["datadate", "srcdate", "LINKDT", "LINKENDDT"]
+key_columns = ["GVKEY", "datadate", "srcdate", "stype", "sid", "LPERMNO", "LINKDT"]
+grain = "company_period_source_segment_link_interval; multiplicity is expected"
+required_columns = ["GVKEY", "LIID", "datadate", "srcdate", "stype", "sid", "LPERMNO", "LPERMCO", "LINKPRIM", "LINKTYPE", "LINKDT", "LINKENDDT", "sales", "revts", "atlls", "curcds", "geotp", "snms", "cik"]

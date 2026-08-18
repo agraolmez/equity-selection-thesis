@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install research environment
+        run: python -m pip install -e ".[research]"
+      - name: Check public snapshot
+        run: python scripts/check_publication.py
+      - name: Check V6 repository closure
+        run: python scripts/check_v6_reproduction.py --repository-only
+      - name: Check historical stage crosswalk
+        run: python scripts/check_legacy_stage_structure.py
+      - name: Compile Python sources
+        run: python -m compileall -q src scripts tests
+      - name: Run tests
+        run: python -m pytest -q

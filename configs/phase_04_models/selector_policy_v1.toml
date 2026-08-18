@@ -1,0 +1,218 @@
+schema_version = 1
+policy_id = "phase04-selector-policy-v1"
+contract_id = "phase04-selector-v1"
+stage = 9
+status = "frozen_development_only_before_selector_training"
+
+[methodology]
+source = "outputs/methodology_v1_source.md"
+source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+freeze_receipt = "outputs/methodology_v1_freeze.json"
+freeze_receipt_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[authority]
+verified_stage08_pointer = "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json"
+verified_stage08_pointer_sha256 = "491bf16f5ee5bf2b8ba197cd251a3e41cbbdacbed7442877eaa3493221831e7a"
+required_stage08_build_id = "phase04-risk-cost-8e2fe8061e776ff3aa527d09"
+required_stage08_verification_id = "verify-b109581df93e2c12"
+required_authorization = "stage_09_model_training_authorized"
+
+[verified_feature_store]
+verified_pointer = "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json"
+verified_pointer_sha256 = "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+primary_manifest = "artifacts/phase_03_features/feature_store_builds/phase03-features-fda21f0e51b8276c10246f9f/manifest.json"
+primary_manifest_sha256 = "96ab135c0628054699fa3f27a76abd1cb30f3e3e46279a84052a29c895b51375"
+required_build_id = "phase03-features-fda21f0e51b8276c10246f9f"
+required_verification_id = "verify-350915782d3ef12e"
+
+[verified_label_store]
+verified_pointer = "artifacts/phase_03_features/LATEST_LABEL_STORE_VERIFIED.json"
+verified_pointer_sha256 = "119a20dffafeb348022de373e2c4aedd790f5a03ef7cd6be8550bbf8278ce5b1"
+primary_manifest = "artifacts/phase_03_features/label_store_builds/phase03-labels-2ed3885a0844fbad6c8a90a7/manifest.json"
+primary_manifest_sha256 = "0bfbf9263e88551ef3dba548d5e0b66f936e1f7eb560c1c1a657e893cda4cfbe"
+required_build_id = "phase03-labels-2ed3885a0844fbad6c8a90a7"
+required_verification_id = "verify-d84e8c9b472a966a"
+
+[verified_stage08_key_audit]
+primary_manifest = "artifacts/phase_04_models/risk_cost_builds/phase04-risk-cost-8e2fe8061e776ff3aa527d09/manifest.json"
+primary_manifest_sha256 = "2d89919698bed5c5009b570295bfeaad9c78ce5ae0b85b9e019090ec2da655c5"
+required_table_name = "development_risk_cost_inputs.parquet"
+projected_columns = ["signal_date", "permno"]
+predictor_permitted = false
+filter_permitted = false
+target_permitted = false
+
+[physical_rules]
+path = "configs/phase_04_models/selector_build_rules_v1.json"
+sha256 = "c1bb0c6be019bc17058f63f5c9c272da7008f040cf32e0e715a15ebc50cdd0a5"
+required_rules_id = "phase04-selector-build-rules-v1"
+
+[scope]
+first_signal_date = "2000-01-31"
+last_signal_date = "2014-10-31"
+required_signal_dates = 178
+required_feature_audit_rows = 1263048
+required_long_eligible_rows = 286628
+required_present_primary_labels = 286322
+required_development_folds = 4
+required_development_oof_months = 95
+required_development_oof_rows = 172969
+required_development_oof_present_labels = 172799
+selector_development_training_permitted = true
+stage10_or_later_permitted = false
+portfolio_or_backtest_permitted = false
+pnl_or_performance_permitted = false
+sharpe_calculation_permitted = false
+validation_2015_2019_payload_access_permitted = false
+final_2020_2025_payload_access_permitted = false
+
+[database]
+root = "/Users/agraemirolmez/Desktop/Thesis"
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+relocation_receipt = "data/database_relocation_v1.json"
+relocation_receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+raw_is_read_only = true
+interim_build_root = "interim/phase_04_models/phase04-selector-v1/selector_builds"
+processed_build_root = "processed/phase_04_models/phase04-selector-v1/selector_builds"
+quality_build_root = "quality/phase_04_models/phase04-selector-v1/selector_builds"
+cache_root = "cache/phase_04_models/phase04-selector-v1/selectors"
+
+[inputs]
+required_table_names = [
+  "feature_store_raw.parquet",
+  "feature_dictionary.parquet",
+  "feature_set_membership.parquet",
+  "category_vocabulary.parquet",
+  "development_labels.parquet",
+  "label_split_membership.parquet",
+  "development_risk_cost_inputs.parquet",
+]
+predictor_payload_names = ["feature_store_raw.parquet"]
+feature_metadata_names = [
+  "feature_dictionary.parquet",
+  "feature_set_membership.parquet",
+  "category_vocabulary.parquet",
+]
+target_payload_names = ["development_labels.parquet"]
+fold_payload_names = ["label_split_membership.parquet"]
+key_audit_only_names = ["development_risk_cost_inputs.parquet"]
+only_closed_allowlist_tables_permitted = true
+validation_or_final_tables_permitted = false
+stage08_numeric_predictor_or_filter_permitted = false
+production_hash_bypass_permitted = false
+symlinked_root_or_path_component_permitted = false
+stable_stat_and_full_rehash_required = true
+
+[[inputs.tables]]
+name = "feature_store_raw.parquet"
+gate = "verified_stage06_feature_store"
+manifest_section = "interim"
+rows = 1263048
+schema_sha256 = "e67436adbe6e2adb2f445a799f07002a272a5cdf780662aca639f0eb3c0969c3"
+role = "predictor_source_and_authenticated_scoring_spine"
+predictor_permitted = true
+filter_permitted = true
+key_audit_only = false
+
+[[inputs.tables]]
+name = "feature_dictionary.parquet"
+gate = "verified_stage06_feature_store"
+manifest_section = "processed"
+rows = 163
+schema_sha256 = "fae7628f17df69561caeac3de46dbd1790fa362d4c6ca48f1979336bcb045a6c"
+role = "ordered_feature_registry"
+predictor_permitted = false
+filter_permitted = false
+key_audit_only = false
+
+[[inputs.tables]]
+name = "feature_set_membership.parquet"
+gate = "verified_stage06_feature_store"
+manifest_section = "processed"
+rows = 489
+schema_sha256 = "ac56e52c97ed1c90a3749aabfcefa8ae8ad3bddbb3de41d79900a6671734884d"
+role = "frozen_full_and_core_feature_membership"
+predictor_permitted = false
+filter_permitted = false
+key_audit_only = false
+
+[[inputs.tables]]
+name = "category_vocabulary.parquet"
+gate = "verified_stage06_feature_store"
+manifest_section = "processed"
+rows = 245
+schema_sha256 = "bac319365c1f96e2241848f24f4d9f8dbd5b5f26cfa9612a35759b9d98ab593a"
+role = "ordered_categorical_encoding_vocabulary"
+predictor_permitted = false
+filter_permitted = false
+key_audit_only = false
+
+[[inputs.tables]]
+name = "development_labels.parquet"
+gate = "verified_stage07_label_store"
+manifest_section = "processed"
+rows = 286628
+schema_sha256 = "bb70740d71661823e5c7dc86d7b3933f2d45ae51076670b54100b0fab204776d"
+role = "development_residual_return_targets"
+predictor_permitted = false
+filter_permitted = true
+key_audit_only = false
+
+[[inputs.tables]]
+name = "label_split_membership.parquet"
+gate = "verified_stage07_label_store"
+manifest_section = "processed"
+rows = 712
+schema_sha256 = "423c330092ee70f8765ce60f22e904379d8e6d42f15eff207abb5fba20452e27"
+role = "development_fold_purge_and_availability_membership"
+predictor_permitted = false
+filter_permitted = true
+key_audit_only = false
+
+[[inputs.tables]]
+name = "development_risk_cost_inputs.parquet"
+gate = "verified_stage08_key_audit"
+manifest_section = "processed"
+rows = 286628
+schema_sha256 = "240283109e2bd1dea3b3249d7d1637d397692b5b1bb17f597462321cec814e62"
+role = "key_domain_reconciliation_only"
+predictor_permitted = false
+filter_permitted = false
+key_audit_only = true
+
+[matrix_contract]
+registry_features = 163
+numeric_features = 153
+numeric_columns_with_missing_flags = 306
+category_columns = 245
+base_matrix_width = 551
+elastic_net_interactions = 2806
+elastic_net_total_width = 3357
+model_array_dtype = "float32"
+forecast_dtype = "float32"
+preprocessing_dtype = "float64"
+metric_dtype = "float64"
+
+[build]
+deterministic_threads_per_fit = 1
+content_addressed_fit_identity_required = true
+dependency_scoped_code_hashes_required = true
+resume_requires_authenticated_receipt = true
+configuration_seed_fold_identity_required = true
+primary_pointer_authorizes_downstream = false
+
+[publication]
+artifact_root = "artifacts/phase_04_models"
+primary_build_namespace = "selector_builds"
+verification_namespace = "selector_verifications"
+latest_primary_pointer = "artifacts/phase_04_models/LATEST_SELECTOR_PRIMARY.json"
+latest_verified_pointer = "artifacts/phase_04_models/LATEST_SELECTOR_VERIFIED.json"
+primary_pointer_authorizes_downstream_use = false
+independent_verification_required = true
+verified_pointer_authorizes_stage10_only = true
+verified_pointer_authorizes_stage11_or_later = false
+verified_pointer_authorizes_portfolios_pnl_or_backtests = false
+verified_pointer_authorizes_validation_or_final_access = false
+closed_file_sets_required = true
+pointer_replaced_last = true

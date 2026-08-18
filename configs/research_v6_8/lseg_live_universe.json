@@ -1,0 +1,24 @@
+{
+  "schema": "research_v6_8_lseg_live_universe_v1",
+  "purpose": "Discover the current US-traded V6.8 candidate universe without carrying historical CRSP membership forward.",
+  "pre_screen": {
+    "minimum_price_usd": 5.0,
+    "minimum_market_cap_usd": 300000000.0,
+    "exact_downstream_rules": [
+      "60-session median dollar volume at least USD 5 million",
+      "positive-volume share at least 0.90",
+      "at least 126 usable daily returns",
+      "one largest eligible security line per issuer"
+    ]
+  },
+  "lseg_discovery": {
+    "maximum_rows": 10000,
+    "filter": "ExchangeCountry eq 'USA' and AssetState eq 'AC' and IsExchangeTradable eq true and Currency eq 'USD' and MktCapIssueUsd ge 300000000 and PriceClose ge 5 and IsPrimaryIssueRIC eq true and RCSAssetCategoryLeaf in ('Ordinary Share' 'Fully Paid Ordinary Share' 'American Depository Receipt')"
+  },
+  "identity_policy": {
+    "security_key": "LSEG quote PermID",
+    "issuer_key_precedence": ["IssuerOAPermID", "IssuerPI", "CUSIP6", "normalized common name"],
+    "quote_rule": "DocumentTitle must explicitly contain Consolidated",
+    "one_line_rule": "largest issue market capitalization, then average volume, then RIC"
+  }
+}

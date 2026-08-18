@@ -1,0 +1,89 @@
+{
+  "schema": "research_v6_1_return_scaling_overlay_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_TEST",
+  "approved_on": "2026-08-14",
+  "question": "Can a causal portfolio-level exposure overlay increase the frozen winning strategy's annualized net excess return while preserving its Sharpe ratio after the existing trading, financing, and borrow cost model?",
+  "scope": {
+    "frozen_selector": true,
+    "frozen_alpha_gate": true,
+    "frozen_optimizer_weights_and_relative_holdings": true,
+    "no_stock_reselection": true,
+    "no_outcome_dependent_monthly_scaling": true,
+    "post_diagnostic_historical_development_only": true,
+    "does_not_replace_or_reinterpret_the_frozen_winner": true
+  },
+  "sources": {
+    "historical_test": {
+      "month_root": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/variants/return_plus_ff5_momentum__optimized_10pct_vol/months",
+      "run_manifest": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/run_manifest.json",
+      "run_manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef",
+      "start": "2024-01",
+      "end": "2025-08"
+    },
+    "validation": {
+      "month_root": "artifacts/research_v6_1/final_optimizer_challenge/72e9dc82f89e-67cac227c15c-a8f3e5acf95a/validation/control/months",
+      "run_manifest": "artifacts/research_v6_1/final_optimizer_challenge/72e9dc82f89e-67cac227c15c-a8f3e5acf95a/run_manifest.json",
+      "run_manifest_sha256": "077238f71b6b266160bcadba2699911748c68aabb051d1cb528d289d0ddab8af",
+      "start": "2022-02",
+      "end": "2023-12"
+    },
+    "risk_cost": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet",
+      "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"
+    }
+  },
+  "profiles": [
+    {"id": "constant_1p00", "kind": "constant", "multiplier": 1.00},
+    {"id": "constant_1p10", "kind": "constant", "multiplier": 1.10},
+    {"id": "constant_1p20", "kind": "constant", "multiplier": 1.20},
+    {"id": "constant_1p25", "kind": "constant", "multiplier": 1.25},
+    {"id": "constant_1p30", "kind": "constant", "multiplier": 1.30},
+    {"id": "causal_vol_6pct", "kind": "forecast_volatility_target", "target": 0.06, "maximum_multiplier": 1.30},
+    {"id": "causal_vol_7pct", "kind": "forecast_volatility_target", "target": 0.07, "maximum_multiplier": 1.30},
+    {"id": "causal_vol_8pct", "kind": "forecast_volatility_target", "target": 0.08, "maximum_multiplier": 1.30}
+  ],
+  "costs": {
+    "commission_rate": 0.0001,
+    "primary": {"spread_multiplier": 1.0, "impact_coefficient": 0.10, "financing_rate_annual": 0.005, "borrow_column": "primary_borrow_rate_annual"},
+    "stress": {"spread_multiplier": 2.0, "impact_coefficient": 0.20, "financing_rate_annual": 0.015, "borrow_column": "stress_borrow_rate_annual"},
+    "rule": "Recompute each month's stock trades, square-root market impact, borrow, financing, NAV, and drifted starting weights at the overlay's actual scale."
+  },
+  "selection": {
+    "validation_only": true,
+    "strict_sharpe_rule": "Maximize annualized net excess return among profiles with validation Sharpe at least the unscaled validation Sharpe.",
+    "practical_sharpe_floor_ratio": 0.95,
+    "practical_rule": "Maximize annualized net excess return among profiles with validation Sharpe at least 95 percent of the unscaled validation Sharpe, maximum one-way ADV participation at most 10 percent, maximum gross exposure at most 1.50, and positive stressed-cost Sharpe.",
+    "historical_test_rule": "Run every profile for transparency, but identify the validation-selected strict and practical profiles before interpreting the historical test."
+  },
+  "continuous_constant_search": {
+    "enabled": true,
+    "minimum_multiplier": 1.0,
+    "maximum_multiplier": 1.30,
+    "bisection_tolerance": 0.0001,
+    "rule": "Using validation only, find the greatest constant multiplier satisfying the practical Sharpe, gross, ADV-capacity, and stressed-Sharpe rules; evaluate that single derived multiplier on the historical test afterward."
+  },
+  "constraints": {
+    "hard_maximum_one_way_adv_participation": 0.10,
+    "hard_maximum_gross": 1.50,
+    "scaled_limits_required_for_multiplier_above_one": [
+      "maximum_position_weight",
+      "maximum_one_way_turnover",
+      "maximum_net",
+      "market_beta_absolute_limit",
+      "other_factor_absolute_limit",
+      "sic2_industry limits"
+    ],
+    "interpretation": "A multiplier above one is an explicit mandate expansion. The report shows the scaled limits it requires; it is not represented as compliant with the original absolute caps."
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "evidence_boundary": {
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  }
+}

@@ -1,0 +1,6972 @@
+{
+  "schema_version": 1,
+  "registry_id": "stage13-final-input-registry-v1",
+  "status": "FROZEN_BEFORE_FINAL_UNBLIND",
+  "source_identity": {
+    "raw_manifest_pointer": {
+      "path": "artifacts/phase_01_raw_manifest/LATEST_FROZEN.json",
+      "sha256": "b11436c10eafbabd52e2fd3d230bb3e48e97529282ba6fd81315c25396455299"
+    },
+    "feature_registry": {
+      "path": "configs/phase_03_features/feature_registry_v1.json",
+      "sha256": "7bac81cd8083c9a5c44ab2482223a342ed6ce2ce265d73cd8cc1bd843e33805a"
+    },
+    "feature_build_rules": {
+      "path": "configs/phase_03_features/feature_build_rules_v1.json",
+      "sha256": "26d5c76aa158600e48922f331c432f75f4b8657bac08909f127052b9fbf33a4e"
+    },
+    "label_rules": {
+      "path": "configs/phase_03_features/label_build_rules_v1.json",
+      "sha256": "f93f006062ba441f61c9cdda3a5d4fc1cb7b8b5ffdf422f1bebe7ea3057d2947"
+    },
+    "risk_cost_rules": {
+      "path": "configs/phase_04_models/risk_cost_build_rules_v1.json",
+      "sha256": "a7049869595625fc192f1fbfcf1570324545009e655af0ab6610eba084c94890"
+    },
+    "stage11_outcome_schema_reference": {
+      "path": "configs/phase_05_validation/stage_11_validation_data_rules_v1.json",
+      "sha256": "43f52f578f5ca810e537962380272d93398d1d2734ce688262724f81b080ce1a"
+    },
+    "schema_implementation": [
+      {
+        "path": "src/portfolio_bot/features/feature_store_contract.py",
+        "sha256": "0a709493370e9d3ceac676cbbf219aa87aa244bc4d23b3ec6ddb8f1ba604bfa7"
+      },
+      {
+        "path": "src/portfolio_bot/risk_cost/contract.py",
+        "sha256": "983173446412a21e05e0bc10a3d725c798e2fd99ca9680738b25fbf9c04d3c9f"
+      }
+    ],
+    "predictor_schema_derivation": {
+      "primary": "holding_month followed by the exact 170-column frozen Stage 6 physical raw feature schema",
+      "core_and_partial": "holding_month followed by the seven frozen audit fields and the exact ordered 111-member reduced_auxiliary_core feature set"
+    },
+    "risk_and_cost_schema_derivation": "holding_month followed by the exact frozen Stage 8 development_risk_cost_inputs Arrow schema"
+  },
+  "global_rules": {
+    "caller_created_template_permitted": false,
+    "caller_supplied_reader_permitted": false,
+    "source_content_hash_must_be_independently_observed": true,
+    "arrow_schema_must_match_registered_schema": true,
+    "holding_month_values_must_equal_requested_domain": true,
+    "projection_must_be_exact_requested_columns": true,
+    "primary_core_partial_splicing_permitted": false,
+    "partial_december_outcome_role_permitted": false
+  },
+  "templates": [
+    {
+      "registration_name": "final_calendar",
+      "role": "final_calendar_metadata",
+      "segment": "all_metadata_only",
+      "month_domain": "2020-01_through_2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "outcome_availability_date",
+        "segment",
+        "complete_holding_interval",
+        "confirmatory_inference_eligible"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "segment",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "complete_holding_interval",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "confirmatory_inference_eligible",
+          "type": "bool",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_predictors",
+      "role": "final_predictor",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "share_type",
+        "return_total_5d",
+        "return_total_63d",
+        "return_total_126d",
+        "return_total_252d",
+        "momentum_6_1",
+        "momentum_12_1",
+        "momentum_24_12",
+        "reversal_21d",
+        "price_to_ma_21d",
+        "price_to_ma_63d",
+        "price_to_ma_126d",
+        "price_to_ma_252d",
+        "distance_to_high_252d",
+        "log_price_trend_slope_63d",
+        "log_price_trend_r2_63d",
+        "log_price_trend_slope_126d",
+        "log_price_trend_r2_126d",
+        "log_price_trend_slope_252d",
+        "log_price_trend_r2_252d",
+        "max_drawdown_252d",
+        "realized_volatility_21d",
+        "realized_volatility_63d",
+        "realized_volatility_126d",
+        "realized_volatility_252d",
+        "downside_semivolatility_63d",
+        "downside_semivolatility_252d",
+        "beta_label_mktrf",
+        "beta_label_smb",
+        "beta_label_hml",
+        "beta_label_rmw",
+        "beta_label_cma",
+        "beta_label_umd",
+        "beta_label_idiosyncratic_volatility",
+        "return_skewness_252d",
+        "return_excess_kurtosis_252d",
+        "maximum_daily_return_21d",
+        "minimum_daily_return_21d",
+        "maximum_daily_return_63d",
+        "minimum_daily_return_63d",
+        "volatility_63d_vs_trailing_median_252d",
+        "log_absolute_price",
+        "log_market_cap",
+        "median_dollar_volume_20d",
+        "median_dollar_volume_60d",
+        "share_turnover_20d",
+        "share_turnover_60d",
+        "amihud_illiquidity_20d",
+        "amihud_illiquidity_60d",
+        "median_estimated_full_spread_20d",
+        "zero_return_share_60d",
+        "zero_volume_share_60d",
+        "dollar_volume_shock_20d_vs_prior_252d",
+        "months_since_first_tradable",
+        "earnings_to_price",
+        "positive_earnings_pe",
+        "book_to_market",
+        "sales_to_price",
+        "operating_cash_flow_to_price",
+        "ebitda_to_enterprise_value",
+        "dividend_yield",
+        "return_on_assets",
+        "return_on_equity",
+        "gross_profitability",
+        "operating_margin",
+        "asset_turnover",
+        "accruals_to_average_assets",
+        "capital_expenditure_to_assets",
+        "research_and_development_to_sales",
+        "investment_growth",
+        "total_debt_to_assets",
+        "long_term_debt_to_assets",
+        "current_ratio",
+        "cash_to_assets",
+        "net_equity_issuance",
+        "repurchase_payout_yield",
+        "sales_growth_yoy",
+        "earnings_growth_yoy",
+        "asset_growth_yoy",
+        "share_growth_yoy",
+        "loss_indicator",
+        "accounting_market_currency_verified",
+        "fundamental_source_basis",
+        "institutional_ownership_ratio",
+        "institutional_ownership_change_1q",
+        "institutional_holder_breadth",
+        "institutional_ownership_hhi",
+        "days_since_latest_annual_filing",
+        "days_since_latest_interim_financial_filing",
+        "latest_annual_filing_form",
+        "latest_interim_financial_filing_form",
+        "count_8k_30d",
+        "count_8k_90d",
+        "count_6k_30d",
+        "count_6k_90d",
+        "recency_8k_30d",
+        "recency_8k_90d",
+        "recency_6k_30d",
+        "recency_6k_90d",
+        "restatement_disclosed_90d",
+        "restatement_disclosed_365d",
+        "business_segment_count",
+        "geographic_segment_count",
+        "business_segment_revenue_hhi",
+        "business_segment_revenue_hhi_change_1y",
+        "eight_k_item_families_30d",
+        "eight_k_item_families_90d",
+        "foreign_listing_indicator",
+        "adr_indicator",
+        "us_incorporation_indicator",
+        "exchange_category",
+        "ff12_sector_category",
+        "sic2_industry_category",
+        "domicile_country_category",
+        "reporting_currency_category",
+        "option_call_volume_21d",
+        "option_put_volume_21d",
+        "option_combined_volume_21d",
+        "option_call_volume_63d",
+        "option_put_volume_63d",
+        "option_combined_volume_63d",
+        "option_call_open_interest_eom",
+        "option_put_open_interest_eom",
+        "option_combined_open_interest_eom",
+        "log_option_put_call_volume_ratio_21d",
+        "log_option_put_call_open_interest_ratio_eom",
+        "option_call_minus_put_volume_share_21d",
+        "option_total_volume_change_1m",
+        "option_total_volume_change_3m",
+        "option_total_open_interest_change_1m",
+        "option_total_open_interest_change_3m",
+        "option_volume_to_underlying_volume_21d",
+        "optionmetrics_covered_indicator",
+        "optionmetrics_coverage_age_months",
+        "option_historical_volatility_30d",
+        "option_historical_volatility_60d",
+        "option_historical_volatility_90d",
+        "option_historical_volatility_180d",
+        "option_historical_volatility_360d",
+        "option_historical_volatility_30d_minus_90d",
+        "option_historical_volatility_60d_minus_180d",
+        "factor_mktrf_trailing_1m",
+        "factor_smb_trailing_1m",
+        "factor_hml_trailing_1m",
+        "factor_rmw_trailing_1m",
+        "factor_cma_trailing_1m",
+        "factor_umd_trailing_1m",
+        "factor_mktrf_trailing_3m",
+        "factor_smb_trailing_3m",
+        "factor_hml_trailing_3m",
+        "factor_rmw_trailing_3m",
+        "factor_cma_trailing_3m",
+        "factor_umd_trailing_3m",
+        "factor_mktrf_trailing_12m",
+        "factor_smb_trailing_12m",
+        "factor_hml_trailing_12m",
+        "factor_rmw_trailing_12m",
+        "factor_cma_trailing_12m",
+        "factor_umd_trailing_12m",
+        "risk_free_rate_1m",
+        "market_realized_volatility_21d",
+        "market_realized_volatility_63d",
+        "pastor_stambaugh_liquidity_level",
+        "pastor_stambaugh_recursive_innovation"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "share_type",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "return_total_5d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_6_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_12_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_24_12",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "reversal_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "distance_to_high_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "max_drawdown_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_idiosyncratic_volatility",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_skewness_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_excess_kurtosis_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "volatility_63d_vs_trailing_median_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_absolute_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_market_cap",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_estimated_full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_return_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_volume_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dollar_volume_shock_20d_vs_prior_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "months_since_first_tradable",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "positive_earnings_pe",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "book_to_market",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_cash_flow_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "ebitda_to_enterprise_value",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dividend_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_equity",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "gross_profitability",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_margin",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_turnover",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "accruals_to_average_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "capital_expenditure_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "research_and_development_to_sales",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "investment_growth",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "total_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "long_term_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "current_ratio",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "cash_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "net_equity_issuance",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "repurchase_payout_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "loss_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "accounting_market_currency_verified",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "fundamental_source_basis",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "institutional_ownership_ratio",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "institutional_ownership_change_1q",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "institutional_holder_breadth",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "institutional_ownership_hhi",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "days_since_latest_annual_filing",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "days_since_latest_interim_financial_filing",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "latest_annual_filing_form",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "latest_interim_financial_filing_form",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "count_8k_30d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "count_8k_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "count_6k_30d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "count_6k_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "recency_8k_30d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "recency_8k_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "recency_6k_30d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "recency_6k_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "restatement_disclosed_90d",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "restatement_disclosed_365d",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "business_segment_count",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "geographic_segment_count",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "business_segment_revenue_hhi",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "business_segment_revenue_hhi_change_1y",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "eight_k_item_families_30d",
+          "type": "list<string>",
+          "nullable": false
+        },
+        {
+          "name": "eight_k_item_families_90d",
+          "type": "list<string>",
+          "nullable": false
+        },
+        {
+          "name": "foreign_listing_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "adr_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "us_incorporation_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "exchange_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "sic2_industry_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reporting_currency_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "option_call_volume_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_put_volume_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_combined_volume_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_call_volume_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_put_volume_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_combined_volume_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_call_open_interest_eom",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_put_open_interest_eom",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_combined_open_interest_eom",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_option_put_call_volume_ratio_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_option_put_call_open_interest_ratio_eom",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_call_minus_put_volume_share_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_total_volume_change_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_total_volume_change_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_total_open_interest_change_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_total_open_interest_change_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_volume_to_underlying_volume_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "optionmetrics_covered_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "optionmetrics_coverage_age_months",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_30d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_180d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_360d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_30d_minus_90d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "option_historical_volatility_60d_minus_180d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_free_rate_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "pastor_stambaugh_liquidity_level",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "pastor_stambaugh_recursive_innovation",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "core_predictors",
+      "role": "final_predictor",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "share_type",
+        "return_total_5d",
+        "return_total_63d",
+        "return_total_126d",
+        "return_total_252d",
+        "momentum_6_1",
+        "momentum_12_1",
+        "momentum_24_12",
+        "reversal_21d",
+        "price_to_ma_21d",
+        "price_to_ma_63d",
+        "price_to_ma_126d",
+        "price_to_ma_252d",
+        "distance_to_high_252d",
+        "log_price_trend_slope_63d",
+        "log_price_trend_r2_63d",
+        "log_price_trend_slope_126d",
+        "log_price_trend_r2_126d",
+        "log_price_trend_slope_252d",
+        "log_price_trend_r2_252d",
+        "max_drawdown_252d",
+        "realized_volatility_21d",
+        "realized_volatility_63d",
+        "realized_volatility_126d",
+        "realized_volatility_252d",
+        "downside_semivolatility_63d",
+        "downside_semivolatility_252d",
+        "beta_label_mktrf",
+        "beta_label_smb",
+        "beta_label_hml",
+        "beta_label_rmw",
+        "beta_label_cma",
+        "beta_label_umd",
+        "beta_label_idiosyncratic_volatility",
+        "return_skewness_252d",
+        "return_excess_kurtosis_252d",
+        "maximum_daily_return_21d",
+        "minimum_daily_return_21d",
+        "maximum_daily_return_63d",
+        "minimum_daily_return_63d",
+        "volatility_63d_vs_trailing_median_252d",
+        "log_absolute_price",
+        "log_market_cap",
+        "median_dollar_volume_20d",
+        "median_dollar_volume_60d",
+        "share_turnover_20d",
+        "share_turnover_60d",
+        "amihud_illiquidity_20d",
+        "amihud_illiquidity_60d",
+        "median_estimated_full_spread_20d",
+        "zero_return_share_60d",
+        "zero_volume_share_60d",
+        "dollar_volume_shock_20d_vs_prior_252d",
+        "months_since_first_tradable",
+        "earnings_to_price",
+        "positive_earnings_pe",
+        "book_to_market",
+        "sales_to_price",
+        "operating_cash_flow_to_price",
+        "ebitda_to_enterprise_value",
+        "dividend_yield",
+        "return_on_assets",
+        "return_on_equity",
+        "gross_profitability",
+        "operating_margin",
+        "asset_turnover",
+        "accruals_to_average_assets",
+        "capital_expenditure_to_assets",
+        "research_and_development_to_sales",
+        "investment_growth",
+        "total_debt_to_assets",
+        "long_term_debt_to_assets",
+        "current_ratio",
+        "cash_to_assets",
+        "net_equity_issuance",
+        "repurchase_payout_yield",
+        "sales_growth_yoy",
+        "earnings_growth_yoy",
+        "asset_growth_yoy",
+        "share_growth_yoy",
+        "loss_indicator",
+        "accounting_market_currency_verified",
+        "fundamental_source_basis",
+        "foreign_listing_indicator",
+        "adr_indicator",
+        "us_incorporation_indicator",
+        "exchange_category",
+        "ff12_sector_category",
+        "sic2_industry_category",
+        "domicile_country_category",
+        "reporting_currency_category",
+        "factor_mktrf_trailing_1m",
+        "factor_smb_trailing_1m",
+        "factor_hml_trailing_1m",
+        "factor_rmw_trailing_1m",
+        "factor_cma_trailing_1m",
+        "factor_umd_trailing_1m",
+        "factor_mktrf_trailing_3m",
+        "factor_smb_trailing_3m",
+        "factor_hml_trailing_3m",
+        "factor_rmw_trailing_3m",
+        "factor_cma_trailing_3m",
+        "factor_umd_trailing_3m",
+        "factor_mktrf_trailing_12m",
+        "factor_smb_trailing_12m",
+        "factor_hml_trailing_12m",
+        "factor_rmw_trailing_12m",
+        "factor_cma_trailing_12m",
+        "factor_umd_trailing_12m",
+        "risk_free_rate_1m",
+        "market_realized_volatility_21d",
+        "market_realized_volatility_63d"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "share_type",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "return_total_5d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_6_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_12_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_24_12",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "reversal_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "distance_to_high_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "max_drawdown_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_idiosyncratic_volatility",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_skewness_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_excess_kurtosis_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "volatility_63d_vs_trailing_median_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_absolute_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_market_cap",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_estimated_full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_return_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_volume_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dollar_volume_shock_20d_vs_prior_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "months_since_first_tradable",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "positive_earnings_pe",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "book_to_market",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_cash_flow_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "ebitda_to_enterprise_value",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dividend_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_equity",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "gross_profitability",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_margin",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_turnover",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "accruals_to_average_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "capital_expenditure_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "research_and_development_to_sales",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "investment_growth",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "total_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "long_term_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "current_ratio",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "cash_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "net_equity_issuance",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "repurchase_payout_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "loss_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "accounting_market_currency_verified",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "fundamental_source_basis",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "foreign_listing_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "adr_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "us_incorporation_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "exchange_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "sic2_industry_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reporting_currency_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "factor_mktrf_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_free_rate_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_predictors",
+      "role": "final_predictor",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "share_type",
+        "return_total_5d",
+        "return_total_63d",
+        "return_total_126d",
+        "return_total_252d",
+        "momentum_6_1",
+        "momentum_12_1",
+        "momentum_24_12",
+        "reversal_21d",
+        "price_to_ma_21d",
+        "price_to_ma_63d",
+        "price_to_ma_126d",
+        "price_to_ma_252d",
+        "distance_to_high_252d",
+        "log_price_trend_slope_63d",
+        "log_price_trend_r2_63d",
+        "log_price_trend_slope_126d",
+        "log_price_trend_r2_126d",
+        "log_price_trend_slope_252d",
+        "log_price_trend_r2_252d",
+        "max_drawdown_252d",
+        "realized_volatility_21d",
+        "realized_volatility_63d",
+        "realized_volatility_126d",
+        "realized_volatility_252d",
+        "downside_semivolatility_63d",
+        "downside_semivolatility_252d",
+        "beta_label_mktrf",
+        "beta_label_smb",
+        "beta_label_hml",
+        "beta_label_rmw",
+        "beta_label_cma",
+        "beta_label_umd",
+        "beta_label_idiosyncratic_volatility",
+        "return_skewness_252d",
+        "return_excess_kurtosis_252d",
+        "maximum_daily_return_21d",
+        "minimum_daily_return_21d",
+        "maximum_daily_return_63d",
+        "minimum_daily_return_63d",
+        "volatility_63d_vs_trailing_median_252d",
+        "log_absolute_price",
+        "log_market_cap",
+        "median_dollar_volume_20d",
+        "median_dollar_volume_60d",
+        "share_turnover_20d",
+        "share_turnover_60d",
+        "amihud_illiquidity_20d",
+        "amihud_illiquidity_60d",
+        "median_estimated_full_spread_20d",
+        "zero_return_share_60d",
+        "zero_volume_share_60d",
+        "dollar_volume_shock_20d_vs_prior_252d",
+        "months_since_first_tradable",
+        "earnings_to_price",
+        "positive_earnings_pe",
+        "book_to_market",
+        "sales_to_price",
+        "operating_cash_flow_to_price",
+        "ebitda_to_enterprise_value",
+        "dividend_yield",
+        "return_on_assets",
+        "return_on_equity",
+        "gross_profitability",
+        "operating_margin",
+        "asset_turnover",
+        "accruals_to_average_assets",
+        "capital_expenditure_to_assets",
+        "research_and_development_to_sales",
+        "investment_growth",
+        "total_debt_to_assets",
+        "long_term_debt_to_assets",
+        "current_ratio",
+        "cash_to_assets",
+        "net_equity_issuance",
+        "repurchase_payout_yield",
+        "sales_growth_yoy",
+        "earnings_growth_yoy",
+        "asset_growth_yoy",
+        "share_growth_yoy",
+        "loss_indicator",
+        "accounting_market_currency_verified",
+        "fundamental_source_basis",
+        "foreign_listing_indicator",
+        "adr_indicator",
+        "us_incorporation_indicator",
+        "exchange_category",
+        "ff12_sector_category",
+        "sic2_industry_category",
+        "domicile_country_category",
+        "reporting_currency_category",
+        "factor_mktrf_trailing_1m",
+        "factor_smb_trailing_1m",
+        "factor_hml_trailing_1m",
+        "factor_rmw_trailing_1m",
+        "factor_cma_trailing_1m",
+        "factor_umd_trailing_1m",
+        "factor_mktrf_trailing_3m",
+        "factor_smb_trailing_3m",
+        "factor_hml_trailing_3m",
+        "factor_rmw_trailing_3m",
+        "factor_cma_trailing_3m",
+        "factor_umd_trailing_3m",
+        "factor_mktrf_trailing_12m",
+        "factor_smb_trailing_12m",
+        "factor_hml_trailing_12m",
+        "factor_rmw_trailing_12m",
+        "factor_cma_trailing_12m",
+        "factor_umd_trailing_12m",
+        "risk_free_rate_1m",
+        "market_realized_volatility_21d",
+        "market_realized_volatility_63d"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "share_type",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "return_total_5d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_total_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_6_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_12_1",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "momentum_24_12",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "reversal_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "price_to_ma_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "distance_to_high_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_slope_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_price_trend_r2_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "max_drawdown_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_126d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "realized_volatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "downside_semivolatility_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_label_idiosyncratic_volatility",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_skewness_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_excess_kurtosis_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "maximum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "minimum_daily_return_63d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "volatility_63d_vs_trailing_median_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_absolute_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "log_market_cap",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_dollar_volume_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_turnover_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "amihud_illiquidity_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "median_estimated_full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_return_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "zero_volume_share_60d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dollar_volume_shock_20d_vs_prior_252d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "months_since_first_tradable",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "positive_earnings_pe",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "book_to_market",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_cash_flow_to_price",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "ebitda_to_enterprise_value",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "dividend_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "return_on_equity",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "gross_profitability",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "operating_margin",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_turnover",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "accruals_to_average_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "capital_expenditure_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "research_and_development_to_sales",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "investment_growth",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "total_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "long_term_debt_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "current_ratio",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "cash_to_assets",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "net_equity_issuance",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "repurchase_payout_yield",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "sales_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "earnings_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "asset_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "share_growth_yoy",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "loss_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "accounting_market_currency_verified",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "fundamental_source_basis",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "foreign_listing_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "adr_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "us_incorporation_indicator",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "exchange_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "sic2_industry_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reporting_currency_category",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "factor_mktrf_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_3m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_mktrf_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_smb_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_hml_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_rmw_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_cma_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "factor_umd_trailing_12m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_free_rate_1m",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_21d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "market_realized_volatility_63d",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_risk_cost",
+      "role": "final_risk_input",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_risk_cost",
+      "role": "final_risk_input",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_risk_cost",
+      "role": "final_risk_input",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_cost_inputs",
+      "role": "final_cost_input",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_cost_inputs",
+      "role": "final_cost_input",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_cost_inputs",
+      "role": "final_cost_input",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "primary_exchange",
+        "ff12_sector_category",
+        "domicile_country_category",
+        "information_cutoff_date",
+        "risk_status",
+        "risk_observation_count",
+        "risk_window_first_date",
+        "risk_window_last_date",
+        "beta_risk_intercept",
+        "beta_risk_mktrf",
+        "beta_risk_smb",
+        "beta_risk_hml",
+        "beta_risk_rmw",
+        "beta_risk_cma",
+        "beta_risk_umd",
+        "specific_variance_raw_daily",
+        "shrinkage_target_daily",
+        "shrinkage_target_source",
+        "shrinkage_population_count",
+        "specific_variance_shrunk_daily",
+        "risk_ridge_daily",
+        "specific_variance_daily",
+        "specific_variance_monthly",
+        "security_variance_pre_ridge_daily",
+        "security_variance_daily",
+        "security_variance_monthly",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "exit_impact_volatility_daily",
+        "exit_volatility_source",
+        "short_liquidity_quintile",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "post_cutoff_return_rows_used",
+        "post_cutoff_factor_rows_used"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "primary_exchange",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ff12_sector_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "domicile_country_category",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "risk_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "risk_observation_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "risk_window_first_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "risk_window_last_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_intercept",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_mktrf",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_smb",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_hml",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_rmw",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_cma",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "beta_risk_umd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_raw_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_target_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "shrinkage_population_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "specific_variance_shrunk_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "risk_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "specific_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_pre_ridge_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "security_variance_monthly",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "exit_impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "exit_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "short_liquidity_quintile",
+          "type": "int8",
+          "nullable": true
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_return_rows_used",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "post_cutoff_factor_rows_used",
+          "type": "int32",
+          "nullable": false
+        }
+      ]
+    },
+    {"registration_name":"primary_factor_covariance","role":"final_risk_input","segment":"primary_full","month_domain":"2020-01_through_2025-08","required_columns":["holding_month","signal_date","factor_row","factor_col","factor_row_ordinal","factor_col_ordinal","factor_observation_count","factor_window_first_date","factor_window_last_date","half_life_sessions","covariance_daily","covariance_monthly","factor_covariance_status"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"factor_row","type":"string","nullable":false},{"name":"factor_col","type":"string","nullable":false},{"name":"factor_row_ordinal","type":"int8","nullable":false},{"name":"factor_col_ordinal","type":"int8","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_window_first_date","type":"date32","nullable":true},{"name":"factor_window_last_date","type":"date32","nullable":true},{"name":"half_life_sessions","type":"float64","nullable":false},{"name":"covariance_daily","type":"float64","nullable":true},{"name":"covariance_monthly","type":"float64","nullable":true},{"name":"factor_covariance_status","type":"string","nullable":false}]},
+    {"registration_name":"primary_risk_cost_month_summary","role":"final_risk_input","segment":"primary_full","month_domain":"2020-01_through_2025-08","required_columns":["holding_month","signal_date","audit_rows","long_eligible_rows","short_eligible_rows","risk_present_rows","factor_covariance_present","factor_observation_count","factor_covariance_min_eigenvalue","ridge_daily","cross_sectional_specific_variance_median","impact_volatility_20d_rows","impact_volatility_60d_rows","impact_volatility_missing_rows","exit_volatility_p95_daily","spread_missing_rows","adv_missing_or_nonpositive_rows","new_long_trade_allowed_rows","new_short_trade_allowed_rows","post_cutoff_return_rows_used","post_cutoff_factor_rows_used"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"audit_rows","type":"int32","nullable":false},{"name":"long_eligible_rows","type":"int32","nullable":false},{"name":"short_eligible_rows","type":"int32","nullable":false},{"name":"risk_present_rows","type":"int32","nullable":false},{"name":"factor_covariance_present","type":"bool","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_covariance_min_eigenvalue","type":"float64","nullable":true},{"name":"ridge_daily","type":"float64","nullable":true},{"name":"cross_sectional_specific_variance_median","type":"float64","nullable":true},{"name":"impact_volatility_20d_rows","type":"int32","nullable":false},{"name":"impact_volatility_60d_rows","type":"int32","nullable":false},{"name":"impact_volatility_missing_rows","type":"int32","nullable":false},{"name":"exit_volatility_p95_daily","type":"float64","nullable":true},{"name":"spread_missing_rows","type":"int32","nullable":false},{"name":"adv_missing_or_nonpositive_rows","type":"int32","nullable":false},{"name":"new_long_trade_allowed_rows","type":"int32","nullable":false},{"name":"new_short_trade_allowed_rows","type":"int32","nullable":false},{"name":"post_cutoff_return_rows_used","type":"int32","nullable":false},{"name":"post_cutoff_factor_rows_used","type":"int32","nullable":false}]},
+    {"registration_name":"core_factor_covariance","role":"final_risk_input","segment":"core_complete","month_domain":"2025-09_through_2025-11","required_columns":["holding_month","signal_date","factor_row","factor_col","factor_row_ordinal","factor_col_ordinal","factor_observation_count","factor_window_first_date","factor_window_last_date","half_life_sessions","covariance_daily","covariance_monthly","factor_covariance_status"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"factor_row","type":"string","nullable":false},{"name":"factor_col","type":"string","nullable":false},{"name":"factor_row_ordinal","type":"int8","nullable":false},{"name":"factor_col_ordinal","type":"int8","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_window_first_date","type":"date32","nullable":true},{"name":"factor_window_last_date","type":"date32","nullable":true},{"name":"half_life_sessions","type":"float64","nullable":false},{"name":"covariance_daily","type":"float64","nullable":true},{"name":"covariance_monthly","type":"float64","nullable":true},{"name":"factor_covariance_status","type":"string","nullable":false}]},
+    {"registration_name":"core_risk_cost_month_summary","role":"final_risk_input","segment":"core_complete","month_domain":"2025-09_through_2025-11","required_columns":["holding_month","signal_date","audit_rows","long_eligible_rows","short_eligible_rows","risk_present_rows","factor_covariance_present","factor_observation_count","factor_covariance_min_eigenvalue","ridge_daily","cross_sectional_specific_variance_median","impact_volatility_20d_rows","impact_volatility_60d_rows","impact_volatility_missing_rows","exit_volatility_p95_daily","spread_missing_rows","adv_missing_or_nonpositive_rows","new_long_trade_allowed_rows","new_short_trade_allowed_rows","post_cutoff_return_rows_used","post_cutoff_factor_rows_used"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"audit_rows","type":"int32","nullable":false},{"name":"long_eligible_rows","type":"int32","nullable":false},{"name":"short_eligible_rows","type":"int32","nullable":false},{"name":"risk_present_rows","type":"int32","nullable":false},{"name":"factor_covariance_present","type":"bool","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_covariance_min_eigenvalue","type":"float64","nullable":true},{"name":"ridge_daily","type":"float64","nullable":true},{"name":"cross_sectional_specific_variance_median","type":"float64","nullable":true},{"name":"impact_volatility_20d_rows","type":"int32","nullable":false},{"name":"impact_volatility_60d_rows","type":"int32","nullable":false},{"name":"impact_volatility_missing_rows","type":"int32","nullable":false},{"name":"exit_volatility_p95_daily","type":"float64","nullable":true},{"name":"spread_missing_rows","type":"int32","nullable":false},{"name":"adv_missing_or_nonpositive_rows","type":"int32","nullable":false},{"name":"new_long_trade_allowed_rows","type":"int32","nullable":false},{"name":"new_short_trade_allowed_rows","type":"int32","nullable":false},{"name":"post_cutoff_return_rows_used","type":"int32","nullable":false},{"name":"post_cutoff_factor_rows_used","type":"int32","nullable":false}]},
+    {"registration_name":"partial_factor_covariance","role":"final_risk_input","segment":"partial_december_descriptive","month_domain":"2025-12","required_columns":["holding_month","signal_date","factor_row","factor_col","factor_row_ordinal","factor_col_ordinal","factor_observation_count","factor_window_first_date","factor_window_last_date","half_life_sessions","covariance_daily","covariance_monthly","factor_covariance_status"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"factor_row","type":"string","nullable":false},{"name":"factor_col","type":"string","nullable":false},{"name":"factor_row_ordinal","type":"int8","nullable":false},{"name":"factor_col_ordinal","type":"int8","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_window_first_date","type":"date32","nullable":true},{"name":"factor_window_last_date","type":"date32","nullable":true},{"name":"half_life_sessions","type":"float64","nullable":false},{"name":"covariance_daily","type":"float64","nullable":true},{"name":"covariance_monthly","type":"float64","nullable":true},{"name":"factor_covariance_status","type":"string","nullable":false}]},
+    {"registration_name":"partial_risk_cost_month_summary","role":"final_risk_input","segment":"partial_december_descriptive","month_domain":"2025-12","required_columns":["holding_month","signal_date","audit_rows","long_eligible_rows","short_eligible_rows","risk_present_rows","factor_covariance_present","factor_observation_count","factor_covariance_min_eigenvalue","ridge_daily","cross_sectional_specific_variance_median","impact_volatility_20d_rows","impact_volatility_60d_rows","impact_volatility_missing_rows","exit_volatility_p95_daily","spread_missing_rows","adv_missing_or_nonpositive_rows","new_long_trade_allowed_rows","new_short_trade_allowed_rows","post_cutoff_return_rows_used","post_cutoff_factor_rows_used"],"arrow_schema":[{"name":"holding_month","type":"string","nullable":false},{"name":"signal_date","type":"date32","nullable":false},{"name":"audit_rows","type":"int32","nullable":false},{"name":"long_eligible_rows","type":"int32","nullable":false},{"name":"short_eligible_rows","type":"int32","nullable":false},{"name":"risk_present_rows","type":"int32","nullable":false},{"name":"factor_covariance_present","type":"bool","nullable":false},{"name":"factor_observation_count","type":"int16","nullable":false},{"name":"factor_covariance_min_eigenvalue","type":"float64","nullable":true},{"name":"ridge_daily","type":"float64","nullable":true},{"name":"cross_sectional_specific_variance_median","type":"float64","nullable":true},{"name":"impact_volatility_20d_rows","type":"int32","nullable":false},{"name":"impact_volatility_60d_rows","type":"int32","nullable":false},{"name":"impact_volatility_missing_rows","type":"int32","nullable":false},{"name":"exit_volatility_p95_daily","type":"float64","nullable":true},{"name":"spread_missing_rows","type":"int32","nullable":false},{"name":"adv_missing_or_nonpositive_rows","type":"int32","nullable":false},{"name":"new_long_trade_allowed_rows","type":"int32","nullable":false},{"name":"new_short_trade_allowed_rows","type":"int32","nullable":false},{"name":"post_cutoff_return_rows_used","type":"int32","nullable":false},{"name":"post_cutoff_factor_rows_used","type":"int32","nullable":false}]},
+    {
+      "registration_name": "primary_market_inputs",
+      "role": "final_market_input",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "source_permco",
+        "source_security_info_start_date",
+        "source_security_info_end_date",
+        "source_cusip",
+        "source_primary_exchange",
+        "conditional_type",
+        "source_trading_status_flag",
+        "source_us_incorporation_flag",
+        "source_issuer_type",
+        "source_security_type",
+        "source_security_subtype",
+        "source_share_type",
+        "source_ticker",
+        "source_sic_code",
+        "source_naics_code",
+        "source_icb_industry",
+        "calendar_date",
+        "diagnostic_price_usd_per_share",
+        "price_flag",
+        "market_cap_thousand_usd",
+        "market_cap_usd",
+        "volume_shares",
+        "close_usd_per_share",
+        "low_usd_per_share",
+        "high_usd_per_share",
+        "bid_usd_per_share",
+        "ask_usd_per_share",
+        "open_usd_per_share",
+        "vendor_price_volume_usd",
+        "screening_dollar_volume_usd",
+        "screening_price_valid",
+        "market_cap_valid",
+        "liquidity_session_valid",
+        "shares_interval_start_date",
+        "shares_interval_end_date",
+        "shares_outstanding_thousand",
+        "shares_outstanding",
+        "shares_source",
+        "shares_factor_type",
+        "shares_adr_flag",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "information_cutoff_date",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "entry_close_status"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "source_permco",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "source_security_info_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_security_info_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_cusip",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_primary_exchange",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "conditional_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_trading_status_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_us_incorporation_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_issuer_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_subtype",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_share_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_ticker",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_sic_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_naics_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_icb_industry",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "diagnostic_price_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "price_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_thousand_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "market_cap_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "volume_shares",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "low_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "high_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "bid_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "ask_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "open_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "vendor_price_volume_usd",
+          "type": "decimal128(38,1)",
+          "nullable": true
+        },
+        {
+          "name": "screening_dollar_volume_usd",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "screening_price_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "liquidity_session_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding_thousand",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_source",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_factor_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_adr_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_market_inputs",
+      "role": "final_market_input",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "source_permco",
+        "source_security_info_start_date",
+        "source_security_info_end_date",
+        "source_cusip",
+        "source_primary_exchange",
+        "conditional_type",
+        "source_trading_status_flag",
+        "source_us_incorporation_flag",
+        "source_issuer_type",
+        "source_security_type",
+        "source_security_subtype",
+        "source_share_type",
+        "source_ticker",
+        "source_sic_code",
+        "source_naics_code",
+        "source_icb_industry",
+        "calendar_date",
+        "diagnostic_price_usd_per_share",
+        "price_flag",
+        "market_cap_thousand_usd",
+        "market_cap_usd",
+        "volume_shares",
+        "close_usd_per_share",
+        "low_usd_per_share",
+        "high_usd_per_share",
+        "bid_usd_per_share",
+        "ask_usd_per_share",
+        "open_usd_per_share",
+        "vendor_price_volume_usd",
+        "screening_dollar_volume_usd",
+        "screening_price_valid",
+        "market_cap_valid",
+        "liquidity_session_valid",
+        "shares_interval_start_date",
+        "shares_interval_end_date",
+        "shares_outstanding_thousand",
+        "shares_outstanding",
+        "shares_source",
+        "shares_factor_type",
+        "shares_adr_flag",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "information_cutoff_date",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "entry_close_status"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "source_permco",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "source_security_info_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_security_info_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_cusip",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_primary_exchange",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "conditional_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_trading_status_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_us_incorporation_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_issuer_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_subtype",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_share_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_ticker",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_sic_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_naics_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_icb_industry",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "diagnostic_price_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "price_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_thousand_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "market_cap_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "volume_shares",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "low_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "high_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "bid_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "ask_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "open_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "vendor_price_volume_usd",
+          "type": "decimal128(38,1)",
+          "nullable": true
+        },
+        {
+          "name": "screening_dollar_volume_usd",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "screening_price_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "liquidity_session_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding_thousand",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_source",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_factor_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_adr_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_market_inputs",
+      "role": "final_market_input",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "source_permco",
+        "source_security_info_start_date",
+        "source_security_info_end_date",
+        "source_cusip",
+        "source_primary_exchange",
+        "conditional_type",
+        "source_trading_status_flag",
+        "source_us_incorporation_flag",
+        "source_issuer_type",
+        "source_security_type",
+        "source_security_subtype",
+        "source_share_type",
+        "source_ticker",
+        "source_sic_code",
+        "source_naics_code",
+        "source_icb_industry",
+        "calendar_date",
+        "diagnostic_price_usd_per_share",
+        "price_flag",
+        "market_cap_thousand_usd",
+        "market_cap_usd",
+        "volume_shares",
+        "close_usd_per_share",
+        "low_usd_per_share",
+        "high_usd_per_share",
+        "bid_usd_per_share",
+        "ask_usd_per_share",
+        "open_usd_per_share",
+        "vendor_price_volume_usd",
+        "screening_dollar_volume_usd",
+        "screening_price_valid",
+        "market_cap_valid",
+        "liquidity_session_valid",
+        "shares_interval_start_date",
+        "shares_interval_end_date",
+        "shares_outstanding_thousand",
+        "shares_outstanding",
+        "shares_source",
+        "shares_factor_type",
+        "shares_adr_flag",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "information_cutoff_date",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "impact_volatility_source",
+        "impact_volatility_observations",
+        "primary_borrow_rate_annual",
+        "stress_borrow_rate_annual",
+        "new_long_trade_allowed",
+        "new_short_trade_allowed",
+        "cost_input_status",
+        "entry_close_status"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "source_permco",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "source_security_info_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_security_info_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "source_cusip",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_primary_exchange",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "conditional_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_trading_status_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_us_incorporation_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_issuer_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_security_subtype",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_share_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_ticker",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_sic_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_naics_code",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "source_icb_industry",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "diagnostic_price_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "price_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_thousand_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "market_cap_usd",
+          "type": "decimal128(38,2)",
+          "nullable": true
+        },
+        {
+          "name": "volume_shares",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "low_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "high_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "bid_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "ask_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "open_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "vendor_price_volume_usd",
+          "type": "decimal128(38,1)",
+          "nullable": true
+        },
+        {
+          "name": "screening_dollar_volume_usd",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "screening_price_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "market_cap_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "liquidity_session_valid",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_start_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_interval_end_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding_thousand",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_outstanding",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "shares_source",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_factor_type",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "shares_adr_flag",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "permco",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "long_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "short_eligible",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "information_cutoff_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_source",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "impact_volatility_observations",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "primary_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "stress_borrow_rate_annual",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "new_long_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "new_short_trade_allowed",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "cost_input_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_market_accounting",
+      "role": "final_accounting_input",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "calendar_date",
+        "return_leg_class",
+        "return_span_start_date",
+        "return_span_end_date",
+        "covered_trading_sessions",
+        "span_alignment_status",
+        "delisting_event_count",
+        "delisting_treatment_status",
+        "delisting_adjustment_return",
+        "authoritative_total_return",
+        "outcome_availability_date",
+        "authoritative_return_state",
+        "reconciliation_status",
+        "return_history_usable",
+        "return_history_authorized",
+        "authenticated_trading_session",
+        "close_usd_per_share",
+        "entry_close_usd_per_share",
+        "entry_close_status",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "borrow_rate_annual",
+        "financing_rate_annual",
+        "source_payload_sha256",
+        "no_mark_source_record_sha256",
+        "factor_observation_date",
+        "factor_public_availability_date",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "rf",
+        "umd",
+        "distribution_event_count",
+        "distribution_event_set_sha256",
+        "distribution_events_assigned_exactly_once",
+        "corporate_action_id",
+        "corporate_economic_event_date",
+        "corporate_assigned_return_date",
+        "corporate_public_availability_date",
+        "corporate_action_sequence",
+        "corporate_source_record_sha256",
+        "corporate_source_permno",
+        "corporate_settlement_kind",
+        "corporate_successor_permno",
+        "corporate_settlement_value_multiplier",
+        "corporate_terminal_total_return_already_applied",
+        "corporate_terminal_sensitivity_policy_sha256",
+        "corporate_terminal_sensitivity_evidence_sha256",
+        "corporate_event_day_quoted_full_spread"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "return_leg_class",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_span_start_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "return_span_end_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "covered_trading_sessions",
+          "type": "int16",
+          "nullable": true
+        },
+        {
+          "name": "span_alignment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_event_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "delisting_treatment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_adjustment_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "authoritative_total_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "authoritative_return_state",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reconciliation_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_history_usable",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "return_history_authorized",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "authenticated_trading_session",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "entry_close_usd_per_share",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "borrow_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "financing_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "source_payload_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "no_mark_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "factor_observation_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "factor_public_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "mktrf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "smb",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "hml",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rmw",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "cma",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "umd",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_set_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "distribution_events_assigned_exactly_once",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "corporate_action_id",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_economic_event_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_assigned_return_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_public_availability_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_action_sequence",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_kind",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_successor_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_value_multiplier",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_total_return_already_applied",
+          "type": "bool",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_policy_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_evidence_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_event_day_quoted_full_spread",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "core_market_accounting",
+      "role": "final_accounting_input",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "calendar_date",
+        "return_leg_class",
+        "return_span_start_date",
+        "return_span_end_date",
+        "covered_trading_sessions",
+        "span_alignment_status",
+        "delisting_event_count",
+        "delisting_treatment_status",
+        "delisting_adjustment_return",
+        "authoritative_total_return",
+        "outcome_availability_date",
+        "authoritative_return_state",
+        "reconciliation_status",
+        "return_history_usable",
+        "return_history_authorized",
+        "authenticated_trading_session",
+        "close_usd_per_share",
+        "entry_close_usd_per_share",
+        "entry_close_status",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "borrow_rate_annual",
+        "financing_rate_annual",
+        "source_payload_sha256",
+        "no_mark_source_record_sha256",
+        "factor_observation_date",
+        "factor_public_availability_date",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "rf",
+        "umd",
+        "distribution_event_count",
+        "distribution_event_set_sha256",
+        "distribution_events_assigned_exactly_once",
+        "corporate_action_id",
+        "corporate_economic_event_date",
+        "corporate_assigned_return_date",
+        "corporate_public_availability_date",
+        "corporate_action_sequence",
+        "corporate_source_record_sha256",
+        "corporate_source_permno",
+        "corporate_settlement_kind",
+        "corporate_successor_permno",
+        "corporate_settlement_value_multiplier",
+        "corporate_terminal_total_return_already_applied",
+        "corporate_terminal_sensitivity_policy_sha256",
+        "corporate_terminal_sensitivity_evidence_sha256",
+        "corporate_event_day_quoted_full_spread"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "return_leg_class",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_span_start_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "return_span_end_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "covered_trading_sessions",
+          "type": "int16",
+          "nullable": true
+        },
+        {
+          "name": "span_alignment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_event_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "delisting_treatment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_adjustment_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "authoritative_total_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "authoritative_return_state",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reconciliation_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_history_usable",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "return_history_authorized",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "authenticated_trading_session",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "entry_close_usd_per_share",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "borrow_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "financing_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "source_payload_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "no_mark_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "factor_observation_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "factor_public_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "mktrf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "smb",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "hml",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rmw",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "cma",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "umd",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_set_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "distribution_events_assigned_exactly_once",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "corporate_action_id",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_economic_event_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_assigned_return_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_public_availability_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_action_sequence",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_kind",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_successor_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_value_multiplier",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_total_return_already_applied",
+          "type": "bool",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_policy_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_evidence_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_event_day_quoted_full_spread",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_market_accounting",
+      "role": "final_accounting_input",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "calendar_date",
+        "return_leg_class",
+        "return_span_start_date",
+        "return_span_end_date",
+        "covered_trading_sessions",
+        "span_alignment_status",
+        "delisting_event_count",
+        "delisting_treatment_status",
+        "delisting_adjustment_return",
+        "authoritative_total_return",
+        "outcome_availability_date",
+        "authoritative_return_state",
+        "reconciliation_status",
+        "return_history_usable",
+        "return_history_authorized",
+        "authenticated_trading_session",
+        "close_usd_per_share",
+        "entry_close_usd_per_share",
+        "entry_close_status",
+        "full_spread_20d",
+        "adv20_usd",
+        "impact_volatility_daily",
+        "borrow_rate_annual",
+        "financing_rate_annual",
+        "source_payload_sha256",
+        "no_mark_source_record_sha256",
+        "factor_observation_date",
+        "factor_public_availability_date",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "rf",
+        "umd",
+        "distribution_event_count",
+        "distribution_event_set_sha256",
+        "distribution_events_assigned_exactly_once",
+        "corporate_action_id",
+        "corporate_economic_event_date",
+        "corporate_assigned_return_date",
+        "corporate_public_availability_date",
+        "corporate_action_sequence",
+        "corporate_source_record_sha256",
+        "corporate_source_permno",
+        "corporate_settlement_kind",
+        "corporate_successor_permno",
+        "corporate_settlement_value_multiplier",
+        "corporate_terminal_total_return_already_applied",
+        "corporate_terminal_sensitivity_policy_sha256",
+        "corporate_terminal_sensitivity_evidence_sha256",
+        "corporate_event_day_quoted_full_spread"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "calendar_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "return_leg_class",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_span_start_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "return_span_end_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "covered_trading_sessions",
+          "type": "int16",
+          "nullable": true
+        },
+        {
+          "name": "span_alignment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_event_count",
+          "type": "int16",
+          "nullable": false
+        },
+        {
+          "name": "delisting_treatment_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "delisting_adjustment_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "authoritative_total_return",
+          "type": "decimal128(38,12)",
+          "nullable": true
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "authoritative_return_state",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "reconciliation_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "return_history_usable",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "return_history_authorized",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "authenticated_trading_session",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "close_usd_per_share",
+          "type": "decimal128(38,6)",
+          "nullable": true
+        },
+        {
+          "name": "entry_close_usd_per_share",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "entry_close_status",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "full_spread_20d",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "adv20_usd",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "impact_volatility_daily",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "borrow_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "financing_rate_annual",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "source_payload_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "no_mark_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "factor_observation_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "factor_public_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "mktrf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "smb",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "hml",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rmw",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "cma",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "rf",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "umd",
+          "type": "decimal128(38,12)",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_count",
+          "type": "int32",
+          "nullable": false
+        },
+        {
+          "name": "distribution_event_set_sha256",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "distribution_events_assigned_exactly_once",
+          "type": "bool",
+          "nullable": false
+        },
+        {
+          "name": "corporate_action_id",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_economic_event_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_assigned_return_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_public_availability_date",
+          "type": "date32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_action_sequence",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_record_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_source_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_kind",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_successor_permno",
+          "type": "int64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_settlement_value_multiplier",
+          "type": "float64",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_total_return_already_applied",
+          "type": "bool",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_policy_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_terminal_sensitivity_evidence_sha256",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "corporate_event_day_quoted_full_spread",
+          "type": "float64",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_factors",
+      "role": "final_factor_return",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "umd",
+        "rf"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "mktrf",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "smb",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "hml",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "rmw",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "cma",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "umd",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "rf",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_factors",
+      "role": "final_factor_return",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "umd",
+        "rf"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "mktrf",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "smb",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "hml",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "rmw",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "cma",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "umd",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "rf",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_benchmarks",
+      "role": "final_benchmark_return",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "benchmark_id",
+        "total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "benchmark_id",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_benchmarks",
+      "role": "final_benchmark_return",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "benchmark_id",
+        "total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "benchmark_id",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_benchmarks",
+      "role": "partial_december_descriptive_return",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "benchmark_id",
+        "total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "benchmark_id",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_completed_labels",
+      "role": "final_label",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "outcome_availability_date",
+        "permno",
+        "unranked_residual_return",
+        "residual_return_rank",
+        "primary_label_status"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "unranked_residual_return",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "residual_return_rank",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "primary_label_status",
+          "type": "string",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_completed_labels",
+      "role": "final_label",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "outcome_availability_date",
+        "permno",
+        "unranked_residual_return",
+        "residual_return_rank",
+        "primary_label_status"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "signal_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "outcome_availability_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "unranked_residual_return",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "residual_return_rank",
+          "type": "float64",
+          "nullable": false
+        },
+        {
+          "name": "primary_label_status",
+          "type": "string",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "primary_outcomes",
+      "role": "final_outcome",
+      "segment": "primary_full",
+      "month_domain": "2020-01_through_2025-08",
+      "required_columns": [
+        "holding_month",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "core_outcomes",
+      "role": "final_outcome",
+      "segment": "core_complete",
+      "month_domain": "2025-09_through_2025-11",
+      "required_columns": [
+        "holding_month",
+        "entry_date",
+        "exit_date",
+        "permno",
+        "total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "exit_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    },
+    {
+      "registration_name": "partial_descriptive_outcome",
+      "role": "partial_december_descriptive_return",
+      "segment": "partial_december_descriptive",
+      "month_domain": "2025-12",
+      "required_columns": [
+        "holding_month",
+        "entry_date",
+        "administrative_close_date",
+        "permno",
+        "partial_total_return"
+      ],
+      "arrow_schema": [
+        {
+          "name": "holding_month",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "entry_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "administrative_close_date",
+          "type": "date32",
+          "nullable": false
+        },
+        {
+          "name": "permno",
+          "type": "int64",
+          "nullable": false
+        },
+        {
+          "name": "partial_total_return",
+          "type": "float64",
+          "nullable": false
+        }
+      ]
+    }
+  ]
+}

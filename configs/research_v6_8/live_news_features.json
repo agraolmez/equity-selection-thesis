@@ -1,0 +1,18 @@
+{
+  "schema": "research_v6_8_live_news_features_v1",
+  "purpose": "Materialize the frozen 56-column point-in-time Alpaca/Benzinga news block for one prospective signal.",
+  "signal_cutoff_new_york": "16:00:00",
+  "lookback_days": 30,
+  "lexicon_path": "/Users/agraemirolmez/Desktop/Thesis/raw/research_v6/public_sources/lm_dictionary/Loughran-McDonald_MasterDictionary_1993-2025.csv",
+  "credentials": {
+    "key_environment": "APCA_API_KEY_ID",
+    "secret_environment": "APCA_API_SECRET_KEY"
+  },
+  "mapping": {
+    "direct": "current exact normalized ticker",
+    "family": "current issuer_key of a directly tagged security",
+    "industry": "current SIC2 only when one article directly tags at least two distinct issuers in that SIC2"
+  },
+  "no_news_policy": "authenticated neutral zero",
+  "future_policy": "both created_at and updated_at must be no later than signal close"
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "status": "STAGE13_SOURCE_CHECKPOINT_CONTEXT_MIGRATION_V2_AUTHORIZED",
+  "migration_id": "stage13-source-checkpoint-context-migration-v2",
+  "supersedes": {
+    "path": "configs/phase_06_final_test/stage_13_source_checkpoint_context_migration_v1.json",
+    "sha256": "956fe984d350cff58142affb2f3832f0bd7b061749f61f998b2d817c59012b13",
+    "migration_id": "stage13-source-checkpoint-context-migration-v1"
+  },
+  "scratch_topology_amendment": {
+    "path": "configs/phase_06_final_test/stage_12_post_unblind_scratch_topology_amendment_v1.json",
+    "sha256": "8e394a97d61e7f18b16baef65a29402960a73f83871151047012a3ee48ea97fb",
+    "amendment_id": "stage12-post-unblind-parent-scratch-topology-v1",
+    "blocker_path": "artifacts/phase_06_final_test/STAGE_13_PARENT_SCRATCH_TOPOLOGY_BLOCKER.json",
+    "blocker_sha256": "927fd04990a93ac01faf67bee9e600cf345d830e323c708420fd0d1ab1c6069e"
+  },
+  "parent_context": {
+    "context_sha256": "dbccbf9cd220d890d8c025bb6e92854bf61098f1eb42517da934c62b98e7adf5",
+    "context_json_relative_path": "context.json",
+    "context_json_sha256": "04e42b584be2c70c49cfbc35f78358cdbb4af58544dec96869c46727567eb3d1",
+    "raw_snapshot_id": "raw-v1-c1ab523852daf9e5",
+    "raw_file_identities_sha256": "cdea009462faaa6150ff24c76b57728dbb1a8d42cc496ba12632ae66b2e050f8",
+    "stage12_binding_sha256": "f9dbccbd448e5e36e52c83d43889549e7e12d4121d12ad049bc6a89962edc482",
+    "approval_payload_sha256": "256447acc775c383bb250c0ad0448a79696b51aee240e9417ec95311a8fc3a20"
+  },
+  "authority_transition": {
+    "parent_stage12_binding_sha256": "f9dbccbd448e5e36e52c83d43889549e7e12d4121d12ad049bc6a89962edc482",
+    "parent_approval_payload_sha256": "256447acc775c383bb250c0ad0448a79696b51aee240e9417ec95311a8fc3a20",
+    "replacement_stage12_binding_must_differ": true,
+    "replacement_approval_payload_must_differ": true,
+    "replacement_stage13_approval_required_before_parent_open": true,
+    "raw_identity_must_match": true
+  },
+  "parent_feature_sources": {
+    "relative_path": "formula_work/feature_sources",
+    "allowed_prerequisite_directories": [
+      "auxiliary",
+      "development_auxiliary",
+      "full_predictor_context",
+      "universe",
+      "universe_context"
+    ],
+    "forbidden_entries": [
+      "feature_input_bundle",
+      "final_predictors",
+      "DECISION_SOURCES_COMMITTED.json",
+      "months",
+      "receipts"
+    ],
+    "file_count": 64,
+    "total_size_bytes": 7190634134,
+    "canonical_tree_sha256": "06483456c92d0302c124aba9f577fb17cc0d1330b6ab3dc5e08f7093ad89bac7",
+    "captured_tree_identity_method": "sealed_pre_amendment_checkpoint_capture_v1",
+    "runtime_parent_before_after_digest_method": "sha256_of_canonical_newline_JSON_sorted_relative_path_sha256_size_records",
+    "subroots": {
+      "development_auxiliary": {
+        "file_count": 18,
+        "total_size_bytes": 2383909536,
+        "canonical_tree_sha256": "031b805715ba43d39b8490222dafa54863d4cadccc5075a9dc7aed2637c43a17"
+      },
+      "universe_context": {
+        "file_count": 4,
+        "total_size_bytes": 284137691,
+        "canonical_tree_sha256": "dfac179e9347eecf8db58c43bfe4bd5ad35773979dcd9b6262c51d83e9a7ffd4"
+      },
+      "universe": {
+        "file_count": 3,
+        "total_size_bytes": 15225776,
+        "canonical_tree_sha256": "d55c7309cb1312877c6848b51d04048e8c99180adc948a2a7ace99e98dd2685c"
+      },
+      "auxiliary": {
+        "file_count": 31,
+        "total_size_bytes": 1840567690,
+        "canonical_tree_sha256": "a6d1ba7367553899943cacb3aef034c02f6f7f9d89c944f6bad56daa7ccb01a8"
+      },
+      "full_predictor_context": {
+        "file_count": 8,
+        "total_size_bytes": 2666793441,
+        "canonical_tree_sha256": "fab43e8ec6241da1fdcfdb7d3868a57e15664a255bb636d90c1ffcd4e2f52444"
+      }
+    }
+  },
+  "receipts": {
+    "universe_context": {
+      "relative_path": "universe_context/context_receipt.json",
+      "sha256": "81ecb45774e7ec4675c25f0e934310402763cf4cee1627ca0c71251995527ea0"
+    },
+    "universe": {
+      "relative_path": "universe/universe_auxiliary_receipt.json",
+      "sha256": "bc22455775a4a75f9aebeeb7091d51964edd51f1097ce7e8246b2d86dcadf0e1"
+    },
+    "auxiliary": {
+      "relative_path": "auxiliary/universe_auxiliary_receipt.json",
+      "sha256": "0f326096930dc653dd246b0ac5193701dba73c364793dabd3b6f3f0f50d3a808"
+    },
+    "full_predictor_context": {
+      "relative_path": "full_predictor_context/full_predictor_context_receipt.json",
+      "sha256": "4fb499c8b89719c13ad169413d28844e5c19e1988665045acdb4f10e631a763c"
+    }
+  },
+  "excluded_parent_state": {
+    "only_parent_month_receipt_family": "final_calendar",
+    "final_calendar_month_receipt_count": 72,
+    "parent_final_calendar_receipts_reused": false,
+    "new_context_final_calendar_recomputed": true,
+    "final_predictor_month_receipt_count": 0,
+    "economic_or_outcome_month_checkpoint_count": 0,
+    "feature_input_bundle_present": false,
+    "decision_source_barrier_present": false
+  },
+  "safety": {
+    "parent_access_read_only": true,
+    "parent_tree_must_be_identical_before_after": true,
+    "migration_created_hardlinks_copies_symlinks_forbidden": true,
+    "feature_bundle_reuse_forbidden": true,
+    "decision_outcome_economic_reuse_forbidden": true,
+    "ignored_recursively_payload_empty_scratch_topologies": [
+      {
+        "relative_path": "full_predictor_context/.duckdb_spill/exact-table-compare-1ejjjtbr",
+        "exact_descendant_relative_paths": [
+          "left",
+          "left/__stage13_exact_partition=27",
+          "left/__stage13_exact_partition=79",
+          "right",
+          "right/__stage13_exact_partition=20",
+          "right/__stage13_exact_partition=94"
+        ]
+      }
+    ],
+    "ignored_scratch_topology_must_match_exactly": true,
+    "ignored_scratch_regular_file_count_required": 0,
+    "ignored_scratch_payload_bytes_required": 0,
+    "ignored_scratch_symlink_count_required": 0,
+    "ignored_scratch_special_node_count_required": 0,
+    "ignored_scratch_directory_identities_before_after_must_match": true,
+    "ignored_scratch_entries_must_not_be_removed_or_mutated": true,
+    "new_context_allowed_writes": [
+      "feature_input_bundle",
+      "stage13_source_checkpoint_context_migration_receipt.json"
+    ],
+    "stage12_tests_synthetic_only": true,
+    "required_synthetic_test_nodes": [
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_composes_fresh_bundle_without_parent_writes",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_rejects_context_tree_and_scratch_drift",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_rejects_exact_scratch_topology_drift",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_rejects_scratch_identity_drift_during_composition",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_reauthenticates_scratch_topology_on_receipt_reuse",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_rejects_adapter_or_null_proof_tamper",
+      "tests/unit/test_stage13_source_checkpoint_context_migration.py::test_parent_checkpoint_migration_receipt_reuse_is_idempotent_and_allows_later_progress"
+    ]
+  }
+}

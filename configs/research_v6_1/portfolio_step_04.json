@@ -1,0 +1,125 @@
+{
+  "schema": "research_v6_1_portfolio_step_04_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "Can the frozen V6.1 return ranks plus FF5/momentum alpha gate preserve the hedge benefit of shorts without forcing a structurally loss-making stock-short sleeve?",
+  "scope": {
+    "portfolio_only": true,
+    "selector_retraining": false,
+    "selector_and_rank_calibration_frozen_to_step_02": true,
+    "two_prespecified_policies_only": true,
+    "historical_post_diagnostic_evidence": true,
+    "realized_short_return_constraint_prohibited": true
+  },
+  "base_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "base_result": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef",
+    "required_status": "COMPLETE",
+    "primary_control": "return_plus_ff5_momentum__optimized_10pct_vol"
+  },
+  "evidence": {
+    "calibration_start": "2020-01",
+    "risk_aversion_validation_start": "2022-02",
+    "risk_aversion_validation_end": "2023-12",
+    "portfolio_start": "2024-01",
+    "portfolio_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "formation": {
+    "policy": "return_plus_ff5_momentum",
+    "candidate_fraction_each_side": 0.20,
+    "long_rule": "Frozen Step 02 top-20-percent long-return rank plus strictly positive causal FF5/momentum alpha gate.",
+    "alpha_short_rule": "Frozen Step 02 top-20-percent short-return rank plus strictly negative causal FF5/momentum alpha gate and a stressed round-trip trading-and-borrow hurdle.",
+    "opposing_signal_rule": "An inherited holding can be reduced or closed but cannot reverse side in the same month.",
+    "stock_hedge_pool": {
+      "rule": "For the optional-utility policy only, a non-long, short-eligible and trade-allowed stock can be a hedge candidate when it is in the more liquid half and below the 75th percentile of stressed borrow cost.",
+      "minimum_adv_cross_section_percentile": 0.50,
+      "maximum_stress_borrow_cross_section_percentile": 0.75,
+      "minimum_short_rank": 0.50
+    }
+  },
+  "policies": [
+    {
+      "id": "optional_stock_short_utility",
+      "description": "No side floors. Alpha and hedge stock shorts are jointly selected only when expected net return plus covariance benefit improves mean-variance utility.",
+      "spy_allowed": false,
+      "market_beta_absolute_limit": 0.10,
+      "require_nonnegative_expected_alpha_short_net": false
+    },
+    {
+      "id": "positive_alpha_shorts_plus_spy_hedge",
+      "description": "Stock shorts must have positive causal expected net edge; a separately reported SPY short supplies residual market-beta hedging.",
+      "spy_allowed": true,
+      "market_beta_absolute_limit": 0.02,
+      "require_nonnegative_expected_alpha_short_net": true
+    }
+  ],
+  "cost_hurdle": {
+    "scenario": "standard_stress",
+    "round_trip": true,
+    "representative_position_weight": 0.001,
+    "commission_each_way": 0.0001
+  },
+  "optimizer": {
+    "objective": "maximize causal expected monthly net excess return minus one-half risk aversion times annualized forecast variance",
+    "risk_aversion_candidates": [1.0, 3.0, 6.0, 10.0],
+    "selection_rule": "For each policy separately, select the highest primary-cost validation Sharpe; break ties by higher stress Sharpe, lower turnover, then larger risk aversion.",
+    "forecast_volatility_limit": 0.10,
+    "maximum_gross": 1.50,
+    "minimum_net": -0.10,
+    "maximum_net": 1.00,
+    "maximum_position_weight": 0.01,
+    "maximum_one_way_turnover": 0.50,
+    "maximum_one_way_adv_participation": 0.10,
+    "other_factor_absolute_limit": 0.10,
+    "sic2_industry_net_absolute_limit": 0.05,
+    "sic2_industry_gross_limit": 0.30,
+    "cash_allowed": true,
+    "minimum_long_gross": 0.0,
+    "minimum_short_gross": 0.0,
+    "solver": "CLARABEL"
+  },
+  "spy_hedge": {
+    "instrument": "SPY total-return benchmark",
+    "maximum_short_gross": 0.75,
+    "factor_exposures": [1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    "expected_return_rule": "Causal trailing mean SPY excess return, shrunk toward zero by 24 prior months and floored at zero so a SPY short always carries a nonnegative expected opportunity cost.",
+    "specific_variance_rule": "Causal trailing variance of SPY excess return minus MKT-RF, shrunk toward a 0.0001 monthly prior over 24 months.",
+    "primary": {
+      "one_way_transaction_cost_rate": 0.0001,
+      "borrow_rate_annual": 0.005
+    },
+    "standard_stress": {
+      "one_way_transaction_cost_rate": 0.0003,
+      "borrow_rate_annual": 0.015
+    }
+  },
+  "evaluation": {
+    "primary_metric": "realized annualized net Sharpe under primary costs",
+    "report_separately": [
+      "long-stock contribution",
+      "alpha-short-stock contribution",
+      "hedge-short-stock contribution",
+      "SPY-hedge contribution",
+      "stock and SPY costs",
+      "gross, net, beta, volatility, turnover and breadth"
+    ],
+    "controls": [
+      "V6.1 Step 02 FF5/momentum optimized 10-percent-volatility portfolio",
+      "V6.1 Step 03 optional-short results"
+    ],
+    "interpretation": "A causal expected-net constraint is valid; a constraint requiring positive future realized short P&L is look-ahead and is not used."
+  },
+  "checkpointing": {
+    "natural_unit": "policy/risk-aversion/profile/completed holding month",
+    "atomic": true,
+    "resume": true,
+    "binds_config_code_inputs_profile_and_month": true
+  }
+}

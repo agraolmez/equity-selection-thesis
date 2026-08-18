@@ -1,0 +1,469 @@
+schema_version = 1
+policy_name = "crsp_return_reconciliation_policy"
+policy_version = "v1"
+status = "frozen_semantic_foundation_pending_empirical_lock"
+purpose = "Create an exact, auditable daily return history from verified CRSP CIZ return staging while proving distributions and delistings are represented exactly once and using monthly returns only as crosschecks."
+semantic_rules_are_frozen = true
+empirical_tolerance_or_ambiguous_event_classification_is_authoritative = false
+production_build_before_empirical_lock_permitted = false
+
+[schema]
+path = "configs/phase_02_canonicalization/crsp_return_reconciliation_schema_v1.json"
+sha256 = "492d7dde39dc634b28be227282fa5d3680406614522a2587dac61f937633e01f"
+schema_id = "crsp-return-reconciliation-schema-v1"
+required_status = "frozen_semantic_foundation_pending_empirical_lock"
+
+[discovery]
+path = "configs/phase_02_canonicalization/crsp_return_reconciliation_discovery_v1.toml"
+sha256 = "472faf23554de2cf4bf9f7fe4476dc90a9849703f0f9eeec89799e18bde25fa3"
+required_status = "frozen_aggregate_only_discovery_contract_not_yet_run"
+
+[empirical_lock]
+template_path = "configs/phase_02_canonicalization/crsp_return_reconciliation_empirical_lock_template_v1.json"
+template_sha256 = "11bb874578520e2033839efff6eab72b8ad71bdf5aee59fe44618aed07f2a9ab"
+required_path = "configs/phase_02_canonicalization/crsp_return_reconciliation_empirical_lock_v1.json"
+required_status = "locked_after_aggregate_only_development_discovery"
+template_is_not_an_empirical_lock = true
+missing_or_wrong_status_lock_is_fatal = true
+
+[upstream.methodology]
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[upstream.phase_02]
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+
+[upstream.typed_backbone]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json"
+verified_pointer_sha256 = "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf"
+build_id = "crsp-typed-2ab2f0b7910a1b4b33d1ca32"
+primary_manifest_sha256 = "b9c87507d4c7a8f6b8776c4e0ed016ea143bca93eea7a6946ebf8e43d302b98a"
+independent_check_sha256 = "08c6d64115b537f0d2cca950a41172b67eb00a0a52517f240269d602cb04e950"
+required_status = "verified_passed"
+
+[upstream.supporting_profile]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "1df31283660a65f5c00774b6a9940c2bdedca68207341272abe0620d393162ba"
+build_id = "crsp-support-5fce388e8edbc75c437977e7"
+primary_manifest_sha256 = "4f73f43fdb95bcdc843d519b46b57b71659d145145ef4846154b1e324f840f39"
+required_status = "verified_passed"
+
+[upstream.calendar]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+build_id = "calendar-ae2e4ba4a280d66e"
+primary_manifest_sha256 = "cc3c460db3ccf445b96a95a0ca649a2b51c505590324934cddfa54c865b9edd1"
+required_status = "verified_passed"
+
+[scope]
+start_date = "2000-01-01"
+development_end_date = "2014-11-30"
+quality_end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+date_first_gating_required = true
+december_2014_role = "embargo_quality_and_boundary_reconciliation_only"
+validation_or_final_test_access_permitted = false
+post_2014_non_date_payload_access_permitted = false
+raw_security_keys_permitted_only_in_external_interim_tables = true
+security_level_examples_or_keys_in_quality_or_project_artifacts_permitted = false
+
+[semantic_sources]
+daily_return_missing_flags = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_RM.html"
+daily_return_duration_flags = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_RD.html"
+monthly_aggregate_return_flags = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_AR.html"
+monthly_aggregate_delisting_flags = "https://www.crsp.org/wp-content/uploads/appendix/FlagType_DE.html"
+crsp_ciz_guide = "https://www.crsp.org/crsp_pdf/crsp-us-stock-indexes-databases-guide-flat-file-format-2-0/"
+
+[authority]
+primary_daily_total_return = "crsp_security_day_return_staging.raw_total_return"
+daily_total_return_semantics = "CRSP CIZ total return including distributions and, when applicable, delisting outcomes"
+daily_return_ex_distributions_semantics = "CRSP DlyRetx price appreciation without ordinary dividends, including CRSP price-factor treatment for splits and qualifying distributions"
+daily_return_ex_distributions_is_audit_only_except_adjusted_price_path = true
+daily_return_ex_distributions_adjusted_price_path_requires_verified_pointer_authorization = true
+daily_return_ex_distributions_may_not_be_used_for_labels_targets_pnl_performance_or_total_return = true
+monthly_total_return_is_crosscheck_only = true
+distribution_events_are_audit_and_assignment_evidence_not_an_additive_return_source = true
+delisting_events_require_explicit_embedding_classification_before_any_adjustment = true
+never_filter_on_future_outcome_availability = true
+
+[arithmetic]
+source_numeric_parse = "arbitrary_precision_decimal"
+derived_reconciliation_type = "decimal128(38,12)"
+binary_float_may_decide_a_canonical_value = false
+default_numpy_isclose_permitted = false
+return_domain_lower_bound = "-1.000000000000"
+return_upper_bound = "unbounded"
+compounding_formula = "product(1 + each nonoverlapping authoritative return) - 1"
+overlapping_return_spans_may_not_be_compounded_twice = true
+
+[daily_return_flags]
+observed_codes = ["DG", "DM", "DP", "GP", "MP", "MV", "NA", "NS", "NT", "RA"]
+unknown_code_outcome = "fatal"
+numeric_value_must_be_preserved_before_classification = true
+only_NA_is_unconditionally_an_observed_return_candidate = true
+MV_numeric_values_are_not_silently_dropped_or_unconditionally_accepted = true
+
+[daily_return_flags.DG]
+official_meaning = "delisting_price_more_than_10_periods_from_delisting_date"
+classification = "delisting_event_required_missing_return"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable_without_explicit_delisting_treatment"
+
+[daily_return_flags.DM]
+official_meaning = "delisting_price_or_amount_missing"
+classification = "delisting_event_required_missing_return"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable_without_explicit_delisting_treatment"
+
+[daily_return_flags.DP]
+official_meaning = "delisting_pending"
+classification = "delisting_event_required_pending_return"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable_without_explicit_delisting_treatment"
+
+[daily_return_flags.GP]
+official_meaning = "gap_between_prices_too_large"
+classification = "missing_return_price_gap"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable"
+
+[daily_return_flags.MP]
+official_meaning = "missing_price"
+classification = "missing_return_missing_price"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable"
+
+[daily_return_flags.MV]
+official_meaning = "missing_corporate_action_value"
+classification = "quarantined_numeric_missing_corporate_action_value"
+numeric_value_policy = "preserve_for_audit_event_reconciliation_and_numeric_transport_QA"
+return_history_policy = "not_usable_even_if_numeric"
+event_ledger_exception = "a separately observed DelRet remains an event-ledger payoff candidate; this does not promote the MV daily payload"
+
+[daily_return_flags.NA]
+official_meaning = "not_applicable_not_missing"
+classification = "observed_total_return_candidate"
+numeric_value_policy = "required_in_domain"
+return_history_policy = "usable_if_duration_is_not_MR_and_span_alignment_passes"
+
+[daily_return_flags.NS]
+official_meaning = "new_security"
+classification = "missing_return_new_security"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable"
+
+[daily_return_flags.NT]
+official_meaning = "not_tracked"
+classification = "missing_return_not_tracked"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable"
+
+[daily_return_flags.RA]
+official_meaning = "return_after_not_tracked_period"
+classification = "missing_return_after_untracked_period"
+numeric_value_policy = "unexpected_numeric_is_fatal_until_empirical_lock_says_otherwise"
+return_history_policy = "not_usable"
+
+[daily_duration_flags]
+observed_codes = ["D1", "D2", "D3", "D4", "DD", "DU", "MR", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"]
+unknown_code_outcome = "fatal"
+factor_alignment_uses_exact_verified_trading_sessions = true
+calendar_day_count_may_not_substitute_for_trading_period_count = true
+delisting_event_linkage_precedes_generic_duration_interpretation = true
+P1_through_P9_delisting_linked_rows_are_terminal_legs_not_generic_spans = true
+DD_is_event_linked_and_never_a_generic_backward_span = true
+
+[daily_duration_flags.D1]
+trading_periods = 1
+official_meaning = "one_trading_day_and_one_calendar_day"
+alignment_rule = "previous_verified_trading_session_to_calendar_date"
+
+[daily_duration_flags.D2]
+trading_periods = 1
+official_meaning = "one_trading_day_and_two_calendar_days"
+alignment_rule = "previous_verified_trading_session_to_calendar_date"
+
+[daily_duration_flags.D3]
+trading_periods = 1
+official_meaning = "one_trading_day_and_three_calendar_days"
+alignment_rule = "previous_verified_trading_session_to_calendar_date"
+
+[daily_duration_flags.D4]
+trading_periods = 1
+official_meaning = "one_trading_day_and_four_calendar_days"
+alignment_rule = "previous_verified_trading_session_to_calendar_date"
+
+[daily_duration_flags.DU]
+trading_periods = 1
+official_meaning = "one_trading_day_and_five_or_more_calendar_days"
+alignment_rule = "previous_verified_trading_session_to_calendar_date"
+
+[daily_duration_flags.P1]
+trading_periods = 2
+official_meaning = "multi_period_two_trading_days"
+ordinary_alignment_rule = "second_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P2]
+trading_periods = 3
+official_meaning = "multi_period_three_trading_days"
+ordinary_alignment_rule = "third_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P3]
+trading_periods = 4
+official_meaning = "multi_period_four_trading_days"
+ordinary_alignment_rule = "fourth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P4]
+trading_periods = 5
+official_meaning = "multi_period_five_trading_days"
+ordinary_alignment_rule = "fifth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P5]
+trading_periods = 6
+official_meaning = "multi_period_six_trading_days"
+ordinary_alignment_rule = "sixth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P6]
+trading_periods = 7
+official_meaning = "multi_period_seven_trading_days"
+ordinary_alignment_rule = "seventh_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P7]
+trading_periods = 8
+official_meaning = "multi_period_eight_trading_days"
+ordinary_alignment_rule = "eighth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P8]
+trading_periods = 9
+official_meaning = "multi_period_nine_trading_days"
+ordinary_alignment_rule = "ninth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.P9]
+trading_periods = 10
+official_meaning = "multi_period_ten_trading_days"
+ordinary_alignment_rule = "tenth_previous_verified_trading_session_to_calendar_date"
+delisting_linked_alignment_rule = "terminal_delisting_leg_on_DelDlyDt_no_backward_Pn_span"
+
+[daily_duration_flags.MR]
+trading_periods = 0
+official_meaning = "missing_return"
+alignment_rule = "no_return_span"
+
+[daily_duration_flags.DD]
+trading_periods = -1
+trading_period_count_is_known = false
+official_meaning = "other_daily_delisting_return_duration"
+alignment_rule = "event_anchored_span_resolved_from_delisting_and_prior_price_dates"
+fixed_one_day_or_Pn_substitution_permitted = false
+terminal_delisting_leg = true
+generic_backward_span_permitted = false
+
+[monthly_return_flags]
+observed_codes = ["CR", "DE", "GP", "IP", "MP", "NS", "NT"]
+unknown_code_outcome = "fatal"
+raw_numeric_values_are_always_preserved_for_audit = true
+raw_monthly_values_may_never_replace_daily_authority = true
+
+[monthly_return_flags.CR]
+official_meaning = "complete_compounded_return_with_no_missing_returns"
+classification = "complete_standard_numeric_transport_crosscheck"
+numeric_value_policy = "required"
+comparison_policy = "hard_for_raw_numeric_transport_QA_after_exact_daily_coverage_is_proved_authorized_compound_is_diagnostic"
+
+[monthly_return_flags.DE]
+official_meaning = "compounded_through_delisting_with_delisting_return_when_appropriate"
+classification = "delisting_conditioned_crosscheck"
+numeric_value_policy = "required"
+comparison_policy = "numeric_transport_and_authorized_compounds_reported_separately_after_delisting_resolution"
+
+[monthly_return_flags.GP]
+official_meaning = "gap_between_prices_too_large_period_return_officially_missing"
+classification = "gap_missing_semantics_numeric_conflict_if_present"
+numeric_value_policy = "preserve_if_present_never_overwrite_or_promote"
+comparison_policy = "diagnostic_only_subject_to_empirical_lock"
+
+[monthly_return_flags.IP]
+official_meaning = "compounded_incomplete_or_unusual_period"
+classification = "incomplete_period_crosscheck"
+numeric_value_policy = "preserve_if_present"
+comparison_policy = "diagnostic_only"
+
+[monthly_return_flags.MP]
+official_meaning = "compounded_return_with_one_or_more_missing_prices"
+classification = "missing_prices_partial_crosscheck"
+numeric_value_policy = "preserve_if_present"
+comparison_policy = "diagnostic_only"
+
+[monthly_return_flags.NS]
+official_meaning = "new_security_partial_period_with_no_missing_returns"
+classification = "new_security_partial_start_crosscheck"
+numeric_value_policy = "required"
+comparison_policy = "hard_only_after_partial_start_daily_coverage_is_proved"
+
+[monthly_return_flags.NT]
+official_meaning = "not_tracked_for_entire_period"
+classification = "entire_period_missing"
+numeric_value_policy = "must_be_missing"
+comparison_policy = "missing_state_crosscheck_only"
+
+[distribution_events]
+primary_return_already_includes_distributions = true
+blindly_add_dividend_amount_to_daily_total_return = false
+blindly_apply_price_or_share_factor_to_daily_total_return = false
+event_assignment_interval = "return_span_start_date_exclusive_through_return_span_end_date_inclusive"
+generic_same_day_row_without_a_proven_span_is_assignment_evidence = false
+unknown_same_day_span_outcome = "retain_as_structural_missing_return_internal_gap_with_assigned_exactly_once_false"
+off_verified_calendar_ex_date_outcome = "retain_and_assign_by_containing_return_span_or_explicitly_classify_unassigned"
+off_calendar_event_may_not_be_silently_dropped_or_shifted = true
+reconciliation_uses_total_vs_ex_distribution_returns_and_monthly_distribution_counts = true
+every_retained_event_requires_exactly_one_assignment_or_an_explicit_nonassignable_status = true
+explicit_structural_nonassignment_is_accounted_but_assigned_exactly_once_is_false = true
+distribution_ledger_changes_authoritative_total_return = false
+
+[pre_scope_span_boundary]
+multi_period_row_without_enough_verified_prior_sessions = "quarantined_unresolved_span"
+span_alignment_status = "pre_scope_multi_session_span_unresolved"
+verified_span_status_requires_nonmissing_start_date = true
+
+[delisting_events]
+posting_axis = "DelDlyDt"
+economic_event_axis = "DelistingDt"
+canonical_return_axis = "DelistingDt"
+posting_payload_role = "audit_evidence_suppressed_from_canonical_compounding_after_event_ownership"
+outcome_availability_rule = "DelDlyDt_or_later_actual_consideration_date_never_earlier_than_DelistingDt"
+blindly_add_DelRet_to_DlyRet = false
+embedding_must_be_classified_before_treatment = true
+allowed_embedding_states = [
+  "embedded_in_observed_daily_total",
+  "excluded_from_observed_daily_total",
+  "observed_daily_total_missing",
+  "ambiguous_fatal",
+]
+observed_excluded_event_combination_formula = "(1 + pre_delisting_return) * (1 + effective_delisting_return) - 1"
+combination_floor = "-1.000000000000"
+observed_DelRet_precedes_imputation = true
+observed_event_return_is_compounded_once_with_existing_DelistingDt_ordinary_return = true
+observed_posting_DlyRet_equal_to_DelRet_is_suppressed_from_canonical_compounding = true
+numeric_MV_posting_payload_is_not_promoted_but_separately_observed_DelRet_is_event_owned = true
+recorded_merger_liquidation_cash_or_stock_consideration_precedes_imputation = true
+missing_performance_imputation_requires_all_of = [
+  "performance_related_classification_locked",
+  "observed_delisting_payoff_genuinely_absent",
+  "not_already_embedded_in_daily_total_return",
+  "covered_exchange_classification",
+]
+performance_related_classification = "subject_to_empirical_lock_using_action_status_reason_and_payment_tuple_not_reason_alone"
+ambiguous_performance_classification_outcome = "no_imputation_and_fatal_for_return_authorization"
+universal_minus_one_is_stress_only_never_primary = true
+proceeds_after_liquidation_earn_risk_free_until_next_rebalance = true
+
+[delisting_events.imputation_by_exchange.N]
+exchange = "NYSE"
+return = "-0.300000000000"
+
+[delisting_events.imputation_by_exchange.A]
+exchange = "NYSE_American"
+return = "-0.300000000000"
+
+[delisting_events.imputation_by_exchange.Q]
+exchange = "Nasdaq"
+return = "-0.550000000000"
+
+[delisting_events.imputation_by_exchange.other]
+exchange = "outside_locked_eligible_exchange_set"
+return = "none"
+outcome = "no_primary_imputation_and_fatal_if_needed_for_an_authorized_return"
+
+[monthly_reconciliation_tolerance]
+status = "proposal_only_subject_to_empirical_lock"
+metric = "absolute_vendor_minus_raw_numeric_transport_compound_in_decimal_return_space"
+observed_complete_CR_maximum_absolute_difference = "0.000054710100"
+proposed_absolute_tolerance = "0.000060000000"
+candidate_grid = [
+  "0.000001000000",
+  "0.000005000000",
+  "0.000010000000",
+  "0.000025000000",
+  "0.000050000000",
+  "0.000060000000",
+]
+relative_tolerance_permitted = false
+exact_fixed_scale_decimal_required = true
+production_value_must_come_from_empirical_lock = true
+model_portfolio_or_backtest_results_may_influence_selection = false
+numeric_transport_compound_uses_all_finite_in_domain_raw_daily_returns = true
+authorized_compound_uses_only_return_history_usable_or_locked_imputed_returns = true
+authorized_compound_comparison_to_vendor_monthly_is_diagnostic_only = true
+MV_or_imputation_may_intentionally_create_authorized_vs_vendor_difference = true
+
+[output_tables]
+tables = [
+  "crsp_distribution_event",
+  "crsp_delisting_event",
+  "crsp_security_day_return",
+  "crsp_security_month_return_reconciliation",
+]
+distribution_and_delisting_tables_are_audit_ledgers = true
+daily_return_table_preserves_one_row_per_verified_staging_key = true
+monthly_table_preserves_one_row_per_verified_staging_key = true
+
+[authorizations.before_empirical_lock]
+return_history_authorized = false
+adjusted_price_path_feature_authorized = false
+beta_estimation_authorized = false
+labels_authorized = false
+targets_authorized = false
+features_authorized = false
+models_authorized = false
+portfolios_authorized = false
+pnl_authorized = false
+performance_authorized = false
+backtests_authorized = false
+validation_or_final_test_access_authorized = false
+
+[authorizations.after_verified_return_reconciliation]
+return_history_authorized = true
+adjusted_price_path_feature_authorized = true
+beta_estimation_authorized = false
+labels_authorized = false
+targets_authorized = false
+features_authorized = false
+models_authorized = false
+portfolios_authorized = false
+pnl_authorized = false
+performance_authorized = false
+backtests_authorized = false
+validation_or_final_test_access_authorized = false
+remaining_blockers = [
+  "factor_source_and_residual_target_contract_not_complete",
+  "universe_and_auxiliary_source_panel_not_complete",
+]
+
+[quality]
+unknown_daily_monthly_or_event_codes_are_hard = true
+every_table_primary_key_unique_and_nonnull = true
+every_table_sorted_by_declared_key = true
+all_expected_row_counts_are_hard = true
+daily_and_monthly_staging_keys_must_be_conserved = true
+every_distribution_and_delisting_event_must_be_accounted_for_exactly_once = true
+ambiguous_delisting_embedding_is_hard = true
+unresolved_overlapping_return_spans_are_hard = true
+monthly_hard_crosscheck_failures_are_hard_only_for_empirically_locked_comparable_classes = true
+no_security_level_rows_in_quality_or_project_artifacts = true
+independent_reconstruction_required_before_return_history_authorization = true
+
+[publication]
+primary_pointer = "LATEST_CRSP_RETURN_RECONCILIATION_PRIMARY.json"
+verified_pointer = "LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json"
+primary_pointer_may_authorize_return_history = false
+verified_pointer_is_the_only_return_history_authority = true
+failed_discovery_build_or_verification_may_not_advance_an_authoritative_pointer = true

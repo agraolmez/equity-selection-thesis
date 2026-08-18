@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "mapping_id": "fama-french-12-sic-ranges-v1",
+  "status": "frozen_for_stage_06_development_feature_build",
+  "input_rule": "Accept a contemporaneous SIC only when it normalizes to an integer from 0 through 9999. Apply the listed ranges in order. A valid SIC not matched by sectors 01 through 11 is 12_OTHER. Missing or invalid SIC is UNKNOWN_SECTOR.",
+  "sectors": [
+    {
+      "code": "01_NODUR",
+      "label": "Consumer Nondurables",
+      "ranges": [[100, 999], [2000, 2399], [2700, 2749], [2770, 2799], [3100, 3199], [3940, 3989]]
+    },
+    {
+      "code": "02_DURBL",
+      "label": "Consumer Durables",
+      "ranges": [[2500, 2519], [2590, 2599], [3630, 3659], [3710, 3711], [3714, 3714], [3716, 3716], [3750, 3751], [3792, 3792], [3900, 3939], [3990, 3999]]
+    },
+    {
+      "code": "03_MANUF",
+      "label": "Manufacturing",
+      "ranges": [[2520, 2589], [2600, 2699], [2750, 2769], [3000, 3099], [3200, 3569], [3580, 3629], [3700, 3709], [3712, 3713], [3715, 3715], [3717, 3749], [3752, 3791], [3793, 3799], [3830, 3839], [3860, 3899]]
+    },
+    {
+      "code": "04_ENRGY",
+      "label": "Oil, Gas, and Coal Extraction and Products",
+      "ranges": [[1200, 1399], [2900, 2999]]
+    },
+    {
+      "code": "05_CHEMS",
+      "label": "Chemicals and Allied Products",
+      "ranges": [[2800, 2829], [2840, 2899]]
+    },
+    {
+      "code": "06_BUSEQ",
+      "label": "Business Equipment",
+      "ranges": [[3570, 3579], [3660, 3692], [3694, 3699], [3810, 3829], [7370, 7379]]
+    },
+    {
+      "code": "07_TELCM",
+      "label": "Telephone and Television Transmission",
+      "ranges": [[4800, 4899]]
+    },
+    {
+      "code": "08_UTILS",
+      "label": "Utilities",
+      "ranges": [[4900, 4949]]
+    },
+    {
+      "code": "09_SHOPS",
+      "label": "Wholesale, Retail, and Some Services",
+      "ranges": [[5000, 5999], [7200, 7299], [7600, 7699]]
+    },
+    {
+      "code": "10_HLTH",
+      "label": "Healthcare, Medical Equipment, and Drugs",
+      "ranges": [[2830, 2839], [3693, 3693], [3840, 3859], [8000, 8099]]
+    },
+    {
+      "code": "11_MONEY",
+      "label": "Finance",
+      "ranges": [[6000, 6999]]
+    },
+    {
+      "code": "12_OTHER",
+      "label": "Other",
+      "residual_valid_sic": true
+    }
+  ],
+  "unknown_category": "UNKNOWN_SECTOR"
+}

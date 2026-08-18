@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-prefinal-shared-calibration-scope-v1",
+  "status": "STAGE12_PREFINAL_METHODOLOGY_AMENDMENT_FROZEN",
+  "governance": {
+    "provenance": "agent_authored_prefinal_implementation_amendment",
+    "explicit_user_acknowledgement": false,
+    "governing_user_scope": "complete_stage12_without_final_period_access",
+    "approval_receipt_binding_asserts_user_acceptance": false
+  },
+  "base_methodology_authority": {
+    "methodology_version": "v1",
+    "source_path": "outputs/methodology_v1_source.md",
+    "source_sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81",
+    "freeze_receipt_path": "outputs/methodology_v1_freeze.json",
+    "freeze_receipt_sha256": "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+  },
+  "explicit_methodology_conflict": {
+    "source_section": "Ensemble, alpha calibration, and refitting",
+    "frozen_v1_rule": "the core model is separately refit and calibrated under the same quarterly weighted-expanding rule throughout the historical period",
+    "amended_rule": "the full-feature prefinal and prior-live calibration receipt for each strategy is shared byte-identically across its full-feature and reduced-core model scopes, while the predictive models remain separately refit by feature scope"
+  },
+  "scientific_rationale": {
+    "authenticated_prefinal_reduced_core_oof_receipts_exist": false,
+    "authenticated_prefinal_full_feature_oof_receipts_exist": true,
+    "calibration_source_scope": "full_feature_primary",
+    "reduced_core_scores_relabelled_as_prefinal_oof": false,
+    "post_selection_reduced_core_oof_history_manufactured": false,
+    "same_strategy_calibration_receipt_shared_across_feature_scopes": true,
+    "separate_full_and_core_model_parameter_refits_retained": true,
+    "quarterly_updates_use_completed_labels_only": true,
+    "rationale": "Sharing the authenticated full-feature calibration receipt preserves a genuine prefinal calibration history without falsely relabelling full-scope scores or manufacturing a post-selection reduced-core OOF history."
+  },
+  "execution_contract": {
+    "calibrated_strategy_ids": [
+      "ensemble_hybrid_primary",
+      "elastic_net_hybrid_challenger",
+      "fixed_value_quality_momentum"
+    ],
+    "quarterly_fit_signal_months": [
+      3,
+      6,
+      9,
+      12
+    ],
+    "calibration_history_sources": [
+      "full_feature_prefinal_pseudo_oof",
+      "full_feature_final_prior_live"
+    ],
+    "completed_label_cutoff": {
+      "holding_month_strictly_before_fit_holding_month": true,
+      "exit_date_on_or_before_fit_signal_date": true,
+      "outcome_availability_date_on_or_before_fit_signal_date": true
+    },
+    "identical_receipt_and_sha256_stored_under_full_and_core_scope_keys": true
+  },
+  "economic_effect": {
+    "economic_behavior_changed": true,
+    "primary_full_feature_calibration_behavior_changed": false,
+    "reduced_core_calibration_behavior_changed": true,
+    "primary_and_core_pnl_may_be_spliced": false,
+    "post_unblind_policy_change_permitted": false
+  },
+  "timing_and_access_boundary": {
+    "frozen_before_final_period_access": true,
+    "final_period_payload_files_opened": 0,
+    "final_period_rows_read": 0,
+    "final_forecasts_created": 0,
+    "final_weights_created": 0,
+    "final_trades_created": 0,
+    "final_pnl_or_performance_rows_created": 0
+  }
+}

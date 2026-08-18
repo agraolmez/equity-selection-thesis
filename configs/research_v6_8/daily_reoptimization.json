@@ -1,0 +1,128 @@
+{
+  "schema": "research_v6_8_daily_reoptimization_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_STUDY",
+  "approved_on": "2026-08-16",
+  "question": "Does causally re-optimizing the surviving monthly holdings after each executed V6.7 warning improve on leaving the released capital in cash?",
+  "scope": {
+    "new_lineage": "research_v6_8",
+    "v6_6_and_v6_7_remain_closed": true,
+    "frozen_monthly_selectors_signals_optimizer_and_initial_weights": true,
+    "frozen_v6_7_warning_model_thresholds_and_execution_dates": true,
+    "no_new_intramonth_stock": true,
+    "no_reentry_or_side_reversal": true,
+    "warned_stock_cannot_be_reenlarged": true,
+    "survivor_refill_can_only_increase_existing_same-side_exposure": true,
+    "cash_allowed_when_refill_is_not_economically_or_risk_feasible": true,
+    "historical_development_not_untouched_confirmation": true
+  },
+  "chronology": {
+    "initial_replay_start": "2022-02",
+    "validation_start": "2023-01",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "warning_decision_time": "16:00 America/New_York after the official close",
+    "warning_and_reoptimization_execution_time": "next trading-session close",
+    "quarantined_outcomes_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "sources": {
+    "v6_7_config": {
+      "path": "configs/research_v6_7/daily_mlp_overlay.json",
+      "sha256": "4108d1f64761730dbd7e39a536d210bf708fadd042f882ff8ae657bf1121c7fb"
+    },
+    "v6_7_runner": {
+      "path": "scripts/run_v6_7_daily_mlp_overlay.py",
+      "sha256": "20e8481d67676f0f1f0bfaf0b781b48e00c9c178dc2ede28856146d3d0e538d4"
+    },
+    "v6_7_result": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/result.json",
+      "sha256": "c27ee110190c86b0c79aa84630561407ba3871fae1a1df46994a30c9534463bb"
+    },
+    "v6_7_selection": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/selection/selection.json",
+      "sha256": "667dcbbe685703656c1e79bf3b6ae3296a0e1634d58aa382d48166f432520637"
+    },
+    "prepared_position_days": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/prepared/position_days.parquet",
+      "sha256": "2ef39b0755c5af351755fda773112c4ec034de3ac4fd453936d465b823161e96"
+    },
+    "validation_warning_actions": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/selection/predictive__ensemble_mlp_signed_return_xgb_depth_2__h5__selective/actions.parquet",
+      "sha256": "5d2ec9a8e0decd09e3394f1856ac7d3d61f8714f69bf777184da718881fb0b73"
+    },
+    "validation_v6_7_monthly": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/selection/predictive__ensemble_mlp_signed_return_xgb_depth_2__h5__selective/monthly.parquet",
+      "sha256": "3dc120d78537526edfbe6e8b49e1490d7c86c7eda33f567d5223024444893a8c"
+    },
+    "validation_monthly_control": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/selection/monthly_control/monthly.parquet",
+      "sha256": "0803a59fcc95683c3e363c947e84e07e6e7014f99e58112776a27cff7e90e253"
+    },
+    "historical_warning_actions": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/historical_test/selected_v6_7_challenger/actions.parquet",
+      "sha256": "65ffdfdc417cf224514892b828712c0d8e065a71a0a3fcf45935c61e27b9ae07"
+    },
+    "historical_v6_7_monthly": {
+      "path": "artifacts/research_v6_7/daily_mlp_overlay/4108d1f64761-16046ee58521-22f799195507/historical_test/selected_v6_7_challenger/monthly.parquet",
+      "sha256": "8285b9feedba8b499b7ab8ebec0642e52c876be5b23402132abf0142f28f5ecb"
+    },
+    "historical_monthly_control": {
+      "path": "artifacts/research_v6_6/intrmonth_interventions/566f3749ee9b-16046ee58521-a82fbba1983b/historical_test/monthly_control/monthly.parquet",
+      "sha256": "d70d94cb38d5ed9851a64573ff67bc5e0850379f7cf4844671cf3750b1a584e3"
+    },
+    "risk_cost": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet",
+      "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"
+    },
+    "factor_covariance": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_factor_covariance.parquet",
+      "sha256": "53e42d9ae51b6f5a273bde59493b91da4471678e02a20c0c1303e4245e65ebe6"
+    }
+  },
+  "reoptimization": {
+    "event": "after each same-close batch of executed V6.7 trims and exits",
+    "objective": "maximize remaining-horizon frozen monthly expected stock excess return minus trading, borrow, and financing costs",
+    "monthly_expected_return_proration": "remaining holding sessions divided by total holding sessions",
+    "maximum_incremental_refill_gross": "gross exposure removed by the contemporaneous warning batch",
+    "maximum_gross": 1.8,
+    "minimum_net": -0.2,
+    "maximum_net": 0.6,
+    "maximum_position_weight": 0.03,
+    "forecast_volatility_limit": 0.2,
+    "market_beta_absolute_limit": 0.2,
+    "other_factor_absolute_limit": 0.2,
+    "sic2_industry_net_absolute_limit": 0.1,
+    "sic2_industry_gross_limit": 0.6,
+    "maximum_one_way_adv_participation": 0.1,
+    "dynamic_feasibility_rule": "A drifted post-warning book is always admissible; the refill may not worsen any limit already exceeded by that book.",
+    "solver": "CLARABEL",
+    "solver_tolerance": 1e-8
+  },
+  "account_and_costs": {
+    "starting_nav_dollars": 100000.0,
+    "rebalance_gross_cap": 1.8,
+    "operational_safety_trigger": 1.95,
+    "operational_safety_target": 1.9,
+    "financing_rate_annual": 0.0625,
+    "spread_multiplier": 1.0,
+    "impact_coefficient": 0.1,
+    "commission_rate": 0.0001,
+    "borrow_column": "primary_borrow_rate_annual"
+  },
+  "evaluation": {
+    "single_prespecified_reoptimization_policy": true,
+    "no_validation_candidate_search": true,
+    "comparators": ["untouched_monthly_control", "v6_7_cash_holding_warning_overlay"],
+    "historical_test_requires_higher_return_and_sharpe_than_v6_7": true,
+    "paired_monthly_difference_hac_t_minimum": 1.96,
+    "maximum_drawdown_not_worse_than_monthly_control_by_more_than": 0.005,
+    "promotion_status_even_if_all_gates_pass": "FORWARD_PAPER_TRADING_SHADOW_CANDIDATE_ONLY"
+  },
+  "checkpointing": {
+    "natural_unit": "completed replay month",
+    "atomic": true,
+    "resume": true,
+    "identity_bound": true
+  }
+}

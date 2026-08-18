@@ -1,0 +1,22 @@
+{
+  "code_identity": "ec470fe0dfb4484cdb31a367e7f36388e0c0484ae1350ea2ba0e5056201e1a93",
+  "config_sha256": "69841fc46fbdf17ee7ab95c1d15233e564bbb790eae365b587a835aca69c12ca",
+  "historical_test_profile_months": 40,
+  "historical_test_profiles": [
+    "incumbent_1p5",
+    "latent_k3_s0p5"
+  ],
+  "idea_winners": {
+    "01_confidence_adjusted_edge": "incumbent_1p5",
+    "02_opportunity_breadth_scaling": "incumbent_1p5",
+    "03_specialist_mixture": "incumbent_1p5",
+    "04_multitask_multihorizon": "incumbent_1p5",
+    "05_decision_aware_rank_mask": "incumbent_1p5",
+    "06_latent_risk_layer": "latent_k3_s0p5"
+  },
+  "input_identity": "c1dc1cd6be2e4bbbca3191d49241b5b049707f6851f3ccae73997e300adb2ce8",
+  "publication_only_markdown_key_fix": true,
+  "schema": "research_v6_3_signal_weight_run_v1",
+  "status": "COMPLETE",
+  "validation_profile_months": 506
+}

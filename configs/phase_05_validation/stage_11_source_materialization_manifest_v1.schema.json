@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stage_11_source_materialization_manifest_v1.schema.json",
+  "title": "Stage 11 Gate-A normalized-source primary manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "publication_id", "status", "stage", "gate", "build_id",
+    "input_fingerprint", "authority", "implementation_code_hashes",
+    "upstream_authorities", "source_identities", "tables",
+    "execution_input_records", "scope", "authorizations"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "publication_id": {"const": "phase05-stage11-source-materialization-publication-v1"},
+    "status": {"const": "STAGE11_SOURCE_MATERIALIZATION_COMPLETE"},
+    "stage": {"const": 11},
+    "gate": {"const": "A"},
+    "build_id": {"type": "string", "pattern": "^stage11-sources-[0-9a-f]{24}$"},
+    "input_fingerprint": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authority": {"type": "object"},
+    "implementation_code_hashes": {"type": "object"},
+    "upstream_authorities": {"type": "object"},
+    "source_identities": {"type": "object"},
+    "tables": {"type": "object", "minProperties": 10, "maxProperties": 10},
+    "execution_input_records": {"type": "object", "minProperties": 10, "maxProperties": 10},
+    "scope": {"type": "object"},
+    "authorizations": {"type": "object"}
+  }
+}

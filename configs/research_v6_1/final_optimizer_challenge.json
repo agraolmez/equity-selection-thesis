@@ -1,0 +1,65 @@
+{
+  "schema": "research_v6_1_final_optimizer_challenge_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "Can one bounded, validation-selected regularization of the frozen FF5/momentum-gated V6.1 optimizer produce statistically superior January 2024--August 2025 performance with a coherent economic mechanism?",
+  "base_portfolio_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "frozen_control": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "variant": "return_plus_ff5_momentum__optimized_10pct_vol",
+    "net_sharpe": 1.7234761068157298
+  },
+  "scope": {
+    "selector_retraining": false,
+    "feature_change": false,
+    "signal_change": false,
+    "alpha_gate_change": false,
+    "candidate_tail_change": false,
+    "short_floor_change": false,
+    "constraint_change": false,
+    "cost_model_change": false,
+    "only_optimizer_objective_regularization_changes": true
+  },
+  "evidence": {
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "profiles": [
+    {"id": "control", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "control"},
+    {"id": "mean_shrink_50", "dispersion_scale": 0.5, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_uncertainty"},
+    {"id": "mean_shrink_25", "dispersion_scale": 0.25, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_uncertainty"},
+    {"id": "mean_equal_side", "dispersion_scale": 0.0, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_uncertainty"},
+    {"id": "mean_variance_0p5", "dispersion_scale": 1.0, "risk_aversion": 0.5, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_variance"},
+    {"id": "mean_variance_1", "dispersion_scale": 1.0, "risk_aversion": 1.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_variance"},
+    {"id": "mean_variance_3", "dispersion_scale": 1.0, "risk_aversion": 3.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.0, "family": "mean_variance"},
+    {"id": "concentration_0p05", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.05, "objective_cost_multiplier": 1.0, "family": "concentration"},
+    {"id": "concentration_0p10", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.1, "objective_cost_multiplier": 1.0, "family": "concentration"},
+    {"id": "concentration_0p25", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.25, "objective_cost_multiplier": 1.0, "family": "concentration"},
+    {"id": "cost_buffer_1p5", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 1.5, "family": "cost_uncertainty"},
+    {"id": "cost_buffer_2", "dispersion_scale": 1.0, "risk_aversion": 0.0, "concentration_aversion": 0.0, "objective_cost_multiplier": 2.0, "family": "cost_uncertainty"}
+  ],
+  "selection": {
+    "metric": "validation_net_sharpe_primary",
+    "rule": "Select exactly one profile by highest validation net Sharpe; break an exact tie by earlier profile order.",
+    "test_only_selected_profile": true
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 200000,
+    "bootstrap_seed": 20260813,
+    "statistical_superiority_rule": "The selected challenger must beat the frozen control in test Sharpe, have a strictly positive lower 95% paired circular-block-bootstrap bound for Sharpe difference, and have paired HAC t-statistic above 1.96 for mean net-excess-return difference.",
+    "economic_rule": "The selected challenger must have a prespecified regularization mechanism, positive stressed-cost Sharpe, no material constraint breach, and no worse annualized net excess return after removing its two best test months."
+  },
+  "decision": {
+    "pass": "PROMOTE_FINAL_OPTIMIZER_CHALLENGER",
+    "fail": "RETAIN_FROZEN_1P723_CONTROL_AND_CLOSE_OPTIMIZER_RESEARCH"
+  }
+}

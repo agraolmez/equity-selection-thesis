@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "schema_id": "phase02-auxiliary-availability-linkage-schema-v1",
+  "status": "frozen_contract_pending_build_and_independent_verification",
+  "scope": {"development_only": true, "last_predictor_signal_date": "2014-10-31", "last_development_exit_date": "2014-12-01"},
+  "common_rules": {
+    "date_type": "date32",
+    "timestamp_type": "timestamp_us_utc",
+    "identifier_type": "utf8_or_int64_as_declared",
+    "numeric_type": "exact_decimal128_no_binary_float",
+    "source_record_id": "sha256_of_source_file_id_and_deterministic_source_grain",
+    "normalized_cusip8": "uppercase_ascii_alphanumeric_after_space_and_hyphen_removal_then_first_8; invalid_or_short_is_null",
+    "all_observation_tables": ["observation_date", "public_availability_date", "availability_basis"],
+    "public_availability_must_not_exceed_consumer_signal": true
+  },
+  "tables": [
+    {
+      "table": "ccm_link_interval", "source": "ccm_link_table.csv", "grain": "one normalized source link interval", "primary_key": ["gvkey","liid","permno","link_start_date","link_end_date","linktype","linkprim"], "sort_key": ["permno","link_start_date","gvkey","liid"],
+      "columns": ["gvkey:utf8!","liid:utf8!","permno:int64!","permco:int64?","link_start_date:date32!","link_end_date:date32?","linktype:utf8!","linkprim:utf8!","link_allowed:bool!","link_precedence:int16?","normalized_cusip8:utf8?","cik:utf8?","fic:utf8?","loc:utf8?","incorp:utf8?"],
+      "rules": {"allowed_linktype":["LC","LU"],"allowed_linkprim":["P","C"],"precedence":"P_then_C_then_lexical_gvkey_liid","open_end_sentinel":"E_to_null"}
+    },
+    {
+      "table": "compustat_annual_observation", "source": "comp_funda_ccm.csv", "grain": "annual company-format-link observation", "primary_key": ["source_record_id"], "sort_key": ["gvkey","datadate","source_record_id"],
+      "columns": ["source_record_id:utf8!","gvkey:utf8!","datadate:date32!","permno:int64?","link_start_date:date32?","link_end_date:date32?","indfmt:utf8!","consol:utf8!","popsrc:utf8!","datafmt:utf8!","standard_format_eligible:bool!","currency_code:utf8?","cik:utf8?","fic:utf8?","loc:utf8?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","stale_after_date:date32!"],
+      "source_payload_columns": ["fyear","act","at","capx","ceq","che","cogs","csho","dlc","dltt","dvc","ebit","ebitda","ib","lct","lt","oancf","oiadp","oibdp","ppent","prstkc","revt","sale","sstk","xrd"],
+      "payload_rule": "nullable exact source decimals; no ratios, TTM values, currency conversion, winsorization, or imputation"
+    },
+    {
+      "table": "compustat_quarterly_observation", "source": "comp_fundq_ccm.csv", "grain": "quarterly company-format-link observation", "primary_key": ["source_record_id"], "sort_key": ["gvkey","datadate","source_record_id"],
+      "columns": ["source_record_id:utf8!","gvkey:utf8!","datadate:date32!","rdq:date32?","permno:int64?","link_start_date:date32?","link_end_date:date32?","indfmt:utf8!","consol:utf8!","popsrc:utf8!","datafmt:utf8!","standard_format_eligible:bool!","currency_code:utf8?","cik:utf8?","fic:utf8?","loc:utf8?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","stale_after_date:date32!"],
+      "source_payload_columns": ["fyearq","fqtr","fyr","datafqtr","actq","atq","capxy","ceqq","cheq","cogsq","dlcq","dlttq","dvy","ibq","lctq","ltq","oancfy","oiadpq","oibdpq","ppentq","prstkcy","revtq","saleq","sstky","xrdq"],
+      "payload_rule": "nullable exact source decimals; cumulative year-to-date fields remain labeled and are not differenced here"
+    },
+    {
+      "table": "compustat_segment_observation", "source": "comp_segments_ccm.csv", "grain": "company-period-source-segment-link observation", "primary_key": ["source_record_id"], "sort_key": ["gvkey","datadate","source_record_id"],
+      "columns": ["source_record_id:utf8!","gvkey:utf8!","liid:utf8?","datadate:date32!","srcdate:date32?","stype:utf8!","sid:utf8!","permno:int64?","link_start_date:date32?","link_end_date:date32?","currency_code:utf8?","geotp:utf8?","segment_name:utf8?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","stale_after_date:date32!","sales:decimal128(38,6)?","revenue:decimal128(38,6)?","assets:decimal128(38,6)?"]
+    },
+    {
+      "table": "sec_filing_observation", "source": "sec_filings_index.csv", "grain": "indexed filing source record", "primary_key": ["source_record_id"], "sort_key": ["cik","filing_date","source_record_id"],
+      "columns": ["source_record_id:utf8!","cik:utf8!","filing_date:date32!","form_family:utf8!","source_filename:utf8!","source:utf8!","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!"],
+      "rules": {"covered_financial_forms":["10-K","10-Q","20-F","40-F"],"covered_current_forms":["8-K","6-K"],"current_company_name_never_join_key":true}
+    },
+    {
+      "table": "sec_8k_item_observation", "source": "sec_8k_items.csv", "grain": "accession-subject-cik-item with deterministic ordinal for blank item", "primary_key": ["source_record_id"], "sort_key": ["cik","filing_date","accession","source_record_id"],
+      "columns": ["source_record_id:utf8!","accession:utf8?","cik:utf8!","filing_date:date32!","form_family:utf8!","item_number:utf8?","item_text:utf8?","acceptance_date:date32?","acceptance_time:utf8?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!"],
+      "rules": {"item_taxonomy_permitted_only_when_form_family":"8-K","six_k_must_not_receive_8k_item_code":true}
+    },
+    {
+      "table": "sec_13f_filing_observation", "source": "sec_13f_summary.csv", "grain": "one filing after deterministic fname-level collapse with other-manager count", "primary_key": ["filing_id"], "sort_key": ["filing_date","filing_id"],
+      "columns": ["filing_id:utf8!","manager_cik:utf8!","filing_date:date32!","report_date:date32!","is_amendment:bool!","amendment_type:utf8?","reported_entry_total:int64?","reported_value_total:decimal128(38,6)?","other_manager_count:int32!","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","stale_after_date:date32!"],
+      "rules": {"report_date_is_never_availability":true,"amendment_effect":"new knowledge only from amendment public availability; never retroactive overwrite"}
+    },
+    {
+      "table": "sec_13f_holding_observation", "source": "sec_13f_holdings.csv", "grain": "filing source row ordinal", "primary_key": ["filing_id","source_row_ordinal"], "sort_key": ["filing_id","source_row_ordinal"],
+      "columns": ["filing_id:utf8!","source_row_ordinal:int64!","manager_cik:utf8!","filing_date:date32!","report_date:date32!","normalized_cusip8:utf8?","issuer_name_audit_only:utf8?","title_of_class:utf8?","reported_value:decimal128(38,6)?","reported_shares:decimal128(38,6)?","share_type:utf8?","put_call:utf8?","discretion:utf8?","sole:decimal128(38,6)?","shared:decimal128(38,6)?","none:decimal128(38,6)?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!"],
+      "rules": {"issuer_name_never_join_key":true,"ticker_never_join_key":true}
+    },
+    {
+      "table": "restatement_event_observation", "source": "audit_financial_restatements.csv", "grain": "restatement notification event", "primary_key": ["restatement_notification_key"], "sort_key": ["public_availability_date","restatement_notification_key"],
+      "columns": ["restatement_notification_key:utf8!","company_fkey:utf8!","file_date:date32!","file_accepted:timestamp_us_utc?","event_date:date32?","normalized_cusip8:utf8?","affected_period_start:date32?","affected_period_end:date32?","accounting_flag:bool?","fraud_flag:bool?","adverse_flag:bool?","improves_flag:bool?","general_type:utf8?","currency_code:utf8?","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!"],
+      "rules": {"current_latest_meta_fields_prohibited":true,"later_event_never_backfilled_to_affected_period":true}
+    },
+    {
+      "table": "restatement_crsp_link", "source": "restatement_event_observation_plus_date_valid_crsp_identity", "grain": "one link disposition per restatement event", "primary_key": ["restatement_notification_key"], "sort_key": ["restatement_notification_key"],
+      "columns": ["restatement_notification_key:utf8!","permno:int64?","link_status:utf8!","link_basis:utf8!","candidate_count:int32!","matched_identity_start_date:date32?","matched_identity_end_date:date32?"],
+      "rules": {"allowed_link_basis":["normalized_cusip8_date_valid","company_key_bridge_date_valid","UNMATCHED"],"ticker_or_name_link_prohibited":true,"ambiguous_means_null_permno":true}
+    },
+    {
+      "table": "optionmetrics_name_interval", "source": "optionmetrics_security_name_history.csv", "grain": "secid effective-dated normalized identifier interval capped at development boundary", "primary_key": ["secid","effective_start_date"], "sort_key": ["secid","effective_start_date"],
+      "columns": ["secid:int64!","effective_start_date:date32!","effective_end_date:date32!","normalized_cusip8:utf8?","ticker_audit_only:utf8?","class:utf8?","issue:utf8?","issuer_name_audit_only:utf8?"],
+      "rules": {"end_rule":"day_before_next_effect_date_else_scope_end","ticker_and_name_never_join_keys":true}
+    },
+    {
+      "table": "optionmetrics_crsp_link_interval", "source": "optionmetrics_name_interval_plus_date_valid_crsp_identity", "grain": "candidate-pair disposition for each date-valid CRSP and OptionMetrics CUSIP8 interval intersection", "primary_key": ["permno","secid","link_start_date","link_end_date"], "sort_key": ["permno","link_start_date","secid"],
+      "columns": ["permno:int64!","secid:int64!","link_start_date:date32!","link_end_date:date32!","normalized_cusip8:utf8!","link_status:utf8!","candidate_count:int32!"],
+      "rules": {"only_date_valid_normalized_cusip8":true,"ambiguous_candidate_pairs_retained_with_AMBIGUOUS_status_and_never_consumed_as_matches":true}
+    },
+    {
+      "table": "optionmetrics_option_volume_observation", "source": "optionmetrics_option_volume.csv", "grain": "secid-day-call-put-or-total", "primary_key": ["secid","observation_date","row_role"], "sort_key": ["secid","observation_date","row_role"],
+      "columns": ["secid:int64!","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","row_role:utf8!","authoritative_flow_component:bool!","volume:int64?","open_interest:int64?","genuine_zero_volume:bool?","genuine_zero_open_interest:bool?","normalized_cusip8_audit_only:utf8?"],
+      "rules": {"authoritative_roles":["CALL","PUT"],"total_or_blank_role_never_added_to_call_plus_put":true,"missing_match_never_zero":true}
+    },
+    {
+      "table": "optionmetrics_historical_volatility_observation", "source": "optionmetrics_historical_volatility.csv", "grain": "secid-day-horizon", "primary_key": ["secid","observation_date","days"], "sort_key": ["secid","observation_date","days"],
+      "columns": ["secid:int64!","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","days:int16!","volatility:decimal128(38,12)?","supported_horizon:bool!","normalized_cusip8_audit_only:utf8?"],
+      "rules": {"supported_horizons":[30,60,91,182,365],"no_implied_volatility_claim":true}
+    },
+    {
+      "table": "ff_factor_daily_observation", "source": "ff_5_momentum_daily.csv", "grain": "factor trading day", "primary_key": ["observation_date"], "sort_key": ["observation_date"],
+      "columns": ["observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","mktrf:decimal128(38,12)!","smb:decimal128(38,12)!","hml:decimal128(38,12)!","rmw:decimal128(38,12)!","cma:decimal128(38,12)!","rf:decimal128(38,12)!","umd:decimal128(38,12)!"],
+      "rules": {"output_unit":"decimal_ratio","source_unit_multiplier_requires_prebuild_empirical_lock":true}
+    },
+    {
+      "table": "ff_factor_monthly_observation", "source": "ff_5_momentum_monthly.csv", "grain": "factor calendar month", "primary_key": ["factor_month"], "sort_key": ["factor_month"],
+      "columns": ["factor_month:date32!","observation_date:date32!","public_availability_date:date32!","availability_basis:utf8!","mktrf:decimal128(38,12)!","smb:decimal128(38,12)!","hml:decimal128(38,12)!","rmw:decimal128(38,12)!","cma:decimal128(38,12)!","rf:decimal128(38,12)!","umd:decimal128(38,12)!"],
+      "rules": {"output_unit":"decimal_ratio","source_unit_multiplier_requires_prebuild_empirical_lock":true,"monthly_daily_alignment_receipt_required":true}
+    },
+    {
+      "table": "ps_liquidity_observation", "source": "ps_liquidity_monthly.csv", "grain": "revised liquidity observation month", "primary_key": ["observation_month"], "sort_key": ["observation_month"],
+      "columns": ["observation_month:date32!","observation_date:date32!","recorded_release_date:date32?","public_availability_date:date32!","availability_basis:utf8!","ps_level:decimal128(38,12)?","ps_vwf_audit_only:decimal128(38,12)?"],
+      "rules": {"missing_release_fallback":"first_verified_trading_day_on_or_after_one_full_calendar_month_after_observation_month_end","raw_PS_INNOV_prohibited":true,"recursive_innovation_deferred_to_phase_03":true,"no_carry_after_source_end":true}
+    },
+    {
+      "table": "auxiliary_signal_linkage", "source": "verified_signal_universe_plus_normalized_link_tables", "grain": "one row per verified signal universe row", "primary_key": ["signal_date","permno"], "sort_key": ["signal_date","permno"],
+      "columns": ["signal_date:date32!","permno:int64!","ccm_match_status:utf8!","ccm_gvkey:utf8?","ccm_linktype:utf8?","ccm_linkprim:utf8?","sec_match_status:utf8!","sec_cik:utf8?","optionmetrics_match_status:utf8!","optionmetrics_secid:int64?","any_auxiliary_ambiguity:bool!","universe_row_preserved:bool!"],
+      "rules": {"allowed_statuses":["MATCHED","UNMATCHED","AMBIGUOUS","NOT_COVERED"],"ambiguous_family_fields_are_null":true,"unmatched_never_drops_row":true,"foreign_filing_absence_never_drops_row":true}
+    }
+  ],
+  "qa_only_nonmaterialized_sources": ["ccm_security_daily.csv","ccm_security_monthly.csv","optionmetrics_security_prices.csv"],
+  "prohibited_outputs": ["features","ratios","ttm_aggregates","rolling_counts","ps_recursive_innovation","targets","scores","portfolio_weights","pnl","performance"]
+}

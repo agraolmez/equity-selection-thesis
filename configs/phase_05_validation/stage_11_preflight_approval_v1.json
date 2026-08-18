@@ -1,0 +1,13 @@
+{
+  "approved": true,
+  "approved_at_utc": "2026-07-22T09:06:19Z",
+  "approved_by": "thesis-owner",
+  "payload_sha256": "844da5436a2d1ef8fbe0dcc465213d4e29596d9b5e38b1d23ee6d2aa4ee17748",
+  "receipt_id": "stage11-preflight-approval-20260722",
+  "schema_version": 1,
+  "scope": "stage11_implementation_no_outcome_preflight",
+  "source_message_id": "019f5682-2b3f-7e13-81cf-60a8018fe14b",
+  "source_message_sha256": "4455be73df06b0d173582d85f4e48a9d5ab9b02279c6d289e09f5c000e28ca29",
+  "stage10_verified_pointer_sha256": "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2",
+  "stage11_policy_sha256": "030ef9cc162b91001d89ae5d4beace423476b259c69f6c89e7a8a5933c6768b8"
+}

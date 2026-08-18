@@ -1,0 +1,254 @@
+{
+  "schema": "research_v6_selector_step_01_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "frozen_on": "2026-08-12",
+  "scope": {
+    "research_question": "Can point-in-time machine-learning ranks identify U.S.-traded stocks with superior next-month CAPM alpha, FF5-plus-momentum alpha, long net opportunity, or short net opportunity?",
+    "selector_only": true,
+    "portfolio_or_optimizer_authorized": false,
+    "historical_development_not_untouched_confirmation": true,
+    "predecessor_models_scores_checkpoints_reused": false
+  },
+  "inputs": {
+    "model_feature_build_identity": "01c2e95ca6b928446b3524f1c621db01cc6285858ca39ac7646441d1265de2d7",
+    "primary_feature_view": "primary_full",
+    "primary_raw_features": 318,
+    "expected_primary_encoded_features": 850,
+    "expected_rows": 278897,
+    "expected_months": 128,
+    "first_month": "2015-01",
+    "last_month": "2025-08",
+    "december_2019_required": true,
+    "diagnostic_views": [
+      "cam_free",
+      "cam_only",
+      "news_free"
+    ],
+    "diagnostic_views_cannot_promote_or_replace_primary": true,
+    "diagnostic_model_rule": "cam_free and news_free reuse the validation-selected XGBoost objective and operating policy; cam_only uses the Elastic Net benchmark. Diagnostics cover validation and historical-test months but cannot select the primary model."
+  },
+  "targets": {
+    "capm": {
+      "rank_column": "target_rank_capm",
+      "economic_column": "alpha_capm"
+    },
+    "ff5_momentum": {
+      "rank_column": "target_rank_ff5_momentum",
+      "economic_column": "alpha_ff5_momentum"
+    },
+    "long_net": {
+      "rank_column": "target_rank_long_net",
+      "economic_column": "long_net_opportunity"
+    },
+    "short_net": {
+      "rank_column": "target_rank_short_net",
+      "economic_column": "short_net_opportunity"
+    }
+  },
+  "target_interpretation": {
+    "higher_is_better": true,
+    "alpha_targets_are_factor_adjusted_opportunity_not_raw_return": true,
+    "long_net": "next-holding-period cash-excess return minus a selector-level round-trip cost shadow",
+    "short_net": "negative next-holding-period cash-excess return minus a selector-level round-trip cost shadow and monthly modeled borrow cost",
+    "net_targets_are_selector_opportunity_labels_not_realized_portfolios": true,
+    "capital_usd": 100000000,
+    "maximum_adv_participation": 0.10
+  },
+  "chronology": {
+    "initial_training_start": "2015-01",
+    "initial_training_end_subject_to_label_availability": "2019-11",
+    "validation_start": "2020-01",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_outcomes_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09",
+    "fit_rule": "A row may enter a fit only when label_available_date is no later than the forecast month's signal_date.",
+    "forecast_rule": "Every forecast is generated from the most recent scheduled fit available at signal close."
+  },
+  "preprocessing": {
+    "complete_case_filter": false,
+    "continuous_firm": "monthly 1/99 clipping, centered cross-sectional rank, missing value zero, explicit missing indicator",
+    "binary_firm": "retain 0/1, missing value zero, explicit missing indicator",
+    "categorical_firm": "frozen vocabulary with explicit unknown state",
+    "aggregate_state": "strictly-past expanding z-score clipped to [-5,5], missing value zero, explicit missing indicator",
+    "outcome_blind": true
+  },
+  "objectives": {
+    "pairwise": {
+      "xgboost": "rank:pairwise grouped by holding month",
+      "neural_network": "within-month sampled-pair logistic RankNet loss"
+    },
+    "continuous_rank": {
+      "xgboost": "reg:pseudohubererror on the centered monthly target rank",
+      "neural_network": "smooth-L1 loss on the centered monthly target rank",
+      "exact_percentage_return_forecast": false
+    }
+  },
+  "model_families": [
+    "xgboost",
+    "neural_network",
+    "dynamic_ensemble",
+    "elastic_net_benchmark"
+  ],
+  "xgboost": {
+    "academic_depth_rationale": "Gu-Kelly-Xiu and closely aligned cross-sectional equity implementations use shallow boosted trees with depth 1-3; V5 used depth 3 and V5.1 used depth 2-3.",
+    "profiles": [
+      {
+        "profile_id": "xgb_d1",
+        "max_depth": 1,
+        "n_estimators": 450,
+        "min_child_weight": 20.0
+      },
+      {
+        "profile_id": "xgb_d2",
+        "max_depth": 2,
+        "n_estimators": 350,
+        "min_child_weight": 20.0
+      },
+      {
+        "profile_id": "xgb_d3",
+        "max_depth": 3,
+        "n_estimators": 250,
+        "min_child_weight": 50.0
+      }
+    ],
+    "shared": {
+      "learning_rate": 0.03,
+      "subsample": 0.75,
+      "colsample_bytree": 0.75,
+      "reg_alpha": 0.05,
+      "reg_lambda": 20.0,
+      "tree_method": "hist",
+      "max_bin": 128,
+      "n_jobs": 4
+    }
+  },
+  "neural_network": {
+    "profiles": [
+      {
+        "profile_id": "mlp_64_32",
+        "hidden_layers": [64, 32],
+        "dropout": 0.10,
+        "epochs": 6
+      },
+      {
+        "profile_id": "mlp_128_64",
+        "hidden_layers": [128, 64],
+        "dropout": 0.20,
+        "epochs": 6
+      }
+    ],
+    "shared": {
+      "optimizer": "AdamW",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "batch_size": 8192,
+      "pairs_per_row": 2,
+      "gradient_clip": 5.0
+    }
+  },
+  "operating_candidates": [
+    {
+      "candidate_id": "annual_expanding_annual_retune",
+      "refit": "annual",
+      "history": "expanding",
+      "retune": "annual"
+    },
+    {
+      "candidate_id": "quarterly_expanding_annual_retune",
+      "refit": "quarterly",
+      "history": "expanding",
+      "retune": "annual"
+    },
+    {
+      "candidate_id": "quarterly_expanding_biennial_retune",
+      "refit": "quarterly",
+      "history": "expanding",
+      "retune": "biennial"
+    },
+    {
+      "candidate_id": "quarterly_rolling_60m_annual_retune",
+      "refit": "quarterly",
+      "history": "rolling",
+      "history_months": 60,
+      "retune": "annual"
+    }
+  ],
+  "causal_tuning": {
+    "holdout_months": 12,
+    "metric": "equal-month mean cross-sectional Spearman rank IC",
+    "tuning_seed": 42,
+    "validation_final_fit_seeds": [42],
+    "historical_test_final_fit_seeds": [17, 42, 101],
+    "selection": "At a scheduled retune, fit every profile before the trailing 12 label-available months, score those months, select highest mean monthly rank IC, and refit the selected profile using all label-available rows. Between retunes reuse the selected profile.",
+    "profile_tie_break": "within 0.002 mean IC prefer the simpler profile, then profile_id",
+    "family_candidate_selection": "using 2020-2023 only, maximize mean rank IC; within 0.002 prefer continuous-rank, annual refit, annual retune, expanding history, then candidate_id",
+    "historical_test_cannot_change_selected_family_candidate": true
+  },
+  "elastic_net": {
+    "objective": "continuous centered monthly rank",
+    "refit": "quarterly",
+    "history": "expanding",
+    "retune": "annual",
+    "alpha_grid": [0.0001, 0.001, 0.01],
+    "l1_ratio_grid": [0.1, 0.5, 0.9],
+    "selection_metric": "equal-month mean cross-sectional Spearman rank IC"
+  },
+  "dynamic_ensemble": {
+    "components": [
+      "validation-selected_xgboost",
+      "validation-selected_neural_network"
+    ],
+    "quality": "exponentially weighted mean of strictly prior monthly rank IC, floored at zero",
+    "half_life_months": 12,
+    "minimum_history_months": 24,
+    "component_weight_bounds": [0.20, 0.80],
+    "no_positive_quality_weights": [0.50, 0.50],
+    "current_month_outcome_used": false
+  },
+  "evaluation": {
+    "primary_metric": "equal-month mean Spearman rank IC",
+    "hac_lags": 6,
+    "also_report": [
+      "HAC t-statistic and 95% interval",
+      "median and standard deviation of monthly IC",
+      "positive-month fraction",
+      "calendar-year IC",
+      "early/recent subperiod IC",
+      "minimum rolling-24-month IC",
+      "economic-target top-decile mean and top-minus-bottom spread",
+      "decile monotonicity",
+      "XGBoost gain and Elastic Net coefficient summaries"
+    ],
+    "interesting_selector_gate": {
+      "historical_test_mean_rank_ic_minimum": 0.02,
+      "historical_test_hac_t_minimum": 2.0,
+      "historical_test_early_mean_rank_ic_strictly_positive": true,
+      "historical_test_recent_mean_rank_ic_strictly_positive": true,
+      "minimum_rolling_12_month_mean_rank_ic_strictly_positive_when_20_month_test_is_too_short_for_24": true,
+      "economic_top_minus_bottom_direction_strictly_positive": true
+    },
+    "all_targets_and_models_reported_no_winner_suppression": true
+  },
+  "checkpointing": {
+    "natural_unit": "target/model/objective/operating-candidate/refit block",
+    "atomic": true,
+    "resume": true,
+    "identity_binds": [
+      "contract SHA-256",
+      "feature build identity",
+      "encoded feature names",
+      "target and row identity",
+      "code SHA-256",
+      "candidate, profile, seed, train cutoff, and forecast months"
+    ],
+    "identity_mismatch": "fail closed into a new output lineage"
+  },
+  "execution": {
+    "stable_python": "/opt/anaconda3/envs/finance/bin/python",
+    "default_parallel_targets": 2,
+    "threads_per_fit": 4,
+    "real_backtest_run_by_contract_creation": false
+  }
+}

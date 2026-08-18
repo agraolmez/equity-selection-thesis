@@ -1,0 +1,370 @@
+schema_version = 1
+profile_name = "crsp_development_supporting_source_structure"
+profile_version = "v1"
+status = "locked_after_aggregate_discovery_before_primary_profile"
+purpose = "Prove development-relevant CRSP historical-identity, shares, event-ledger, and current-header structure before unit joins or canonical market publication."
+
+[scope]
+start_date = "2000-01-01"
+end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+names_and_shares_rule = "retain an interval iff end_date >= scope_start and start_date <= scope_end"
+distribution_rule = "retain iff DisExDt is inside the inclusive scope"
+delisting_rule = "retain iff DelistingDt or DelDlyDt is inside the inclusive scope"
+stock_header_rule = "full-file exact header and PERMNO key QA only; all current descriptor payload is prohibited"
+date_first_gating_required = true
+excluded_row_non_date_payload_may_be_inspected = false
+whole_file_byte_hash_and_row_count_are_the_only_exceptions = true
+december_2014_stage = "embargo_quality_and_reconciliation_only"
+canonical_tables_materialized = false
+numeric_units_validated = false
+returns_reconciled = false
+eligibility_built = false
+targets_built = false
+features_built = false
+portfolios_built = false
+pnl_built = false
+performance_analyzed = false
+raw_security_keys_may_be_published = false
+
+[upstream.methodology]
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[upstream.phase_01]
+freeze_id = "phase01-freeze-9241d6d2adcd7a88"
+freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+
+[upstream.phase_02]
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+
+[upstream.contract]
+contract_id = "phase02-crsp-b03263a970e52fbd"
+verification_id = "verify-6640223bff5ef6bc"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json"
+verified_pointer_sha256 = "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+required_status = "verified_passed"
+
+[upstream.calendar]
+build_id = "calendar-ae2e4ba4a280d66e"
+verification_id = "verify-7dc718e9be47873c"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+required_status = "verified_passed"
+
+[upstream.daily_monthly_profile]
+build_id = "crsp-profile-45422a7d1d2b38ca"
+verification_id = "verify-c0621f6d96316f0f"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_DEVELOPMENT_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "cc716a5461432f24f722fc613be628446bbaa1fed53734367d7b61d32cfed17d"
+primary_manifest_sha256 = "98b215946cdace652fa101248a06d85f99b11e063a3b602cb769f0be2e3830ca"
+required_status = "verified_passed"
+
+[key_semantics]
+permno_format = "one or more ASCII decimal digits representing a positive signed-int64 value"
+sequence_format = "one or more ASCII decimal digits representing a positive signed-int64 value"
+date_format = "strict Gregorian YYYY-MM-DD"
+blank_or_invalid_scope_gate_date_is_fatal_globally = true
+blank_or_invalid_required_date_is_fatal_in_retained_rows = true
+blank_invalid_or_nonpositive_permno_is_fatal_in_retained_rows = true
+blank_invalid_or_nonpositive_distribution_sequence_is_fatal_in_retained_rows = true
+intervals_are_inclusive = true
+inverted_interval_is_fatal = true
+
+[duplicate_policy]
+global_key_profile_required = true
+full_decoded_row_comparison_required = true
+classify_exact_and_conflicting_duplicates = true
+conflicting_duplicates_are_fatal = true
+exact_duplicates_are_fatal_for_these_sources = true
+blind_drop_duplicates_prohibited = true
+source_order_may_not_substitute_for_global_grouping = true
+
+[interval_policy]
+names_and_shares_overlaps_are_fatal = true
+inclusive_boundary_overlap_definition = "next_start <= maximum_prior_end within PERMNO"
+contiguous_definition = "next_start = maximum_prior_end + one calendar day"
+gaps_are_reported = true
+gaps_are_fatal = false
+intervals_starting_before_scope_must_be_retained_when_they_overlap = true
+intervals_ending_after_scope_must_be_retained_when_they_overlap = true
+current_stock_header_may_not_fill_interval_gaps = true
+
+[categorical_policy]
+compare_csv_decoded_strings_without_trim_case_or_null_normalization = true
+blank_string_is_distinct = true
+literal_n_slash_a_is_value = true
+expected_domains_are_exact_sorted_distinct_nonblank_literals = true
+unexpected_or_missing_nonblank_domain_value_is_fatal = true
+frequency_reproduction_is_required = true
+
+[[sources]]
+filename = "crsp_names_ciz.csv"
+sha256 = "ee791429169b380b5fcacd896d76a16795861ce42d703d0d188d2c4fc9c26e24"
+size_bytes = 26876522
+full_file_rows = 191048
+scope_kind = "interval_overlap"
+key = ["PERMNO", "SecInfoStartDt", "SecInfoEndDt"]
+interval_start = "SecInfoStartDt"
+interval_end = "SecInfoEndDt"
+optional_date_columns = ["SecurityBegDt", "SecurityEndDt"]
+categorical_columns = ["USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SecurityActiveFlg", "PrimaryExch", "TradingStatusFlg"]
+header = [
+  "PERMNO", "HdrPrimaryExch", "NASDIssuno", "HdrSICCD", "PERMCO", "SecInfoStartDt",
+  "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt", "CUSIP", "Ticker", "IssuerNm",
+  "ShareClass", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType",
+  "SecurityActiveFlg", "SICCD", "PrimaryExch", "TradingSymbol", "NAICS", "TradingStatusFlg",
+]
+
+[expected.crsp_names_ciz_csv]
+retained_rows = 65602
+distinct_keys = 65602
+unique_permnos = 15555
+duplicate_key_groups = 0
+duplicate_surplus_rows = 0
+conflicting_duplicate_groups = 0
+inverted_intervals = 0
+overlap_edges = 0
+contiguous_edges = 50047
+gap_edges = 0
+starts_before_scope = 8555
+ends_after_scope = 7140
+spans_entire_scope = 7
+blank_SecInfoStartDt = 0
+blank_SecInfoEndDt = 0
+blank_SecurityBegDt = 0
+blank_SecurityEndDt = 0
+security_life_inversions = 0
+information_interval_outside_security_life = 8416
+
+[expected_domains.crsp_names_ciz_csv]
+USIncFlg = ["N", "Y"]
+IssuerType = ["ACOR", "CORP", "REIT"]
+SecurityType = ["EQTY", "FUND", "N/A"]
+SecuritySubType = ["CEF", "COM", "ETF", "UNK"]
+ShareType = ["AD", "CE", "N/A", "NS", "SB", "UG"]
+SecurityActiveFlg = ["N", "Y"]
+PrimaryExch = ["A", "B", "N", "Q", "R", "X"]
+TradingStatusFlg = ["A", "D", "H", "S", "X"]
+
+[[sources]]
+filename = "crsp_shares_outstanding_ciz.csv"
+sha256 = "b66cb7f4b4d2e51b9cd79cad9306911267da35d6c521caa7f15426dc02e2e966"
+size_bytes = 120698952
+full_file_rows = 2241129
+scope_kind = "interval_overlap"
+key = ["PERMNO", "ShrStartDt", "ShrEndDt"]
+interval_start = "ShrStartDt"
+interval_end = "ShrEndDt"
+positive_integer_columns = ["ShrOut"]
+categorical_columns = ["ShrSource", "ShrFacType", "ShrAdrFlg"]
+header = ["PERMNO", "ShrStartDt", "ShrEndDt", "ShrOut", "ShrSource", "ShrFacType", "ShrAdrFlg", "PrimaryExch", "SICCD", "NASDIssuno"]
+
+[expected.crsp_shares_outstanding_ciz_csv]
+retained_rows = 1090812
+distinct_keys = 1090812
+unique_permnos = 15326
+duplicate_key_groups = 0
+duplicate_surplus_rows = 0
+conflicting_duplicate_groups = 0
+inverted_intervals = 0
+overlap_edges = 0
+contiguous_edges = 1075486
+gap_edges = 0
+starts_before_scope = 0
+ends_after_scope = 7132
+spans_entire_scope = 0
+blank_ShrStartDt = 0
+blank_ShrEndDt = 0
+blank_ShrOut = 0
+invalid_ShrOut = 0
+nonpositive_ShrOut = 0
+
+[expected_domains.crsp_shares_outstanding_ciz_csv]
+ShrSource = ["EVS", "NC", "OBS"]
+ShrFacType = ["F1", "NA", "S1", "S2"]
+ShrAdrFlg = ["N", "Y"]
+
+[[sources]]
+filename = "crsp_distribution_ciz.csv"
+sha256 = "2f88d667bfa4b66f135f98bb13bae5c75ca0abf926ee934cb5eb0031ace531d7"
+size_bytes = 65402747
+full_file_rows = 552234
+scope_kind = "event_date"
+scope_date_columns = ["DisExDt"]
+key = ["PERMNO", "DisExDt", "DisSeqNbr"]
+required_date_columns = ["DisExDt"]
+optional_date_columns = ["DisDeclareDt", "DisRecordDt", "DisPayDt"]
+positive_integer_columns = ["DisSeqNbr"]
+categorical_columns = ["DisOrdinaryFlg", "DisType", "DisFreqType", "DisPaymentType", "DisDetailType", "DisTaxType", "DisOrigCurType", "DisAmountSourceType"]
+header = [
+  "PERMNO", "DisExDt", "DisSeqNbr", "DisOrdinaryFlg", "DisType", "DisFreqType",
+  "DisPaymentType", "DisDetailType", "DisTaxType", "DisOrigCurType", "DisDivAmt",
+  "DisFacPr", "DisFacShr", "DisDeclareDt", "DisRecordDt", "DisPayDt", "DisPERMNO",
+  "DisPERMCO", "DisAmountSourceType", "PrimaryExch", "SICCD", "NASDIssuno",
+]
+
+[expected.crsp_distribution_ciz_csv]
+retained_rows = 266225
+distinct_keys = 266225
+unique_permnos = 11737
+duplicate_key_groups = 0
+duplicate_surplus_rows = 0
+conflicting_duplicate_groups = 0
+blank_DisExDt = 0
+blank_DisDeclareDt = 15481
+blank_DisRecordDt = 4
+blank_DisPayDt = 8
+invalid_DisSeqNbr = 0
+nonpositive_DisSeqNbr = 0
+declare_after_ex = 81
+record_before_ex = 10560
+pay_before_ex = 9254
+declare_after_record = 212
+record_after_pay = 37
+
+[expected_domains.crsp_distribution_ciz_csv]
+DisOrdinaryFlg = ["N", "Y"]
+DisType = ["CD", "CG", "CP", "FRS", "N/A", "ROC", "SD", "SP"]
+DisFreqType = ["A", "E", "M", "N", "N/A", "Q", "S", "U", "Y"]
+DisPaymentType = ["FX", "OP", "OS", "SS", "UNIT", "USD", "X"]
+DisDetailType = ["CAPG", "CDIV", "CDPSR", "CPBLST", "CPEX", "CPFL", "CPM", "CPPL", "CPRCSH", "CPSIL", "ROC", "SDIV", "SDROC", "SECDO", "SECEX", "SECMRG", "SECMWM", "SECNOD", "SECRD", "SECRSD", "SECSDN", "SECSDO", "SECSO", "SECSTL", "STKDIV", "STKSPL", "URTSD"]
+DisTaxType = ["C", "D", "F", "G", "N", "R", "U", "X"]
+DisOrigCurType = ["N/A", "NUS", "USD"]
+DisAmountSourceType = ["CF", "CV", "FM", "MK", "N/A", "UV"]
+
+[[sources]]
+filename = "crsp_delisting_ciz.csv"
+sha256 = "bdee1560043d059c7b75518a31a4637398234168a087d9f37ba1fcb8fc90d4cb"
+size_bytes = 1786555
+full_file_rows = 14618
+scope_kind = "event_or_posting_date"
+scope_date_columns = ["DelistingDt", "DelDlyDt"]
+key = ["PERMNO", "DelistingDt"]
+required_date_columns = ["DelistingDt", "DelDlyDt"]
+optional_date_columns = ["DelNextDt", "DelAmtDt"]
+categorical_columns = ["DelDtPrcFlg", "DelActionType", "DelStatusType", "DelReasonType", "DelPaymentType", "DelRetMissType", "DelNextPrcFlg", "DelDisType", "PrimaryExch"]
+header = [
+  "PERMNO", "DelistingDt", "DelDtPrc", "DelDtPrcFlg", "DelActionType", "DelStatusType",
+  "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelRet", "DelRetMissType",
+  "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType",
+  "DelDlyDt", "PrimaryExch", "SICCD", "NASDIssuno",
+]
+
+[expected.crsp_delisting_ciz_csv]
+retained_rows = 8391
+distinct_keys = 8391
+unique_permnos = 8391
+duplicate_key_groups = 0
+duplicate_surplus_rows = 0
+conflicting_duplicate_groups = 0
+delisting_date_in_scope = 8391
+posting_date_in_scope = 8388
+both_dates_in_scope = 8388
+blank_DelistingDt = 0
+blank_DelDlyDt = 0
+blank_DelNextDt = 5385
+blank_DelAmtDt = 171
+posting_before_delisting = 0
+next_before_delisting = 0
+amount_before_delisting = 0
+
+[expected_domains.crsp_delisting_ciz_csv]
+DelDtPrcFlg = ["BA", "TR"]
+DelActionType = ["GDR", "GEX", "GLI", "MER"]
+DelStatusType = ["FPAY", "NDC", "NDP", "NFC", "NFP", "VCL"]
+DelReasonType = ["BKPY", "CORQ", "DEEX", "DELQ", "DERE", "EQRQ", "FARG", "FDCV", "FING", "INSC", "INSF", "LP", "MTMK", "MVOT", "MVTO", "OFFRE", "PUBI", "SERQ", "SHLD", "UNAV", "VIO"]
+DelPaymentType = ["CASH", "CNC", "COP", "CSHN", "CST", "CUS", "DW", "PRCF", "SNC", "SOP", "STK", "UNAV", "USNC", "USOP", "USTK"]
+DelRetMissType = ["DG", "DM", "DP", "MV", "NA"]
+DelNextPrcFlg = ["DA", "DM", "DP"]
+DelDisType = ["D1", "D2", "MU", "NO"]
+PrimaryExch = ["A", "N", "Q", "R"]
+
+[[sources]]
+filename = "crsp_stock_header_ciz.csv"
+sha256 = "d4c5880976f44067ce56df239fdafca3efc66ff420f24044f6e68abb253c5b59"
+size_bytes = 10106170
+full_file_rows = 40518
+scope_kind = "qa_key_only"
+key = ["PERMNO"]
+required_date_columns = []
+optional_date_columns = []
+categorical_columns = []
+prohibited_payload_columns = ["SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt", "SecurityHdrFlg", "HdrCUSIP", "HdrCUSIP9", "CUSIP", "CUSIP9", "PrimaryExch", "ConditionalType", "ExchangeTier", "TradingStatusFlg", "SecurityNm", "ShareClass", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "SecurityActiveFlg", "DelActionType", "DelStatusType", "DelReasonType", "DelPaymentType", "Ticker", "TradingSymbol", "PERMCO", "SICCD", "NAICS", "ICBIndustry", "UESIndustry", "NASDCompno", "NASDIssuno", "IssuerNm"]
+header = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "SecurityBegDt", "SecurityEndDt",
+  "SecurityHdrFlg", "HdrCUSIP", "HdrCUSIP9", "CUSIP", "CUSIP9", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "SecurityNm", "ShareClass",
+  "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType",
+  "SecurityActiveFlg", "DelActionType", "DelStatusType", "DelReasonType",
+  "DelPaymentType", "Ticker", "TradingSymbol", "PERMCO", "SICCD", "NAICS",
+  "ICBIndustry", "UESIndustry", "NASDCompno", "NASDIssuno", "IssuerNm",
+]
+
+[expected.crsp_stock_header_ciz_csv]
+retained_rows = 40518
+distinct_keys = 40518
+unique_permnos = 40518
+duplicate_key_groups = 0
+duplicate_surplus_rows = 0
+conflicting_duplicate_groups = 0
+
+[diagnostic_status]
+distribution_date_order_counts_are_descriptive_not_validity_failures = true
+distribution_nontrading_ex_dates_are_descriptive_event_metadata_not_market_rows = true
+information_interval_outside_security_life_is_descriptive = true
+stock_header_current_descriptors_are_never_historical_evidence = true
+event_type_domains_are_inventory_not_return_semantics = true
+delisting_code_mapping_remains_unresolved_before_return_reconciliation = true
+shares_units_and_adr_capitalization_remain_unresolved_before_unit_gate = true
+
+[referential_integrity]
+verified_calendar_dates = 6539
+names_invalid_or_nonpositive_permco_rows = 0
+names_nonconstant_security_lifetime_permnos = 0
+names_permnos_missing_current_header_key = 0
+shares_rows_with_exactly_one_overlapping_names_interval = 1090812
+shares_rows_with_zero_overlapping_names_intervals = 0
+shares_rows_with_multiple_overlapping_names_intervals = 0
+distribution_rows_on_verified_trading_date = 266122
+distribution_rows_off_verified_trading_date = 103
+distribution_rows_with_exactly_one_names_match_on_ex_date = 266225
+distribution_rows_with_zero_names_matches_on_ex_date = 0
+distribution_rows_with_multiple_names_matches_on_ex_date = 0
+delisting_rows_on_verified_trading_date = 8391
+delisting_posting_rows_on_verified_trading_date = 8391
+delisting_posting_equals_next_verified_trading_date = 8391
+delisting_rows_with_exactly_one_names_match_on_delisting_date = 8391
+delisting_rows_with_zero_names_matches_on_delisting_date = 0
+delisting_rows_with_multiple_names_matches_on_delisting_date = 0
+delisting_rows_with_exactly_one_names_match_on_posting_date = 8383
+delisting_rows_with_zero_names_matches_on_posting_date = 8
+delisting_rows_with_multiple_names_matches_on_posting_date = 0
+fatal_zero_or_multiple_match_checks = ["shares_interval_to_names_interval", "distribution_ex_date_to_names_interval", "delisting_date_to_names_interval"]
+diagnostic_match_checks = ["delisting_posting_date_to_names_interval"]
+stock_header_match_is_key_presence_QA_only = true
+
+[outputs]
+quality_subdirectory = "crsp_supporting_profile"
+artifact_subdirectory = "crsp_supporting_profiles"
+verification_subdirectory = "crsp_supporting_profile_verifications"
+primary_pointer = "LATEST_CRSP_SUPPORTING_PROFILE_PRIMARY.json"
+verified_pointer = "LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+closed_quality_file_set = [
+  "_SUCCESS.json", "categorical_domains.csv", "checks.csv", "date_diagnostics.csv",
+  "duplicate_multiplicity.csv", "duplicate_summary.csv", "input_receipt.json",
+  "interval_diagnostics.csv", "numeric_validity.csv", "profile_contract.json",
+  "referential_integrity.csv", "source_structure.csv", "summary.json",
+]
+closed_artifact_file_set = ["manifest.json", "output_hashes.sha256"]
+closed_verification_file_set = ["differences.csv", "independent_check.json"]
+
+[outputs.serialization]
+text_encoding = "UTF-8 without BOM"
+json = "Objects use lexicographically sorted keys, separators comma and colon with no extra spaces, ensure_ascii=false, and exactly one trailing LF."
+csv = "RFC-4180-compatible comma delimiter, double-quote quote character, doubled embedded quotes, minimal quoting, no escape character, header row present, and LF record terminators."
+csv_null = "empty field"
+csv_boolean = "lowercase true or false"
+sha256_inventory = "lowercase 64-hex digest, two ASCII spaces, path, LF; rows sorted by path"

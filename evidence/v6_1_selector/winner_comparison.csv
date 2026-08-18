@@ -1,0 +1,9 @@
+target,target_order,series,model_id,mean_rank_ic,rank_ic_hac_t,rank_ic_hac_95_lower,positive_ic_fraction,early_mean_rank_ic,recent_mean_rank_ic,minimum_rolling_mean_rank_ic,months,test_period
+CAPM alpha,1,V6.1 best historical,ensemble__cam_free_mlp_plus_cam__equal,0.0577658369,3.6778714695,0.0269814440,0.70,0.0664148695,0.0491168043,0.0383319896,20,2024-01 to 2025-08
+CAPM alpha,1,Frozen V6 ensemble,v6_frozen__ensemble_rank,0.0222780193,2.1378207198,0.0018530522,0.60,0.0294503939,0.0151056446,0.0086707218,20,2024-01 to 2025-08
+FF5+momentum alpha,2,V6.1 best historical,ensemble__cam_free_mlp_plus_cam__equal,0.0475304517,7.5112950435,0.0351278387,0.85,0.0425315301,0.0525293733,0.0344596633,20,2024-01 to 2025-08
+FF5+momentum alpha,2,Frozen V6 ensemble,v6_frozen__ensemble_rank,0.0147114561,1.8221447552,-0.0011130023,0.60,0.0180530248,0.0113698875,0.0016344359,20,2024-01 to 2025-08
+Long-net,3,V6.1 best historical,ensemble__cam_free_mlp_plus_cam__equal,0.0673708823,3.8150144654,0.0327584502,0.75,0.0626413521,0.0721004125,0.0332708780,20,2024-01 to 2025-08
+Long-net,3,Frozen V6 ensemble,v6_frozen__ensemble_rank,0.0370084573,2.6929810830,0.0100730374,0.55,0.0407649129,0.0332520018,0.0258513735,20,2024-01 to 2025-08
+Short-net,4,V6.1 best historical,ensemble__correlation_reduced_xgb_mlp__equal,0.0574032573,3.3931979420,0.0242456325,0.70,0.0521880892,0.0626184253,0.0300101999,20,2024-01 to 2025-08
+Short-net,4,Frozen V6 ensemble,v6_frozen__ensemble_rank,0.0408776587,2.4338896177,0.0079590701,0.60,0.0405882609,0.0411670565,0.0176829222,20,2024-01 to 2025-08

@@ -1,0 +1,26 @@
+{
+  "schema": "research_v6_8_live_factor_policy_v1",
+  "purpose": "Causal official-factor policy for the frozen V6.8 paper model.",
+  "source_urls": {
+    "ff5_monthly": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip",
+    "ff5_daily": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_daily_CSV.zip",
+    "momentum_monthly": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Momentum_Factor_CSV.zip",
+    "momentum_daily": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Momentum_Factor_daily_CSV.zip"
+  },
+  "signal_cutoff_timezone": "America/New_York",
+  "signal_cutoff_local_time": "16:00:00",
+  "beta_policy": {
+    "lookback_global_sessions": 252,
+    "minimum_valid_observations": 126,
+    "half_life_sessions": 126.0,
+    "maximum_latest_factor_age_calendar_days": 120,
+    "cross_sectional_clip_lower": 0.01,
+    "cross_sectional_clip_upper": 0.99
+  },
+  "aggregate_state_policy": {
+    "factor_trailing_1m_3m_12m": "missing_when_the_official_archive_does_not_contain_the_signal_month",
+    "risk_free_rate_1m": "latest_official_month_available_in_the_pre_cutoff_snapshot",
+    "market_realized_volatility_21d_63d": "missing_when_the_official_daily_archive_does_not_end_on_the_signal_session",
+    "internal_nowcast_allowed": false
+  }
+}

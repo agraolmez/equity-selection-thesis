@@ -1,0 +1,148 @@
+schema_version = 1
+config_id = "phase02-auxiliary-sources-v1"
+status = "frozen_contract_profiles_completed_pending_primary_build"
+scope = "development_only"
+last_predictor_signal_date = "2014-10-31"
+last_development_exit_date = "2014-12-01"
+policy = "configs/phase_02_canonicalization/auxiliary_source_policy_v1.toml"
+schema = "configs/phase_02_canonicalization/auxiliary_source_schema_v1.json"
+
+[stage_01_binding]
+raw_snapshot_id = "raw-v1-c1ab523852daf9e5"
+phase_01_build_id = "phase01-2d804a3a69673de5"
+verification_id = "verify-c04d45b4e40e0918"
+freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+raw_snapshot_pointer = "data/raw_snapshot.pointer.json"
+raw_snapshot_pointer_sha256 = "b9424a91ff8acb20626ffa8048d371ece4b0c38665f6454a44d50e25faaee7a1"
+
+[raw_contract_bindings]
+compustat_ccm = "3eddb56f7b248d2fbaad020e6b08a20f1d0b37600281de8c5ab11987b35879d3"
+crsp = "fcd6bb75eba53e9415266ee6a229700742c6f2f93a44836b35f01e1eb71e9076"
+factors_liquidity = "8271740d9f233b996f3451f90aad78b096e0fbd645119b8b7858e49794c7aac2"
+optionmetrics = "a850acb28d229f7cd3d73ef711284e084b99cb1cbed8f25a04f05c0487ef2659"
+sec_restatements = "235de9f1c8c488c9f6cd41e8f63298ba79b119fd372878cce60c40d23d0d7cfa"
+
+[[inputs]]
+filename = "ccm_link_table.csv"
+family = "compustat_ccm"
+disposition = "materialize_normalized"
+outputs = ["ccm_link_interval"]
+
+[[inputs]]
+filename = "ccm_security_daily.csv"
+family = "compustat_ccm"
+disposition = "qa_scan_only_no_row_level_materialization"
+qa_receipts = ["ccm_daily_crosscheck_coverage", "ccm_daily_crsp_link_consistency"]
+reason = "9.3GB redundant market-data cross-check; CRSP remains authoritative"
+
+[[inputs]]
+filename = "ccm_security_monthly.csv"
+family = "compustat_ccm"
+disposition = "qa_scan_only_no_row_level_materialization"
+qa_receipts = ["ccm_monthly_crosscheck_coverage", "ccm_monthly_crsp_link_consistency"]
+reason = "432MB redundant market-data cross-check; CRSP remains authoritative"
+
+[[inputs]]
+filename = "comp_funda_ccm.csv"
+family = "compustat_ccm"
+disposition = "materialize_normalized"
+outputs = ["compustat_annual_observation"]
+
+[[inputs]]
+filename = "comp_fundq_ccm.csv"
+family = "compustat_ccm"
+disposition = "materialize_normalized"
+outputs = ["compustat_quarterly_observation"]
+
+[[inputs]]
+filename = "comp_segments_ccm.csv"
+family = "compustat_ccm"
+disposition = "materialize_normalized"
+outputs = ["compustat_segment_observation"]
+
+[[inputs]]
+filename = "sec_filings_index.csv"
+family = "sec_restatements"
+disposition = "materialize_normalized"
+outputs = ["sec_filing_observation"]
+
+[[inputs]]
+filename = "sec_8k_items.csv"
+family = "sec_restatements"
+disposition = "materialize_normalized"
+outputs = ["sec_8k_item_observation"]
+
+[[inputs]]
+filename = "sec_13f_summary.csv"
+family = "sec_restatements"
+disposition = "materialize_normalized"
+outputs = ["sec_13f_filing_observation"]
+
+[[inputs]]
+filename = "sec_13f_holdings.csv"
+family = "sec_restatements"
+disposition = "materialize_normalized"
+outputs = ["sec_13f_holding_observation"]
+reason = "Feature-owning source; large size does not make it QA-only"
+
+[[inputs]]
+filename = "audit_financial_restatements.csv"
+family = "sec_restatements"
+disposition = "materialize_normalized"
+outputs = ["restatement_event_observation", "restatement_crsp_link"]
+
+[[inputs]]
+filename = "optionmetrics_security_name_history.csv"
+family = "optionmetrics"
+disposition = "materialize_normalized"
+outputs = ["optionmetrics_name_interval", "optionmetrics_crsp_link_interval"]
+
+[[inputs]]
+filename = "optionmetrics_option_volume.csv"
+family = "optionmetrics"
+disposition = "materialize_normalized"
+outputs = ["optionmetrics_option_volume_observation"]
+
+[[inputs]]
+filename = "optionmetrics_historical_volatility.csv"
+family = "optionmetrics"
+disposition = "materialize_normalized"
+outputs = ["optionmetrics_historical_volatility_observation"]
+
+[[inputs]]
+filename = "optionmetrics_security_prices.csv"
+family = "optionmetrics"
+disposition = "qa_scan_only_no_row_level_materialization"
+qa_receipts = ["optionmetrics_underlying_coverage", "optionmetrics_crsp_market_crosscheck"]
+reason = "5.5GB redundant underlying-price cross-check; not required for option features"
+
+[[inputs]]
+filename = "ff_5_momentum_daily.csv"
+family = "factors_liquidity"
+disposition = "materialize_normalized"
+outputs = ["ff_factor_daily_observation"]
+
+[[inputs]]
+filename = "ff_5_momentum_monthly.csv"
+family = "factors_liquidity"
+disposition = "materialize_normalized"
+outputs = ["ff_factor_monthly_observation"]
+
+[[inputs]]
+filename = "ps_liquidity_monthly.csv"
+family = "factors_liquidity"
+disposition = "materialize_normalized"
+outputs = ["ps_liquidity_observation"]
+
+[required_linkage_output]
+table = "auxiliary_signal_linkage"
+grain = "exactly_one_row_per_verified_signal_date_universe_row"
+source_families = ["compustat_ccm", "sec_restatements", "optionmetrics"]
+
+[prohibited_materializations]
+tables = [
+  "ccm_security_daily_normalized",
+  "ccm_security_monthly_normalized",
+  "optionmetrics_security_prices_normalized",
+]

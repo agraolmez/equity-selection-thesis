@@ -1,0 +1,349 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Winning Strategy: Month-by-Month Attribution",
+    "description": "A monthly economic attribution of the frozen V6.1 winning portfolio from January 2024 through August 2025.",
+    "generatedAt": "2026-08-14T00:00:00+03:00",
+    "cards": [
+      {
+        "id": "sharpe",
+        "description": "Annualized mean monthly net excess return divided by realized annualized volatility.",
+        "dataset": "headline",
+        "sourceId": "month_attribution",
+        "metrics": [
+          {"label": "Net Sharpe", "field": "sharpe", "format": "number"},
+          {"label": "Stressed", "field": "stressed_sharpe", "format": "number"}
+        ]
+      },
+      {
+        "id": "net_excess",
+        "description": "Annualized arithmetic mean of monthly net return in excess of cash.",
+        "dataset": "headline",
+        "sourceId": "month_attribution",
+        "metrics": [
+          {"label": "Annualized net excess", "field": "annualized_net_excess", "format": "percent", "signed": true},
+          {"label": "Gross excess", "field": "annualized_gross_excess", "format": "percent", "signed": true}
+        ]
+      },
+      {
+        "id": "cumulative_return",
+        "description": "Compounded net total return, including the cash return on net capital, over the 20-month test path.",
+        "dataset": "headline",
+        "sourceId": "month_attribution",
+        "metrics": [
+          {"label": "Cumulative net total", "field": "cumulative_total_return", "format": "percent", "signed": true},
+          {"label": "Cumulative net excess", "field": "cumulative_net_excess", "format": "percent", "signed": true}
+        ]
+      },
+      {
+        "id": "risk",
+        "description": "Realized risk on the net total-return path.",
+        "dataset": "headline",
+        "sourceId": "month_attribution",
+        "metrics": [
+          {"label": "Realized volatility", "field": "realized_volatility", "format": "percent"},
+          {"label": "Maximum drawdown", "field": "max_drawdown", "format": "percent", "signed": true}
+        ]
+      },
+      {
+        "id": "significance",
+        "description": "Heteroskedasticity-and-autocorrelation-consistent t-statistic of mean monthly net excess return.",
+        "dataset": "headline",
+        "sourceId": "month_attribution",
+        "metrics": [
+          {"label": "HAC t-statistic", "field": "hac_t", "format": "number"},
+          {"label": "Positive months", "field": "positive_month_rate", "format": "percent"}
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "sleeve_contributions",
+        "title": "Long and short sleeve contributions by month",
+        "subtitle": "The long book supplied the average return; shorts paid off reliably in negative-market months and dragged in many rallies.",
+        "type": "stackedBar",
+        "intent": "composition",
+        "dataset": "sleeve_long",
+        "sourceId": "month_attribution",
+        "encodings": {
+          "x": {"field": "month", "type": "temporal", "label": "Holding month"},
+          "y": {"field": "contribution", "type": "quantitative", "label": "Monthly portfolio contribution", "format": "percent"},
+          "color": {"field": "sleeve", "type": "nominal", "label": "Sleeve"}
+        },
+        "yAxisTitle": "Contribution",
+        "valueFormat": "percent",
+        "layout": "full"
+      },
+      {
+        "id": "cumulative_path",
+        "title": "Cumulative return path",
+        "subtitle": "Net total return reached 27.8%; the largest peak-to-trough loss was 2.0% and occurred at the end of 2024.",
+        "type": "line",
+        "intent": "trend",
+        "dataset": "path_long",
+        "sourceId": "month_attribution",
+        "encodings": {
+          "x": {"field": "month", "type": "temporal", "label": "Holding month"},
+          "y": {"field": "value", "type": "quantitative", "label": "Cumulative return", "format": "percent"},
+          "color": {"field": "series", "type": "nominal", "label": "Series"}
+        },
+        "yAxisTitle": "Cumulative return",
+        "valueFormat": "percent",
+        "layout": "full"
+      },
+      {
+        "id": "regime_attribution",
+        "title": "Average monthly sleeve contribution by market regime",
+        "subtitle": "The short sleeve averaged +1.79% in the six negative-market months and -1.15% in the fourteen positive-market months.",
+        "type": "bar",
+        "intent": "comparison",
+        "dataset": "regime_long",
+        "sourceId": "month_attribution",
+        "encodings": {
+          "x": {"field": "regime", "type": "nominal", "label": "Market regime"},
+          "y": {"field": "contribution", "type": "quantitative", "label": "Average monthly contribution", "format": "percent"},
+          "color": {"field": "sleeve", "type": "nominal", "label": "Sleeve"}
+        },
+        "yAxisTitle": "Average monthly contribution",
+        "valueFormat": "percent",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "monthly_detail",
+        "title": "Month-by-month strategy ledger",
+        "subtitle": "L/S identifies whether the largest individual contributor or detractor was held long or short. Contributions are to portfolio return.",
+        "dataset": "months",
+        "sourceId": "month_attribution",
+        "defaultSort": {"field": "month", "direction": "asc"},
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {"field": "month", "label": "Month", "type": "text"},
+          {"field": "market_return", "label": "Market", "format": "percent", "movement": true},
+          {"field": "net_excess_return", "label": "Net excess", "format": "percent", "movement": true},
+          {"field": "long_contribution", "label": "Long", "format": "percent", "movement": true},
+          {"field": "short_contribution", "label": "Short", "format": "percent", "movement": true},
+          {"field": "cost", "label": "Cost", "format": "percent"},
+          {"field": "gross_exposure", "label": "Gross", "format": "number"},
+          {"field": "net_exposure", "label": "Net", "format": "number"},
+          {"field": "top_position", "label": "Largest contributor", "type": "text"},
+          {"field": "bottom_position", "label": "Largest detractor", "type": "text"},
+          {"field": "diagnosis", "label": "Monthly diagnosis", "type": "text"}
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "month_attribution",
+        "label": "Frozen V6.1 portfolio outputs and authenticated factor/name authorities",
+        "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/monthly_results.parquet",
+        "query": {
+          "engine": "pandas and DuckDB",
+          "language": "python/sql",
+          "sql": "SELECT * FROM read_parquet('artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/monthly_results.parquet') WHERE variant = 'return_plus_ff5_momentum__optimized_10pct_vol' AND holding_month BETWEEN '2024-01' AND '2025-08'; SELECT holding_month, signal_date, permno, weight, stock_excess_return, weight * stock_excess_return AS contribution FROM read_parquet('artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/variants/return_plus_ff5_momentum__optimized_10pct_vol/months/*.parquet');",
+          "description": "Selected the frozen return_plus_ff5_momentum__optimized_10pct_vol variant, joined monthly market factors, decomposed realized return into long and short position contributions, and compared the fixed-floor result with the frozen optional-short ablation.",
+          "executed_at": "2026-08-14T00:00:00+03:00",
+          "tables_used": [
+            "artifacts.research_v6_1.portfolio_step_02.monthly_results",
+            "artifacts.research_v6_1.portfolio_step_02.variant_month_positions",
+            "phase_06_final_test.stage13_final_inputs_v2.primary_factors",
+            "raw.crsp_names_ciz",
+            "artifacts.research_v6_1.portfolio_short_floor_ablation.monthly_results"
+          ],
+          "filters": [
+            "variant = return_plus_ff5_momentum__optimized_10pct_vol",
+            "holding_month between 2024-01 and 2025-08",
+            "monthly evidence only; no post-August-2025 outcomes"
+          ],
+          "metric_definitions": {
+            "net_excess_return": "Gross stock excess return less modeled trading and financing costs.",
+            "long_contribution": "Sum of weight times realized stock excess return for positive weights.",
+            "short_contribution": "Sum of weight times realized stock excess return for negative weights; a positive value means the short book earned money.",
+            "sharpe": "Annualized arithmetic mean monthly net excess return divided by annualized standard deviation.",
+            "cumulative_total_return": "Compounded net total return including the contemporaneous risk-free return on net capital.",
+            "max_drawdown": "Largest peak-to-trough decline in compounded net total NAV.",
+            "top_position": "Largest weight-times-stock-excess-return contribution within the month; L means long and S means short.",
+            "bottom_position": "Most negative weight-times-stock-excess-return contribution within the month; L means long and S means short."
+          }
+        }
+      }
+    ],
+    "blocks": [
+      {"id": "title", "type": "markdown", "body": "# Winning Strategy: Month-by-Month Attribution"},
+      {
+        "id": "executive_summary",
+        "type": "markdown",
+        "sourceId": "month_attribution",
+        "body": "## Executive Summary\n\nThe frozen winning strategy was **long-driven and short-hedged**. Across January 2024–August 2025, it produced **9.94% annualized net excess return**, **5.77% realized volatility**, a **1.72 Sharpe ratio**, a **2.64 HAC t-statistic**, and a **−1.96% maximum drawdown**. The result was positive in **13 of 20 months**.\n\nThe long sleeve contributed **+14.13% annualized** before costs; the short sleeve contributed **−3.19% annualized**; modeled costs consumed **0.99% annualized**. That negative average short P&L does not mean the shorts failed as a hedge: they were profitable in **all six negative-market months**, and their monthly contribution had a **−0.82 correlation with the market factor**. The short book sacrificed return during many rallies but materially stabilized weak-market months."
+      },
+      {"id": "headline_metrics", "type": "metric-strip", "cardIds": ["sharpe", "net_excess", "cumulative_return", "risk", "significance"]},
+      {
+        "id": "monthly_section",
+        "type": "markdown",
+        "body": "## Monthly Evidence\n\nThe sleeve chart separates what the long and short books contributed before portfolio-level costs. A profitable short contribution means the securities held short fell relative to cash; a negative short contribution means they rose and hurt the portfolio."
+      },
+      {"id": "sleeves", "type": "chart", "chartId": "sleeve_contributions", "layout": "full"},
+      {
+        "id": "regime_section",
+        "type": "markdown",
+        "sourceId": "month_attribution",
+        "body": "## The Short Book Earned Its Place Through Protection\n\nIn positive-market months, the portfolio averaged **+0.96% net excess per month**: longs contributed **+2.19%**, while shorts cost **−1.15%**. In negative-market months, the portfolio still averaged **+0.51% net excess**: longs lost **−1.20%**, but shorts earned **+1.79%**. This is the clearest economic explanation for the high Sharpe ratio."
+      },
+      {"id": "regimes", "type": "chart", "chartId": "regime_attribution", "layout": "full"},
+      {
+        "id": "path_section",
+        "type": "markdown",
+        "sourceId": "month_attribution",
+        "body": "## Return Path and Stress Months\n\nThe strongest month was **July 2024 (+4.98% net excess)**, when both sleeves made money. **February 2025 (+2.25%)** was the purest hedge success: longs lost 1.58%, while shorts earned 3.91%. The worst month was **December 2024 (−2.07%)**, but shorts still added 2.13% and prevented a much larger loss from the long book."
+      },
+      {"id": "path", "type": "chart", "chartId": "cumulative_path", "layout": "full"},
+      {
+        "id": "ledger_section",
+        "type": "markdown",
+        "body": "## Month-by-Month Diagnosis\n\nThe ledger below is the complete 20-month path. It shows the market backdrop, net excess return, sleeve attribution, exposures, the largest security-level contributor and detractor, and the economic interpretation of each month."
+      },
+      {"id": "ledger", "type": "table", "tableId": "monthly_detail", "layout": "full"},
+      {
+        "id": "mechanics",
+        "type": "markdown",
+        "sourceId": "month_attribution",
+        "body": "## What the Optimizer Was Actually Doing\n\nThe strategy used roughly **0.97× average gross exposure** and **0.28× average net long exposure**. Net exposure was usually 0.30×, but fell toward 0.20× in several months. Forecast volatility ranged from **3.42% to 5.42%**, well below the 10% ceiling, so the volatility cap was not the main binding control. Turnover reached the **0.50 monthly cap in every month**, making turnover and transaction costs operationally important even though monthly modeled cost stayed within roughly 7–10 basis points."
+      },
+      {
+        "id": "conclusion",
+        "type": "markdown",
+        "sourceId": "month_attribution",
+        "body": "## Decision Interpretation\n\nThe winning strategy should be described as a **high-quality long selector paired with an expensive but effective defensive short sleeve**. Its success did not require the shorts to make money on average; it required them to make money when the long book and the market were weak. The month-by-month record supports that mechanism.\n\nThe fixed short-floor specification beat the optional-short counterfactual in **11 of 20 months**, but the difference was unstable and previously failed statistical superiority tests. Because changing the short constraint also changes the long allocation, those monthly differences are a joint portfolio effect—not isolated proof that the floor itself creates alpha."
+      },
+      {
+        "id": "caveats",
+        "type": "markdown",
+        "body": "## Caveats and Next Evidence\n\nThis is a short, 20-month historical development window, not untouched production confirmation. The strategy was selected using evidence available through August 2025, so September 2026 onward remains the clean confirmation boundary. Security-level contribution labels use CRSP date-effective tickers, and their displayed contributions are pre-cost stock-excess contributions; portfolio costs are shown separately. The result is economically and statistically meaningful on its own path, but superiority over nearby optimizer constraints has not been established."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-14T00:00:00+03:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [
+        {
+          "sharpe": 1.723476,
+          "stressed_sharpe": 1.448851,
+          "annualized_net_excess": 0.099436,
+          "annualized_gross_excess": 0.109383,
+          "cumulative_total_return": 0.277875,
+          "cumulative_net_excess": 0.176402,
+          "realized_volatility": 0.057696,
+          "max_drawdown": -0.0196,
+          "hac_t": 2.641,
+          "positive_month_rate": 0.65
+        }
+      ],
+      "months": [
+        {"month":"2024-01","market_return":0.0266,"net_excess_return":0.0182,"long_contribution":0.0055,"short_contribution":0.0135,"cost":0.0008,"gross_exposure":1.00,"net_exposure":0.30,"forecast_volatility":0.0376,"cumulative_total_return":0.0225,"cumulative_net_excess":0.0182,"fixed_minus_optional":-0.0035,"top_position":"RIOT (S) +0.26%","bottom_position":"VRT (S) −0.30%","diagnosis":"Both sleeves profited; shorts supplied most of the month."},
+        {"month":"2024-02","market_return":0.0456,"net_excess_return":-0.0068,"long_contribution":0.0196,"short_contribution":-0.0257,"cost":0.0007,"gross_exposure":0.80,"net_exposure":0.20,"forecast_volatility":0.0378,"cumulative_total_return":0.0196,"cumulative_net_excess":0.0113,"fixed_minus_optional":-0.0266,"top_position":"EME (L) +0.37%","bottom_position":"CELH (S) −0.46%","diagnosis":"Sharp rally hurt shorts more than profitable longs could offset."},
+        {"month":"2024-03","market_return":0.0180,"net_excess_return":0.0165,"long_contribution":0.0263,"short_contribution":-0.0090,"cost":0.0008,"gross_exposure":1.00,"net_exposure":0.30,"forecast_volatility":0.0404,"cumulative_total_return":0.0405,"cumulative_net_excess":0.0280,"fixed_minus_optional":-0.0111,"top_position":"VST (L) +0.31%","bottom_position":"AA (S) −0.23%","diagnosis":"Long selection comfortably overcame short-book drag."},
+        {"month":"2024-04","market_return":-0.0464,"net_excess_return":-0.0165,"long_contribution":-0.0322,"short_contribution":0.0165,"cost":0.0008,"gross_exposure":1.09,"net_exposure":0.30,"forecast_volatility":0.0396,"cumulative_total_return":0.0279,"cumulative_net_excess":0.0110,"fixed_minus_optional":0.0046,"top_position":"SMCI (S) +0.29%","bottom_position":"SBUX (L) −0.19%","diagnosis":"Shorts halved the damage from a weak long book in a market selloff."},
+        {"month":"2024-05","market_return":0.0464,"net_excess_return":0.0162,"long_contribution":0.0277,"short_contribution":-0.0106,"cost":0.0010,"gross_exposure":1.21,"net_exposure":0.30,"forecast_volatility":0.0418,"cumulative_total_return":0.0491,"cumulative_net_excess":0.0274,"fixed_minus_optional":0.0140,"top_position":"TRIP (S) +0.31%","bottom_position":"AA (S) −0.28%","diagnosis":"Long alpha dominated despite rally-driven short losses."},
+        {"month":"2024-06","market_return":0.0299,"net_excess_return":0.0039,"long_contribution":-0.0084,"short_contribution":0.0131,"cost":0.0007,"gross_exposure":0.90,"net_exposure":0.30,"forecast_volatility":0.0347,"cumulative_total_return":0.0572,"cumulative_net_excess":0.0314,"fixed_minus_optional":-0.0079,"top_position":"PARA (S) +0.21%","bottom_position":"CNK (S) −0.16%","diagnosis":"Short selection rescued a losing long sleeve despite a rising market."},
+        {"month":"2024-07","market_return":-0.0063,"net_excess_return":0.0498,"long_contribution":0.0402,"short_contribution":0.0104,"cost":0.0008,"gross_exposure":1.00,"net_exposure":0.30,"forecast_volatility":0.0357,"cumulative_total_return":0.1145,"cumulative_net_excess":0.0828,"fixed_minus_optional":0.0205,"top_position":"MHO (L) +0.33%","bottom_position":"CCOI (S) −0.25%","diagnosis":"Best month: both sleeves profited while the market fell slightly."},
+        {"month":"2024-08","market_return":0.0091,"net_excess_return":0.0129,"long_contribution":0.0092,"short_contribution":0.0044,"cost":0.0008,"gross_exposure":0.80,"net_exposure":0.20,"forecast_volatility":0.0342,"cumulative_total_return":0.1337,"cumulative_net_excess":0.0968,"fixed_minus_optional":0.0057,"top_position":"CLSK (S) +0.41%","bottom_position":"AFRM (S) −0.28%","diagnosis":"Balanced positive month with gains from both sleeves."},
+        {"month":"2024-09","market_return":0.0306,"net_excess_return":0.0285,"long_contribution":0.0410,"short_contribution":-0.0116,"cost":0.0009,"gross_exposure":0.97,"net_exposure":0.30,"forecast_volatility":0.0392,"cumulative_total_return":0.1706,"cumulative_net_excess":0.1284,"fixed_minus_optional":0.0016,"top_position":"JD (L) +0.60%","bottom_position":"VITL (S) −0.20%","diagnosis":"Strong long book absorbed moderate short drag."},
+        {"month":"2024-10","market_return":0.0042,"net_excess_return":-0.0109,"long_contribution":-0.0071,"short_contribution":-0.0030,"cost":0.0008,"gross_exposure":1.00,"net_exposure":0.30,"forecast_volatility":0.0381,"cumulative_total_return":0.1632,"cumulative_net_excess":0.1179,"fixed_minus_optional":0.0045,"top_position":"SKYW (L) +0.20%","bottom_position":"LMND (S) −0.49%","diagnosis":"Only month in which both sleeves lost money."},
+        {"month":"2024-11","market_return":0.0619,"net_excess_return":-0.0009,"long_contribution":0.0509,"short_contribution":-0.0509,"cost":0.0008,"gross_exposure":1.00,"net_exposure":0.30,"forecast_volatility":0.0352,"cumulative_total_return":0.1669,"cumulative_net_excess":0.1169,"fixed_minus_optional":-0.0057,"top_position":"GEO (L) +0.87%","bottom_position":"MARA (S) −0.59%","diagnosis":"Post-election rally created an almost exact long/short cancellation."},
+        {"month":"2024-12","market_return":-0.0351,"net_excess_return":-0.0207,"long_contribution":-0.0411,"short_contribution":0.0213,"cost":0.0009,"gross_exposure":1.06,"net_exposure":0.30,"forecast_volatility":0.0430,"cumulative_total_return":0.1476,"cumulative_net_excess":0.0939,"fixed_minus_optional":0.0288,"top_position":"MARA (S) +0.33%","bottom_position":"NFE (S) −0.20%","diagnosis":"Worst month, but shorts prevented a roughly 4% long-book loss from fully reaching NAV."},
+        {"month":"2025-01","market_return":0.0212,"net_excess_return":0.0133,"long_contribution":0.0258,"short_contribution":-0.0116,"cost":0.0010,"gross_exposure":1.24,"net_exposure":0.30,"forecast_volatility":0.0505,"cumulative_total_return":0.1675,"cumulative_net_excess":0.1061,"fixed_minus_optional":-0.0113,"top_position":"CLS (L) +0.29%","bottom_position":"EIX (L) −0.34%","diagnosis":"Long selection overcame the cost of the short hedge."},
+        {"month":"2025-02","market_return":-0.0350,"net_excess_return":0.0225,"long_contribution":-0.0158,"short_contribution":0.0391,"cost":0.0008,"gross_exposure":1.01,"net_exposure":0.30,"forecast_volatility":0.0542,"cumulative_total_return":0.1982,"cumulative_net_excess":0.1310,"fixed_minus_optional":-0.0029,"top_position":"NFE (S) +0.40%","bottom_position":"PEGA (L) −0.29%","diagnosis":"Cleanest hedge success: short gains more than offset losing longs."},
+        {"month":"2025-03","market_return":-0.0419,"net_excess_return":-0.0033,"long_contribution":-0.0159,"short_contribution":0.0132,"cost":0.0007,"gross_exposure":0.80,"net_exposure":0.20,"forecast_volatility":0.0447,"cumulative_total_return":0.1992,"cumulative_net_excess":0.1273,"fixed_minus_optional":-0.0017,"top_position":"VFC (S) +0.32%","bottom_position":"CELH (S) −0.28%","diagnosis":"Shorts nearly neutralized weak longs during a broad selloff."},
+        {"month":"2025-04","market_return":-0.0063,"net_excess_return":-0.0008,"long_contribution":-0.0069,"short_contribution":0.0069,"cost":0.0008,"gross_exposure":0.93,"net_exposure":0.30,"forecast_volatility":0.0420,"cumulative_total_return":0.2033,"cumulative_net_excess":0.1264,"fixed_minus_optional":0.0055,"top_position":"FIX (L) +0.26%","bottom_position":"MSTR (S) −0.24%","diagnosis":"Gross sleeve returns offset; modeled costs left a small loss."},
+        {"month":"2025-05","market_return":0.0582,"net_excess_return":0.0183,"long_contribution":0.0440,"short_contribution":-0.0246,"cost":0.0010,"gross_exposure":0.80,"net_exposure":0.20,"forecast_volatility":0.0473,"cumulative_total_return":0.2304,"cumulative_net_excess":0.1470,"fixed_minus_optional":0.0065,"top_position":"ACAD (L) +0.47%","bottom_position":"HOOD (S) −0.50%","diagnosis":"Bull-market long alpha exceeded substantial short squeeze losses."},
+        {"month":"2025-06","market_return":0.0435,"net_excess_return":0.0054,"long_contribution":0.0293,"short_contribution":-0.0229,"cost":0.0010,"gross_exposure":0.84,"net_exposure":0.245,"forecast_volatility":0.0531,"cumulative_total_return":0.2420,"cumulative_net_excess":0.1529,"fixed_minus_optional":0.0024,"top_position":"CLS (L) +0.27%","bottom_position":"COIN (S) −0.36%","diagnosis":"Another rally: profitable longs narrowly exceeded short drag and costs."},
+        {"month":"2025-07","market_return":0.0030,"net_excess_return":0.0006,"long_contribution":-0.0018,"short_contribution":0.0032,"cost":0.0007,"gross_exposure":0.89,"net_exposure":0.291,"forecast_volatility":0.0456,"cumulative_total_return":0.2483,"cumulative_net_excess":0.1536,"fixed_minus_optional":0.0363,"top_position":"CLS (L) +0.30%","bottom_position":"OKLO (S) −0.38%","diagnosis":"Shorts turned a slightly losing long book into a small positive month."},
+        {"month":"2025-08","market_return":0.0301,"net_excess_return":0.0195,"long_contribution":0.0451,"short_contribution":-0.0247,"cost":0.0009,"gross_exposure":1.08,"net_exposure":0.30,"forecast_volatility":0.0475,"cumulative_total_return":0.2779,"cumulative_net_excess":0.1764,"fixed_minus_optional":-0.0104,"top_position":"GFI (L) +0.34%","bottom_position":"DK (S) −0.51%","diagnosis":"Strong long selection closed the sample despite another costly hedge month."}
+      ],
+      "sleeve_long": [
+        {"month":"2024-01","sleeve":"Long","contribution":0.0055,"net_excess_return":0.0182,"market_return":0.0266,"gross_exposure":1.00,"net_exposure":0.30},{"month":"2024-01","sleeve":"Short","contribution":0.0135,"net_excess_return":0.0182,"market_return":0.0266,"gross_exposure":1.00,"net_exposure":0.30},
+        {"month":"2024-02","sleeve":"Long","contribution":0.0196,"net_excess_return":-0.0068,"market_return":0.0456,"gross_exposure":0.80,"net_exposure":0.20},{"month":"2024-02","sleeve":"Short","contribution":-0.0257,"net_excess_return":-0.0068,"market_return":0.0456,"gross_exposure":0.80,"net_exposure":0.20},
+        {"month":"2024-03","sleeve":"Long","contribution":0.0263,"net_excess_return":0.0165,"market_return":0.0180,"gross_exposure":1.00,"net_exposure":0.30},{"month":"2024-03","sleeve":"Short","contribution":-0.0090,"net_excess_return":0.0165,"market_return":0.0180,"gross_exposure":1.00,"net_exposure":0.30},
+        {"month":"2024-04","sleeve":"Long","contribution":-0.0322,"net_excess_return":-0.0165,"market_return":-0.0464,"gross_exposure":1.09,"net_exposure":0.30},{"month":"2024-04","sleeve":"Short","contribution":0.0165,"net_excess_return":-0.0165,"market_return":-0.0464,"gross_exposure":1.09,"net_exposure":0.30},
+        {"month":"2024-05","sleeve":"Long","contribution":0.0277,"net_excess_return":0.0162,"market_return":0.0464,"gross_exposure":1.21,"net_exposure":0.30},{"month":"2024-05","sleeve":"Short","contribution":-0.0106,"net_excess_return":0.0162,"market_return":0.0464,"gross_exposure":1.21,"net_exposure":0.30},
+        {"month":"2024-06","sleeve":"Long","contribution":-0.0084,"net_excess_return":0.0039,"market_return":0.0299,"gross_exposure":0.90,"net_exposure":0.30},{"month":"2024-06","sleeve":"Short","contribution":0.0131,"net_excess_return":0.0039,"market_return":0.0299,"gross_exposure":0.90,"net_exposure":0.30},
+        {"month":"2024-07","sleeve":"Long","contribution":0.0402,"net_excess_return":0.0498,"market_return":-0.0063,"gross_exposure":1.00,"net_exposure":0.30},{"month":"2024-07","sleeve":"Short","contribution":0.0104,"net_excess_return":0.0498,"market_return":-0.0063,"gross_exposure":1.00,"net_exposure":0.30},
+        {"month":"2024-08","sleeve":"Long","contribution":0.0092,"net_excess_return":0.0129,"market_return":0.0091,"gross_exposure":0.80,"net_exposure":0.20},{"month":"2024-08","sleeve":"Short","contribution":0.0044,"net_excess_return":0.0129,"market_return":0.0091,"gross_exposure":0.80,"net_exposure":0.20},
+        {"month":"2024-09","sleeve":"Long","contribution":0.0410,"net_excess_return":0.0285,"market_return":0.0306,"gross_exposure":0.97,"net_exposure":0.30},{"month":"2024-09","sleeve":"Short","contribution":-0.0116,"net_excess_return":0.0285,"market_return":0.0306,"gross_exposure":0.97,"net_exposure":0.30},
+        {"month":"2024-10","sleeve":"Long","contribution":-0.0071,"net_excess_return":-0.0109,"market_return":0.0042,"gross_exposure":1.00,"net_exposure":0.30},{"month":"2024-10","sleeve":"Short","contribution":-0.0030,"net_excess_return":-0.0109,"market_return":0.0042,"gross_exposure":1.00,"net_exposure":0.30},
+        {"month":"2024-11","sleeve":"Long","contribution":0.0509,"net_excess_return":-0.0009,"market_return":0.0619,"gross_exposure":1.00,"net_exposure":0.30},{"month":"2024-11","sleeve":"Short","contribution":-0.0509,"net_excess_return":-0.0009,"market_return":0.0619,"gross_exposure":1.00,"net_exposure":0.30},
+        {"month":"2024-12","sleeve":"Long","contribution":-0.0411,"net_excess_return":-0.0207,"market_return":-0.0351,"gross_exposure":1.06,"net_exposure":0.30},{"month":"2024-12","sleeve":"Short","contribution":0.0213,"net_excess_return":-0.0207,"market_return":-0.0351,"gross_exposure":1.06,"net_exposure":0.30},
+        {"month":"2025-01","sleeve":"Long","contribution":0.0258,"net_excess_return":0.0133,"market_return":0.0212,"gross_exposure":1.24,"net_exposure":0.30},{"month":"2025-01","sleeve":"Short","contribution":-0.0116,"net_excess_return":0.0133,"market_return":0.0212,"gross_exposure":1.24,"net_exposure":0.30},
+        {"month":"2025-02","sleeve":"Long","contribution":-0.0158,"net_excess_return":0.0225,"market_return":-0.0350,"gross_exposure":1.01,"net_exposure":0.30},{"month":"2025-02","sleeve":"Short","contribution":0.0391,"net_excess_return":0.0225,"market_return":-0.0350,"gross_exposure":1.01,"net_exposure":0.30},
+        {"month":"2025-03","sleeve":"Long","contribution":-0.0159,"net_excess_return":-0.0033,"market_return":-0.0419,"gross_exposure":0.80,"net_exposure":0.20},{"month":"2025-03","sleeve":"Short","contribution":0.0132,"net_excess_return":-0.0033,"market_return":-0.0419,"gross_exposure":0.80,"net_exposure":0.20},
+        {"month":"2025-04","sleeve":"Long","contribution":-0.0069,"net_excess_return":-0.0008,"market_return":-0.0063,"gross_exposure":0.93,"net_exposure":0.30},{"month":"2025-04","sleeve":"Short","contribution":0.0069,"net_excess_return":-0.0008,"market_return":-0.0063,"gross_exposure":0.93,"net_exposure":0.30},
+        {"month":"2025-05","sleeve":"Long","contribution":0.0440,"net_excess_return":0.0183,"market_return":0.0582,"gross_exposure":0.80,"net_exposure":0.20},{"month":"2025-05","sleeve":"Short","contribution":-0.0246,"net_excess_return":0.0183,"market_return":0.0582,"gross_exposure":0.80,"net_exposure":0.20},
+        {"month":"2025-06","sleeve":"Long","contribution":0.0293,"net_excess_return":0.0054,"market_return":0.0435,"gross_exposure":0.84,"net_exposure":0.245},{"month":"2025-06","sleeve":"Short","contribution":-0.0229,"net_excess_return":0.0054,"market_return":0.0435,"gross_exposure":0.84,"net_exposure":0.245},
+        {"month":"2025-07","sleeve":"Long","contribution":-0.0018,"net_excess_return":0.0006,"market_return":0.0030,"gross_exposure":0.89,"net_exposure":0.291},{"month":"2025-07","sleeve":"Short","contribution":0.0032,"net_excess_return":0.0006,"market_return":0.0030,"gross_exposure":0.89,"net_exposure":0.291},
+        {"month":"2025-08","sleeve":"Long","contribution":0.0451,"net_excess_return":0.0195,"market_return":0.0301,"gross_exposure":1.08,"net_exposure":0.30},{"month":"2025-08","sleeve":"Short","contribution":-0.0247,"net_excess_return":0.0195,"market_return":0.0301,"gross_exposure":1.08,"net_exposure":0.30}
+      ],
+      "path_long": [
+        {"month":"2024-01","series":"Net total return","value":0.0225,"monthly_net_excess":0.0182,"drawdown":0.0000},{"month":"2024-01","series":"Net excess return","value":0.0182,"monthly_net_excess":0.0182,"drawdown":0.0000},
+        {"month":"2024-02","series":"Net total return","value":0.0196,"monthly_net_excess":-0.0068,"drawdown":-0.0028},{"month":"2024-02","series":"Net excess return","value":0.0113,"monthly_net_excess":-0.0068,"drawdown":-0.0028},
+        {"month":"2024-03","series":"Net total return","value":0.0405,"monthly_net_excess":0.0165,"drawdown":0.0000},{"month":"2024-03","series":"Net excess return","value":0.0280,"monthly_net_excess":0.0165,"drawdown":0.0000},
+        {"month":"2024-04","series":"Net total return","value":0.0279,"monthly_net_excess":-0.0165,"drawdown":-0.0121},{"month":"2024-04","series":"Net excess return","value":0.0110,"monthly_net_excess":-0.0165,"drawdown":-0.0121},
+        {"month":"2024-05","series":"Net total return","value":0.0491,"monthly_net_excess":0.0162,"drawdown":0.0000},{"month":"2024-05","series":"Net excess return","value":0.0274,"monthly_net_excess":0.0162,"drawdown":0.0000},
+        {"month":"2024-06","series":"Net total return","value":0.0572,"monthly_net_excess":0.0039,"drawdown":0.0000},{"month":"2024-06","series":"Net excess return","value":0.0314,"monthly_net_excess":0.0039,"drawdown":0.0000},
+        {"month":"2024-07","series":"Net total return","value":0.1145,"monthly_net_excess":0.0498,"drawdown":0.0000},{"month":"2024-07","series":"Net excess return","value":0.0828,"monthly_net_excess":0.0498,"drawdown":0.0000},
+        {"month":"2024-08","series":"Net total return","value":0.1337,"monthly_net_excess":0.0129,"drawdown":0.0000},{"month":"2024-08","series":"Net excess return","value":0.0968,"monthly_net_excess":0.0129,"drawdown":0.0000},
+        {"month":"2024-09","series":"Net total return","value":0.1706,"monthly_net_excess":0.0285,"drawdown":0.0000},{"month":"2024-09","series":"Net excess return","value":0.1284,"monthly_net_excess":0.0285,"drawdown":0.0000},
+        {"month":"2024-10","series":"Net total return","value":0.1632,"monthly_net_excess":-0.0109,"drawdown":-0.0063},{"month":"2024-10","series":"Net excess return","value":0.1179,"monthly_net_excess":-0.0109,"drawdown":-0.0063},
+        {"month":"2024-11","series":"Net total return","value":0.1669,"monthly_net_excess":-0.0009,"drawdown":-0.0031},{"month":"2024-11","series":"Net excess return","value":0.1169,"monthly_net_excess":-0.0009,"drawdown":-0.0031},
+        {"month":"2024-12","series":"Net total return","value":0.1476,"monthly_net_excess":-0.0207,"drawdown":-0.0196},{"month":"2024-12","series":"Net excess return","value":0.0939,"monthly_net_excess":-0.0207,"drawdown":-0.0196},
+        {"month":"2025-01","series":"Net total return","value":0.1675,"monthly_net_excess":0.0133,"drawdown":-0.0026},{"month":"2025-01","series":"Net excess return","value":0.1061,"monthly_net_excess":0.0133,"drawdown":-0.0026},
+        {"month":"2025-02","series":"Net total return","value":0.1982,"monthly_net_excess":0.0225,"drawdown":0.0000},{"month":"2025-02","series":"Net excess return","value":0.1310,"monthly_net_excess":0.0225,"drawdown":0.0000},
+        {"month":"2025-03","series":"Net total return","value":0.1992,"monthly_net_excess":-0.0033,"drawdown":0.0000},{"month":"2025-03","series":"Net excess return","value":0.1273,"monthly_net_excess":-0.0033,"drawdown":0.0000},
+        {"month":"2025-04","series":"Net total return","value":0.2033,"monthly_net_excess":-0.0008,"drawdown":0.0000},{"month":"2025-04","series":"Net excess return","value":0.1264,"monthly_net_excess":-0.0008,"drawdown":0.0000},
+        {"month":"2025-05","series":"Net total return","value":0.2304,"monthly_net_excess":0.0183,"drawdown":0.0000},{"month":"2025-05","series":"Net excess return","value":0.1470,"monthly_net_excess":0.0183,"drawdown":0.0000},
+        {"month":"2025-06","series":"Net total return","value":0.2420,"monthly_net_excess":0.0054,"drawdown":0.0000},{"month":"2025-06","series":"Net excess return","value":0.1529,"monthly_net_excess":0.0054,"drawdown":0.0000},
+        {"month":"2025-07","series":"Net total return","value":0.2483,"monthly_net_excess":0.0006,"drawdown":0.0000},{"month":"2025-07","series":"Net excess return","value":0.1536,"monthly_net_excess":0.0006,"drawdown":0.0000},
+        {"month":"2025-08","series":"Net total return","value":0.2779,"monthly_net_excess":0.0195,"drawdown":0.0000},{"month":"2025-08","series":"Net excess return","value":0.1764,"monthly_net_excess":0.0195,"drawdown":0.0000}
+      ],
+      "regime_long": [
+        {"regime":"Positive market months (14)","sleeve":"Long","contribution":0.021945,"average_net_excess":0.009631,"average_market_return":0.030593,"short_positive_rate":0.2857},
+        {"regime":"Positive market months (14)","sleeve":"Short","contribution":-0.011469,"average_net_excess":0.009631,"average_market_return":0.030593,"short_positive_rate":0.2857},
+        {"regime":"Negative market months (6)","sleeve":"Long","contribution":-0.011955,"average_net_excess":0.005148,"average_market_return":-0.028523,"short_positive_rate":1.0000},
+        {"regime":"Negative market months (6)","sleeve":"Short","contribution":0.017896,"average_net_excess":0.005148,"average_market_return":-0.028523,"short_positive_rate":1.0000}
+      ]
+    },
+    "accessIssues": []
+  },
+  "sources": [
+    {
+      "id": "month_attribution",
+      "label": "Frozen V6.1 portfolio outputs and authenticated factor/name authorities",
+      "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/monthly_results.parquet",
+      "query": {
+        "engine": "pandas and DuckDB",
+        "language": "python/sql",
+        "sql": "SELECT * FROM read_parquet('artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/monthly_results.parquet') WHERE variant = 'return_plus_ff5_momentum__optimized_10pct_vol' AND holding_month BETWEEN '2024-01' AND '2025-08'; SELECT holding_month, signal_date, permno, weight, stock_excess_return, weight * stock_excess_return AS contribution FROM read_parquet('artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393/variants/return_plus_ff5_momentum__optimized_10pct_vol/months/*.parquet');",
+        "description": "Selected the frozen return_plus_ff5_momentum__optimized_10pct_vol variant, joined monthly market factors, decomposed realized return into long and short position contributions, and compared the fixed-floor result with the frozen optional-short ablation.",
+        "executed_at": "2026-08-14T00:00:00+03:00",
+        "tables_used": [
+          "artifacts.research_v6_1.portfolio_step_02.monthly_results",
+          "artifacts.research_v6_1.portfolio_step_02.variant_month_positions",
+          "phase_06_final_test.stage13_final_inputs_v2.primary_factors",
+          "raw.crsp_names_ciz",
+          "artifacts.research_v6_1.portfolio_short_floor_ablation.monthly_results"
+        ],
+        "filters": [
+          "variant = return_plus_ff5_momentum__optimized_10pct_vol",
+          "holding_month between 2024-01 and 2025-08",
+          "monthly evidence only; no post-August-2025 outcomes"
+        ]
+      }
+    }
+  ]
+}

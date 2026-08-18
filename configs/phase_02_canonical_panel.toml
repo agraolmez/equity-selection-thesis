@@ -1,0 +1,222 @@
+schema_version = 1
+phase = "02_canonical_point_in_time_panel"
+contract_version = "v1"
+methodology_freeze_id = "methodology_v1_preimplementation_2026-07-14"
+methodology_freeze_manifest = "outputs/methodology_v1_freeze.json"
+methodology_freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+raw_snapshot_id = "raw-v1-c1ab523852daf9e5"
+phase_01_build_id = "phase01-2d804a3a69673de5"
+verification_id = "verify-c04d45b4e40e0918"
+phase_01_freeze_id = "phase01-freeze-9241d6d2adcd7a88"
+phase_01_freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+phase_01_freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+phase_01_recovery_attestation = "runs/phase_01_raw_snapshot/phase01-2d804a3a69673de5/post_publication_recovery/attestation.json"
+phase_01_recovery_attestation_sha256 = "5587f89aebd4c317415999806c8c65b0455bfc6574363aaf0e340845b8d1899e"
+source_contracts = ["configs/phase_02_sources/crsp_backbone.toml"]
+
+[first_slice]
+name = "crsp_market_identity_backbone_development"
+start_date = "2000-01-01"
+end_date = "2014-12-31"
+may_read_final_test_outcomes = false
+build_targets = false
+build_features = false
+build_portfolios = false
+publish_only_after_all_hard_gates_pass = true
+
+[storage]
+interim_namespace = "phase_02_canonical_panel"
+processed_namespace = "phase_02_canonical_panel"
+quality_namespace = "phase_02_canonical_panel"
+authoritative_raw_subdirectory = "raw"
+raw_is_read_only = true
+
+[calendar]
+calendar_owner_file = "crsp_daily_ciz.csv"
+calendar_date_column = "DlyCalDt"
+calendar_definition = "sorted distinct valid DlyCalDt values observed in crsp_daily_ciz.csv without universe or status filters"
+calendar_label = "observed_CRSP_trading_date_calendar"
+official_exchange_calendar_claim = false
+expected_observed_minimum = "2000-01-03"
+expected_observed_maximum = "2025-12-31"
+signal_rule = "last_trading_day_close_of_calendar_month"
+signal_timestamp = "after_close"
+entry_rule = "first_trading_day_close_after_signal"
+exit_rule = "next_scheduled_rebalance_close"
+credit_signal_to_entry_return = false
+holding_month_names_stage = true
+one_holding_period_purge = true
+raw_start_date = "2000-01-01"
+full_crsp_end_date = "2025-12-31"
+full_feature_last_signal_date = "2025-07-31"
+full_feature_last_entry_date = "2025-08-01"
+full_feature_last_exit_date = "2025-09-02"
+partial_december_close_date = "2025-12-31"
+
+[calendar.boundaries]
+last_development_signal = "2014-10-31"
+last_development_entry = "2014-11-03"
+last_development_exit = "2014-12-01"
+development_validation_embargo_signal = "2014-11-28"
+development_validation_embargo_entry = "2014-12-01"
+development_validation_embargo_exit = "2015-01-02"
+first_validation_signal = "2014-12-31"
+first_validation_entry = "2015-01-02"
+first_validation_exit = "2015-02-02"
+last_validation_signal = "2019-10-31"
+last_validation_entry = "2019-11-01"
+last_validation_exit = "2019-12-02"
+embargo_signal = "2019-11-29"
+embargo_entry = "2019-12-02"
+embargo_exit = "2020-01-02"
+first_final_signal = "2019-12-31"
+first_final_entry = "2020-01-02"
+first_final_exit = "2020-02-03"
+
+[universe.base]
+security_type = "EQTY"
+security_subtype = "COM"
+share_types = ["NS", "AD"]
+conditional_type = "RW"
+trading_status = "A"
+primary_exchanges = ["N", "A", "Q"]
+require_valid_price = true
+require_valid_market_cap = true
+us_incorporation_is_filter = false
+
+[universe.long]
+minimum_price_usd = 5.0
+minimum_market_cap_usd = 300000000.0
+liquidity_window_sessions = 60
+minimum_valid_liquidity_sessions = 40
+minimum_median_daily_dollar_volume_usd = 5000000.0
+minimum_positive_volume_fraction = 0.90
+return_history_window_sessions = 252
+minimum_valid_daily_returns = 126
+valid_liquidity_session_rule = "finite_positive_DlyClose_and_finite_nonnegative_DlyVol"
+median_dollar_volume_denominator = "valid_liquidity_sessions_only"
+positive_volume_fraction_denominator = "valid_liquidity_sessions_only"
+liquidity_windows_end_at_signal_date = true
+forward_fill_market_observations = false
+valid_return_rule = "finite_DlyRet_and_vendor_return_flag_domain_confirms_available"
+
+[universe.short]
+minimum_price_usd = 10.0
+minimum_market_cap_usd = 1000000000.0
+liquidity_window_sessions = 60
+minimum_valid_liquidity_sessions = 40
+minimum_median_daily_dollar_volume_usd = 20000000.0
+minimum_positive_volume_fraction = 0.95
+historical_locate_observed = false
+must_also_pass_long_investable_screen = true
+
+[universe.issuer_deduplication]
+issuer_key = "PERMCO"
+primary_sort = "trailing_60_session_median_dollar_volume_desc"
+secondary_sort = "market_cap_usd_desc"
+tertiary_sort = "PERMNO_asc"
+keep_lines_per_issuer = 1
+
+[availability]
+require_observation_date = true
+require_public_availability_date = true
+require_signal_date = true
+hard_assert_availability_not_after_signal = true
+future_backfill_permitted = false
+market_observation_rule = "after_dated_close"
+quarterly_primary_rule = "rdq_plus_one_trading_day"
+quarterly_fallback_calendar_days = 120
+annual_primary_rule = "matched_10K_20F_40F_acceptance_plus_one_trading_day"
+annual_fallback_calendar_days = 180
+segment_primary_rule = "srcdate_plus_one_trading_day"
+segment_fallback_calendar_days = 180
+filing_rule = "acceptance_timestamp_plus_one_trading_day"
+filing_fallback_rule = "filing_date_plus_one_trading_day"
+restatement_rule = "public_filing_or_acceptance_plus_one_trading_day"
+thirteen_f_rule = "filing_date_plus_one_trading_day"
+pastor_stambaugh_fallback_lag_calendar_months = 1
+quarterly_max_staleness_calendar_days = 180
+annual_max_staleness_calendar_days = 540
+segment_max_staleness_calendar_days = 540
+thirteen_f_max_staleness_calendar_days = 180
+fundamental_vintage_claim = "availability_lagged_latest_vintage_not_full_point_in_time"
+
+[returns]
+primary_daily_total_return_file = "crsp_daily_ciz.csv"
+primary_daily_total_return_column = "DlyRet"
+monthly_crosscheck_file = "crsp_monthly_ciz.csv"
+monthly_crosscheck_column = "MthRet"
+distribution_file = "crsp_distribution_ciz.csv"
+delisting_file = "crsp_delisting_ciz.csv"
+include_distributions_exactly_once = true
+include_delisting_outcomes_exactly_once = true
+never_filter_on_future_outcome_availability = true
+missing_performance_delisting_nyse_american = -0.30
+missing_performance_delisting_nasdaq = -0.55
+combined_return_floor = -1.0
+universal_missing_performance_delisting_stress = -1.0
+daily_delisting_flag_expected_from_vendor_but_absent = "DlyDelFlg"
+monthly_delisting_flag_expected_from_vendor_but_absent = "MthDelFlg"
+delisting_embedding_detection = "event_ledger_reconciliation_using_DelistingDt_DelDlyDt_DelRet_DelRetMissType_and_return_flags"
+exactly_once_status_before_reconciliation = "unproved"
+performance_related_delisting_code_set = "unresolved_hard_gate_before_returns"
+delisting_compounding_algorithm = "unresolved_hard_gate_before_returns"
+delisting_reconciliation_tolerance = "unresolved_hard_gate_before_returns"
+
+[units]
+crsp_capitalization_raw_unit = "thousand_usd"
+crsp_capitalization_to_nominal_usd_multiplier = 1000.0
+daily_volume_raw_unit = "shares"
+shares_outstanding_raw_unit = "thousand_shares"
+returns_raw_unit = "decimal_ratio"
+dollar_volume_formula = "DlyClose * DlyVol on valid liquidity sessions"
+execution_price_column = "DlyClose"
+screening_price_column = "DlyClose"
+screening_price_semantics = "last regular-session trade only"
+diagnostic_price_column = "DlyPrc"
+diagnostic_price_semantics = "last regular-session trade with bid-ask-average fallback"
+diagnostic_vendor_dollar_volume_column = "DlyPrcVol"
+missing_scheduled_execution_close_rule = "unresolved_hard_gate_before_backtest_execution"
+capitalization_semantics = "CRSP security-line capitalization; not asserted to be total issuer capitalization for ADRs"
+official_crsp_ciz_guide = "https://www.crsp.org/crsp_pdf/crsp-us-stock-indexes-databases-guide-flat-file-format-2-0/"
+official_guide_last_modified = "2026-04-27"
+require_empirical_unit_identity_checks = true
+
+[quality]
+fail_on_duplicate_canonical_security_day = true
+fail_on_duplicate_canonical_security_month = true
+fail_on_ambiguous_base_crsp_identity = true
+auxiliary_ambiguity_makes_family_missing_only = true
+require_daily_monthly_return_reconciliation = true
+require_distribution_reconciliation = true
+require_delisting_reconciliation = true
+require_calendar_boundary_receipts = true
+require_before_after_join_counts = true
+require_missingness_by_source_year = true
+require_structural_break_explanations = true
+
+[quality.duplicate_policy]
+phase_01_counts_are_adjacent_diagnostics_only = true
+require_full_global_key_profile = true
+classify_exact_and_conflicting_duplicates = true
+allow_exact_duplicate_collapse_only_with_receipt = true
+conflicting_duplicates_are_fatal = true
+blind_drop_duplicates_prohibited = true
+
+[quality.auxiliary_join_policy]
+crsp_row_count_must_not_change = true
+ambiguous_match_sets_auxiliary_family_missing = true
+missing_auxiliary_family_cannot_remove_crsp_row = true
+
+[deferred_contracts]
+compustat_format_filter = "must_be_resolved_before_accounting_features_without_excluding_valid_foreign_issuers"
+thirteen_f_amendment_folding = "must_be_resolved_before_13F_features"
+audit_analytics_company_bridge = "must_be_demonstrated_before_restatement_features"
+pastor_stambaugh_release_boundary = "must_receive_weekend_month_end_unit_tests_before_liquidity_features"
+
+[sealed_periods]
+development = "2000-01 through 2014-11 holding intervals, subject to history"
+validation = "2015-01 through 2019-11 holding intervals"
+embargo = "2014-12 and 2019-12 holding intervals at stage boundaries"
+primary_final = "2020-01 through 2025-08 holding intervals"
+core_extension = "2025-09 through 2025-11 complete; 2025-12 partial descriptive"

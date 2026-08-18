@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-equal-weight-missing-cost-gate-v1",
+  "status": "STAGE12_EQUAL_WEIGHT_MISSING_COST_GATE_AMENDMENT_AUTHORIZED",
+  "classification": "rule_restoring_economic_benchmark_execution_gate_correction",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_EQUAL_WEIGHT_MISSING_COST_GATE_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "6f8063509a88792cb22d4d446a3633dc040a8a53030f6b79ae7e5076a8850a95",
+    "status": "STAGE12_EQUAL_WEIGHT_MISSING_COST_GATE_AMENDMENT_AUTHORIZED"
+  },
+  "materiality_policy": {
+    "path": "artifacts/phase_06_final_test/ERROR_MATERIALITY_POLICY_20260727.json",
+    "sha256": "622d1335c540dfa84a4a396bade529e2e3632d1090a41ce66e1990dc582df03d",
+    "status": "THESIS_ERROR_MATERIALITY_POLICY_ACTIVE"
+  },
+  "prior_v10_authority": {
+    "policy_path": "configs/phase_06_final_test/stage_12_freeze_policy_v10.json",
+    "policy_sha256": "fb2d0f27020c1ec842fddbbb73bc6b1836088f5fef417a40974509d74827138f",
+    "file_inventory_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-4159858fb5e321c1ec45c3fd/file_inventory.json",
+    "file_inventory_sha256": "ad81241b4b6449c9133b5799578c91abd9cd786ae7175345b1cd52d7209dd3ba",
+    "file_count": 610,
+    "project_tree_sha256": "77a08b63b34e93a9750e0e820b6329b3817cbf50f5970999d0087a593cd6c032",
+    "freeze_id": "stage12-freeze-4159858fb5e321c1ec45c3fd",
+    "manifest_sha256": "b10f167acc83e7e2ce8ffa84e04ec2a586601c07140a6e2b6a03f3ea784eca4d",
+    "primary_pointer_sha256": "115e2f65e16b1b30bcdaab13bfe9c9c55e0af8d6d98a0b7a3564bab7d8012011",
+    "verification_id": "stage12-verify-c6b1a60f762b5e7d83de08bf",
+    "verification_report_sha256": "cfa64e383b9f75f85c893832d85825820476dc631a2cf6e7f2aadb92238119b9",
+    "verified_pointer_sha256": "f71ef82e9db06df23acf33562dd40f40d426930478706f7c36885d2de7bc4c2b",
+    "stage12_binding_sha256": "be92d206989305525d946ffb6093cc160bb5bdd88da671ddc00ef2338f586a03",
+    "stage13_approval_sha256": "23423442f51da1df76bee27e1c93054b710091a38e40bd120b415d6f4a98dfd6"
+  },
+  "incident_authorities": {
+    "resume3_failure": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_RESUME3_FAILURE_V10_BE92D206.json",
+      "sha256": "d0e4b76bf16bc2caa56e218b8af7159abb9dfaa0992e9b0a14104a6239112056",
+      "status": "STAGE13_RESUME3_FAILED_CLOSED_BEFORE_FIRST_ECONOMIC_CHECKPOINT"
+    },
+    "preflight": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_EQUAL_WEIGHT_MISSING_COST_PREFLIGHT_20260727.json",
+      "sha256": "08c43ef17fad63878f3c996a8f863f75039ba707a849d6adc5235e30d9e1e5cf",
+      "status": "STAGE13_EQUAL_WEIGHT_MISSING_COST_GATE_PREFLIGHT_COMPLETE"
+    }
+  },
+  "diagnosis": {
+    "affected_long_eligible_missing_adv_rows": 25,
+    "affected_distinct_permnos": 23,
+    "affected_holding_months": 19,
+    "january_2020_affected_rows": 2,
+    "all_affected_new_long_trade_allowed_false": true,
+    "optimized_strategy_problem_builder_already_enforces_gate": true,
+    "equal_weight_branch_omitted_gate": true,
+    "common_cost_engine_behavior_correct": true,
+    "same_v10_restart_would_repeat_failure": true,
+    "equal_weight_inherited_current_invalid_execution_or_cost_transitions": 24,
+    "missing_adv_with_current_risk_present": 22,
+    "missing_entry_close_with_current_risk_absent": 2,
+    "missing_entry_close_rows_requiring_inherited_beta_fallback": [
+      {
+        "holding_month": "2020-05",
+        "permno": 18662
+      },
+      {
+        "holding_month": "2022-03",
+        "permno": 12799
+      }
+    ]
+  },
+  "execution_gate_contract": {
+    "equal_weight_scoring_universe_identity_retained": true,
+    "new_or_increased_long_requires_long_eligible_open_trade_gate_and_valid_execution_cost_inputs": true,
+    "new_or_increased_long_requires_complete_finite_current_factor_betas_and_positive_finite_specific_variance": true,
+    "required_exit_is_excluded_from_executable_long": true,
+    "missing_execution_or_cost_inherited_long_exact_hold_required": true,
+    "frozen_inherited_trade_exactly_zero": true,
+    "frozen_hold_and_zero_trade_use_exact_equality_not_tolerance": true,
+    "residual_gross_equals_one_minus_frozen_long_gross": true,
+    "residual_gross_equal_across_executable_long_eligible_rows": true,
+    "frozen_gross_above_one_fails_closed": true,
+    "valid_cost_ineligible_or_gate_closed_inherited_position_may_liquidate": true,
+    "invalid_execution_or_cost_input_is_zero_capacity_regardless_of_entry_gate": true,
+    "frozen_inherited_exact_hold_with_missing_current_beta_uses_last_authenticated_inherited_beta": true,
+    "inherited_beta_fallback_may_not_authorize_new_or_increased_risk": true,
+    "nonzero_target_without_current_or_inherited_authenticated_beta_fails_closed": true,
+    "nonzero_trade_with_invalid_execution_or_cost_input_fails_closed": true,
+    "positive_adv_imputation_permitted": false,
+    "authenticated_row_drop_permitted": false,
+    "cost_guard_bypass_permitted": false,
+    "blocked_flat_rows_use_descriptive_blocked_candidate_class": true,
+    "candidate_counts_are_derived_from_executable_rows": true,
+    "new_risk_permitted_is_derived_from_executable_count_and_positive_residual": true,
+    "target_gross": 1.0
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 3,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/economic_kernel.py",
+        "pre_amendment_sha256": "e8698fce50883217f22c5a6404eacaa101eb750fb7092589a47e4cef8ba26ddf",
+        "post_amendment_sha256": "c0b57ad65e4c11b3836f195129f250d9e4c44be49e10d1bbf15b693f703937e0"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/publication.py",
+        "pre_amendment_sha256": "7b20de47a4d04e67e42f9140d7c59e522f36470994f88c3bd5340f6a3f880755",
+        "post_amendment_sha256": "14982491210ef1412d0a5c04b051a829e5f547ca0a6f91cfe74ed64a4ce715d7"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/production_runtime.py",
+        "pre_amendment_sha256": "f7ed29de71bd2b3731bc9e3bc6385414ce264bebb499f9faa3a4ddef3657e929",
+        "post_amendment_sha256": "5390d06e5220579dc2045ab67031521a3c94e7603ac3e945eaeb80d78375d75a"
+      }
+    ]
+  },
+  "focused_test_evidence": {
+    "tests_passed": 58,
+    "commands": [
+      ".venv/bin/python -m pytest -q tests/unit/test_final_test_economic_kernel.py",
+      ".venv/bin/python -m pytest -q tests/unit/test_final_test_publication.py",
+      ".venv/bin/python -m pytest -q tests/unit/test_final_test_production_runtime.py"
+    ],
+    "test_files": [
+      {
+        "path": "tests/unit/test_final_test_economic_kernel.py",
+        "pre_amendment_sha256": "9a9a1a7bbcbf3d1e7cb9f2e69b57c9416be29993a77a622d857594fd2ac9470e",
+        "post_amendment_sha256": "e0547f398444a20543b5784ca1716f271e78538c1f84a41443a6f20e88fb9217"
+      },
+      {
+        "path": "tests/unit/test_final_test_publication.py",
+        "pre_amendment_sha256": "782c498a2619a873f47f82b5e4c4011b5a6d38d78a97250f09048f4ead8e30c4",
+        "post_amendment_sha256": "97a4eeebd8900874eb75a572ede262ee03107e1d7e924e3c9da730b45d0e7cb7"
+      }
+    ],
+    "suite_counts": {
+      "economic_kernel": 29,
+      "publication": 14,
+      "production_runtime": 15
+    },
+    "unchanged_support_test_files": [
+      {
+        "path": "tests/unit/test_final_test_production_runtime.py",
+        "sha256": "3458d95cf8fae3bbb9401657dbcbcdc30894f348113c629a9db9163d2880b016"
+      }
+    ]
+  },
+  "access_disclosure": {
+    "normalized_decision_source_files_opened_by_preflight": 1,
+    "authenticated_score_frames_opened_by_preflight": 1,
+    "accepted_trade_cost_return_pnl_or_performance_files_opened": 0,
+    "economic_checkpoint_files_accepted": 0,
+    "stage12_v11_parent_or_final_payload_files_opened_required": 0
+  },
+  "checkpoint_reuse": {
+    "resume3_economic_checkpoint_count": 0,
+    "economic_checkpoint_reuse_available": false,
+    "v10_model_state_direct_reuse_permitted": false,
+    "fresh_v11_full_and_reduced_model_fits_required": 6,
+    "restart_boundary": "primary_full_2020-01_ordinal_1_predecessor_null"
+  },
+  "economic_boundary": {
+    "equal_weight_benchmark_outputs_may_change": true,
+    "change_required_to_restore_prespecified_common_execution_gate": true,
+    "models_scores_ranks_and_other_five_strategy_rules_changed": false,
+    "common_transaction_cost_model_changed": false,
+    "cost_input_transport_changed": false,
+    "stage1_through_stage11_retraining_required": false,
+    "outcome_months_accepted_before_failure": 0
+  },
+  "replacement_authority": {
+    "replacement_stage12_v11_identity_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_v10_stage13_approval_valid_for_v11": false,
+    "fresh_exact_binding_stage13_approval_required": true,
+    "standing_approval_permits_receipt_after_verification": true,
+    "additional_user_prompt_after_v11_verification_required": false,
+    "stage13_execution_authorized_now": false
+  }
+}

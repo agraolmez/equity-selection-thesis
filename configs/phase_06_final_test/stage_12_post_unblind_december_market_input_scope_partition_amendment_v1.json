@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "status": "STAGE12_DECEMBER_MARKET_INPUT_SCOPE_PARTITION_AMENDMENT_AUTHORIZED",
+  "amendment_id": "stage12-post-unblind-december-market-input-scope-partition-v1",
+  "purpose": "Restore the frozen 72-month decision-input contract by exposing only the exact 2025-12 entry-date market consumer snapshot before the decision barrier, while leaving predictors and return information capped at 2025-11-28 and leaving outcomes closed.",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_DECEMBER_MARKET_INPUT_SCOPE_PARTITION_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "b626fba569d16a00ee0235006f1cd66cd9c8f6021c94686e854643411a03313a",
+    "authorization_id": "stage12-december-market-input-scope-partition-amendment-authorization-20260727-v1",
+    "source_message_exact": "yes, please fix these types of mistakes beforehand",
+    "source_message_sha256": "70c78b3f5dfe084851ae8072eaeb393f7c84c18c2380f920f4f80759b4013627",
+    "replacement_stage13_approval_granted": false
+  },
+  "blocker_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_13_DECEMBER_MARKET_INPUT_BLOCKER_20260727.json",
+    "sha256": "82a08d940c3b7f6f54bdbd4bc3e6690754f8298c70e4ce57ad366ea80528329b",
+    "classification": "DETERMINISTIC_FROZEN_DECISION_OUTCOME_SCOPE_PARTITION_CONTRADICTION",
+    "failed_table": "final_market_inputs",
+    "missing_holding_month": "2025-12",
+    "decision_source_receipts_present": 431,
+    "decision_source_receipts_expected": 432
+  },
+  "prior_frozen_authority": {
+    "policy": {
+      "path": "configs/phase_06_final_test/stage_12_freeze_policy_v4.json",
+      "sha256": "3bbb7eebbe200f477feaf688feb5a5faf1b92684c35d7ee1e70a2421df5481e3"
+    },
+    "file_inventory": {
+      "path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-8641d95070c80372cfa2ad02/file_inventory.json",
+      "sha256": "87200b90aba352f761fddb61036f2888814067544d175b9855f64a6c727a6928",
+      "file_count": 595,
+      "tree_sha256": "f56241945d55fce817dd2ee25104c1b8714dbb778a11005a03a7e92842a862e4"
+    },
+    "primary_pointer_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_8641D950.json",
+      "sha256": "72f1f01a00ea2789db5131172f1a8609da4295a00b27ee919b09528fca60debf",
+      "freeze_id": "stage12-freeze-8641d95070c80372cfa2ad02"
+    },
+    "verified_pointer_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_8641D950.json",
+      "sha256": "a333c7026c014a4a030a9a8f3548fb0fc2516f5786f4ec1023a9755a93db2c74",
+      "verification_id": "stage12-verify-63585b576f3b60749d35956b"
+    },
+    "stage13_approval_archive": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_8641D950.json",
+      "sha256": "2bc69b11d224f7915d0c63687daf1fa4f6212e97d725ed3602c6f8ef940277ea",
+      "payload_sha256": "7948764f27166ebbc36ccacf9b9084eb5697b1e52ae0820c758e8dc8472311b8",
+      "stage12_binding_sha256": "4eba843d99bd2dd193a83383a66d34d430c0675da9e81e04fc0812a7e041eee8"
+    },
+    "failed_context": {
+      "context_sha256": "082c42dd57e8077f47cf409a12aefd8ec2ee98b732839496a320f8f84abeb66e",
+      "context_document_sha256": "f7cf334957a8eb7c29d4b80250a4763cb1a42385977b1d9396d79ffee72982a7"
+    }
+  },
+  "decision_outcome_scope_partition": {
+    "holding_month_count": 72,
+    "first_holding_month": "2020-01",
+    "last_holding_month": "2025-12",
+    "last_signal_date": "2025-11-28",
+    "exact_partial_entry_date": "2025-12-01",
+    "last_exit_date": "2025-12-31",
+    "decision_predictor_and_return_maximum_date": "2025-11-28",
+    "entry_market_projection_exact_dates": [
+      "2025-12-01"
+    ],
+    "entry_market_projection_consumer_columns_only": true,
+    "entry_market_projection_return_columns_requested": [],
+    "entry_market_projection_labels_outcomes_accounting_or_performance_opened": false,
+    "outcome_market_earliest_permitted_date": "2025-11-29",
+    "outcome_sources_open_before_complete_decision_barrier": false,
+    "calendar_dates_schemas_keys_features_models_and_economic_rules_changed": false
+  },
+  "preflight_and_completion_contract": {
+    "provider_preflight_runs_before_checkpoint_store_construction": true,
+    "provider_preflight_requires_exact_72_month_calendar": true,
+    "provider_preflight_authenticates_all_six_frozen_calendar_anchors": true,
+    "provider_preflight_requires_non_circular_decision_sources": true,
+    "provider_preflight_opens_outcome_sources": false,
+    "family_commit_requires_built_month_set_equal_pending_month_set": true,
+    "partial_or_missing_family_build_must_fail_before_first_fragment_commit": true,
+    "invented_empty_or_synthetic_2025_12_receipt_forbidden": true
+  },
+  "source_transition": {
+    "exact_changed_existing_runtime_member_count": 2,
+    "exact_added_runtime_member_count": 1,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/final_source_replay.py",
+        "pre_amendment_sha256": "ebecc9d341331cb7e6dc0b15cd45bc522ed7dda5796608542b53412c8ccc28c6",
+        "post_amendment_sha256": "73539ebe6b569cfacc94bce78c246766551bfbe174a2f8a8aabc4b126ba96a4f"
+      },
+      {
+        "path": "src/portfolio_bot/validation/validation_market_extension.py",
+        "pre_amendment_sha256": "1bd9a4487351f1ac3337f2d3216f946ba553ee43a6006353ed1a019d7ad09446",
+        "post_amendment_sha256": "b54e382705935b90c25372c4fc24cce7013da2beda741ae378e20113977e50f6"
+      },
+      {
+        "path": "src/portfolio_bot/final_test/source_checkpoint_rebind.py",
+        "pre_amendment_sha256": null,
+        "post_amendment_sha256": "7216eb7b08b4cd0886e9ffff6497ed9a5b49c9013310c63e36a8f4e2d2d688bb"
+      }
+    ]
+  },
+  "decision_checkpoint_rebind": {
+    "path": "configs/phase_06_final_test/stage_13_decision_checkpoint_rebind_v1.json",
+    "sha256": "178db1903c087cb53b5f6deb34b6df85da92ae66e55af2124ecf63a69f9fec27",
+    "rebind_id": "stage13-decision-checkpoint-v4-to-v5-rebind-v1",
+    "checkpoint_count": 431,
+    "receipt_count": 431,
+    "total_rows": 1522126,
+    "total_payload_bytes": 505136766,
+    "fresh_receipts_change_only_context_sha256": true,
+    "parent_access_read_only": true,
+    "hardlinks_symlinks_and_aliases_forbidden": true,
+    "post_completion_state_verify_only": true,
+    "completion_receipt_published_last": true,
+    "parent_decision_market_cache_reuse_mode": "authenticated_read_only_direct_parent_paths",
+    "parent_decision_market_cache_typed_receipt_sha256": "1b287e50a9e7d2eb2ed7bfa2c4e84bf8dc52185899d7fda6bed6949589fc248e",
+    "parent_decision_market_cache_return_receipt_sha256": "3ef1a4c8a71d3f2ec8a2980da66fb9fe21ec23c845b71680f9ad7a7ddb90f619",
+    "parent_decision_market_cache_fallback_rebuild_on_authentication_failure": false,
+    "stage12_tests_synthetic_only": true
+  },
+  "non_economic_boundary": {
+    "measurement_scope": "guarded_stage12_publication_and_verification_subprocesses_only",
+    "failed_context_or_sealed_parent_mutated": false,
+    "guarded_parent_checkpoint_payload_files_opened": 0,
+    "guarded_raw_payload_files_opened": 0,
+    "guarded_final_period_payload_files_opened": 0,
+    "guarded_final_period_rows_read": 0,
+    "guarded_stage13_outcome_or_economic_payload_files_opened": 0,
+    "guarded_economic_or_outcome_months_executed": 0,
+    "guarded_final_forecasts_weights_trades_or_pnl_created": 0,
+    "scientific_or_economic_result_informed_choice": false,
+    "prior_unguarded_regression_access_disclosure": {
+      "historical_access_detected": true,
+      "operator_turn_history_minimum_known_whole_file_test_executions": 4,
+      "persisted_execution_receipt_count": 0,
+      "complete_low_level_open_event_count_recorded": false,
+      "distinct_raw_payload_paths_opened": 1,
+      "raw_payload_paths": [
+        "/Users/agraemirolmez/Desktop/Thesis/raw/crsp_delisting_ciz.csv"
+      ],
+      "raw_physical_lines_read_per_execution": 2,
+      "raw_record_period": "not_reauthenticated_unknown",
+      "distinct_stage11_interim_payload_paths_opened": 3,
+      "stage11_interim_payload_paths": [
+        "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_day_return_staging.parquet",
+        "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_day.parquet",
+        "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_month_return_staging.parquet"
+      ],
+      "stage11_logical_filter": {
+        "permno": 16493,
+        "start_date": "2016-11-01",
+        "end_date": "2016-11-30"
+      },
+      "stage11_monthly_logical_rows_per_execution": 1,
+      "other_logical_row_physical_row_group_and_byte_counts": "not_recorded",
+      "stage13_parent_checkpoint_payload_paths_opened": 0,
+      "stage13_final_context_opened": false,
+      "stage13_outcome_sources_opened": false,
+      "final_artifacts_created": 0,
+      "payloads_mutated": false,
+      "used_to_choose_december_rule_feature_model_or_economic_parameter": false,
+      "corrective_action": "whole_file_selector_replaced_by_exact_synthetic_nodes_under_the_stage12_access_guard"
+    }
+  },
+  "replacement_authority": {
+    "replacement_stage12_freeze_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_stage13_approval_valid_for_replacement_identity": false,
+    "renewed_explicit_stage13_approval_bound_to_exact_replacement_required": true,
+    "renewed_stage13_approval_granted_by_this_amendment": false,
+    "stage13_parent_context_open_authorized_now": false,
+    "stage13_execution_authorized_now": false,
+    "stop_and_ask_before_restarting_stage13": true
+  },
+  "tests": {
+    "required_files": [
+      "tests/unit/test_final_source_builder.py",
+      "tests/unit/test_stage11_validation_market_extension.py",
+      "tests/unit/test_stage13_decision_checkpoint_rebind.py",
+      "tests/unit/test_stage12_final_freeze.py"
+    ],
+    "old_boundary_missing_december_rejected": true,
+    "exact_entry_projection_and_72_month_completion_accepted": true,
+    "provider_preflight_and_partial_build_fail_before_commit": true,
+    "checkpoint_rebind_is_synthetic_only_during_stage12": true
+  }
+}

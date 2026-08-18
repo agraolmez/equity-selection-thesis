@@ -1,0 +1,17 @@
+{
+  "code_identity": "dab475636cfcaa4f049995de0c57c3095e0746690d5429c15b379d548eb6b4eb",
+  "config": "/Users/agraemirolmez/Documents/Thesis/configs/research_v6/selector_step_01.json",
+  "config_sha256": "841b5f23ca9dcbfa497bdef772fcee2dffb588e304c7c87743ad65aa30a62e2d",
+  "diagnostics": true,
+  "input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd",
+  "optimizer_run": false,
+  "portfolio_constructed": false,
+  "schema": "research_v6_selector_run_manifest_v1",
+  "status": "COMPLETE",
+  "targets": [
+    "capm",
+    "ff5_momentum",
+    "long_net",
+    "short_net"
+  ]
+}

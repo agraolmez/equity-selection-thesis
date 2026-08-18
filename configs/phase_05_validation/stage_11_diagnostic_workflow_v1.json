@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase05-stage11-diagnostic-workflow-v1",
+  "stage": 11,
+  "methodology_version": "v1",
+  "status": "FROZEN_PERFORMANCE_BLIND_DIAGNOSTIC_WORKFLOW",
+  "scope": {
+    "first_holding_month": "2015-01",
+    "last_holding_month": "2019-11",
+    "complete_holding_month_count": 59,
+    "stage12_or_2020_plus_access_permitted": false,
+    "portfolio_methodology_changed": false
+  },
+  "problem_bundle": {
+    "save_before_any_solver_call": true,
+    "independent_reopen_before_any_solver_call": true,
+    "active_qualifying_strategy_ids": [
+      "ensemble_hybrid_primary",
+      "ensemble_rank_challenger",
+      "elastic_net_hybrid_challenger"
+    ],
+    "nonqualifying_strategy_rule": "persist_elastic_net_problem_and_authenticated_inactive_receipts_for_primary_and_rank",
+    "allocation_problem_init_fields_required": true,
+    "monthly_problem_diagnostics_required": true,
+    "rank_entry_boundaries_required": true,
+    "source_identity_and_opening_state_digest_required": true
+  },
+  "allocation_diagnostics": {
+    "attempt_every_active_strategy": true,
+    "catch_exception_not_base_exception": true,
+    "aggregate_failures_after_all_active_attempts": true,
+    "inactive_strategy_receipts_are_explicit": true,
+    "accounting_permitted_if_any_strategy_failed": false,
+    "strategy_labeled_failures_required": true,
+    "allocator_or_economic_rule_changed": false
+  },
+  "accounting_diagnostics": {
+    "attempt_every_active_strategy": true,
+    "aggregate_failures_after_all_active_attempts": true,
+    "shared_post_problem_failures_are_authenticated": true,
+    "checkpoint_permitted_if_any_downstream_step_failed": false
+  },
+  "pending_dust_normalization": {
+    "policy_id": "stage11-pending-subcent-dust-retirement-v1",
+    "application_scope": "uniform_all_strategies_all_months_post_accounting_boundary",
+    "absolute_position_value_dollars_strict_upper_bound": 0.01,
+    "pending_no_mark_count_must_be_positive": true,
+    "nav_preserved_bit_for_bit": true,
+    "position_value_set_to_exact_zero": true,
+    "mark_continuity_identity_removed": true,
+    "synthetic_trade_permitted": false,
+    "transaction_cost_permitted": false,
+    "return_or_price_imputation_permitted": false,
+    "corporate_action_or_terminal_retirement_permitted": false,
+    "pending_position_at_or_above_one_cent_permitted": false,
+    "deterministic_private_evidence_required": true
+  },
+  "checkpoint": {
+    "save_after_successful_month": true,
+    "commit_after_all_strategy_accounting": true,
+    "commit_after_corporate_action_and_retirement_updates": true,
+    "commit_after_execution_input_gate": true,
+    "independent_reopen_before_checkpoint_is_authoritative": true,
+    "mutable_latest_pointer_used": false,
+    "resume_from_highest_contiguous_authenticated_checkpoint": true,
+    "partial_month_can_advance_pointer": false,
+    "checkpoint_authorizes_final_results": false,
+    "private_state_contains_accounting_values": true,
+    "private_state_file_mode": "0600",
+    "directory_mode": "0700"
+  },
+  "resume_compatibility": {
+    "required_identity_fields": [
+      "methodology_sha256",
+      "preflight_sha256",
+      "gate_b_sha256",
+      "execution_input_authority_sha256",
+      "validation_calendar_sha256",
+      "checkpoint_state_schema_sha256",
+      "allocation_problem_schema_sha256",
+      "accounting_transition_code_sha256",
+      "diagnostic_workflow_sha256"
+    ],
+    "execution_input_authority_binds_outcomes_selection_scores_calibration_and_inventories": true,
+    "producer_implementation_sha256_recorded": true,
+    "producer_implementation_sha256_is_automatic_resume_blocker": false,
+    "producer_implementation_sha256_must_match_before_final_clean_run": true,
+    "changed_economic_methodology_input_accounting_or_state_identity_requires_restart_from_january": true,
+    "incompatible_diagnostic_root_must_be_archived_whole_and_reverified": true,
+    "solver_only_numerical_correction_may_resume_when_protected_identities_are_unchanged": true,
+    "solver_only_numerical_correction_requires_permanent_regression": true
+  },
+  "performance_blinding": {
+    "public_payload_rule": "exact_schema_per_payload_plus_forbidden_key_tokens",
+    "forbidden_public_field_fragments": [
+      "return",
+      "pnl",
+      "profit",
+      "loss",
+      "nav",
+      "sharpe",
+      "alpha",
+      "beta",
+      "drawdown",
+      "exposure",
+      "turnover",
+      "cost",
+      "objective",
+      "weight",
+      "trade"
+    ],
+    "performance_fields_emitted_required": 0,
+    "diagnostic_publication_or_results_report_permitted": false
+  },
+  "regression_promotion": {
+    "every_real_failure_requires_permanent_fixture": true,
+    "fixture_must_bind_failure_report": true,
+    "fixture_must_reproduce_original_failure": true,
+    "fixture_must_verify_corrected_behavior": true,
+    "permanent_registry_is_append_only_across_compatibility_changes": true,
+    "every_registry_artifact_is_authenticated_even_if_historical": true,
+    "completion_mapping_contains_only_failures_observed_in_current_compatibility": true,
+    "unresolved_failure_permitted_in_completion_seal": false
+  },
+  "diagnostic_completion": {
+    "required_completed_months": 59,
+    "required_unresolved_failure_count": 0,
+    "all_failure_regressions_must_pass": true,
+    "performance_fields_emitted": 0,
+    "completion_seal_authorizes_performance_viewing": false
+  },
+  "final_clean_execution": {
+    "requires_diagnostic_completion_seal": true,
+    "requires_exact_current_producer_implementation_sha256": true,
+    "must_ignore_diagnostic_checkpoints": true,
+    "must_start_2015_01_from_all_cash": true,
+    "must_cover_all_59_months_in_one_process": true,
+    "must_publish_only_after_independent_verification": true,
+    "diagnostic_entry_may_reauthenticate_static_forecast_and_selection_authority": true,
+    "diagnostic_resume_must_not_retrain_models_or_replay_completed_portfolio_months": true
+  }
+}

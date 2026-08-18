@@ -1,0 +1,199 @@
+{
+  "schema": "research_v6_8_production_feature_sources_v2",
+  "strategy_id": "research_v6_8_final_paper",
+  "created_on": "2026-08-16",
+  "purpose": "Fail-closed source contract for rebuilding the frozen 318-column V6 feature schema for prospective paper trading.",
+  "frozen_feature_registry": {
+    "path": "/Users/agraemirolmez/Desktop/Thesis/processed/research_v6/model_features_v2/feature_registry.parquet",
+    "sha256": "68a2f4de0251fa598f7263b8314c71a8cdb159f0d5b4b45fa2dcafd74afdd20a",
+    "feature_count": 318,
+    "encoded_feature_count": 850,
+    "build_identity": "01c2e95ca6b928446b3524f1c621db01cc6285858ca39ac7646441d1265de2d7",
+    "missing_policy": "retain_full_universe_then_common_encoder_zero_plus_missing_indicator"
+  },
+  "production_policy": {
+    "signal_cutoff": "official signal-date close in America/New_York",
+    "no_future_information": true,
+    "no_complete_case_filter": true,
+    "same_feature_names_and_transformations_required": true,
+    "silent_provider_substitution_forbidden": true,
+    "provider_bridge_requires_overlap_parity": true,
+    "yfinance_primary_allowed": false,
+    "yfinance_allowed_uses": [
+      "non-authoritative reconciliation",
+      "operator-facing sanity check"
+    ],
+    "paper_orders_blocked_until_data_gate_passes": true
+  },
+  "production_universe": {
+    "historical_authority": "CRSP/Compustat point-in-time eligible universe",
+    "candidate_live_bridge": "Alpaca active US assets plus LSEG identifiers, shares, prices, and classifications",
+    "status": "BRIDGE_REQUIRES_OVERLAP_PARITY",
+    "requirements": [
+      "one stable issuer/security identifier map with symbol-history support",
+      "the frozen price, market-cap, liquidity, trading-history, exchange, and issuer-line screens",
+      "no filtering on news, analyst, options, or fundamental coverage"
+    ]
+  },
+  "feature_groups": [
+    {
+      "id": "lseg_analyst_cam",
+      "label": "LSEG analyst expectations and CAM",
+      "ordinal_ranges": [[159, 247], [307, 314]],
+      "feature_count": 97,
+      "refresh_class": "SAME_SOURCE_REFRESH_PATH",
+      "primary_source": "LSEG Data Library through the signed-in Workspace desktop session",
+      "current_state": "CURRENT_SAMPLE_ENTITLEMENT_VERIFIED",
+      "fallback": "missing values plus frozen missing indicators; never Yahoo analyst fields",
+      "action": "extend the historical CUSIP9/RIC downloader into a new prospective monthly lineage and authenticate the full eligible universe"
+    },
+    {
+      "id": "alpaca_related_news",
+      "label": "Alpaca/Benzinga related news",
+      "ordinal_ranges": [[248, 303]],
+      "feature_count": 56,
+      "refresh_class": "SAME_SOURCE_REFRESH_PATH",
+      "primary_source": "Alpaca Historical News API",
+      "current_state": "API_CREDENTIALS_NOT_PRESENT_IN_PROCESS",
+      "fallback": "source unavailable flag; do not reinterpret unavailable coverage as no news",
+      "action": "configure rotated credentials through environment variables and append immutable article/manifest months"
+    },
+    {
+      "id": "sec_filings_events",
+      "label": "SEC filings and event recency",
+      "ordinal_ranges": [[87, 102]],
+      "feature_count": 16,
+      "refresh_class": "SAME_SOURCE_REFRESH_PATH",
+      "primary_source": "SEC EDGAR submissions and filing index APIs",
+      "current_state": "PUBLIC_API_AVAILABLE",
+      "fallback": "missing when issuer mapping or filing history is unavailable",
+      "action": "materialize a point-in-time CIK-to-security bridge and preserve filing acceptance timestamps"
+    },
+    {
+      "id": "pastor_stambaugh_structural_missing",
+      "label": "Pastor-Stambaugh liquidity",
+      "ordinal_ranges": [[157, 158]],
+      "feature_count": 2,
+      "refresh_class": "PRESERVE_FROZEN_STRUCTURAL_MISSINGNESS",
+      "primary_source": "verified historical Pastor-Stambaugh source ending in 2014",
+      "current_state": "MISSING_THROUGHOUT_V6_MODEL_PERIOD_BY_CONTRACT",
+      "fallback": "keep both economic values missing and activate their frozen missing indicators",
+      "action": "none for the frozen model; a new proxy would require retraining a successor model"
+    },
+    {
+      "id": "market_price_liquidity",
+      "label": "Price, return distribution, size, liquidity, and market volatility",
+      "ordinal_ranges": [[1, 26], [34, 53], [155, 156], [304, 306]],
+      "feature_count": 51,
+      "refresh_class": "PROVIDER_BRIDGE_REQUIRES_PARITY",
+      "primary_source": "LSEG adjusted end-of-day pricing, volume, shares, and market-cap fields; Alpaca broker bars only for execution reconciliation",
+      "historical_source": "CRSP daily security data and daily market factors",
+      "current_state": "FORMULAS_EXIST_BUT_PROVIDER_PARITY_NOT_CERTIFIED",
+      "fallback": "leave affected fields missing if their provider bridge fails",
+      "action": "rebuild the frozen formulas on an overlapping 2024-2025 window and pass monthly cross-sectional rank/distribution parity before use"
+    },
+    {
+      "id": "valuation_fundamentals",
+      "label": "Valuation and fundamentals",
+      "ordinal_ranges": [[54, 82], [315, 318]],
+      "feature_count": 33,
+      "refresh_class": "PROVIDER_BRIDGE_REQUIRES_PARITY",
+      "primary_source": "LSEG point-in-time fundamentals with SEC Company Facts as reconciliation",
+      "historical_source": "Compustat point-in-time fundamentals joined to CRSP market values",
+      "current_state": "FIELD_DEFINITION_AND_CURRENCY_PARITY_NOT_CERTIFIED",
+      "fallback": "leave unmatched definitions missing; never mix currencies or fiscal periods",
+      "action": "freeze field mappings, reporting lags, currency conversions, and overlap parity tests"
+    },
+    {
+      "id": "institutional_ownership",
+      "label": "Institutional ownership",
+      "ordinal_ranges": [[83, 86]],
+      "feature_count": 4,
+      "refresh_class": "PROVIDER_BRIDGE_REQUIRES_PARITY",
+      "primary_source": "SEC 13F holdings plus LSEG shares outstanding",
+      "historical_source": "point-in-time 13F holdings plus CRSP shares",
+      "current_state": "PUBLIC_HOLDINGS_AVAILABLE_WITH_REGULATORY_LAG",
+      "fallback": "missing until the filing is public and the CUSIP/security bridge is unambiguous",
+      "action": "enforce the 45-day filing deadline/actual acceptance time and validate denominator parity"
+    },
+    {
+      "id": "security_identity",
+      "label": "Security identity and categories",
+      "ordinal_ranges": [[103, 109]],
+      "feature_count": 7,
+      "refresh_class": "PROVIDER_BRIDGE_REQUIRES_PARITY",
+      "primary_source": "LSEG identifiers/classifications, Alpaca assets, and SEC registrant metadata",
+      "historical_source": "CRSP/Compustat security and issuer identity",
+      "current_state": "LIVE_PERMNO_PERMCO_BRIDGE_NOT_YET_FROZEN",
+      "fallback": "unknown frozen category rather than guessed identity",
+      "action": "build date-effective ticker, CUSIP, RIC, CIK, issuer-family, exchange, ADR, domicile, and SIC2 mapping"
+    },
+    {
+      "id": "optionmetrics",
+      "label": "Options flow, open interest, coverage, and vendor historical volatility",
+      "ordinal_ranges": [[110, 135]],
+      "feature_count": 26,
+      "refresh_class": "PROVIDER_BRIDGE_REQUIRES_PARITY",
+      "primary_source": "LSEG OPRA contract discovery, end-of-day option volume/open interest, underlying volume, and LSEG or internally calculated historical volatility",
+      "historical_source": "WRDS OptionMetrics IvyDB US",
+      "candidate_bridge": "LSEG OPRA and equity history through the signed-in Workspace/Data Library session",
+      "current_state": "LSEG_OPRA_CURRENT_AND_HISTORY_SAMPLE_ENTITLEMENT_VERIFIED_PROVIDER_PARITY_PENDING",
+      "fallback": "frozen missing-value path if the LSEG aggregate-feature bridge fails parity; never relabel a nonequivalent proxy as OptionMetrics",
+      "action": "rebuild the exact 26 frozen formulas from LSEG contract-level volume/open interest, coverage, underlying volume, and historical volatility; pass 2024-2025 OptionMetrics overlap parity before model use"
+    },
+    {
+      "id": "factor_dependent",
+      "label": "Factor betas, idiosyncratic volatility, and aggregate factor state",
+      "ordinal_ranges": [[27, 33], [136, 154]],
+      "feature_count": 26,
+      "refresh_class": "CAUSAL_NOWCAST_OR_MISSING_POLICY_REQUIRED",
+      "primary_source": "Ken French official factors after publication; Treasury/FRED for cash-rate reconciliation",
+      "historical_source": "publicly available FF5, momentum, and risk-free observations under frozen availability dates",
+      "current_state": "OFFICIAL_SAME_MONTH_FACTORS_NOT_AVAILABLE_AT_SIGNAL_CLOSE",
+      "fallback": "use only last officially published factors and leave current-dependent fields missing unless a separately frozen internal factor nowcast passes parity",
+      "action": "choose and freeze the causal live policy before first signal; never backfill later-released factors into a contemporaneous paper decision"
+    }
+  ],
+  "environment": {
+    "alpaca_key_environment": "APCA_API_KEY_ID",
+    "alpaca_secret_environment": "APCA_API_SECRET_KEY",
+    "lseg_desktop_application": "/Applications/Refinitiv Workspace.app",
+    "lseg_python_environment": "/opt/anaconda3/envs/finance",
+    "wrds_credential_markers": ["~/.pgpass", "~/.wrds", "WRDS_USERNAME"],
+    "lseg_capability_receipt": "/Users/agraemirolmez/Documents/Thesis/artifacts/research_v6_8/lseg_production_probe/20260816/receipt.json",
+    "lseg_market_parity_receipt": "/Users/agraemirolmez/Documents/Thesis/artifacts/research_v6_8/lseg_market_parity/20260817/receipt.json",
+    "lseg_market_derived_parity_receipt": "/Users/agraemirolmez/Documents/Thesis/artifacts/research_v6_8/lseg_market_derived_parity/20260817/feature_summary_receipt.json"
+  },
+  "legacy_local_sources": {
+    "alpaca_news_directory": "/Users/agraemirolmez/Desktop/Thesis/raw/research_v6/alpaca_news",
+    "lseg_directory": "/Users/agraemirolmez/Desktop/Thesis/raw/research_v6/lseg",
+    "lseg_usd_directory": "/Users/agraemirolmez/Desktop/Thesis/raw/research_v6/lseg_usd_v1",
+    "crsp_daily": "/Users/agraemirolmez/Desktop/Thesis/raw/crsp_daily_ciz.csv",
+    "ccm_daily": "/Users/agraemirolmez/Desktop/Thesis/raw/ccm_security_daily.csv",
+    "optionmetrics_volume": "/Users/agraemirolmez/Desktop/Thesis/raw/optionmetrics_option_volume.csv",
+    "sec_filing_index": "/Users/agraemirolmez/Desktop/Thesis/raw/sec_filings_index.csv"
+  },
+  "parity_gate": {
+    "evaluation_window": "shared 2024-01 through 2025-08 signal months",
+    "required_scope": "eligible-stock cross section for every bridged feature and every monthly signal",
+    "minimum_monthly_rank_correlation": 0.95,
+    "maximum_median_absolute_rank_difference": 0.05,
+    "maximum_material_missingness_difference": 0.02,
+    "categorical_exact_match_rate": 0.99,
+    "decision_rule": "all material bridge checks pass before the frozen model may consume the bridge; otherwise preserve supported missingness or retrain a new provider-compatible model"
+  },
+  "official_sources": {
+    "alpaca_stock_bars": "https://docs.alpaca.markets/us/v1.4.2/reference/stockbars",
+    "alpaca_market_data_faq": "https://docs.alpaca.markets/us/docs/market-data-faq",
+    "alpaca_news": "https://docs.alpaca.markets/us/docs/historical-news-data",
+    "alpaca_options": "https://docs.alpaca.markets/us/docs/historical-option-data",
+    "lseg_data_library": "https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python/tutorials/content-tutorials/pricing/realtime-snapshot",
+    "lseg_opra": "https://www.lseg.com/en/data-catalogue/derivatives/pricing/exchange-derivatives-options-price-reporting-authority-opra",
+    "lseg_fundamentals_estimates": "https://developers.lseg.com/en/article-catalog/article/fundamentals-estimates-dcf",
+    "lseg_usage_limits": "https://developers.lseg.com/en/article-catalog/article/the-data-library-for-python-maximum-usage-reference-guide",
+    "sec_edgar_api": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+    "sec_fair_access": "https://www.sec.gov/about/developer-resources",
+    "ken_french_library": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html",
+    "yfinance_readme": "https://github.com/ranaroussi/yfinance/blob/main/README.md"
+  }
+}

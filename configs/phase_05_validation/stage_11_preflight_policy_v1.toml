@@ -1,0 +1,142 @@
+schema_version = 1
+policy_id = "phase05-stage11-preflight-policy-v1"
+contract_id = "phase05-stage11-preflight-v1"
+stage = 11
+purpose = "hash_bound_no_outcome_validation_runner_preflight"
+
+[scientific_authority]
+methodology_source = "outputs/methodology_v1_source.md"
+methodology_source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+methodology_freeze = "outputs/methodology_v1_freeze.json"
+methodology_freeze_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[physical_rules]
+path = "configs/phase_05_validation/stage_11_preflight_rules_v1.json"
+sha256 = "0f7810424dfb968c1e02f0d74169c3a19ce833366c940a95d89a33ee16a541c9"
+required_rules_id = "phase05-stage11-preflight-rules-v1"
+
+[preflight_approval]
+path = "configs/phase_05_validation/stage_11_preflight_approval_v1.json"
+required_receipt_id = "stage11-preflight-approval-20260722"
+required_scope = "stage11_implementation_no_outcome_preflight"
+approved = true
+receipt_binds_this_policy_sha256 = true
+receipt_hash_is_bound_in_the_preflight_contract_and_manifest = true
+
+[upstream]
+verified_pointer = "artifacts/phase_04_models/LATEST_ALLOCATOR_VERIFIED.json"
+verified_pointer_sha256 = "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2"
+required_build_id = "phase04-allocator-3f10636b529b111e9d78368e"
+required_verification_id = "verify-c2d5b39a731dc397"
+required_status = "VERIFIED_PASSED"
+primary_manifest = "artifacts/phase_04_models/allocator_builds/phase04-allocator-3f10636b529b111e9d78368e/manifest.json"
+primary_manifest_sha256 = "18913c20a3adcf1db498038d3b26913fceb62097d59dde2329387ebdafcdbeba"
+stage10_policy = "configs/phase_04_models/allocation_policy_v1.toml"
+stage10_policy_sha256 = "96c74f9a424bdf2b85f87f82c09ff326808e9cf5a85a8099743e848b17361add"
+stage10_rules = "configs/phase_04_models/allocation_build_rules_v1.json"
+stage10_rules_sha256 = "a5113e0bdd2d62429312c81d78d5f06e55573bddb775881eb90826c24dcfd851"
+unregistered_input_permitted = false
+hash_bypass_permitted = false
+symlinked_path_permitted = false
+
+[scope]
+implementation_permitted = true
+no_outcome_preflight_permitted = true
+synthetic_fixture_execution_permitted = true
+development_only_parity_check_permitted = true
+validation_calendar_metadata_permitted = true
+validation_predictor_payload_access_permitted = true
+validation_predictor_access_requires_guarded_column_and_date_allowlist = true
+validation_predictor_may_include_forward_returns_or_labels = false
+validation_outcome_or_forward_return_access_permitted = false
+real_validation_weights_or_trades_permitted = false
+real_validation_pnl_or_performance_permitted = false
+validation_model_or_ensemble_selection_permitted = false
+final_2020_2025_access_permitted = false
+stage12_or_later_execution_permitted = false
+
+[runtime]
+minimum_python = "3.11"
+numpy = "2.1.3"
+pandas = "2.2.3"
+pyarrow = "19.0.0"
+torch = "2.7.1"
+cvxpy = "1.9.2"
+cvxpylayers = "1.2.0"
+clarabel = "0.11.1"
+scs = "3.2.11"
+diffcp = "1.1.9"
+
+[calendar]
+first_holding_month = "2015-01"
+last_holding_month = "2019-11"
+complete_holding_months = 59
+first_signal_date = "2014-12-31"
+first_entry_date = "2015-01-02"
+first_exit_date = "2015-02-02"
+last_signal_date = "2019-10-31"
+last_entry_date = "2019-11-01"
+last_exit_date = "2019-12-02"
+embargoed_holding_month = "2019-12"
+first_prohibited_final_entry = "2020-01-02"
+
+[access_broker]
+permitted_roles = [
+  "repository_metadata",
+  "authenticated_stage10_metadata",
+  "synthetic_fixture",
+  "development_parity_fixture",
+  "validation_calendar_metadata",
+  "validation_predictor_payload"
+]
+prohibited_roles = [
+  "validation_outcome_payload",
+  "validation_forward_return",
+  "real_validation_weight",
+  "real_validation_trade",
+  "real_validation_pnl_or_performance",
+  "final_period_predictor_or_outcome",
+  "stage12_or_later_payload"
+]
+direct_storage_reader_outside_broker_permitted = false
+read_then_filter_later_period_payload_permitted = false
+
+[execution_boundary]
+preflight_entrypoint = "scripts/build_stage_11_preflight.py"
+independent_verification_entrypoint = "scripts/verify_stage_11_preflight.py"
+validation_entrypoint = "scripts/run_stage_11_validation.py"
+preflight_may_call_validation_entrypoint = false
+validation_requires_separate_unblind_approval_receipt = true
+validation_requires_verified_preflight_pointer = true
+final_period_may_be_opened_in_stage11 = false
+
+[terminal_accounting]
+last_validation_interval_ends_after_the_2019_12_02_close_return = true
+forced_artificial_liquidation_at_sample_end = false
+terminal_positions_are_marked_to_market_without_a_nonexistent_next_rebalance = true
+terminal_liquidation_cost_sensitivity_may_be_reported_later = true
+
+[publication]
+artifact_root = "artifacts/phase_05_validation"
+build_directory = "stage_11_preflight_builds"
+verification_directory = "stage_11_preflight_verifications"
+primary_pointer = "LATEST_STAGE_11_PREFLIGHT_PRIMARY.json"
+verified_pointer = "LATEST_STAGE_11_PREFLIGHT_VERIFIED.json"
+build_prefix = "stage11-preflight-"
+verification_prefix = "verify-"
+primary_bundle_members = ["manifest.json", "preflight_report.json", "preflight_checks.parquet", "_SUCCESS.json"]
+verification_bundle_members = ["verification_report.json", "verification_checks.parquet", "differences.json", "_SUCCESS.json"]
+pointer_replaced_last = true
+outcome_or_performance_payload_permitted = false
+
+[counters_required_zero]
+validation_outcome_rows_read = 0
+final_period_rows_read = 0
+real_validation_weights_created = 0
+real_validation_trades_created = 0
+real_validation_pnl_or_performance_rows_created = 0
+
+[counters_required_audited]
+validation_predictor_rows_read = true
+validation_predictor_maximum_signal_date = "2019-10-31"
+validation_predictor_forward_return_or_label_columns_read = 0

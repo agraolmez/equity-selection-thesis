@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "rules_id": "phase05-stage11-validation-data-rules-v1",
+  "status": "frozen_scaffold_before_validation_data_materialization",
+  "scope": {
+    "internal_context_signal_date": "2014-11-28",
+    "first_published_signal_date": "2014-12-31",
+    "last_published_signal_date": "2019-10-31",
+    "published_signal_count": 59,
+    "first_prohibited_signal_date": "2019-11-29",
+    "first_prohibited_final_entry_date": "2020-01-02",
+    "context_signal_may_be_published": false,
+    "validation_labels_or_outcomes_permitted": false,
+    "forward_return_columns_permitted": false,
+    "final_period_rows_permitted": false
+  },
+  "calendar": {
+    "calendar_build_id": "calendar-ae2e4ba4a280d66e",
+    "calendar_verification_id": "verify-7dc718e9be47873c",
+    "rebalance_calendar_relative_path": "interim/phase_02_canonical_panel/phase02-crsp-b03263a970e52fbd/calendar/calendar-ae2e4ba4a280d66e/rebalance_calendar.parquet",
+    "rebalance_calendar_sha256": "cc03002bb9c349c07f14d699bf3667fd4ccbcd012f20579b1ce1c22dd19f2591",
+    "validation_stage_value": "validation",
+    "required_holding_month_first": "2015-01",
+    "required_holding_month_last": "2019-11",
+    "required_last_exit_date": "2019-12-02"
+  },
+  "features": {
+    "frozen_stage06_build_id": "phase03-features-fda21f0e51b8276c10246f9f",
+    "frozen_stage06_verification_id": "verify-350915782d3ef12e",
+    "audit_column_count": 7,
+    "economic_feature_count": 163,
+    "physical_column_count": 170,
+    "feature_order_source": "configs/phase_03_features/feature_registry_v1.json",
+    "lineage_schema_source": "src/portfolio_bot/features/feature_store_contract.py",
+    "family_order": [
+      "price_trends_path",
+      "risk_return_distribution",
+      "size_liquidity_trading_frictions",
+      "valuation_fundamentals",
+      "ownership_filings_events_segments",
+      "optionmetrics",
+      "aggregate_state"
+    ],
+    "lineage_row_rule": "published_feature_rows_times_163",
+    "lineage_key": ["signal_date", "permno", "feature_name"],
+    "point_in_time_rules": {
+      "maximum_observation_date_must_not_exceed_signal_date": true,
+      "maximum_public_availability_date_must_not_exceed_signal_date": true,
+      "present_value_after_stale_after_date_permitted": false,
+      "missing_value_lineage_dates_must_be_null": true
+    },
+    "frozen_category_vocabulary_must_be_reused": true,
+    "validation_categories_may_expand_vocabulary": false,
+    "frozen_model_support_must_be_reused": true,
+    "segment_features_remain_inactive_when_frozen_development_support_is_zero": true
+  },
+  "risk_cost": {
+    "formula_authority": "configs/phase_04_models/risk_cost_build_rules_v1.json",
+    "factor_order": ["mktrf", "smb", "hml", "rmw", "cma", "umd"],
+    "factor_covariance_cells_per_signal": 36,
+    "required_factor_covariance_rows": 2124,
+    "risk_input_rows_are_long_eligible_feature_rows": true,
+    "risk_audit_rows_equal_feature_rows": true,
+    "post_cutoff_return_rows_used": 0,
+    "post_cutoff_factor_rows_used": 0,
+    "label_payload_rows_read": 0,
+    "risk_and_cost_history_may_end_on_each_signal_date": true,
+    "returns_after_each_signal_date_permitted": false
+  },
+  "forbidden_columns": {
+    "exact": [
+      "forward_return",
+      "future_return",
+      "residual_return",
+      "realized_return",
+      "outcome",
+      "target",
+      "label",
+      "portfolio_weight",
+      "trade",
+      "pnl",
+      "performance"
+    ],
+    "case_insensitive_tokens": [
+      "forward_return",
+      "future_return",
+      "realized_return",
+      "residual_return",
+      "outcome",
+      "target",
+      "label",
+      "pnl",
+      "performance"
+    ]
+  },
+  "published_roles": {
+    "validation_predictor_payload": "validation_feature_store_raw.parquet",
+    "validation_feature_lineage_price_trends_path": "feature_lineage_price_trends_path.parquet",
+    "validation_feature_lineage_risk_return_distribution": "feature_lineage_risk_return_distribution.parquet",
+    "validation_feature_lineage_size_liquidity_trading_frictions": "feature_lineage_size_liquidity_trading_frictions.parquet",
+    "validation_feature_lineage_valuation_fundamentals": "feature_lineage_valuation_fundamentals.parquet",
+    "validation_feature_lineage_ownership_filings_events_segments": "feature_lineage_ownership_filings_events_segments.parquet",
+    "validation_feature_lineage_optionmetrics": "feature_lineage_optionmetrics.parquet",
+    "validation_feature_lineage_aggregate_state": "feature_lineage_aggregate_state.parquet",
+    "validation_risk_cost_audit": "validation_risk_cost_audit.parquet",
+    "validation_risk_cost_inputs": "validation_risk_cost_inputs.parquet",
+    "validation_factor_covariance": "validation_factor_covariance.parquet",
+    "validation_risk_cost_month_summary": "validation_risk_cost_month_summary.parquet"
+  },
+  "manifest": {
+    "manifest_name": "manifest.json",
+    "required_payload_receipt_fields": [
+      "role",
+      "path",
+      "sha256",
+      "size_bytes",
+      "rows",
+      "row_groups",
+      "schema_sha256",
+      "minimum_signal_date",
+      "maximum_signal_date"
+    ],
+    "must_bind_policy_rules_registry_calendar_stage06_stage08_and_code": true,
+    "must_report_context_rows_published_as_zero": true,
+    "must_report_label_outcome_forward_and_final_rows_read_as_zero": true,
+    "primary_manifest_authorizes_validation_outcome_access": false,
+    "independent_verification_required": true
+  },
+  "development_parity": {
+    "required_before_validation_materialization": true,
+    "scope_first_signal_date": "2000-01-31",
+    "scope_last_signal_date": "2014-10-31",
+    "compare_exact_raw_schema_order_keys_values_and_lineage": true,
+    "reference_build_id": "phase03-features-fda21f0e51b8276c10246f9f",
+    "reference_verification_id": "verify-350915782d3ef12e",
+    "reference_feature_rows": 1263048,
+    "reference_lineage_rows": 205876824,
+    "parity_failure_is_fatal": true
+  },
+  "materialization": {
+    "must_use_new_stage11_scope_aware_adapters": true,
+    "frozen_stage02_through_stage08_source_files_may_be_modified": false,
+    "pure_formula_modules_may_be_reused_unchanged": [
+      "src/portfolio_bot/features/crsp_features.py",
+      "src/portfolio_bot/features/fundamental_features.py",
+      "src/portfolio_bot/features/ownership_event_features.py",
+      "src/portfolio_bot/features/optionmetrics_features.py",
+      "src/portfolio_bot/features/aggregate_state_features.py",
+      "src/portfolio_bot/risk_cost/risk_math.py",
+      "src/portfolio_bot/risk_cost/cost_math.py"
+    ],
+    "context_signal_purpose": "exact_one_month_optionmetrics_lag_only",
+    "raw_source_rows_may_not_be_read_by_contract_or_verifier": true
+  }
+}

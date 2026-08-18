@@ -1,0 +1,35 @@
+{
+  "schema": "research_v6_8_prospective_portfolio_v1",
+  "strategy_id": "research_v6_8_final_paper",
+  "purpose": "Build one current frozen V6.1 monthly target book and its 1.80x V6.8 Alpaca paper translation.",
+  "frozen_bindings": {
+    "portfolio_config": {"path": "configs/research_v6_1/portfolio_step_02.json", "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"},
+    "translation_config": {"path": "configs/research_v6_1/alpaca_paper_translation.json", "sha256": "7a85da08ca8ce6869d67256d0a38e1159ce912f5f4cf02bd01ff6a1acc7e500d"},
+    "v6_8_result_sha256": "a6592d65a30dcaae27f1465e3c56baa7bd8899a7d53f57b69bea0d67f0200454",
+    "historical_rows": {"path": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache/rows.parquet", "sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056"},
+    "historical_factors": {"path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_factors.parquet", "sha256": "edc86f1b9bf9a8de5987598a8b8206a74b4eee362196c2acbbb7bfdb379b75f2"},
+    "historical_selector_root": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3",
+    "selected_score_column": "ensemble__cam_free_mlp_plus_cam__equal",
+    "selected_short_score_column": "ensemble__correlation_reduced_xgb_mlp__equal"
+  },
+  "formation": {
+    "policy": "return_plus_ff5_momentum",
+    "candidate_fraction_each_side": 0.20,
+    "ff5_gate": {"long_expected_alpha_strictly_above": 0.0, "short_expected_alpha_strictly_below": 0.0}
+  },
+  "portfolio_overrides": {"maximum_position_weight": 0.015},
+  "paper_translation": {"raw_multiplier": 2.05, "maximum_starting_gross": 1.80, "maximum_absolute_position_weight": 0.030751},
+  "broker_candidate_gate": {
+    "new_long_requires": ["active", "tradable", "marginable", "known_sic2_industry"],
+    "new_short_requires": ["active", "tradable", "marginable", "shortable", "easy_to_borrow", "known_sic2_industry"],
+    "existing_untradeable_position_blocks": true,
+    "unmanaged_position_blocks": true
+  },
+  "schedule": {
+    "timezone": "America/New_York",
+    "signal_must_be_final_trading_session_of_prior_calendar_month": true,
+    "entry_must_be_first_following_trading_session": true,
+    "signal_cutoff": "official_close",
+    "technical_smoke_never_executable": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "identity": {
+    "code_identity": "2e422abd519f7c46af9761e1169c306a60a761e096b5491c30e0a224d161b838",
+    "config_sha256": "d55a1db689f9eeb15c77f0ed9afae733f95177d0ad9d5049ad9e9f87a07bba82",
+    "identity_sha256": "a26834cc840df872ddfa8cdb23da87e41e94daba5dc8b29eaa5958af43073605",
+    "prepared_position_days_sha256": "2ef39b0755c5af351755fda773112c4ec034de3ac4fd453936d465b823161e96",
+    "v6_7_result_sha256": "c27ee110190c86b0c79aa84630561407ba3871fae1a1df46994a30c9534463bb"
+  },
+  "report": "RESULT.md",
+  "result": "result.json",
+  "schema": "research_v6_8_daily_reoptimization_run_v1",
+  "status": "COMPLETE"
+}

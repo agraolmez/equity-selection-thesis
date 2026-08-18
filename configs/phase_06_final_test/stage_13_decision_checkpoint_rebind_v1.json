@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "status": "STAGE13_DECISION_CHECKPOINT_V4_TO_V5_REBIND_AUTHORIZED",
+  "rebind_id": "stage13-decision-checkpoint-v4-to-v5-rebind-v1",
+  "authority_path": "configs/phase_06_final_test/stage_13_decision_checkpoint_rebind_v1.json",
+  "purpose": "Authenticate and byte-copy the exact 431 completed decision-source checkpoint pairs from the failed-closed Stage 13 v4 replay context into a fresh v5-bound replay context without changing any scientific field. The absent parent final_market_inputs/2025-12 checkpoint is outside this rebind and must be built under the replacement rule.",
+  "repair_authorization": {
+    "source_message_exact": "yes, please fix these types of mistakes beforehand",
+    "source_message_sha256": "70c78b3f5dfe084851ae8072eaeb393f7c84c18c2380f920f4f80759b4013627",
+    "authorized_scope": "narrow_stage12_december_market_input_scope_partition_repair_and_prerequisite_checkpoint_preservation",
+    "stage13_relaunch_authorized": false
+  },
+  "parent_context": {
+    "context_sha256": "082c42dd57e8077f47cf409a12aefd8ec2ee98b732839496a320f8f84abeb66e",
+    "context_json_relative_path": "context.json",
+    "context_json_sha256": "f7cf334957a8eb7c29d4b80250a4763cb1a42385977b1d9396d79ffee72982a7",
+    "raw_snapshot_id": "raw-v1-c1ab523852daf9e5",
+    "raw_file_identities_sha256": "cdea009462faaa6150ff24c76b57728dbb1a8d42cc496ba12632ae66b2e050f8",
+    "stage12_binding_sha256": "4eba843d99bd2dd193a83383a66d34d430c0675da9e81e04fc0812a7e041eee8",
+    "approval_payload_sha256": "7948764f27166ebbc36ccacf9b9084eb5697b1e52ae0820c758e8dc8472311b8"
+  },
+  "replacement_context_rules": {
+    "raw_identity_must_match": true,
+    "stage12_binding_must_differ": true,
+    "stage13_approval_must_differ": true,
+    "fresh_stage13_approval_required": true,
+    "prior_stage13_approval_valid": false
+  },
+  "parent_decision_market_cache": {
+    "reuse_mode": "authenticated_read_only_direct_parent_paths",
+    "relative_path": "formula_work/decision_market",
+    "typed_relative_path": "typed",
+    "typed_receipt_sha256": "1b287e50a9e7d2eb2ed7bfa2c4e84bf8dc52185899d7fda6bed6949589fc248e",
+    "returns_relative_path": "returns",
+    "return_receipt_sha256": "3ef1a4c8a71d3f2ec8a2980da66fb9fe21ec23c845b71680f9ad7a7ddb90f619",
+    "legacy_market_extension_source_sha256": "1bd9a4487351f1ac3337f2d3216f946ba553ee43a6006353ed1a019d7ad09446",
+    "reconciliation_source_sha256": "18e8209005ecb4b2672bb4e62567e61a3920abe4a346104c2abe2163690a1872",
+    "return_adapter_source_sha256": "d5cc2046f607782625d3509a3f8acb3d8d63a78fdbfe8d43f3f60b25b63f1603",
+    "scope": {
+      "extension_start": "2019-11-01",
+      "last_signal": "2025-11-28",
+      "last_exit": "2025-12-31",
+      "first_context_signal": "2019-10-31"
+    },
+    "safety": {
+      "selected_subtrees_read_only": true,
+      "selected_subtrees_reauthenticated_before_reuse": true,
+      "selected_subtrees_identical_before_after": true,
+      "unselected_siblings_not_opened": true,
+      "hardlinks_symlinks_special_nodes_forbidden": true,
+      "typed_and_return_builder_semantics_unchanged": true,
+      "entry_projection_change_semantically_disjoint": true,
+      "replacement_cache_copy_authorized": false,
+      "fallback_rebuild_on_authentication_failure": false,
+      "interrupted_siblings_may_not_be_opened_or_quarantined": true
+    }
+  },
+  "checkpoint_contract": {
+    "checkpoint_id": "stage13-final-month-checkpoint-v1",
+    "receipt_schema_version": 1,
+    "receipt_status": "FINAL_FORMULA_MONTH_CHECKPOINT_COMPLETE",
+    "receipt_change_fields": [
+      "context_sha256"
+    ]
+  },
+  "source_families": {
+    "final_calendar": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-12",
+      "checkpoint_count": 72,
+      "total_rows": 72,
+      "arrow_schema_sha256": "c0afd5a16e473dc795d904a7164115fb047b468246bd430ec0385ed558f75139"
+    },
+    "final_predictors": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-12",
+      "checkpoint_count": 72,
+      "total_rows": 658818,
+      "arrow_schema_sha256": "a8b8f2259def4c550f9954add769291d4a212cee165ed45121612186963de401"
+    },
+    "final_risk_cost": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-12",
+      "checkpoint_count": 72,
+      "total_rows": 658818,
+      "arrow_schema_sha256": "e307b0301c2c40f65e327f3953705967edcccda41c6a61bef54cfaf2932f5b41"
+    },
+    "final_factor_covariance": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-12",
+      "checkpoint_count": 72,
+      "total_rows": 2592,
+      "arrow_schema_sha256": "80b6119f0c2d9a650286239d29a73df28b0b6653de507321d935bc0b9eac2dfa"
+    },
+    "final_risk_cost_month_summary": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-12",
+      "checkpoint_count": 72,
+      "total_rows": 72,
+      "arrow_schema_sha256": "9502c043b3b8d26c490a25757b684e6f4a9b7e1430df8ba0c68100cd0adc13"
+    },
+    "final_market_inputs": {
+      "first_holding_month": "2020-01",
+      "last_holding_month": "2025-11",
+      "checkpoint_count": 71,
+      "total_rows": 201754,
+      "arrow_schema_sha256": "0c0eb7926bce55e55ad0eee5ad17413612b7d602a1a89f98df72093af4023a40"
+    }
+  },
+  "aggregate_pins": {
+    "checkpoint_count": 431,
+    "receipt_count": 431,
+    "total_rows": 1522126,
+    "total_payload_bytes": 505136766,
+    "total_receipt_bytes": 261343,
+    "receipt_file_set_sha256": "b7e68e822e342cb64751a1e52ff76baa07d5b431236d28b954afa5660ba7edb3",
+    "payload_content_set_sha256": "86ba5293bf94e3c9813518bfc94e4c2403e87d28d453f7f1d350ee0d3cd7122a",
+    "logical_content_set_sha256": "d838de02d32ef39e78964bd75f9b5f2e1e72694496d3c886cb24cdb20c0819c3",
+    "aggregate_method": "sha256_sorted_relative_path_nul_binary_digest_v1"
+  },
+  "excluded_parent_state": {
+    "final_market_inputs_2025_12_present": false,
+    "decision_source_barrier_present": false,
+    "outcome_source_checkpoint_count": 0,
+    "economic_checkpoint_count": 0,
+    "excluded_state_may_not_be_synthesized_by_rebind": true
+  },
+  "safety": {
+    "parent_access_read_only": true,
+    "parent_tree_identical_before_after": true,
+    "payload_copy_bytes_exact": true,
+    "hardlinks_symlinks_aliases_forbidden": true,
+    "fresh_receipt_changes_only_context_sha256": true,
+    "idempotent_states": [
+      "neither_payload_nor_receipt_copy_then_publish",
+      "payload_without_receipt_authenticate_then_publish_receipt",
+      "payload_and_receipt_reauthenticate",
+      "receipt_without_payload_fail_closed"
+    ],
+    "post_completion_state_verify_only": true,
+    "completion_receipt_published_last": true,
+    "stage12_tests_synthetic_only": true,
+    "production_parent_payloads_may_not_be_opened_during_stage12_validation": true
+  }
+}

@@ -1,0 +1,553 @@
+schema_version = 1
+policy_name = "crsp_typed_backbone_policy"
+policy_version = "v1"
+status = "locked_preproduction_before_typed_backbone_build"
+purpose = "Freeze a lossless typed CRSP development backbone while physically quarantining unreconciled returns and preserving every downstream research gate as closed."
+
+[schema]
+path = "configs/phase_02_canonicalization/crsp_typed_backbone_schema_v1.json"
+sha256 = "62ad603c88798212f60ea4ec9796bffbf65008c6cfd87a08239cddf057e31391"
+schema_id = "crsp-typed-backbone-schema-v1"
+required_status = "locked_preproduction_before_typed_backbone_build"
+
+[upstream.methodology]
+freeze_id = "methodology_v1_preimplementation_2026-07-14"
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[upstream.phase_01]
+raw_snapshot_id = "raw-v1-c1ab523852daf9e5"
+freeze_id = "phase01-freeze-9241d6d2adcd7a88"
+freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+
+[upstream.database_relocation]
+relocation_id = "database-root-relocation-2026-07-15-v1"
+receipt = "data/database_relocation_v1.json"
+receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+required_status = "verified_same_frozen_files_at_new_root"
+historical_paths_config_sha256 = "f628e2263da59774aff10d480628ba3cebdca555e48765c2507ec6795be9c61c"
+current_paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+old_database_root = "/Users/agraemirolmez/Desktop/database"
+new_database_root = "/Users/agraemirolmez/Desktop/Thesis"
+
+[upstream.phase_02]
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+source_contract = "configs/phase_02_sources/crsp_backbone.toml"
+source_contract_sha256 = "ee9be29c6e10572c65c3e35cab162431363c67e059fc17c233666f1dc2b7fdb0"
+
+[upstream.contract]
+contract_id = "phase02-crsp-b03263a970e52fbd"
+verification_id = "verify-6640223bff5ef6bc"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json"
+verified_pointer_sha256 = "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+contract_json_sha256 = "040b5c7196bbb4efc34e4b6c3798c5bafed0787f9ee8dbd9ab9b45f5f3f4302c"
+required_status = "verified_passed"
+
+[upstream.calendar]
+build_id = "calendar-ae2e4ba4a280d66e"
+verification_id = "verify-7dc718e9be47873c"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+primary_manifest_sha256 = "cc3c460db3ccf445b96a95a0ca649a2b51c505590324934cddfa54c865b9edd1"
+required_status = "verified_passed"
+
+[upstream.daily_monthly_profile]
+config = "configs/phase_02_canonicalization/crsp_development_v1.toml"
+config_sha256 = "645b6ff51480d4e3cbcad313e3488c5a8d45df272ca4af6e7010e870296b4c35"
+build_id = "crsp-profile-45422a7d1d2b38ca"
+verification_id = "verify-c0621f6d96316f0f"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_DEVELOPMENT_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "cc716a5461432f24f722fc613be628446bbaa1fed53734367d7b61d32cfed17d"
+primary_manifest_sha256 = "98b215946cdace652fa101248a06d85f99b11e063a3b602cb769f0be2e3830ca"
+required_status = "verified_passed"
+
+[upstream.supporting_profile]
+config = "configs/phase_02_canonicalization/crsp_supporting_sources_development_v1.toml"
+config_sha256 = "6117495f76106a9a89922c1d2a01d23c824e9e94f783ffd8a8290a99bec11cf1"
+build_id = "crsp-support-5fce388e8edbc75c437977e7"
+verification_id = "verify-fa14980826f5b235"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+verified_pointer_sha256 = "1df31283660a65f5c00774b6a9940c2bdedca68207341272abe0620d393162ba"
+primary_manifest_sha256 = "4f73f43fdb95bcdc843d519b46b57b71659d145145ef4846154b1e324f840f39"
+required_status = "verified_passed"
+
+[upstream.numeric_unit_profile]
+policy = "configs/phase_02_canonicalization/crsp_numeric_unit_policy_v1.toml"
+policy_sha256 = "9d979aa016bdf6acc90a98b2168e4d1b15cdeb120715168d55a3bb0466d377be"
+profile_config = "configs/phase_02_canonicalization/crsp_numeric_unit_profile_development_v1.toml"
+profile_config_sha256 = "99469fbd0e2dc6046b45490cad4253942ae11b22b28ed9886e878cdf4e1958c1"
+empirical_lock = "configs/phase_02_canonicalization/crsp_numeric_unit_empirical_lock_v1.json"
+empirical_lock_sha256 = "fb643406c4bb36c7f28bb5bf07e625117db8d44c14599512693fc4de2f498b2a"
+build_id = "crsp-numeric-4eed299feb8f1e39b3cd71bc"
+verification_id = "verify-6af8a21e0fe27590"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_NUMERIC_UNIT_VERIFIED.json"
+verified_pointer_sha256 = "b308bcd53656cebdf79c88dd687ee67e40baa606abd5c1153ed8d72c1c0b8aaa"
+primary_manifest_sha256 = "90ab2b723c1cb3a306893bcdac7f3eb0090e32babb74a8be2c6294fcaa2831cc"
+independent_check_sha256 = "624097a0004dc48c6662dfa8bc49aa3ef04373f200332c03d2920e96b0229caf"
+required_status = "verified_passed"
+
+[upstream.identity_empirical_lock]
+path = "configs/phase_02_canonicalization/crsp_typed_backbone_identity_empirical_lock_v1.json"
+sha256 = "f369b9eccf3dbfb9741fcbaa0e0a6a0376d3585c0acb04c2443c94d090a33406"
+lock_id = "crsp-typed-identity-joins-v1"
+required_status = "locked_after_aggregate_only_development_discovery"
+
+[scope]
+scope_name = "pre_validation_typed_crsp_development_and_embargo_quality_slice"
+start_date = "2000-01-01"
+development_end_date = "2014-11-30"
+quality_end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+development_period_segment = "development_2000_2014_11"
+december_period_segment = "embargo_2014_12"
+december_2014_is_quality_and_boundary_reconciliation_only = true
+validation_or_final_test_access_permitted = false
+date_first_gating_required = true
+full_file_scope_date_may_be_decoded_only_to_route_rows = true
+whole_file_byte_hash_and_row_count_are_authentication_only_exceptions = true
+monolithic_csv_syntax_decoding_is_operational_not_analytical = true
+post_2014_non_date_fields_may_be_inspected = false
+post_2014_non_date_fields_may_be_aggregated_counted_sampled_or_published = false
+raw_security_keys_permitted_only_in_external_interim_tables = true
+raw_security_keys_or_row_examples_may_be_published_in_quality_or_project_artifacts = false
+
+[scope.boundary_2014_12_01]
+date = "2014-12-01"
+methodology_role = "exit_date_of_the_2014_11_holding_interval"
+permitted_market_role = "terminal_market_observation_for_the_2014_11_holding_interval"
+permitted_return_role_after_exactly_once_gate = "terminal_return_observation_for_the_2014_11_holding_interval_only"
+does_not_create_a_2014_12_development_holding_interval = true
+does_not_permit_december_features_model_fitting_selection_portfolios_or_performance = true
+return_use_remains_quarantined_until_exactly_once_gate = true
+reason = "Methodology v1 makes the November 2014 outcome ending on 2014-12-01 eligible; the December embargo prohibits a December holding outcome, not the terminal observation of the November interval."
+
+[source_access.daily]
+filename = "crsp_daily_ciz.csv"
+sha256 = "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9"
+size_bytes = 12740735288
+full_file_rows = 49886907
+scope_date_column = "DlyCalDt"
+scope_rule = "retain iff DlyCalDt is inside the inclusive scope"
+
+[source_access.monthly]
+filename = "crsp_monthly_ciz.csv"
+sha256 = "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf"
+size_bytes = 561296199
+full_file_rows = 2423212
+scope_date_column = "MthCalDt"
+observation_date_column = "MthPrcDt"
+scope_rule = "retain iff MthCalDt is inside the inclusive scope"
+
+[source_access.identity]
+filename = "crsp_names_ciz.csv"
+sha256 = "ee791429169b380b5fcacd896d76a16795861ce42d703d0d188d2c4fc9c26e24"
+size_bytes = 26876522
+full_file_rows = 191048
+scope_rule = "retain an interval iff SecInfoEndDt >= scope_start and SecInfoStartDt <= quality_end"
+interval_endpoints_are_not_clipped = true
+
+[source_access.shares]
+filename = "crsp_shares_outstanding_ciz.csv"
+sha256 = "b66cb7f4b4d2e51b9cd79cad9306911267da35d6c521caa7f15426dc02e2e966"
+size_bytes = 120698952
+full_file_rows = 2241129
+scope_rule = "retain an interval iff ShrEndDt >= scope_start and ShrStartDt <= quality_end"
+interval_endpoints_are_not_clipped = true
+
+[table_roles]
+consumer_tables = [
+  "crsp_security_day",
+  "crsp_security_month_crosscheck",
+  "crsp_identity_interval",
+  "crsp_shares_interval",
+]
+quarantined_return_tables = [
+  "crsp_security_day_return_staging",
+  "crsp_security_month_return_staging",
+]
+consumer_tables_may_contain_return_values_flags_or_duration_fields = false
+return_staging_tables_may_be_read_by_consumer_feature_model_optimizer_or_backtest_code = false
+trading_calendar_is_consumed_from_verified_upstream_not_rebuilt = true
+rebalance_calendar_is_consumed_from_verified_upstream_not_rebuilt = true
+distribution_and_delisting_event_tables_are_deferred_to_exactly_once_gate = true
+stock_header_is_qa_only_and_not_materialized = true
+
+[authority]
+daily_market_fields_source = "crsp_daily_ciz.csv"
+daily_conditional_type_source = "crsp_daily_ciz.csv"
+historical_identity_and_classification_source = "crsp_names_ciz.csv"
+effective_dated_shares_and_adr_flag_source = "crsp_shares_outstanding_ciz.csv"
+monthly_role = "crosscheck_only_never_daily_calendar_or_primary_return_source"
+current_stock_header_historical_use_prohibited = true
+daily_and_monthly_embedded_descriptors_are_source_prefixed_audit_fields_only = true
+us_incorporation_flag_is_not_an_eligibility_filter = true
+eligible_share_types_remain_for_later_universe = ["NS", "AD"]
+share_type_and_shares_adr_flag_are_distinct_fields = true
+vendor_capitalization_is_security_line_capitalization = true
+depositary_ratio_reconstruction_permitted = false
+permco_issuer_cap_reconstruction_permitted = false
+
+[availability]
+daily_observation_date = "crsp_security_day.calendar_date"
+daily_public_availability_rule = "usable only after calendar_date close"
+monthly_axis_date = "crsp_security_month_crosscheck.calendar_month"
+monthly_observation_date = "crsp_security_month_crosscheck.observation_date"
+monthly_public_availability_rule = "usable only after nonblank observation_date close"
+monthly_blank_observation_date_is_unavailable = true
+monthly_calendar_axis_may_substitute_for_observation_date = false
+identity_interval_rule = "inclusive start_date through end_date"
+shares_interval_rule = "inclusive start_date through end_date"
+signal_date_is_not_materialized_in_this_normalized_backbone = true
+future_engineered_rows_must_store_observation_public_availability_and_signal_dates = true
+future_public_availability_date_must_not_exceed_signal_date = true
+
+[typing]
+exact_schema_required = true
+schema_column_order_required = true
+source_numeric_parse_engine = "arbitrary_precision_Decimal"
+binary_float_may_parse_or_decide_a_typed_value = false
+prices_quotes_and_returns_type = "decimal128(38,6)"
+capitalization_thousand_usd_type = "decimal128(38,2)"
+price_volume_usd_type = "decimal128(38,1)"
+derived_dollar_volume_type = "decimal128(38,6)"
+identifiers_counts_volume_and_shares_type = "int64"
+dates_type = "date32"
+categoricals_and_text_type = "utf8"
+categorical_blank_string_is_preserved = true
+literal_n_slash_a_is_preserved_as_value = true
+trim_whitespace = false
+normalize_case = false
+normalize_null_tokens = false
+numeric_blank_becomes_null = true
+optional_date_blank_becomes_null = true
+invalid_nonblank_coercion_permitted = false
+cusip_sic_and_naics_are_strings = true
+
+[units]
+daily_and_monthly_price_and_quote = "usd_per_share"
+daily_and_monthly_returns = "decimal_ratio"
+daily_and_monthly_capitalization_raw = "thousand_usd"
+capitalization_to_nominal_usd_multiplier = 1000
+daily_and_monthly_volume = "shares"
+daily_and_monthly_price_volume = "usd"
+shares_outstanding_raw = "thousand_shares"
+shares_outstanding_to_nominal_shares_multiplier = 1000
+screening_price_source = "crsp_security_day.close_usd_per_share"
+diagnostic_price_source = "crsp_security_day.diagnostic_price_usd_per_share"
+screening_dollar_volume_formula = "close_usd_per_share * volume_shares"
+vendor_price_volume_may_replace_screening_dollar_volume = false
+
+[canonicalization.daily]
+source = "crsp_daily_ciz.csv"
+raw_key = ["PERMNO", "DlyCalDt"]
+canonical_key = ["permno", "calendar_date"]
+retained_rows = 26785087
+exact_duplicate_groups = 6413
+duplicate_surplus_rows = 6994
+conflicting_duplicate_groups = 0
+output_rows = 26778093
+collapse_only_all_field_exact_rows = true
+conflicting_groups_are_fatal = true
+source_order_is_not_a_tiebreaker = true
+final_key_must_be_unique = true
+sort_order = ["permno", "calendar_date"]
+
+[canonicalization.monthly]
+source = "crsp_monthly_ciz.csv"
+raw_key = ["PERMNO", "MthCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+canonical_key = ["permno", "calendar_month"]
+retained_rows = 1299612
+rows_after_exact_raw_key_collapse = 1285279
+exact_raw_key_duplicate_groups = 9688
+exact_raw_key_duplicate_surplus_rows = 14333
+effective_interval_candidate_groups = 982
+candidate_group_size = 2
+output_rows = 1284297
+first_stage_collapse_only_all_field_exact_rows = true
+conflicting_raw_key_groups_are_fatal = true
+candidate_selection_rule = "select the unique row satisfying SecInfoStartDt <= MthPrcDt <= SecInfoEndDt; the same row must uniquely contain MthCalDt"
+candidate_selection_applies_only_when_post_collapse_canonical_group_size_exceeds_one = true
+singleton_canonical_groups_pass_through_without_interval_selection = true
+blank_monthly_price_date_is_permitted_only_for_singleton_canonical_groups = true
+price_and_calendar_date_must_select_same_row = true
+conditional_type_or_trading_status_may_break_tie = false
+source_order_is_not_a_tiebreaker = true
+final_key_must_be_unique = true
+sort_order = ["permno", "calendar_month"]
+
+[canonicalization.identity]
+source = "crsp_names_ciz.csv"
+key = ["permno", "start_date", "end_date"]
+output_rows = 65602
+unique_permnos = 15555
+duplicate_key_groups = 0
+contiguous_edges = 50047
+overlap_edges = 0
+gap_edges = 0
+interval_bounds_are_inclusive = true
+inverted_or_overlapping_intervals_are_fatal = true
+information_interval_outside_security_lifetime_rows = 8416
+information_interval_outside_security_lifetime_is_diagnostic_not_row_filter = true
+sort_order = ["permno", "start_date", "end_date"]
+
+[canonicalization.shares]
+source = "crsp_shares_outstanding_ciz.csv"
+key = ["permno", "start_date", "end_date"]
+output_rows = 1090812
+unique_permnos = 15326
+duplicate_key_groups = 0
+overlap_edges = 0
+gap_edges = 0
+interval_bounds_are_inclusive = true
+inverted_or_overlapping_intervals_are_fatal = true
+sort_order = ["permno", "start_date", "end_date"]
+
+[canonicalization.return_split]
+daily_consumer_and_return_staging_keys_must_be_identical = true
+monthly_consumer_and_return_staging_keys_must_be_identical = true
+daily_consumer_rows = 26778093
+daily_return_staging_rows = 26778093
+monthly_consumer_rows = 1284297
+monthly_return_staging_rows = 1284297
+one_to_one_split_conservation_is_hard = true
+no_return_payload_may_remain_in_consumer_tables = true
+
+[joins.daily_to_shares]
+left_table = "crsp_security_day"
+right_table = "crsp_shares_interval"
+join_rule = "equal permno and inclusive start_date <= calendar_date <= end_date"
+population_rows = 26778093
+one_match_rows = 26262718
+zero_match_rows = 515375
+multiple_match_rows = 0
+left_row_count_must_not_change = true
+zero_matches_retain_left_row_and_set_share_family_missing = true
+multiple_matches_are_fatal = true
+
+[joins.monthly_to_shares]
+left_table = "crsp_security_month_crosscheck"
+right_table = "crsp_shares_interval"
+join_rule = "equal permno and inclusive start_date <= observation_date <= end_date"
+population_rows = 1284297
+blank_observation_date_rows = 24784
+nonblank_observation_date_rows = 1259513
+one_match_rows = 1249809
+zero_match_rows_with_nonblank_observation_date = 9704
+total_rows_without_usable_share_match = 34488
+multiple_match_rows = 0
+calendar_month_substitution_for_blank_observation_date_permitted = false
+left_row_count_must_not_change = true
+zero_or_blank_matches_retain_left_row_and_set_share_family_missing = true
+multiple_matches_are_fatal = true
+
+[joins.daily_to_identity]
+left_table = "crsp_security_day"
+right_table = "crsp_identity_interval"
+join_rule = "equal permno and inclusive start_date <= calendar_date <= end_date"
+expected_match_counts_status = "LOCKED_AFTER_DEVELOPMENT_ONLY_AGGREGATE_DISCOVERY"
+population_rows = 26778093
+blank_as_of_date_rows = 0
+one_match_rows = 26778093
+zero_match_rows = 0
+multiple_match_rows = 0
+embedded_interval_exact_key_match_rows = 26778093
+embedded_interval_exact_key_missing_rows = 0
+as_of_interval_key_equal_rows = 26778093
+as_of_interval_key_different_rows = 0
+as_of_payload_all_fields_equal_rows = 26778093
+as_of_payload_one_or_more_fields_different_rows = 0
+left_row_count_must_not_change = true
+zero_matches_retain_left_row_and_set_identity_family_missing = true
+multiple_matches_are_fatal = true
+production_publication_empirical_expectation_is_locked = true
+
+[joins.monthly_to_identity]
+left_table = "crsp_security_month_crosscheck"
+right_table = "crsp_identity_interval"
+join_rule = "equal permno and inclusive start_date <= observation_date <= end_date"
+expected_match_counts_status = "LOCKED_AFTER_DEVELOPMENT_ONLY_AGGREGATE_DISCOVERY"
+population_rows = 1284297
+blank_as_of_date_rows = 24784
+nonblank_as_of_date_rows = 1259513
+one_match_rows = 1259513
+zero_match_rows = 24784
+zero_match_rows_with_nonblank_as_of_date = 0
+multiple_match_rows = 0
+embedded_interval_exact_key_match_rows = 1284297
+embedded_interval_exact_key_missing_rows = 0
+calendar_month_substitution_for_blank_as_of_date_permitted = false
+as_of_interval_key_equal_rows = 1251772
+as_of_interval_key_different_rows = 7741
+as_of_payload_all_fields_equal_rows = 1251777
+as_of_payload_one_or_more_fields_different_rows = 7736
+blank_observation_date_is_no_match_and_calendar_month_substitution_is_prohibited = true
+left_row_count_must_not_change = true
+zero_matches_retain_left_row_and_set_identity_family_missing = true
+multiple_matches_are_fatal = true
+production_publication_empirical_expectation_is_locked = true
+
+[joins.future_signal_identity]
+universe_identity_join_date = "signal_date"
+monthly_observation_identity_may_not_substitute_for_signal_date_identity = true
+current_stock_header_may_not_fill_interval_gaps = true
+
+[joins.normalized_lineage_audit]
+consumer_market_facts_embed_authoritative_identity_or_shares_payload = false
+consumer_market_facts_embed_authoritative_interval_foreign_keys = false
+identity_and_shares_intervals_remain_separate_normalized_tables = true
+every_later_materialized_as_of_join_must_store_match_count = true
+every_later_successful_identity_join_must_store_matched_identity_start_and_end_dates = true
+every_later_successful_shares_join_must_store_matched_shares_start_and_end_dates = true
+every_later_as_of_join_must_report_before_and_after_row_counts = true
+every_later_as_of_join_must_report_left_key_multiplicity_fingerprint_before_and_after = true
+every_later_as_of_join_must_publish_aggregate_join_coverage_without_security_rows = true
+zero_match_must_be_explicit_and_left_preserving = true
+multiple_match_is_fatal = true
+current_header_backfill_is_prohibited = true
+
+[return_quarantine]
+status_literal = "unreconciled"
+return_history_authorized_literal = false
+daily_return_source = "crsp_daily_ciz.csv:DlyRet"
+monthly_return_source_role = "crosscheck_only"
+raw_return_values_flags_and_duration_must_be_preserved = true
+flag_specific_daily_return_availability_mapping_is_built = false
+valid_return_boolean_or_126_session_return_history_is_built = false
+p1_through_p9_may_be_treated_as_one_day = false
+dd_factor_alignment_is_resolved = false
+daily_to_monthly_return_reconciliation_is_complete = false
+distribution_exactly_once_is_complete = false
+delisting_exactly_once_is_complete = false
+distribution_or_delisting_payload_may_be_added_to_staged_returns = false
+monthly_numeric_gp_returns_may_be_overwritten_or_nulled_from_flag_alone = false
+
+[authorization.additive_rule]
+upstream_primary_downstream_gate_status_remains_immutable = true
+upstream_false_flags_are_expected_because_the_primary_numeric_bundle_precedes_independent_verification = true
+this_policy_does_not_mutate_or_republish_upstream_evidence = true
+typed_build_may_begin_only_if_every_bound_verified_pointer_and_hash_matches = true
+typed_primary_publication_requires_locked_daily_and_monthly_identity_match_expectations = true
+typed_primary_publication_requires_all_hard_build_checks_pass = true
+typed_primary_publication_alone_authorizes_consumer_use = false
+typed_authorization_is_added_only_by_a_separate_zero_difference_independent_verification = true
+verified_typed_authorization_receipt_must_bind_policy_schema_primary_manifest_and_verifier = true
+only_authorizations_that_may_be_added_after_verified_typed_build = [
+  "typed_market_backbone",
+  "universe_unit_inputs",
+]
+
+[downstream.before_typed_independent_verification]
+typed_market_backbone_authorized = false
+universe_unit_inputs_authorized = false
+eligibility_authorized = false
+return_history_authorized = false
+beta_estimation_authorized = false
+labels_authorized = false
+targets_authorized = false
+features_authorized = false
+models_authorized = false
+portfolios_authorized = false
+pnl_authorized = false
+performance_authorized = false
+backtests_authorized = false
+validation_or_final_test_access_authorized = false
+
+[downstream.after_verified_typed_build]
+typed_market_backbone_authorized = true
+universe_unit_inputs_authorized = true
+eligibility_authorized = false
+return_history_authorized = false
+beta_estimation_authorized = false
+labels_authorized = false
+targets_authorized = false
+features_authorized = false
+models_authorized = false
+portfolios_authorized = false
+pnl_authorized = false
+performance_authorized = false
+backtests_authorized = false
+validation_or_final_test_access_authorized = false
+remaining_blockers = [
+  "flag_specific_daily_return_availability_unresolved",
+  "P1_through_P9_factor_alignment_unresolved",
+  "DD_factor_alignment_unresolved",
+  "RETURN_DISTRIBUTION_DELISTING_EXACTLY_ONCE_not_run",
+]
+
+[quality]
+exact_schema_and_column_order_are_hard = true
+every_table_primary_key_unique_and_nonnull = true
+every_table_sorted_by_declared_key = true
+all_expected_row_counts_are_hard = true
+daily_and_monthly_duplicate_reproduction_is_hard = true
+interval_nonoverlap_and_noninversion_are_hard = true
+share_match_expectations_are_hard = true
+identity_match_expectations_are_hard_only_after_separate_lock = true
+consumer_return_column_absence_is_hard = true
+return_staging_guard_literals_are_hard = true
+daily_and_monthly_return_split_key_fingerprints_must_equal_consumer_key_fingerprints = true
+before_and_after_join_counts_required = true
+raw_to_typed_null_counts_required_by_column = true
+source_to_typed_decimal_roundtrip_required = true
+nominal_unit_multiplier_identities_required = true
+post_2014_payload_access_is_fatal = true
+december_2014_prohibited_use_is_fatal = true
+no_security_level_rows_in_quality_artifacts = true
+deterministic_independent_rebuild_required = true
+
+[publication]
+contract_id = "phase02-crsp-b03263a970e52fbd"
+interim_namespace_template = "interim/phase_02_canonical_panel/phase02-crsp-b03263a970e52fbd/crsp_typed_backbone/<build_id>"
+quality_namespace_template = "quality/phase_02_canonical_panel/phase02-crsp-b03263a970e52fbd/crsp_typed_backbone/<build_id>"
+artifact_subdirectory = "crsp_typed_backbones"
+verification_subdirectory = "crsp_typed_backbone_verifications"
+primary_pointer = "LATEST_CRSP_TYPED_BACKBONE_PRIMARY.json"
+verified_pointer = "LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json"
+failed_attempts_may_not_move_primary_or_verified_pointer = true
+published_directories_are_immutable = true
+pointer_published_last = true
+closed_interim_file_set = [
+  "_SUCCESS.json",
+  "crsp_identity_interval.parquet",
+  "crsp_security_day.parquet",
+  "crsp_security_day_return_staging.parquet",
+  "crsp_security_month_crosscheck.parquet",
+  "crsp_security_month_return_staging.parquet",
+  "crsp_shares_interval.parquet",
+]
+closed_quality_file_set = [
+  "_SUCCESS.json",
+  "build_contract.json",
+  "checks.csv",
+  "column_profiles.csv",
+  "downstream_gate_status.json",
+  "input_receipt.json",
+  "join_coverage.csv",
+  "parquet_metadata.csv",
+  "summary.json",
+  "table_counts.csv",
+]
+closed_artifact_file_set = ["manifest.json", "output_hashes.sha256"]
+closed_verification_file_set = ["differences.csv", "independent_check.json"]
+
+[publication.parquet]
+format_version = "2.6"
+compression = "zstd"
+compression_level = 9
+data_page_version = "2.0"
+row_group_size = 262144
+write_statistics = true
+dictionary_encode_utf8 = true
+store_schema = true
+runtime_timestamp_metadata_permitted = false
+table_schema_must_equal_bound_schema_json = true
+
+[publication.serialization]
+json = "Canonical JSON with lexicographically sorted object keys, compact comma/colon separators, ensure_ascii=false, and exactly one LF."
+csv = "RFC-4180-compatible comma delimiter, double quotes, minimal quoting, UTF-8 without BOM, header present, and LF terminators."
+sha256_inventory = "lowercase 64-hex digest, two ASCII spaces, database-root-relative or project-root-relative POSIX path, LF; rows sorted by path"
+runtime_or_wall_clock_values_may_affect_build_id = false

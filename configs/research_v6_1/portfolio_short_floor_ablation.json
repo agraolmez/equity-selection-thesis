@@ -1,0 +1,59 @@
+{
+  "schema": "research_v6_1_exact_short_floor_ablation_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "What happens to the user-selected V6.1 Step 02 FF5/momentum portfolio when mandatory short exposure is removed and every other selector, formation, calibration, cost, objective, risk, capacity, and timing rule is preserved?",
+  "base_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "base_result": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef",
+    "required_status": "COMPLETE",
+    "control_variant": "return_plus_ff5_momentum__optimized_10pct_vol"
+  },
+  "frozen_variant": {
+    "policy": "return_plus_ff5_momentum",
+    "kind": "optimized",
+    "method": "optimized",
+    "volatility": 0.10
+  },
+  "only_economic_changes": {
+    "optimizer.minimum_short_gross": {
+      "from": 0.30,
+      "to": 0.00,
+      "reason": "Remove the explicit mandatory short sleeve."
+    },
+    "optimizer.maximum_net": {
+      "from": 0.30,
+      "to": 1.00,
+      "reason": "With minimum long gross 0.50, retaining maximum net 0.30 would create an implicit minimum short gross of 0.20. This mechanical relaxation is required for zero shorts to be feasible."
+    }
+  },
+  "unchanged": [
+    "all frozen selector scores and targets",
+    "FF5/momentum alpha sign gate",
+    "top-20-percent long and short candidate formation",
+    "causal monotonic rank-to-payoff calibration",
+    "maximize expected net return objective",
+    "10-percent forecast-volatility ceiling",
+    "minimum long gross 0.50",
+    "maximum gross 1.50",
+    "minimum net -0.10",
+    "one-percent position cap",
+    "50-percent one-way turnover cap",
+    "10-percent ADV participation cap",
+    "market-beta, factor, SIC2, financing, trading-cost and borrow controls",
+    "$100 million NAV",
+    "January 2024 through August 2025 historical window",
+    "no validation, tuning, retuning, or selector retraining"
+  ],
+  "interpretation": "Shorts remain permitted. They are chosen only when the unchanged expected-net objective and unchanged portfolio risk controls make them useful; there is no direct or net-exposure-induced short allocation floor.",
+  "checkpointing": {
+    "natural_unit": "completed portfolio month",
+    "atomic": true,
+    "resume": true,
+    "binds_overlay_base_contract_code_inputs_and_month": true
+  }
+}

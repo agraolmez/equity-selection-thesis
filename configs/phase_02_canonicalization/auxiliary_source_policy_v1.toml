@@ -1,0 +1,215 @@
+schema_version = 1
+policy_id = "phase02-auxiliary-availability-linkage-policy-v1"
+contract_id = "phase02-auxiliary-availability-linkage-v1"
+status = "frozen_contract_pending_primary_build_and_independent_verification"
+
+[bindings]
+methodology_source = "outputs/methodology_v1_source.md"
+methodology_source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+methodology_freeze = "outputs/methodology_v1_freeze.json"
+methodology_freeze_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+phase_02_config = "configs/phase_02_canonical_panel.toml"
+phase_02_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+source_config = "configs/phase_02_sources/auxiliary_sources_v1.toml"
+source_config_sha256 = "20d83d732f234454f1589f2ce65ad40b7836ae1969b86c49a75b0a10ddf1f0c2"
+schema = "configs/phase_02_canonicalization/auxiliary_source_schema_v1.json"
+schema_sha256 = "98ea793e43799d17ce6914e41874a87fe962a09bb251e7b65d7f062cae4e808e"
+phase_01_freeze_manifest = "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json"
+phase_01_freeze_manifest_sha256 = "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac"
+
+[bindings.raw_contracts]
+compustat_ccm = "3eddb56f7b248d2fbaad020e6b08a20f1d0b37600281de8c5ab11987b35879d3"
+crsp = "fcd6bb75eba53e9415266ee6a229700742c6f2f93a44836b35f01e1eb71e9076"
+factors_liquidity = "8271740d9f233b996f3451f90aad78b096e0fbd645119b8b7858e49794c7aac2"
+optionmetrics = "a850acb28d229f7cd3d73ef711284e084b99cb1cbed8f25a04f05c0487ef2659"
+sec_restatements = "235de9f1c8c488c9f6cd41e8f63298ba79b119fd372878cce60c40d23d0d7cfa"
+
+[upstream.signal_universe]
+primary_pointer = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_PRIMARY.json"
+primary_pointer_sha256_at_contract_freeze = "7e02931ae279466620b25dd0988acd8d48681e2eef212b525259f9a63d03a076"
+required_build_id = "signal-universe-51b26dd77e60988269cfd902"
+current_status = "signal_date_universe_primary_passed_pending_independent_verification"
+current_authorized = false
+required_before_auxiliary_primary_publication = "independent_verified_pointer_for_same_build_with_signal_date_universe_authorized_true"
+pending_upstream_is_not_authority = true
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json"
+verified_pointer_sha256 = "07cd6dc90b48b150b9900884e7ffa6ba01445a9bab3cd847e237eb785e3993d2"
+verified_status = "verified_passed"
+verified_authorization = "signal_date_universe_authorized"
+
+[scope]
+development_only = true
+first_signal_date = "2000-01-31"
+last_predictor_signal_date = "2014-10-31"
+last_development_exit_date = "2014-12-01"
+predictor_payload_after_last_signal_permitted = false
+factor_rows_through_last_development_exit_permitted_for_later_target_and_attribution_alignment = true
+validation_or_final_period_payload_access_permitted = false
+date_first_payload_gate_required_for_large_csvs = true
+features_labels_models_portfolios_pnl_performance_or_backtests_permitted = false
+
+[point_in_time]
+required_audit_columns = ["observation_date", "public_availability_date"]
+consumer_key = ["signal_date", "PERMNO"]
+hard_rule = "public_availability_date_le_signal_date"
+future_backfill = false
+future_survival_or_delisting_filter = false
+current_master_or_current_company_metadata_filter = false
+source_absence_is_missing_not_zero = true
+
+[availability.compustat_quarterly]
+primary = "first_verified_trading_day_strictly_after_rdq"
+fallback = "datadate_plus_120_calendar_days_advanced_to_first_verified_trading_day_on_or_after"
+fallback_only_when_rdq_missing = true
+maximum_carry_calendar_days_after_availability = 180
+
+[availability.compustat_annual]
+primary_forms = ["10-K", "20-F", "40-F"]
+primary = "first_verified_trading_day_strictly_after_date_valid_matched_filing_date_or_acceptance_date"
+fallback = "datadate_plus_180_calendar_days_advanced_to_first_verified_trading_day_on_or_after"
+fallback_only_when_no_unique_defensible_filing_match = true
+maximum_carry_calendar_days_after_availability = 540
+latest_vintage_not_historical_vintage = true
+
+[availability.compustat_segment]
+primary = "first_verified_trading_day_strictly_after_srcdate"
+fallback = "datadate_plus_180_calendar_days_advanced_to_first_verified_trading_day_on_or_after"
+fallback_only_when_srcdate_missing = true
+maximum_carry_calendar_days_after_availability = 540
+
+[availability.sec]
+filing_index = "first_verified_trading_day_strictly_after_fdate_when_acceptance_timestamp_unavailable"
+eight_k_items = "first_verified_trading_day_strictly_after_validated_secadate_and_secatime_else_fdate"
+forms_covered = ["10-K", "10-Q", "20-F", "40-F", "8-K", "6-K"]
+eight_k_item_taxonomy_applies_only_to = "8-K"
+foreign_form_absence_is_explicit_missingness = true
+foreign_form_absence_may_remove_universe_row = false
+
+[availability.restatements]
+rule = "first_verified_trading_day_strictly_after_file_accepted_else_file_date"
+future_restatement_knowledge_may_rewrite_old_fundamental = false
+affected_period_dates_are_never_availability = true
+reversed_affected_period_interval = "retain_public_event_but_set_both_affected_period_endpoints_null; never_swap_or_infer"
+current_latest_meta_fields_permitted = false
+
+[availability.thirteen_f]
+rule = "first_verified_trading_day_strictly_after_each_filing_or_amendment_fdate"
+report_date_is_availability = false
+maximum_carry_calendar_days_after_availability = 180
+amendment_rule = "new filing version affects knowledge only from its own availability; retain prior version for earlier signals"
+blind_current_vintage_amendment_fold = false
+
+[availability.optionmetrics]
+rule = "observation_is_available_after_its_dated_close"
+same_close_signal_use = true
+same_close_execution = false
+precoverage_state = "NOT_COVERED_not_zero"
+post_source_end_carry = false
+
+[availability.factors]
+daily_rule = "available_after_dated_factor_trading_day_close"
+monthly_rule = "available_after_observed_month_end_close"
+output_unit = "decimal_ratio"
+exact_nonbinary_decimal_required = true
+source_unit_multiplier_must_be_frozen_by_aggregate_only_prebuild_discovery = true
+daily_monthly_unit_agreement_required = true
+
+[factor_unit_lock]
+path = "configs/phase_02_canonicalization/auxiliary_factor_unit_empirical_lock_v1.json"
+sha256 = "a75491c032800628c09b7a0b2507c8ffcdffa492437b18e62e281f0160fddd94"
+selected_source_to_decimal_ratio_multiplier = "1"
+selection_precedes_primary_build = true
+
+[availability.pastor_stambaugh]
+series_is_historically_revised_not_vintage_archive = true
+recorded_release_rule = "first_verified_trading_day_strictly_after_recorded_release_date"
+missing_release_rule = "first_verified_trading_day_on_or_after_one_full_calendar_month_after_observation_month_end"
+raw_PS_INNOV_permitted = false
+recursive_innovation_belongs_to_phase_03 = true
+future_AR1_fit_endpoint_permitted = false
+carry_after_source_end = false
+
+[compustat_format]
+retain_all_normalized_rows_for_audit = true
+standard_format_eligible_requires = ["indfmt=INDL", "consol=C", "popsrc=D", "datafmt=STD"]
+nonstandard_format_drops_crsp_universe_row = false
+
+[linkage.ccm]
+issuer_key = "GVKEY"
+security_key = "PERMNO"
+interval_rule = "LINKDT_le_signal_date_le_LINKENDDT_with_E_as_open_end"
+allowed_LINKTYPE = ["LC", "LU"]
+allowed_LINKPRIM = ["P", "C"]
+precedence = ["P", "C", "lowest_lexical_GVKEY_then_LIID_only_if_still_economically_same"]
+distinct_remaining_candidates = "AMBIGUOUS_family_missing"
+current_CUSIP_ticker_or_name_join = false
+
+[linkage.optionmetrics]
+source_key = "secid"
+rule = "date_valid_normalized_CUSIP8_intersection_between_optionmetrics_name_history_and_CRSP_identity"
+current_CUSIP_ticker_or_name_join = false
+zero_candidates = "NOT_COVERED"
+multiple_distinct_candidates = "AMBIGUOUS_family_missing"
+
+[linkage.sec]
+primary = "date_valid_CCM_GVKEY_to_CIK_bridge"
+restatement = "date_valid_company_key_bridge_or_normalized_CUSIP8_at_event_availability"
+ticker_or_company_name_join = false
+multiple_distinct_candidates = "AMBIGUOUS_family_missing"
+
+[row_preservation]
+spine = "independently_verified_crsp_signal_date_universe"
+required_output = "auxiliary_signal_linkage"
+before_rows_must_equal_after_rows = true
+primary_key_unchanged = ["signal_date", "PERMNO"]
+unmatched_family_drops_row = false
+ambiguous_family_drops_row = false
+ambiguous_family_values_are_null = true
+option_coverage_determines_universe_membership = false
+sec_form_coverage_determines_universe_membership = false
+
+[optionmetrics_semantics]
+authoritative_option_flow_rows = ["CALL", "PUT"]
+total_or_blank_rows_added_to_call_plus_put = false
+genuine_zero_requires_positive_vendor_coverage = true
+supported_historical_volatility_days = [30, 60, 91, 182, 365]
+quotes_strikes_expirations_greeks_or_implied_volatility_claims = false
+
+[materialization]
+required_tables = [
+  "ccm_link_interval", "compustat_annual_observation", "compustat_quarterly_observation",
+  "compustat_segment_observation", "sec_filing_observation", "sec_8k_item_observation",
+  "sec_13f_filing_observation", "sec_13f_holding_observation",
+  "restatement_event_observation", "restatement_crsp_link",
+  "optionmetrics_name_interval", "optionmetrics_crsp_link_interval",
+  "optionmetrics_option_volume_observation", "optionmetrics_historical_volatility_observation",
+  "ff_factor_daily_observation", "ff_factor_monthly_observation",
+  "ps_liquidity_observation", "auxiliary_signal_linkage",
+]
+qa_only_no_row_level_table = ["ccm_security_daily.csv", "ccm_security_monthly.csv", "optionmetrics_security_prices.csv"]
+feature_owning_large_sources_must_not_be_downgraded_to_qa_only = ["sec_13f_holdings.csv", "optionmetrics_option_volume.csv", "optionmetrics_historical_volatility.csv", "sec_filings_index.csv", "sec_8k_items.csv"]
+
+[hard_quality_gates]
+raw_hash_and_header_match_stage_01 = true
+normalized_primary_keys_unique = true
+interval_starts_not_after_ends = true
+overlapping_link_candidates_classified_not_silently_selected = true
+availability_not_after_signal = true
+signal_spine_row_count_preserved = true
+signal_spine_primary_key_preserved = true
+before_after_link_counts_by_family_required = true
+missingness_by_family_year_exchange_domicile_adr_and_long_short_required = true
+sec_form_coverage_by_year_domicile_adr_and_form_required = true
+optionmetrics_match_genuine_zero_optionability_by_year_required = true
+factor_date_alignment_and_unit_receipt_required = true
+ps_release_lag_receipt_required = true
+no_raw_identifiers_or_security_examples_in_quality_receipts = true
+independent_implementation_verification_required = true
+
+[publication]
+primary_pointer = "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_PRIMARY.json"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_VERIFIED.json"
+primary_authorizes_phase_03 = false
+only_verified_pointer_may_set_auxiliary_panel_authorized_true = true
+stage_02_complete_requires_verified_signal_universe_and_verified_auxiliary_outputs = true
+features_labels_models_portfolios_pnl_performance_or_backtests_authorized = false

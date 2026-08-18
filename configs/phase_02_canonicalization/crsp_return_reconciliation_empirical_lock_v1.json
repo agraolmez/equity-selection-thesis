@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "lock_id": "crsp-return-reconciliation-empirical-lock-v1",
+  "status": "locked_after_aggregate_only_development_discovery",
+  "purpose": "Freeze the aggregate empirical facts and decisions required before the first CRSP return-reconciliation production build.",
+  "bindings": {
+    "discovery_config_sha256": "472faf23554de2cf4bf9f7fe4476dc90a9849703f0f9eeec89799e18bde25fa3",
+    "policy_sha256": "897c32f3b80846a2ad4e605e03b7ab8309153a4da841a3fcee70b6808932d138",
+    "schema_sha256": "492d7dde39dc634b28be227282fa5d3680406614522a2587dac61f937633e01f",
+    "verified_typed_backbone_pointer_sha256": "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf",
+    "verified_supporting_profile_pointer_sha256": "1df31283660a65f5c00774b6a9940c2bdedca68207341272abe0620d393162ba",
+    "verified_calendar_pointer_sha256": "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9",
+    "raw_distribution_sha256": "2f88d667bfa4b66f135f98bb13bae5c75ca0abf926ee934cb5eb0031ace531d7",
+    "raw_delisting_sha256": "bdee1560043d059c7b75518a31a4637398234168a087d9f37ba1fcb8fc90d4cb",
+    "aggregate_discovery_result_sha256": "01e8d7a7c568735e3fe73a01581d24c4ee8042da1a1402c979775cd334b24f21",
+    "aggregate_discovery_implementation_sha256": "c5cb8b105599f7526a760f852e355af7da572e18de4baba682f78b3f922cf0e8"
+  },
+  "daily_flag_availability_lock": {
+    "population_rows": 26778093,
+    "finite_in_domain_numeric_rows": 26240559,
+    "authorized_observed_NA_rows": 26240492,
+    "numeric_MV_rows": 67,
+    "numeric_MV_authorized_rows": 0,
+    "rule": "A raw daily total is usable only when finite, at least -1, DlyRetMissFlg is exactly NA, and the duration is a mapped non-MR value. Numeric MV is retained for audit and numeric-transport QA but never authorized."
+  },
+  "daily_span_alignment_lock": {
+    "numeric_P1_through_P9_rows": 1910,
+    "ordinary_non_delisting_P_rows": 1250,
+    "ordinary_P_rows_with_exact_span_start": 1249,
+    "ordinary_P_pre_scope_unresolved_span_rows": 1,
+    "delisting_linked_P_rows": 660,
+    "ordinary_P_preceding_implied_sessions_all_blank_MR": 1250,
+    "delisting_P_posted_next_verified_session": 660,
+    "delisting_P_equal_observed_DelRet": 660,
+    "delisting_P_with_intervening_numeric_endpoint": 659,
+    "DD_rows": 5171,
+    "DD_rows_linked_to_in_scope_posting_event": 5168,
+    "rule": "Non-delisting Pn is one ordinary multi-session return spanning n+1 trading sessions when enough verified prior sessions exist; the single pre-scope boundary P8 row is explicitly unresolved and quarantined. A delisting-linked Pn or DD row is a separate terminal event leg and does not own an overlapping ordinary factor window."
+  },
+  "monthly_flag_crosscheck_lock": {
+    "population_rows": 1284297,
+    "numeric_total_and_retx_rows": 1259189,
+    "flag_counts": {
+      "CR": 1242271,
+      "DE": 8347,
+      "GP": 491,
+      "IP": 525,
+      "MP": 886,
+      "NS": 6669,
+      "NT": 25108
+    },
+    "rule": "MthRet is a crosscheck only. Raw-numeric transport and authorized-return compounds are separate because MV quarantine and missing-performance imputation intentionally change the latter."
+  },
+  "distribution_assignment_lock": {
+    "event_rows": 266225,
+    "raw_security_ex_date_groups": 259107,
+    "sequence_multiplicity": {
+      "1": 252600,
+      "2": 5953,
+      "3": 507,
+      "4": 37,
+      "5": 10
+    },
+    "off_calendar_ex_dates": 103,
+    "effective_date_groups_after_containing_interval_assignment": 259104,
+    "effective_group_return_interval_matches": {
+      "zero": 509,
+      "one": 258594,
+      "two_before_identity_resolution": 1
+    },
+    "zero_match_subclasses": {
+      "after_last_security_day": 412,
+      "missing_return_internal_gap": 59,
+      "no_scoped_security_day": 38,
+      "off_calendar_within_after_last": 8
+    },
+    "double_match_rule": "Assign the non-cash factor event to the single endpoint whose total-versus-ex-distribution identity changes; hard-fail if zero or two endpoints change.",
+    "zero_match_rule": "Retain and classify as after_last_security_day, missing_return_internal_gap, or no_scoped_security_day; a generic same-day DD row with no proven span is not assignment evidence; assigned_exactly_once is false, the event is explicitly accounted, and its payload is never added to DlyRet.",
+    "DlyRet_not_equal_DlyRetx_numeric_rows": 246714,
+    "explained_by_distribution_interval": 246712,
+    "explained_by_delisting_posting": 2,
+    "unexplained": 0
+  },
+  "delisting_embedding_and_imputation_lock": {
+    "event_rows": 8391,
+    "posting_date_daily_row_matches": 8383,
+    "posting_date_daily_row_absences": 8,
+    "absent_posting_rows_with_delisting_date_daily_row": 8,
+    "absent_posting_rows_after_quality_boundary": 3,
+    "numeric_DelRet_rows": 7847,
+    "blank_DelRet_rows": 544,
+    "numeric_event_daily_pairs": 7839,
+    "numeric_event_daily_exact_matches": 7839,
+    "maximum_exact_pair_absolute_difference": "0.000000000000",
+    "numeric_MV_delisting_rows": 28,
+    "numeric_MV_performance_tuple_rows": 1,
+    "numeric_MV_daily_payload_authorized_rows": 0,
+    "numeric_MV_rows_with_separately_observed_event_DelRet": 28,
+    "performance_tuple": {
+      "legacy_DLSTCD_codes": [500, 520, 550, 551, 552, 560, 561, 570, 573, 574, 575, 580, 581, 582, 583, 584],
+      "action_type": "GDR",
+      "payment_type": "PRCF",
+      "status_type": "VCL",
+      "reason_types": ["UNAV", "MVOT", "MTMK", "SHLD", "LP", "INSC", "INSF", "CORQ", "DERE", "BKPY", "OFFRE", "DELQ", "FARG", "EQRQ", "DEEX", "FING"]
+    },
+    "performance_tuple_event_rows": 2955,
+    "performance_tuple_blank_DelRet_rows": 374,
+    "performance_missing_exchange_counts": {
+      "A": 128,
+      "N": 38,
+      "Q": 208
+    },
+    "nonperformance_blank_DelRet_rows": 170,
+    "performance_missing_treatment": "Compound the imputed terminal payoff once with the existing numeric DelistingDt ordinary return: -0.30 for N/A or -0.55 for Q. Suppress the missing posting leg from canonical compounding.",
+    "observed_embedding_treatment": "Use posting-day equality only as embedding evidence. Compound the separately observed DelRet once with the existing numeric DelistingDt ordinary return for every observed event, and suppress the next-session posting payload from canonical compounding.",
+    "numeric_MV_treatment": "The MV daily posting payload remains quarantined. A separately observed event-ledger DelRet is owned as the terminal event leg and attached once on DelistingDt; it is not an MV-payload promotion.",
+    "outcome_availability_rule": "The economic return is assigned to DelistingDt, but its outcome_availability_date is DelDlyDt or a later actual consideration date. Later training/labels must honor that availability plus purge."
+  },
+  "monthly_tolerance_lock": {
+    "selected_absolute_tolerance": "0.000060000000",
+    "selected_from_predeclared_candidate_grid": true,
+    "complete_CR_maximum_raw_numeric_transport_absolute_difference": "0.000054710092",
+    "exact_fixed_scale_decimal": true,
+    "relative_tolerance_permitted": false,
+    "selection_precedes_first_production_build": true,
+    "selection_used_model_portfolio_or_backtest_results": false
+  },
+  "adjusted_price_path_feature_lock": {
+    "population_rows": 26778093,
+    "numeric_DlyRetx_rows": 26240559,
+    "DlyRet_vs_DlyRetx_null_asymmetry_rows": 0,
+    "ordinary_one_session_rows": 26223084,
+    "ordinary_one_session_observed_rows": 26223046,
+    "eligible_observed_one_session_DlyRetx_rows": 26223046,
+    "eligible_rows_available_after_observation_date": 0,
+    "all_numeric_DlyRetx_at_or_below_minus_one_rows": 4,
+    "authorized_use": "The independently verified CRSP DlyRetx field may be consumed only to reconstruct normalized adjusted price paths for the eleven frozen moving-average, high-distance, and log-price-trend features.",
+    "prohibited_uses": "DlyRetx may not replace authoritative_total_return in labels, targets, beta estimation, risk, P&L, performance, or backtests.",
+    "transition_rule": "Use only observed ordinary_one_session rows with mapped_trading_periods=covered_trading_sessions=1, exact consecutive global-session spans, point-in-time availability, finite DlyRetx greater than -1, and no gaps, overlaps, duplicates, delisting, suppressed, imputed, or unresolved legs."
+  },
+  "aggregate_conservation_checks": {
+    "distribution_event_key_duplicates": 0,
+    "delisting_event_key_duplicates": 0,
+    "daily_staging_key_duplicates": 0,
+    "monthly_staging_key_duplicates": 0,
+    "distribution_event_rows_conserved": true,
+    "delisting_event_rows_conserved": true,
+    "daily_staging_rows_conserved": true,
+    "monthly_staging_rows_conserved": true
+  },
+  "scope_and_privacy_attestation": {
+    "minimum_payload_date": "2000-01-01",
+    "maximum_payload_date": "2014-12-31",
+    "december_2014_role": "embargo_quality_and_boundary_reconciliation_only",
+    "validation_or_final_test_accessed": false,
+    "security_level_examples_or_keys_published": false,
+    "aggregate_counts_only": true
+  },
+  "authorizations": {
+    "production_return_reconciliation_build_authorized": true,
+    "return_history_authorized": false,
+    "beta_estimation_authorized": false,
+    "labels_targets_features_models_portfolios_pnl_performance_or_backtests_authorized": false
+  }
+}

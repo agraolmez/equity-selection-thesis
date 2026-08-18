@@ -1,0 +1,339 @@
+schema_version = 1
+contract_id = "phase03-feature-label-split-v1"
+status = "frozen_development_only_contract_pending_primary_build_and_independent_verification"
+methodology_freeze_id = "methodology_v1_preimplementation_2026-07-14"
+
+[methodology]
+source = "outputs/methodology_v1_source.md"
+source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[feature_registry]
+path = "configs/phase_03_features/feature_registry_v1.json"
+sha256 = "7bac81cd8083c9a5c44ab2482223a342ed6ce2ce265d73cd8cc1bd843e33805a"
+required_registry_id = "phase03-feature-registry-v1"
+required_economic_feature_count = 163
+required_family_count = 7
+
+[database]
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+active_root = "/Users/agraemirolmez/Desktop/Thesis"
+historical_root = "/Users/agraemirolmez/Desktop/database"
+relocation_receipt = "data/database_relocation_v1.json"
+relocation_receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+new_outputs_may_use_historical_root = false
+sealed_historical_paths_may_be_rewritten = false
+resolve_historical_manifest_paths_through_relocation_receipt = true
+raw_is_read_only = true
+phase_03_interim_namespace = "interim/phase_03_features/phase03-feature-label-split-v1"
+phase_03_processed_namespace = "processed/phase_03_features/phase03-feature-label-split-v1"
+phase_03_quality_namespace = "quality/phase_03_features/phase03-feature-label-split-v1"
+
+[upstream.calendar]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+primary_manifest = "artifacts/phase_02_canonical_panel/calendar_builds/calendar-ae2e4ba4a280d66e/manifest.json"
+primary_manifest_sha256 = "cc3c460db3ccf445b96a95a0ca649a2b51c505590324934cddfa54c865b9edd1"
+required_build_id = "calendar-ae2e4ba4a280d66e"
+required_verification_id = "verify-7dc718e9be47873c"
+required_status = "verified_passed"
+required_contract_id = "phase02-crsp-b03263a970e52fbd"
+legacy_no_authorizations_object = true
+required_false_manifest_summary = ["features_built", "targets_built", "portfolios_built", "performance_results_seen"]
+required_tables = ["trading_calendar.parquet", "rebalance_calendar.parquet"]
+
+[upstream.typed_backbone]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json"
+verified_pointer_sha256 = "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf"
+primary_manifest = "artifacts/phase_02_canonical_panel/crsp_typed_backbones/crsp-typed-2ab2f0b7910a1b4b33d1ca32/manifest.json"
+primary_manifest_sha256 = "b9c87507d4c7a8f6b8776c4e0ed016ea143bca93eea7a6946ebf8e43d302b98a"
+required_build_id = "crsp-typed-2ab2f0b7910a1b4b33d1ca32"
+required_verification_id = "verify-0fa5f4856025e29d"
+required_status = "verified_passed"
+required_contract_id = "phase02-crsp-b03263a970e52fbd"
+required_authorizations = ["typed_market_backbone_authorized", "universe_unit_inputs_authorized"]
+required_false_authorizations = ["backtests_authorized", "beta_estimation_authorized", "eligibility_authorized", "features_authorized", "labels_authorized", "models_authorized", "performance_authorized", "pnl_authorized", "portfolios_authorized", "return_history_authorized", "targets_authorized", "validation_or_final_test_access_authorized"]
+required_tables = ["crsp_security_day.parquet", "crsp_identity_interval.parquet", "crsp_shares_interval.parquet"]
+prohibited_tables = ["crsp_security_day_return_staging.parquet", "crsp_security_month_return_staging.parquet"]
+
+[upstream.return_reconciliation]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json"
+verified_pointer_sha256 = "c6d6ebacd418f01bddf64c6f0c36903ec083c358f7506867f1c06da0328ea835"
+primary_manifest = "artifacts/phase_02_canonical_panel/crsp_return_reconciliations/crsp-return-c6ba39536fb9654781f260eb/manifest.json"
+primary_manifest_sha256 = "fae6b45973064695266b372b2c04d4d0de732685c6611d7b4f7f52517b0f222f"
+required_build_id = "crsp-return-c6ba39536fb9654781f260eb"
+required_verification_id = "verify-029a6286667ce44a"
+required_status = "verified_passed"
+required_contract_id = "phase02-crsp-b03263a970e52fbd"
+required_authorizations = ["return_history_authorized", "adjusted_price_path_feature_authorized"]
+required_false_authorizations = ["beta_estimation_authorized", "features_labels_models_portfolios_pnl_performance_or_backtests_authorized", "validation_or_final_test_access_authorized"]
+required_tables = ["crsp_security_day_return.parquet", "crsp_delisting_event.parquet"]
+primary_return_column = "authoritative_total_return"
+primary_return_usable_column = "return_history_usable"
+outcome_availability_column = "outcome_availability_date"
+raw_or_staging_total_return_may_be_consumed = false
+verified_price_return_column = "raw_return_ex_distributions"
+verified_price_return_authorized_use = "adjusted_price_path_features_only"
+verified_price_return_prohibited_uses = ["labels", "targets", "beta_estimation", "risk", "pnl", "performance", "backtests"]
+monthly_return_crosscheck_may_replace_daily_authority = false
+
+[upstream.signal_universe]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json"
+verified_pointer_sha256 = "07cd6dc90b48b150b9900884e7ffa6ba01445a9bab3cd847e237eb785e3993d2"
+primary_manifest = "artifacts/phase_02_canonical_panel/signal_date_universes/signal-universe-51b26dd77e60988269cfd902/manifest.json"
+primary_manifest_sha256 = "7a5d5b5248add0eb129265b527649317c0a897ad1ecad97dd0508cb94ac44830"
+required_build_id = "signal-universe-51b26dd77e60988269cfd902"
+required_verification_id = "verify-a09655a7bfa6e8cc"
+required_status = "verified_passed"
+required_contract_id = "phase02-crsp-b03263a970e52fbd"
+required_authorizations = ["signal_date_universe_authorized"]
+required_false_authorizations = ["features_labels_models_portfolios_pnl_performance_or_backtests_authorized", "validation_or_final_test_access_authorized"]
+required_tables = ["crsp_signal_date_universe.parquet"]
+required_rows = 1263048
+required_signal_dates = 178
+required_min_signal_date = "2000-01-31"
+required_max_signal_date = "2014-10-31"
+
+[upstream.auxiliary]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_AUXILIARY_AVAILABILITY_LINKAGE_VERIFIED.json"
+verified_pointer_sha256 = "ea58ee795a1ca5540a6da314ffde11dcde71d22d719d09d7ba69ec35bd0e3e59"
+primary_manifest = "artifacts/phase_02_canonical_panel/auxiliary_availability_linkages/auxiliary-b98bab2947570e9b1c8001d8/manifest.json"
+primary_manifest_sha256 = "5535a783e9d59b330dc2247cec2936c3139797070392893d1a7f11d20756bb57"
+required_build_id = "auxiliary-b98bab2947570e9b1c8001d8"
+required_verification_id = "verify-51319096babc6144"
+required_status = "verified_passed"
+required_contract_id = "phase02-auxiliary-availability-linkage-v1"
+required_authorizations = ["auxiliary_panel_authorized", "phase_03_inputs_authorized"]
+required_false_authorizations = ["backtests_authorized", "features_authorized", "features_labels_models_portfolios_pnl_performance_or_backtests_authorized", "models_authorized", "validation_or_final_test_access_authorized"]
+required_table_count = 18
+required_fully_verified_rows = 194901138
+required_signal_keys = 1263048
+primary_or_unverified_pointer_may_authorize = false
+required_tables = [
+  "auxiliary_signal_linkage.parquet",
+  "ccm_link_interval.parquet",
+  "compustat_annual_observation.parquet",
+  "compustat_quarterly_observation.parquet",
+  "compustat_segment_observation.parquet",
+  "ff_factor_daily_observation.parquet",
+  "ff_factor_monthly_observation.parquet",
+  "optionmetrics_crsp_link_interval.parquet",
+  "optionmetrics_historical_volatility_observation.parquet",
+  "optionmetrics_name_interval.parquet",
+  "optionmetrics_option_volume_observation.parquet",
+  "ps_liquidity_observation.parquet",
+  "restatement_crsp_link.parquet",
+  "restatement_event_observation.parquet",
+  "sec_13f_filing_observation.parquet",
+  "sec_13f_holding_observation.parquet",
+  "sec_8k_item_observation.parquet",
+  "sec_filing_observation.parquet",
+]
+
+[scope]
+stage = "development"
+signal_start_date = "2000-01-31"
+last_permitted_predictor_signal_date = "2014-10-31"
+last_permitted_development_holding_month = "2014-11"
+last_permitted_label_exit_date = "2014-12-01"
+predictor_payload_after_2014_10_31_permitted = false
+return_and_factor_payload_after_2014_12_01_permitted = false
+validation_2015_2019_payload_or_outcome_access_permitted = false
+final_2020_2025_payload_or_outcome_access_permitted = false
+feature_and_label_materialization_permitted_after_contract_verification = true
+model_fitting_permitted = false
+portfolio_optimization_permitted = false
+portfolio_or_backtest_permitted = false
+pnl_or_performance_permitted = false
+raw_rows_may_be_modified = false
+
+[panel]
+audit_spine = "every verified signal-date universe row"
+audit_primary_key = ["signal_date", "permno"]
+scoring_and_label_filter = "long_eligible==true"
+scoring_and_label_primary_key = ["signal_date", "permno"]
+chosen_issuer_line_key = ["signal_date", "permco"]
+short_eligibility_may_change_feature_preprocessing_or_target_cross_section = false
+short_eligibility_application = "after_model_scoring_only"
+unmatched_or_ambiguous_auxiliary_family_may_drop_spine_row = false
+future_outcome_may_filter_spine_or_scoring_universe = false
+
+[point_in_time]
+require_observation_date_not_after_signal = true
+require_public_availability_date_not_after_signal = true
+require_signal_not_after_stale_after_when_present = true
+future_backfill_permitted = false
+same_close_execution_permitted = false
+market_observation_at_signal_close_permitted_for_after_close_signal = true
+max_lineage_dates_required_for_every_feature = true
+lineage_table_primary_key = ["signal_date", "permno", "feature_name"]
+quarterly_rdq_before_datadate_known_rows = 43
+quarterly_rdq_before_datadate_resolution = "retain row but do not expose its values until both observation_date and public_availability_date are not after signal_date"
+compustat_is_true_historical_vintage = false
+compustat_description = "availability-lagged latest-vintage"
+future_restatement_may_rewrite_past_fundamentals = false
+
+[preprocessing]
+cross_section = "signal-date long-eligible scoring universe"
+continuous_winsor_lower_quantile = "0.01"
+continuous_winsor_upper_quantile = "0.99"
+quantile_algorithm = "Hyndman-Fan type 7 linear interpolation over finite nonmissing values"
+rank_ties = "average"
+centered_rank_formula = "((average_rank - 0.5) / N_nonmissing) - 0.5"
+rank_range = "[-0.5,+0.5]"
+missing_continuous_fill_after_ranking = "0"
+dedicated_missing_indicator_for_every_continuous = true
+binary_values = [0, 1]
+nullable_binary_encoding = "missing => value 0 and is_missing 1; genuine zero => value 0 and is_missing 0"
+categorical_encoding = "full one-hot with explicit UNKNOWN and no dropped reference category"
+aggregate_zscore_history = "signal months strictly before current signal"
+aggregate_zscore_standard_deviation = "sample ddof=1"
+aggregate_zscore_min_prior_nonmissing = 2
+aggregate_zscore_clip = "[-5,+5]"
+aggregate_missing_fill = "0 with dedicated missingness indicator"
+raw_identifiers_ticker_names_and_future_availability_indicators_are_features = false
+
+[labels.beta_label]
+lookback_sessions = 252
+minimum_valid_observations = 126
+eligible_return_legs = "return_history_usable==true and covered_trading_sessions==1"
+factors = ["mktrf", "smb", "hml", "rmw", "cma", "umd"]
+dependent_variable = "authoritative_total_return-rf"
+intercept = true
+half_life_sessions = 126
+weight_formula = "2^(-age_sessions/126)"
+slope_clip_cross_section = "signal-date long-eligible scoring universe"
+slope_clip_quantiles = ["0.01", "0.99"]
+slope_clip_algorithm = "Hyndman-Fan type 7"
+intercept_is_subtracted_from_forward_label = false
+
+[labels.forward_interval]
+clock_source = "verified rebalance_calendar"
+signal_timestamp = "after signal_date close"
+entry = "first verified trading-day close after signal"
+included_return_span = "strictly after entry close through and including next rebalance close"
+signal_to_entry_return_credited = false
+multi_session_return_use = "label missing; a compounded multi-session security return is not a daily residual and is never approximated by subtracting summed daily factors"
+valid_forward_return_legs = "return_history_usable==true and covered_trading_sessions==1; ordinary_plus_terminal_delisting_adjustment is valid only when it is one session"
+span_straddling_entry_or_exit = "label missing; never prorate"
+unresolved_or_nonusable_gap = "label missing; never zero"
+midperiod_delisting = "end security path at reconciled liquidation payoff; subsequent cash contributes zero excess return"
+security_label_available_date = "max(exit_date, all contributing outcome_availability_date)"
+month_label_available_date = "max(security_label_available_date across all valid labels in the signal-date scoring cross-section)"
+training_cutoff = "month_label_available_date<=fit_signal_date"
+
+[labels.primary]
+name = "residual_return_rank"
+unranked_formula = "sum over one-session legs after entry through exit of (authoritative_total_return - same-session rf - clipped_beta_label' * same-session FF5+UMD); the regression intercept is not subtracted"
+rank_cross_section = "signal-date long-eligible securities with valid realized outcomes"
+rank_formula = "((average_rank - 0.5) / N_valid) - 0.5"
+rank_ties = "average"
+minimum_valid_labels_per_signal = 100
+required_monthly_mean = "exact_zero"
+
+[labels.robustness_excess]
+name = "excess_return_rank"
+unranked_formula = "sum(authoritative_total_return - sum(rf over return leg span))"
+rank_cross_section = "identical to primary"
+rank_formula = "identical to primary"
+
+[labels.robustness_magnitude]
+name = "residual_return_mad_standardized"
+formula = "(unranked_residual_return - within_month_median) / (1.4826 * within_month_MAD)"
+clip = "[-5,+5]"
+zero_mad = "target missing for the entire signal month"
+
+[splits]
+stage_axis = "holding_month"
+chronological = true
+expanding = true
+purge_unit = "one complete holding interval"
+training_label_requires_month_availability_by_fit_signal = true
+interval_crossing_training_to_evaluation_boundary_is_training_eligible = false
+development_selection_last_holding_month = "2014-11"
+development_embargo_holding_month = "2014-12"
+development_embargo_signal_date = "2014-11-28"
+development_embargo_exit_date = "2015-01-02"
+
+[[splits.folds]]
+fold_id = "dev_fold_1"
+fit_signal_date = "2006-12-29"
+train_last_eligible_holding_month = "2006-11"
+purged_holding_month = "2006-12"
+validation_first_holding_month = "2007-01"
+validation_last_holding_month = "2008-12"
+
+[[splits.folds]]
+fold_id = "dev_fold_2"
+fit_signal_date = "2008-12-31"
+train_last_eligible_holding_month = "2008-11"
+purged_holding_month = "2008-12"
+validation_first_holding_month = "2009-01"
+validation_last_holding_month = "2010-12"
+
+[[splits.folds]]
+fold_id = "dev_fold_3"
+fit_signal_date = "2010-12-31"
+train_last_eligible_holding_month = "2010-11"
+purged_holding_month = "2010-12"
+validation_first_holding_month = "2011-01"
+validation_last_holding_month = "2012-12"
+
+[[splits.folds]]
+fold_id = "dev_fold_4"
+fit_signal_date = "2012-12-31"
+train_last_eligible_holding_month = "2012-11"
+purged_holding_month = "2012-12"
+validation_first_holding_month = "2013-01"
+validation_last_holding_month = "2014-11"
+
+[refit_support]
+monthly_feature_scoring_and_optimization_rows_required_for_every_specification = true
+primary_refit_signal_months = [3, 6, 9, 12]
+annual_robustness_refit_signal_month = 12
+refit_cutoff = "only label months with month_label_available_date<=refit signal close"
+age_months_formula = "month_index(refit_signal_month)-month_index(label_holding_month)"
+primary_memory = "weighted expanding with weight 2^(-age_months/120)"
+unweighted_expanding_robustness = true
+trailing_15_year_robustness = "age_months<=180"
+cadence_robustness = ["monthly", "quarterly", "annual"]
+
+[feature_sets]
+full_feature_primary = "all 163 registry features"
+reduced_auxiliary_core = "extension core including Compustat but excluding OptionMetrics, 13F, SEC events, restatements, segments and Pastor-Stambaugh"
+market_price_liquidity_core = "robustness core excluding Compustat and every late or revised auxiliary family"
+core_names_are_interchangeable = false
+
+[quality_gates]
+upstream_pointer_and_manifest_hashes_match = true
+only_verified_upstream_pointers_consumed = true
+every_consumed_file_hash_and_size_matches_manifest = true
+unique_signal_date_permno = true
+unique_selected_signal_date_permco = true
+row_conservation_against_signal_universe = true
+observation_date_after_signal_count = 0
+public_availability_date_after_signal_count = 0
+stale_feature_use_count = 0
+future_outcome_universe_filter_count = 0
+return_span_overlap_or_double_count_count = 0
+factor_unit = "decimal_ratio"
+optionmetrics_total_or_blank_flow_rows_used_count = 0
+optionmetrics_noncovered_rows_encoded_as_zero_count = 0
+raw_ps_innovation_used_count = 0
+ps_ar_fit_endpoint_not_before_innovation_month_count = 0
+feature_names_formulas_units_and_order_match_registry = true
+missingness_report_dimensions = ["feature_family", "signal_year", "exchange", "domicile", "adr_status", "long_eligible", "short_eligible"]
+deterministic_recreation_required = true
+
+[publication]
+artifact_root = "artifacts/phase_03_features"
+primary_pointer = "artifacts/phase_03_features/LATEST_CONTRACT_PRIMARY.json"
+verified_pointer = "artifacts/phase_03_features/LATEST_CONTRACT_VERIFIED.json"
+only_verified_contract_may_authorize_feature_and_label_build = true
+primary_contract_authorizes_feature_or_label_materialization = false
+independent_contract_verification_required = true
+verified_contract_may_authorize_development_feature_and_label_materialization = true
+verified_contract_may_authorize_model_fitting_or_backtests = false
+validation_or_final_access_authorized = false

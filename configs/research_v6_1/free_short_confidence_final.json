@@ -1,0 +1,87 @@
+{
+  "schema": "research_v6_1_free_short_confidence_final_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_TEST",
+  "approved_on": "2026-08-14",
+  "question": "Does the frozen 1.5-percent-cap winner improve when shorts are optional but both sides retain the same confidence-sensitive rank-to-payoff weighting?",
+  "base_portfolio_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "frozen_control": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "variant": "return_plus_ff5_momentum__optimized_10pct_vol",
+    "manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef"
+  },
+  "scope": {
+    "selector_retraining": false,
+    "feature_change": false,
+    "model_change": false,
+    "signal_change": false,
+    "rank_change": false,
+    "alpha_gate_change": false,
+    "candidate_tail_change": false,
+    "calibration_change": false,
+    "cost_model_change": false,
+    "optimizer_objective": "unchanged causal expected-net-return objective",
+    "position_cap": 0.015,
+    "only_intervention": "remove minimum short gross and raise maximum net solely so zero shorts are feasible",
+    "post_diagnostic_historical_development_only": true
+  },
+  "evidence": {
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "profiles": [
+    {
+      "id": "control",
+      "family": "frozen_control",
+      "overrides": {}
+    },
+    {
+      "id": "incumbent_1p5",
+      "family": "incumbent",
+      "overrides": {
+        "maximum_position_weight": 0.015
+      }
+    },
+    {
+      "id": "free_short_confident_1p5",
+      "family": "single_ablation",
+      "overrides": {
+        "maximum_position_weight": 0.015,
+        "minimum_short_gross": 0.0,
+        "maximum_net": 1.0
+      }
+    }
+  ],
+  "selection_tiers": {
+    "incumbent": {
+      "allowed_profiles": ["incumbent_1p5"]
+    },
+    "free_short": {
+      "allowed_profiles": ["free_short_confident_1p5"]
+    }
+  },
+  "selection": {
+    "uses_validation_only": true,
+    "metric": "annualized_net_excess_return_primary",
+    "rule": "Evaluate both prespecified profiles on validation and carry both unchanged into the historical comparison.",
+    "test_outcomes_never_select_profile": true
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "interpretation": {
+    "primary_question": "Does making shorts optional improve the exact 1.5-percent winner without changing its signals or confidence weighting?",
+    "no_promotion_from_historical_test": true,
+    "clean_confirmation_required": true
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "control_reconciliation": {
+    "historical_test": {
+      "available": true,
+      "explanation": "The V6.6 replay accrues borrow and financing from current daily drifted weights; the predecessor charged monthly start weights. Gross stock and risk-free accounting use the same authenticated outcomes.",
+      "maximum_absolute_monthly_total_return_difference": 0.0006326202806758927,
+      "mean_monthly_total_return_difference": -0.00012000300796201032,
+      "months": 20
+    },
+    "selection": {
+      "available": true,
+      "explanation": "The V6.6 replay accrues borrow and financing from current daily drifted weights; the predecessor charged monthly start weights. Gross stock and risk-free accounting use the same authenticated outcomes.",
+      "maximum_absolute_monthly_total_return_difference": 0.0008900123882648985,
+      "mean_monthly_total_return_difference": -0.0001085540769457227,
+      "months": 12
+    }
+  },
+  "data_quality": {
+    "dynamic_feature_count": 38,
+    "encoded_feature_count": 850,
+    "months": 43,
+    "position_days": 102524,
+    "position_months": 4903,
+    "post_fallback_finite_return_fraction": 1.0,
+    "raw_daily_position_day_coverage": 0.995318169404237,
+    "raw_daily_weight_coverage": 0.9947287032423263
+  },
+  "decision": {
+    "best_historical_profile": "safety_only",
+    "interpretation": "No validation-frozen intervention cleared every economic and paired-inference gate. The evidence therefore favors preserving monthly discipline and using the daily layer only for operational exposure safety.",
+    "qualifying_profiles": [],
+    "terminal_decision": "RETAIN_MONTHLY_REBALANCE_CONTROL_NO_INTRAMONTH_INTERVENTION_QUALIFIES"
+  },
+  "historical_test": {
+    "monthly_control": {
+      "annualized_borrow_cost": 0.006458435335870482,
+      "annualized_financing_cost": 0.048985103053386596,
+      "annualized_net_excess_return": 0.2162866122823641,
+      "annualized_realized_volatility": 0.1103056807642405,
+      "annualized_total_cost": 0.0622797694766589,
+      "annualized_transaction_cost": 0.006836231087401837,
+      "cumulative_total_return": 0.5373844975025521,
+      "ending_nav": 175717.41969865715,
+      "exit_count": 0,
+      "intervention_count": 0,
+      "intervention_one_way_turnover": 0.0,
+      "maximum_close_gross": 1.9705416887342864,
+      "maximum_drawdown": -0.08208568412803241,
+      "months": 20,
+      "net_sharpe": 1.9607930505831304,
+      "policy": "monthly_control",
+      "positive_month_fraction": 0.7,
+      "safety_action_count": 0,
+      "starting_nav": 114296.33899919398,
+      "total_return_cagr": 0.2944029632196401,
+      "trim_count": 0
+    },
+    "safety_only": {
+      "annualized_borrow_cost": 0.006455915276679709,
+      "annualized_financing_cost": 0.04894045000465749,
+      "annualized_net_excess_return": 0.21635880140044095,
+      "annualized_realized_volatility": 0.11029755896061558,
+      "annualized_total_cost": 0.062232965479799666,
+      "annualized_transaction_cost": 0.00683660019846246,
+      "cumulative_total_return": 0.5375676418940525,
+      "ending_nav": 175738.35243211398,
+      "exit_count": 0,
+      "intervention_count": 1,
+      "intervention_one_way_turnover": 0.07054168873428644,
+      "maximum_close_gross": 1.9527367604122188,
+      "maximum_drawdown": -0.08208568440515718,
+      "months": 20,
+      "net_sharpe": 1.9615919285910677,
+      "policy": "safety_only",
+      "positive_month_fraction": 0.7,
+      "safety_action_count": 1,
+      "starting_nav": 114296.33899919398,
+      "total_return_cagr": 0.2944954802167725,
+      "trim_count": 1
+    },
+    "selected_predictive": {
+      "annualized_borrow_cost": 0.005725067195307923,
+      "annualized_financing_cost": 0.04354710109327384,
+      "annualized_net_excess_return": 0.23003684239327907,
+      "annualized_realized_volatility": 0.12025154432031755,
+      "annualized_total_cost": 0.05651564008950809,
+      "annualized_transaction_cost": 0.0072434718009263275,
+      "cumulative_total_return": 0.5694988978848998,
+      "ending_nav": 179387.97809151383,
+      "exit_count": 158,
+      "intervention_count": 311,
+      "intervention_one_way_turnover": 2.4461142195214585,
+      "maximum_close_gross": 1.8916301826282238,
+      "maximum_drawdown": -0.06578502354246896,
+      "months": 20,
+      "net_sharpe": 1.9129637269399484,
+      "policy": "selected_predictive",
+      "positive_month_fraction": 0.7,
+      "safety_action_count": 0,
+      "starting_nav": 114296.33899919398,
+      "total_return_cagr": 0.31055909606770515,
+      "trim_count": 153
+    },
+    "selected_predictive_plus_safety": {
+      "annualized_borrow_cost": 0.005725067195307923,
+      "annualized_financing_cost": 0.04354710109327384,
+      "annualized_net_excess_return": 0.23003684239327907,
+      "annualized_realized_volatility": 0.12025154432031755,
+      "annualized_total_cost": 0.05651564008950809,
+      "annualized_transaction_cost": 0.0072434718009263275,
+      "cumulative_total_return": 0.5694988978848998,
+      "ending_nav": 179387.97809151383,
+      "exit_count": 158,
+      "intervention_count": 311,
+      "intervention_one_way_turnover": 2.4461142195214585,
+      "maximum_close_gross": 1.8916301826282238,
+      "maximum_drawdown": -0.06578502354246896,
+      "months": 20,
+      "net_sharpe": 1.9129637269399484,
+      "policy": "selected_predictive_plus_safety",
+      "positive_month_fraction": 0.7,
+      "safety_action_count": 0,
+      "starting_nav": 114296.33899919398,
+      "total_return_cagr": 0.31055909606770515,
+      "trim_count": 153
+    },
+    "selected_rule": {
+      "annualized_borrow_cost": 0.005609496198086114,
+      "annualized_financing_cost": 0.04210432379468451,
+      "annualized_net_excess_return": 0.1578401742895399,
+      "annualized_realized_volatility": 0.11955211909044725,
+      "annualized_total_cost": 0.05549690706624371,
+      "annualized_transaction_cost": 0.0077830870734730715,
+      "cumulative_total_return": 0.3949036613977799,
+      "ending_nav": 159432.3817543376,
+      "exit_count": 380,
+      "intervention_count": 380,
+      "intervention_one_way_turnover": 4.725077386591929,
+      "maximum_close_gross": 1.8810414001260578,
+      "maximum_drawdown": -0.07731592747040927,
+      "months": 20,
+      "net_sharpe": 1.3202624553239894,
+      "policy": "selected_rule",
+      "positive_month_fraction": 0.55,
+      "safety_action_count": 0,
+      "starting_nav": 114296.33899919398,
+      "total_return_cagr": 0.2210305457076185,
+      "trim_count": 0
+    }
+  },
+  "identity": {
+    "code_identity": "a82fbba1983b6797210e6752ba16fae212680cd3372e3e4bb9da060d2279a483",
+    "config_sha256": "566f3749ee9baa6317a7af2a123323cb96bc3870908ead3a4525baf6d334c6ff",
+    "daily_returns_sha256": "45a0abdadc50ac05945a55b68672ed7723fc88d4e281df645a26b656a8b1d512",
+    "frontier_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+    "v6_input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd"
+  },
+  "paired_differences": {
+    "monthly_control": {
+      "annualized_difference": 0.0,
+      "paired_hac_t": NaN
+    },
+    "safety_only": {
+      "annualized_difference": 7.218911807687077e-05,
+      "paired_hac_t": 1.320417961809341,
+      "positive_difference_fraction": 0.15
+    },
+    "selected_predictive": {
+      "annualized_difference": 0.013750230110915009,
+      "paired_hac_t": 0.6243435613080632,
+      "positive_difference_fraction": 0.55
+    },
+    "selected_predictive_plus_safety": {
+      "annualized_difference": 0.013750230110915009,
+      "paired_hac_t": 0.6243435613080632,
+      "positive_difference_fraction": 0.55
+    },
+    "selected_rule": {
+      "annualized_difference": -0.0584464379928242,
+      "paired_hac_t": -1.5390990358367216,
+      "positive_difference_fraction": 0.35
+    }
+  },
+  "promotion_gates": {
+    "safety_only": {
+      "drawdown_within_tolerance": true,
+      "paired_hac_t": false,
+      "test_return_higher": true,
+      "test_sharpe_higher": true,
+      "validation_frozen": true
+    },
+    "selected_predictive": {
+      "drawdown_within_tolerance": true,
+      "paired_hac_t": false,
+      "test_return_higher": true,
+      "test_sharpe_higher": false,
+      "validation_frozen": true
+    },
+    "selected_predictive_plus_safety": {
+      "drawdown_within_tolerance": true,
+      "paired_hac_t": false,
+      "test_return_higher": true,
+      "test_sharpe_higher": false,
+      "validation_frozen": true
+    },
+    "selected_rule": {
+      "drawdown_within_tolerance": true,
+      "paired_hac_t": false,
+      "test_return_higher": false,
+      "test_sharpe_higher": false,
+      "validation_frozen": true
+    }
+  },
+  "schema": "research_v6_6_intramonth_result_v1",
+  "selection": {
+    "control": {
+      "annualized_borrow_cost": 0.006541274521137266,
+      "annualized_financing_cost": 0.04925475478342507,
+      "annualized_net_excess_return": -0.038202772245230054,
+      "annualized_realized_volatility": 0.06514981056965759,
+      "annualized_total_cost": 0.061826448469070316,
+      "annualized_transaction_cost": 0.0060304191645079875,
+      "cumulative_total_return": 0.009944554063767042,
+      "ending_nav": 114296.33899919398,
+      "exit_count": 0,
+      "intervention_count": 0,
+      "intervention_one_way_turnover": 0.0,
+      "maximum_close_gross": 2.070912995447192,
+      "maximum_drawdown": -0.07074976363329699,
+      "months": 12,
+      "net_sharpe": -0.5863834738918235,
+      "policy": "monthly_control",
+      "positive_month_fraction": 0.5,
+      "safety_action_count": 0,
+      "starting_nav": 113170.90481778812,
+      "total_return_cagr": 0.009944554063767042,
+      "trim_count": 0
+    },
+    "period": "2023-01--2023-12",
+    "safety": {
+      "annualized_borrow_cost": 0.006509774171605252,
+      "annualized_financing_cost": 0.04870386394084955,
+      "annualized_net_excess_return": -0.03855946974576396,
+      "annualized_realized_volatility": 0.06525346254138739,
+      "annualized_total_cost": 0.06125735829521256,
+      "annualized_transaction_cost": 0.006043720182757766,
+      "cumulative_total_return": 0.00957743899976471,
+      "ending_nav": 114254.79225522863,
+      "exit_count": 0,
+      "intervention_count": 5,
+      "intervention_one_way_turnover": 0.3474980470390615,
+      "maximum_close_gross": 1.9792453193214254,
+      "maximum_drawdown": -0.07122682341500886,
+      "months": 12,
+      "net_sharpe": -0.5909183703670496,
+      "policy": "safety_only",
+      "positive_month_fraction": 0.5,
+      "safety_action_count": 5,
+      "starting_nav": 113170.90481778812,
+      "total_return_cagr": 0.00957743899976471,
+      "trim_count": 5
+    },
+    "selected_predictive": {
+      "exit_threshold": -0.015528196236118674,
+      "horizon": 5,
+      "intensity": "selective",
+      "kind": "predictive",
+      "model_key": "xgb_depth_2__h5",
+      "policy": {
+        "id": "predictive__xgb_depth_2__h5__selective",
+        "predictive": {
+          "exit_threshold": -0.015528196236118674,
+          "horizon": 5,
+          "intensity": "selective",
+          "model_key": "xgb_depth_2__h5",
+          "trim_threshold": -0.011806773953139782
+        }
+      },
+      "policy_id": "predictive__xgb_depth_2__h5__selective",
+      "summary": {
+        "annualized_borrow_cost": 0.005408246401515384,
+        "annualized_financing_cost": 0.03119306637051382,
+        "annualized_net_excess_return": -0.023568241886095076,
+        "annualized_realized_volatility": 0.07014897038571734,
+        "annualized_total_cost": 0.04381720440869777,
+        "annualized_transaction_cost": 0.007215891636668565,
+        "cumulative_total_return": 0.024494991930029242,
+        "ending_nav": 115943.0252180139,
+        "exit_count": 258,
+        "intervention_count": 481,
+        "intervention_one_way_turnover": 4.7526789839778685,
+        "maximum_close_gross": 1.910323427150979,
+        "maximum_drawdown": -0.06507685379512251,
+        "months": 12,
+        "net_sharpe": -0.3359741669265281,
+        "policy": "predictive__xgb_depth_2__h5__selective",
+        "positive_month_fraction": 0.4166666666666667,
+        "safety_action_count": 0,
+        "starting_nav": 113170.90481778812,
+        "total_return_cagr": 0.024494991930029242,
+        "trim_count": 223
+      },
+      "trim_threshold": -0.011806773953139782
+    },
+    "selected_rule": {
+      "kind": "rule",
+      "policy": {
+        "id": "rule__stop_loss_15_exit",
+        "rule": {
+          "id": "stop_loss_15_exit",
+          "stop_loss": -0.15,
+          "stop_loss_fraction": 0.0
+        }
+      },
+      "policy_id": "rule__stop_loss_15_exit",
+      "summary": {
+        "annualized_borrow_cost": 0.005699951748879679,
+        "annualized_financing_cost": 0.04298224803420446,
+        "annualized_net_excess_return": 0.08341554783136584,
+        "annualized_realized_volatility": 0.11232623020490143,
+        "annualized_total_cost": 0.055460428737165446,
+        "annualized_transaction_cost": 0.006778228954081316,
+        "cumulative_total_return": 0.13568635694465203,
+        "ending_nav": 128526.65260464375,
+        "exit_count": 180,
+        "intervention_count": 180,
+        "intervention_one_way_turnover": 2.5988909599274415,
+        "maximum_close_gross": 1.9146979340335797,
+        "maximum_drawdown": -0.06820362468635588,
+        "months": 12,
+        "net_sharpe": 0.7426186001186208,
+        "policy": "rule__stop_loss_15_exit",
+        "positive_month_fraction": 0.5833333333333334,
+        "safety_action_count": 0,
+        "starting_nav": 113170.90481778812,
+        "total_return_cagr": 0.13568635694465203,
+        "trim_count": 0
+      }
+    }
+  },
+  "status": "COMPLETE"
+}

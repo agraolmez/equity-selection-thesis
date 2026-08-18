@@ -1,0 +1,261 @@
+schema_version = 1
+policy_id = "signal-date-universe-policy-v1"
+status = "frozen_development_only_contract_pending_primary_build_and_independent_verification"
+contract_id = "phase02-signal-date-universe-v1"
+methodology_freeze_id = "methodology_v1_preimplementation_2026-07-14"
+
+[methodology]
+source = "outputs/methodology_v1_source.md"
+source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+freeze_manifest = "outputs/methodology_v1_freeze.json"
+freeze_manifest_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[phase_02]
+phase_config = "configs/phase_02_canonical_panel.toml"
+phase_config_sha256 = "fb727b10375d5eaf5a8e72629934daeb2f5790c7b09a46287df08c972db00adb"
+
+[schema]
+path = "configs/phase_02_canonicalization/signal_date_universe_schema_v1.json"
+sha256 = "c9302de89b846fc044c984648236c8ecbac1ca5c26777cb4cc66be7b8e6570c3"
+
+[upstream.typed_backbone]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json"
+verified_pointer_sha256 = "556e57a27ed21a7ba6ea6ffb58f02335f3278aaac3de09e316e3f7535d74edcf"
+required_status = "verified_passed"
+required_build_id = "crsp-typed-2ab2f0b7910a1b4b33d1ca32"
+required_tables = ["crsp_security_day", "crsp_identity_interval"]
+
+[upstream.calendar]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+required_status = "verified_passed"
+required_build_id = "calendar-ae2e4ba4a280d66e"
+required_table = "trading_calendar"
+
+[upstream.return_reconciliation]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_RETURN_RECONCILIATION_VERIFIED.json"
+verified_pointer_sha256 = "136b84757cc40136fa621546c372592259d870b6440d70867a79e4c4364c4abb"
+required_status = "verified_passed"
+required_build_id = "crsp-return-e4259d178a43f4ac8c6bfbab"
+required_authorization = "return_history_authorized"
+required_table = "crsp_security_day_return"
+primary_or_unverified_return_output_permitted = false
+
+[scope]
+start_date = "2000-01-01"
+last_permitted_signal_date = "2014-10-31"
+signal_date_rule = "last_verified_CRSP_trading_day_close_of_each_calendar_month"
+signal_timestamp = "after_close"
+same_close_execution_permitted = false
+entry_rule = "first_verified_trading_day_close_after_signal"
+validation_or_final_period_access_permitted = false
+features_permitted = false
+labels_or_targets_permitted = false
+models_permitted = false
+portfolios_or_backtests_permitted = false
+
+[row_population]
+rule = "retain_every_canonical_crsp_security_day_row_whose_calendar_date_is_a_development_signal_date"
+primary_key = ["signal_date", "PERMNO"]
+same_day_market_row_required = true
+forward_fill_market_observations = false
+failed_base_or_investability_rows_are_retained_for_audit = true
+identity_interval_join = "exactly_one_interval_with_start_date_le_signal_date_le_end_date"
+zero_identity_matches = "fatal"
+multiple_identity_matches = "fatal"
+current_security_master_or_current_listing_filter_permitted = false
+
+[point_in_time]
+observation_date = "same_day_CRSP_calendar_date"
+public_availability_date = "same_day_CRSP_calendar_date_after_close"
+signal_date = "same_day_month_end_after_close"
+hard_assert_public_availability_date_not_after_signal_date = true
+rolling_market_observations_must_be_on_or_before_signal_date = true
+rolling_return_outcome_availability_must_be_on_or_before_signal_date = true
+future_backfill_permitted = false
+future_return_requirement_permitted = false
+future_delisting_or_survival_filter_permitted = false
+absence_from_present_day_master_filter_permitted = false
+
+[base_screen]
+security_type_allowed = ["EQTY"]
+security_subtype_allowed = ["COM"]
+share_type_allowed = ["NS", "AD"]
+conditional_type_allowed = ["RW"]
+trading_status_allowed = ["A"]
+primary_exchange_allowed = ["N", "A", "Q"]
+valid_price_rule = "screening_price_valid_true_and_close_usd_per_share_nonnull_and_gt_zero"
+valid_market_cap_rule = "market_cap_valid_true_and_market_cap_usd_nonnull_and_gt_zero"
+all_components_required = true
+us_incorporation_is_filter = false
+issuer_domicile_is_filter = false
+foreign_ordinary_shares_permitted = true
+adrs_permitted = true
+
+[rolling_windows]
+calendar = "verified_global_CRSP_trading_calendar"
+windows_end_at_signal_date_inclusive = true
+window_membership_uses_global_sessions_not_last_security_observations = true
+security_rows_are_never_forward_filled = true
+early_scope_windows_may_contain_fewer_than_requested_sessions = true
+
+[rolling_windows.liquidity]
+requested_sessions = 60
+valid_session_rule = "liquidity_session_valid_true_equivalent_to_finite_positive_DlyClose_and_finite_nonnegative_DlyVol"
+dollar_volume_source = "screening_dollar_volume_usd"
+dollar_volume_formula = "DlyClose_times_DlyVol_in_nominal_USD_on_valid_liquidity_sessions"
+median_population = "valid_liquidity_sessions_only"
+median_rule = "sorted_exact_values_middle_value_or_arithmetic_mean_of_two_middle_values"
+minimum_valid_sessions = 40
+positive_volume_numerator = "valid_liquidity_sessions_with_DlyVol_gt_zero"
+positive_volume_denominator = "valid_liquidity_sessions_only"
+zero_denominator_fraction = "null_and_all_fraction_thresholds_fail"
+
+[rolling_windows.return_history]
+requested_sessions = 252
+valid_row_rule = "verified_authoritative_total_return_nonnull_and_return_history_usable_true_and_outcome_availability_date_le_signal_date"
+count_unit = "distinct_canonical_security_day_return_rows_not_covered_session_expansion"
+minimum_valid_rows = 126
+future_return_or_future_survival_required = false
+
+[long_screen]
+must_pass_base_screen = true
+minimum_close_usd_per_share = "5.000000"
+minimum_market_cap_usd = "300000000.00"
+minimum_valid_liquidity_sessions = 40
+minimum_median_daily_dollar_volume_60_usd = "5000000.000000"
+minimum_positive_volume_fraction_60 = "0.900000000000"
+minimum_valid_daily_return_rows_252 = 126
+threshold_comparison = "greater_than_or_equal"
+pre_dedup_boolean = "long_eligible_pre_dedup"
+final_boolean = "long_eligible"
+scoring_and_label_universe_boolean = "long_eligible"
+
+[short_screen]
+must_pass_long_screen_pre_dedup = true
+minimum_close_usd_per_share = "10.000000"
+minimum_market_cap_usd = "1000000000.00"
+minimum_median_daily_dollar_volume_60_usd = "20000000.000000"
+minimum_positive_volume_fraction_60 = "0.950000000000"
+minimum_valid_liquidity_sessions_inherited_from_long = 40
+minimum_valid_daily_return_rows_252_inherited_from_long = 126
+historical_locate_observed = false
+threshold_comparison = "greater_than_or_equal"
+pre_dedup_boolean = "short_eligible_pre_dedup"
+final_boolean = "short_eligible"
+final_short_must_imply_final_long = true
+application_stage = "after_scoring_for_opening_positions_but_precomputed_here_as_a_point_in_time_feasibility_flag"
+
+[issuer_deduplication]
+application_population = "long_eligible_pre_dedup_lines_only"
+application_stage = "after_complete_long_screen_before_final_long_or_short_boolean"
+issuer_key = "PERMCO"
+partition_key = ["signal_date", "PERMCO"]
+primary_sort = "median_daily_dollar_volume_60_usd_desc"
+secondary_sort = "market_cap_usd_desc"
+tertiary_sort = "PERMNO_asc"
+null_sort = "fatal_in_application_population"
+numeric_tie_rule = "exact_fixed_scale_decimal_equality_no_epsilon"
+keep_lines_per_issuer = 1
+rank_is_one_based = true
+non_long_pre_dedup_rank = "null"
+final_long_rule = "long_eligible_pre_dedup_and_issuer_line_selected"
+final_short_rule = "short_eligible_pre_dedup_and_issuer_line_selected"
+separate_short_line_selection_permitted = false
+dedup_among_base_only_lines_permitted = false
+
+[reason_codes]
+encoding = "pipe_delimited_in_contract_order_without_duplicates"
+pass_token = "PASS"
+unknown_token_permitted = false
+
+[reason_codes.base]
+contract_order = [
+  "BASE_SECURITY_TYPE_NOT_EQTY",
+  "BASE_SECURITY_SUBTYPE_NOT_COM",
+  "BASE_SHARE_TYPE_NOT_NS_OR_AD",
+  "BASE_CONDITIONAL_TYPE_NOT_RW",
+  "BASE_TRADING_STATUS_NOT_A",
+  "BASE_PRIMARY_EXCHANGE_NOT_N_A_Q",
+  "BASE_PRICE_INVALID",
+  "BASE_MARKET_CAP_INVALID",
+]
+
+[reason_codes.long]
+contract_order = [
+  "LONG_NOT_BASE_ELIGIBLE",
+  "LONG_PRICE_BELOW_5_USD",
+  "LONG_MARKET_CAP_BELOW_300M_USD",
+  "LONG_VALID_LIQUIDITY_SESSIONS_BELOW_40",
+  "LONG_MEDIAN_DOLLAR_VOLUME_BELOW_5M_USD",
+  "LONG_POSITIVE_VOLUME_FRACTION_BELOW_0_90",
+  "LONG_VALID_RETURN_ROWS_BELOW_126",
+  "LONG_NOT_SELECTED_ISSUER_LINE",
+]
+pre_dedup_codes_exclude = ["LONG_NOT_SELECTED_ISSUER_LINE"]
+final_codes_include_dedup_result = true
+
+[reason_codes.short]
+contract_order = [
+  "SHORT_NOT_LONG_ELIGIBLE",
+  "SHORT_PRICE_BELOW_10_USD",
+  "SHORT_MARKET_CAP_BELOW_1B_USD",
+  "SHORT_MEDIAN_DOLLAR_VOLUME_BELOW_20M_USD",
+  "SHORT_POSITIVE_VOLUME_FRACTION_BELOW_0_95",
+]
+
+[reason_codes.issuer_dedup]
+allowed = [
+  "NOT_APPLICABLE_NOT_LONG_ELIGIBLE_PRE_DEDUP",
+  "SOLE_LONG_ELIGIBLE_LINE",
+  "SELECTED_HIGHEST_MEDIAN_DOLLAR_VOLUME",
+  "SELECTED_MARKET_CAP_TIEBREAK",
+  "SELECTED_LOWEST_PERMNO_TIEBREAK",
+  "NOT_SELECTED_LOWER_MEDIAN_DOLLAR_VOLUME",
+  "NOT_SELECTED_LOWER_MARKET_CAP_TIEBREAK",
+  "NOT_SELECTED_HIGHER_PERMNO_TIEBREAK",
+]
+exactly_one_required = true
+
+[hard_quality_gates]
+unique_signal_date_permno = true
+unique_selected_signal_date_permco = true
+signal_dates_must_match_verified_calendar_month_ends = true
+signal_date_must_not_exceed_2014_10_31 = true
+identity_join_cardinality_one = true
+availability_not_after_signal = true
+return_observations_after_signal_count_must_equal_zero = true
+future_outcome_filter_applied_must_be_false = true
+short_eligible_implies_long_eligible = true
+long_eligible_implies_issuer_line_selected = true
+issuer_selected_count_per_eligible_issuer_must_equal_one = true
+issuer_rank_must_follow_frozen_sort = true
+before_after_join_counts_required = true
+reason_code_boolean_reconstruction_required = true
+counts_by_signal_year_exchange_share_type_and_eligibility_required = true
+structural_break_explanations_required = true
+raw_identifiers_or_security_examples_in_quality_artifacts_permitted = false
+
+[publication]
+primary_pointer = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_PRIMARY.json"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_SIGNAL_DATE_UNIVERSE_VERIFIED.json"
+primary_status = "primary_passed_pending_independent_verification"
+verified_status = "verified_passed"
+only_verified_pointer_may_set_signal_date_universe_authorized_true = true
+primary_build_authorizes_consumption = false
+independent_implementation_verification_required = true
+features_labels_models_portfolios_pnl_performance_or_backtests_authorized = false
+validation_or_final_test_access_authorized = false
+
+[prohibited_inputs]
+columns_or_concepts = [
+  "future_return",
+  "future_delisting",
+  "future_outcome_availability",
+  "survival_to_next_rebalance",
+  "present_day_listing_status",
+  "current_security_master_membership",
+  "USIncFlg_as_filter",
+  "ticker_as_join_key",
+  "current_CUSIP_as_undated_join_key",
+]

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "lock_id": "phase02-auxiliary-factor-unit-empirical-lock-v1",
+  "status": "locked_after_aggregate_only_prebuild_discovery",
+  "selected_source_to_decimal_ratio_multiplier": "1",
+  "source_values_are_decimal_ratios": true,
+  "selection_used_models_portfolios_or_backtests": false,
+  "daily": {
+    "source": "ff_5_momentum_daily.csv",
+    "source_sha256": "c709acdb7e3a383d1f7b9f1208fb7d460dcc5b1cc1ea260060e289f5baa964ba",
+    "rows_through_2014_12_01": 3752,
+    "minimum_date": "2000-01-03",
+    "maximum_date": "2014-12-01",
+    "maximum_absolute_mktrf": "0.113600",
+    "maximum_absolute_rf": "0.00030"
+  },
+  "monthly": {
+    "source": "ff_5_momentum_monthly.csv",
+    "source_sha256": "466c2326783bcac9f9ee29bfa4edb88ed94ec4d49567f99dc743c9687f73ba50",
+    "rows_through_2014_12_01": 179,
+    "minimum_date": "2000-01-31",
+    "maximum_date": "2014-11-28",
+    "maximum_absolute_mktrf": "0.172000",
+    "maximum_absolute_rf": "0.00560"
+  },
+  "daily_monthly_crosscheck": {
+    "overlap_months": 179,
+    "median_absolute_daily_compound_minus_monthly_mktrf": "0.000107235084607915784430415",
+    "maximum_absolute_daily_compound_minus_monthly_mktrf": "0.000960575511166474206155471",
+    "interpretation": "The small differences are consistent with daily-versus-monthly construction and rounding; multiplying either file by 0.01 would create a two-order-of-magnitude mismatch."
+  }
+}

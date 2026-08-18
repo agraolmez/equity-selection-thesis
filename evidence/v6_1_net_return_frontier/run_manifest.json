@@ -1,0 +1,24 @@
+{
+  "code_identity": "eac64c8cf6db8a2355c879457e978bd0d86b90c3bd512ebc48ff39708cd2311d",
+  "config_sha256": "880c4b16de974ac2406ecb244dd128191962ad7842a1f856f56a86fdcadd0674",
+  "historical_test_months": 40,
+  "historical_test_profiles": [
+    "control",
+    "position_1p5"
+  ],
+  "input_identity": "6e6c91767c469719e6ff619446e4555e5ff341f3f878ccc296f2648f53413fec",
+  "reporting_repair": {
+    "execution_code_identity": "eac64c8cf6db8a2355c879457e978bd0d86b90c3bd512ebc48ff39708cd2311d",
+    "reason": "reporting_field_name_repair_after_complete_validation",
+    "reporting_code_identity": "1d5f0fdc365a1a27cb73bea18f06481036231e533dbe9144886e33ad250eb423"
+  },
+  "schema": "research_v6_1_net_return_frontier_run_v1",
+  "status": "COMPLETE",
+  "tier_winners": {
+    "expanded_institutional_100m": "position_1p5",
+    "frozen_control": "control",
+    "practical_100m": "position_1p5",
+    "unrestricted_research": "position_1p5"
+  },
+  "validation_profile_months": 575
+}

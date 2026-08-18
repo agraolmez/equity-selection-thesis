@@ -1,0 +1,838 @@
+{
+  "schema_version": 1,
+  "rules_id": "phase03-label-build-rules-v1",
+  "contract_id": "phase03-feature-label-split-v1",
+  "stage": 7,
+  "status": "frozen_stage_07_development_only_before_materialization",
+  "scope": {
+    "first_signal_date": "2000-01-31",
+    "last_signal_date": "2014-10-31",
+    "last_permitted_exit_date": "2014-12-01",
+    "required_audit_rows": 1263048,
+    "required_long_eligible_rows": 286628,
+    "required_signal_dates": 178,
+    "required_folds": 4,
+    "required_split_membership_rows": 712,
+    "validation_or_final_payload_permitted": false,
+    "models_portfolios_pnl_or_backtests_permitted": false
+  },
+  "input_allowlist": {
+    "feature_store_raw.parquet": {
+      "gate": "verified_stage_06",
+      "rows": 1263048,
+      "sha256": "07c588ddddb1b9b48db8a4cc8b1d5527aefab0d771b001d651cc33f7a735a854",
+      "schema_sha256": "e67436adbe6e2adb2f445a799f07002a272a5cdf780662aca639f0eb3c0969c3",
+      "projected_columns": [
+        "signal_date",
+        "permno",
+        "permco",
+        "long_eligible",
+        "short_eligible",
+        "beta_label_mktrf",
+        "beta_label_smb",
+        "beta_label_hml",
+        "beta_label_rmw",
+        "beta_label_cma",
+        "beta_label_umd"
+      ]
+    },
+    "crsp_signal_date_universe.parquet": {
+      "gate": "verified_signal_universe",
+      "rows": 1263048,
+      "sha256": "393784a9351039ecaf56c42eaf0bac4b3220738974291505835dda21eac3ee57",
+      "schema_sha256": "fdc4be359187a8efa621d6ab4d19951477156960a3817d8d63524edc2eff49dc",
+      "projected_columns": [
+        "signal_date",
+        "permno",
+        "permco",
+        "issuer_line_selected",
+        "long_eligible",
+        "short_eligible",
+        "future_outcome_filter_applied"
+      ]
+    },
+    "rebalance_calendar.parquet": {
+      "gate": "verified_calendar",
+      "rows": 311,
+      "sha256": "cc03002bb9c349c07f14d699bf3667fd4ccbcd012f20579b1ce1c22dd19f2591",
+      "schema_sha256": "fafaab43ec8dc08f9d1a563b425e3a671e1e1af002175f7c4d8942cc8106eac4",
+      "projected_columns": [
+        "holding_month",
+        "stage",
+        "signal_date",
+        "entry_date",
+        "exit_date",
+        "is_embargo",
+        "is_partial",
+        "full_feature_time_eligible",
+        "formal_inference_expected"
+      ]
+    },
+    "trading_calendar.parquet": {
+      "gate": "verified_calendar",
+      "rows": 6539,
+      "sha256": "b53c9fb689cea035019180405f7c2b3f90fae76f1815dadc8d2b30a1bfc7ea03",
+      "schema_sha256": "a77a27f36a803392568ed679f85c4480a64bac357808b6a7907a74561344a1a6",
+      "projected_columns": [
+        "calendar_date"
+      ]
+    },
+    "crsp_security_day_return.parquet": {
+      "gate": "verified_return_reconciliation",
+      "rows": 26778093,
+      "sha256": "9b5f0cbf31c55e3656e39333a1c32dd81c04e94cf852817b4ac628978f0938fd",
+      "schema_sha256": "6878bf18a88071b041688c41ea4b712e132de7d12f322fa077c8e2910da54e28",
+      "physical_max_date": "2014-12-31",
+      "semantic_max_date": "2014-12-01",
+      "projected_columns": [
+        "permno",
+        "calendar_date",
+        "return_leg_class",
+        "return_span_start_date",
+        "return_span_end_date",
+        "covered_trading_sessions",
+        "span_alignment_status",
+        "delisting_event_count",
+        "delisting_treatment_status",
+        "delisting_adjustment_return",
+        "authoritative_total_return",
+        "outcome_availability_date",
+        "authoritative_return_state",
+        "reconciliation_status",
+        "return_history_usable",
+        "return_history_authorized"
+      ]
+    },
+    "ff_factor_daily_observation.parquet": {
+      "gate": "verified_auxiliary",
+      "rows": 3752,
+      "sha256": "351944814b44c1ae0a43d98171be34d5dde107cead6b6a992355ef52974bd330",
+      "schema_sha256": "37ba01a80ed35b0e8bc5c2be42d8a5bf235f9893fa18da4f3c014e0c2d3e2438",
+      "first_date": "2000-01-03",
+      "last_date": "2014-12-01",
+      "units": "decimal_ratio",
+      "projected_columns": [
+        "observation_date",
+        "public_availability_date",
+        "availability_basis",
+        "mktrf",
+        "smb",
+        "hml",
+        "rmw",
+        "cma",
+        "rf",
+        "umd"
+      ]
+    }
+  },
+  "input_authentication": {
+    "production_hash_bypass_permitted": false,
+    "symlinked_root_or_path_component_permitted": false,
+    "lexical_or_resolved_root_escape_permitted": false,
+    "initial_full_sha256_required": true,
+    "bounded_temporal_delivery_required": true,
+    "identity_check_before_each_payload_read_required": true,
+    "stable_stat_and_full_rehash_after_materialization_required": true,
+    "stable_stat_and_full_rehash_before_publication_required": true
+  },
+  "beta_binding": {
+    "primary_builder_action": "consume_verified_stage_06_clipped_slopes_without_reestimation_or_reclipping",
+    "feature_names_in_order": [
+      "beta_label_mktrf",
+      "beta_label_smb",
+      "beta_label_hml",
+      "beta_label_rmw",
+      "beta_label_cma",
+      "beta_label_umd"
+    ],
+    "independent_verifier_action": "recompute_unclipped_ewls_then_type7_clip_without_importing_primary_builder",
+    "lookback_global_sessions": 252,
+    "minimum_valid_observations": 126,
+    "half_life_global_sessions": 126,
+    "intercept": true,
+    "intercept_subtracted_from_forward_label": false,
+    "factor_order": [
+      "mktrf",
+      "smb",
+      "hml",
+      "rmw",
+      "cma",
+      "umd"
+    ],
+    "dependent_variable": "authoritative_total_return_minus_rf",
+    "solver": "sqrt_weighted_numpy_lstsq_float64",
+    "rcond": 1e-12,
+    "required_rank": 7,
+    "clip_population": "signal_date_long_eligible_finite_slopes_only",
+    "clip_quantiles": [
+      0.01,
+      0.99
+    ],
+    "clip_algorithm": "Hyndman-Fan type 7 linear interpolation",
+    "comparison_absolute_tolerance": 1e-10,
+    "comparison_relative_tolerance": 1e-10
+  },
+  "forward_interval": {
+    "calendar_source": "rebalance_calendar.parquet",
+    "included_sessions": "verified trading sessions strictly after entry_date through and including exit_date",
+    "signal_to_entry_return_credited": false,
+    "return_sum": "math.fsum of chronological one-session authoritative_total_return values",
+    "excess_formula": "math.fsum(authoritative_total_return-rf)",
+    "residual_formula": "math.fsum(authoritative_total_return-rf-math.fsum(beta_j*factor_j))",
+    "compounding_permitted": false,
+    "required_return_leg_class": "ordinary_one_session or valid one-session ordinary_plus_terminal_delisting_adjustment",
+    "required_covered_trading_sessions": 1,
+    "return_authorization_source": "authenticated verified return-reconciliation pointer with return_history_authorized true",
+    "row_level_return_history_authorized_rule": "constant-false provenance guard; never a row eligibility filter",
+    "gap_multi_session_overlap_duplicate_or_straddling_rule": "entire security outcome missing",
+    "missing_or_nonfinite_factor_rule": "entire security outcome missing",
+    "unresolved_delisting_rule": "entire security outcome missing",
+    "terminal_delisting_rule": "include the reconciled one-session terminal payoff exactly once, end the path, and add zero excess return afterward",
+    "terminal_on_or_before_entry_rule": "outcome missing",
+    "suppressed_delisting_posting_rule": "never contributes a second return",
+    "successor_security_returns_permitted": false,
+    "valid_minus_one_return_permitted": true,
+    "return_below_minus_one_permitted": false
+  },
+  "availability": {
+    "security_label_available_date": "max(exit_date, every contributing outcome_availability_date)",
+    "month_label_available_date": "max security_label_available_date over primary-valid long-eligible rows only",
+    "fit_rule": "month_label_available_date less than or equal to fit_signal_date",
+    "invalid_or_nonlong_rows_may_delay_month": false,
+    "invalid_month_retains_audit_availability_date": true
+  },
+  "targets": {
+    "primary_name": "residual_return_rank",
+    "robustness_excess_name": "excess_return_rank",
+    "robustness_magnitude_name": "residual_return_mad_standardized",
+    "common_population": "primary-valid long-eligible rows within one signal date",
+    "short_eligibility_influences_target": false,
+    "minimum_valid_labels_per_signal": 100,
+    "rank_ties": "exact_float_value_average_rank",
+    "rank_formula": "rank_numerator/(2*N), where rank_numerator=p+q-N for zero-based tie block [p,q)",
+    "rank_numerator_month_sum": 0,
+    "rank_recenter_after_formula_permitted": false,
+    "canonical_negative_zero": "positive_zero",
+    "mad_center": "ordinary median",
+    "mad_scale": 1.4826,
+    "mad_clip": [
+      -5.0,
+      5.0
+    ],
+    "zero_mad_rule": "magnitude target missing for the complete signal month",
+    "mad_epsilon_permitted": false
+  },
+  "status_vocabulary": {
+    "ordered": [
+      "PRESENT",
+      "NOT_LONG_ELIGIBLE",
+      "MISSING_BETA",
+      "MISSING_NO_POST_ENTRY_RETURN",
+      "MISSING_DUPLICATE_RETURN_LEG",
+      "MISSING_RETURN_GAP",
+      "MISSING_MULTI_SESSION_RETURN",
+      "MISSING_INTERVAL_STRADDLE",
+      "MISSING_UNUSABLE_RETURN",
+      "MISSING_UNRESOLVED_DELISTING",
+      "MISSING_FACTOR",
+      "MISSING_NONFINITE_INPUT",
+      "MISSING_MONTH_MINIMUM",
+      "MISSING_ZERO_MAD"
+    ],
+    "outcome_precedence": [
+      "NOT_LONG_ELIGIBLE",
+      "MISSING_BETA",
+      "MISSING_DUPLICATE_RETURN_LEG",
+      "MISSING_INTERVAL_STRADDLE",
+      "MISSING_MULTI_SESSION_RETURN",
+      "MISSING_UNRESOLVED_DELISTING",
+      "MISSING_RETURN_GAP",
+      "MISSING_NO_POST_ENTRY_RETURN",
+      "MISSING_UNUSABLE_RETURN",
+      "MISSING_FACTOR",
+      "MISSING_NONFINITE_INPUT"
+    ],
+    "primary_additional_status": "MISSING_MONTH_MINIMUM",
+    "magnitude_additional_status": "MISSING_ZERO_MAD"
+  },
+  "value_domains": {
+    "outcome_status": [
+      "PRESENT",
+      "NOT_LONG_ELIGIBLE",
+      "MISSING_BETA",
+      "MISSING_NO_POST_ENTRY_RETURN",
+      "MISSING_DUPLICATE_RETURN_LEG",
+      "MISSING_RETURN_GAP",
+      "MISSING_MULTI_SESSION_RETURN",
+      "MISSING_INTERVAL_STRADDLE",
+      "MISSING_UNUSABLE_RETURN",
+      "MISSING_UNRESOLVED_DELISTING",
+      "MISSING_FACTOR",
+      "MISSING_NONFINITE_INPUT"
+    ],
+    "primary_label_status": [
+      "PRESENT",
+      "NOT_LONG_ELIGIBLE",
+      "MISSING_BETA",
+      "MISSING_NO_POST_ENTRY_RETURN",
+      "MISSING_DUPLICATE_RETURN_LEG",
+      "MISSING_RETURN_GAP",
+      "MISSING_MULTI_SESSION_RETURN",
+      "MISSING_INTERVAL_STRADDLE",
+      "MISSING_UNUSABLE_RETURN",
+      "MISSING_UNRESOLVED_DELISTING",
+      "MISSING_FACTOR",
+      "MISSING_NONFINITE_INPUT",
+      "MISSING_MONTH_MINIMUM"
+    ],
+    "magnitude_label_status": [
+      "PRESENT",
+      "NOT_LONG_ELIGIBLE",
+      "MISSING_BETA",
+      "MISSING_NO_POST_ENTRY_RETURN",
+      "MISSING_DUPLICATE_RETURN_LEG",
+      "MISSING_RETURN_GAP",
+      "MISSING_MULTI_SESSION_RETURN",
+      "MISSING_INTERVAL_STRADDLE",
+      "MISSING_UNUSABLE_RETURN",
+      "MISSING_UNRESOLVED_DELISTING",
+      "MISSING_FACTOR",
+      "MISSING_NONFINITE_INPUT",
+      "MISSING_MONTH_MINIMUM",
+      "MISSING_ZERO_MAD"
+    ],
+    "month_status": [
+      "PRESENT",
+      "NO_ELIGIBLE_SECURITIES",
+      "MISSING_MONTH_MINIMUM"
+    ],
+    "status_dimension": [
+      "outcome",
+      "primary",
+      "magnitude"
+    ],
+    "split_role": [
+      "TRAIN_ELIGIBLE",
+      "PURGED",
+      "VALIDATION",
+      "OUTSIDE"
+    ],
+    "distribution_target_name": [
+      "unranked_excess_return",
+      "unranked_residual_return",
+      "residual_return_rank",
+      "excess_return_rank",
+      "residual_return_mad_standardized"
+    ],
+    "timing_severity": [
+      "CRITICAL"
+    ],
+    "timing_check_name": {
+      "source": "exact sorted key set of integer-valued quality_gates"
+    }
+  },
+  "derived_status_rules": {
+    "outcome_status": "first applicable outcome_precedence value, otherwise PRESENT",
+    "primary_nonpresent_outcome": "copy outcome_status",
+    "primary_present_outcome_invalid_month": "MISSING_MONTH_MINIMUM",
+    "primary_present_outcome_valid_month": "PRESENT",
+    "magnitude_nonpresent_primary": "copy primary_label_status",
+    "magnitude_present_primary_zero_mad": "MISSING_ZERO_MAD",
+    "magnitude_present_primary_nonzero_mad": "PRESENT",
+    "magnitude_month_minimum_precedes_zero_mad": true,
+    "month_no_eligible": "NO_ELIGIBLE_SECURITIES",
+    "month_eligible_below_minimum": "MISSING_MONTH_MINIMUM",
+    "month_meets_minimum": "PRESENT"
+  },
+  "implementation_conventions": {
+    "lineage_leg_ordinal": "one_based_chronological_within_signal_date_permno",
+    "lineage_scope": "accepted contributions from PRESENT security outcomes only",
+    "decimal_to_float64_conversion": "Python float conversion of authenticated decimal128(38,12) values before chronological math.fsum",
+    "valid_forward_count": "long-eligible security intervals with a valid return-and-factor path before applying beta completeness",
+    "valid_primary_count": "long-eligible rows with PRESENT outcome_status after beta and forward-path rules",
+    "outcome_present_count": "long-eligible rows with PRESENT outcome_status",
+    "nonpresent_security_label_available_date": "null",
+    "audit_month_availability_copy_scope": "copy the signal-month value to every audit-spine row including nonlong and invalid rows",
+    "status_counts": {
+      "density": "dense_zero_filled_signal_date_by_dimension_by_allowed_status_domain",
+      "denominator": "all audit-spine rows in the signal date"
+    },
+    "coverage": {
+      "denominator": "long-eligible audit rows",
+      "zero_denominator_rate": 0.0
+    },
+    "distribution": {
+      "population": "long-eligible processed rows within signal date",
+      "missing_count": "population rows minus finite_count",
+      "p01_p99_algorithm": "Hyndman-Fan type 7 linear interpolation",
+      "mean_primitive": "math.fsum divided by finite_count",
+      "zero_finite_statistics": "null"
+    },
+    "split_flags": {
+      "included_in_training": "role TRAIN_ELIGIBLE and primary month valid and month available by fit",
+      "included_in_validation": "role VALIDATION and primary month valid",
+      "purged_or_embargoed": "role PURGED or holding month equals the frozen embargo holding month",
+      "embargo_boundary_checked_outside_membership": true
+    },
+    "structural_gate_units": {
+      "duplicate": "excess rows beyond unique primary keys",
+      "sort": "adjacent strict key inversions with strings compared by UTF-8 byte order; duplicates excluded",
+      "key_domain": "cardinality of the symmetric difference between unique expected and observed key sets",
+      "spine_key_or_audit_field_mismatches": "rows with any null-safe key or audited-field difference"
+    },
+    "semantic_gate_units": {
+      "nonlong_nonnull_target_values": "nonnull cells across the two unranked outcomes, two rank numerators, two rank targets, and MAD target",
+      "short_eligibility_influence_violations": "changed target cells after independently flipping short eligibility while holding all other inputs fixed",
+      "beta_value_mismatches": "null-safe mismatched beta cells across the six copied slopes",
+      "residual_value_mismatches": "mismatched contribution cells plus mismatched security aggregate cells",
+      "excess_value_mismatches": "mismatched contribution cells plus mismatched security aggregate cells",
+      "rank_formula_mismatches": "mismatched numerator or rank cells",
+      "nonzero_rank_numerator_month_sums": "failing signal-date by target pairs",
+      "unknown_statuses": "cells outside the frozen domain",
+      "nonfinite_published_values": "NaN or positive/negative infinity cells across every published floating column"
+    },
+    "float_comparison": {
+      "beta_absolute_tolerance": 1e-10,
+      "beta_relative_tolerance": 1e-10,
+      "label_absolute_tolerance": 1e-12,
+      "label_relative_tolerance": 1e-12,
+      "integer_and_status_comparison": "exact"
+    }
+  },
+  "splits": {
+    "axis": "holding_month",
+    "rows_per_signal_date": 4,
+    "roles": [
+      "TRAIN_ELIGIBLE",
+      "PURGED",
+      "VALIDATION",
+      "OUTSIDE"
+    ],
+    "training_requires_month_available_by_fit": true,
+    "fit_date_equality_is_available": true,
+    "folds": [
+      {
+        "fold_id": "dev_fold_1",
+        "fit_signal_date": "2006-12-29",
+        "train_last_holding_month": "2006-11",
+        "purged_holding_month": "2006-12",
+        "validation_first_holding_month": "2007-01",
+        "validation_last_holding_month": "2008-12"
+      },
+      {
+        "fold_id": "dev_fold_2",
+        "fit_signal_date": "2008-12-31",
+        "train_last_holding_month": "2008-11",
+        "purged_holding_month": "2008-12",
+        "validation_first_holding_month": "2009-01",
+        "validation_last_holding_month": "2010-12"
+      },
+      {
+        "fold_id": "dev_fold_3",
+        "fit_signal_date": "2010-12-31",
+        "train_last_holding_month": "2010-11",
+        "purged_holding_month": "2010-12",
+        "validation_first_holding_month": "2011-01",
+        "validation_last_holding_month": "2012-12"
+      },
+      {
+        "fold_id": "dev_fold_4",
+        "fit_signal_date": "2012-12-31",
+        "train_last_holding_month": "2012-11",
+        "purged_holding_month": "2012-12",
+        "validation_first_holding_month": "2013-01",
+        "validation_last_holding_month": "2014-11"
+      }
+    ],
+    "development_embargo_holding_month": "2014-12",
+    "development_embargo_signal_date": "2014-11-28",
+    "development_embargo_exit_date": "2015-01-02"
+  },
+  "published_table_schemas": {
+    "development_label_audit.parquet": {
+      "rows": 1263048,
+      "primary_key": [
+        "signal_date",
+        "permno"
+      ],
+      "sort": [
+        "signal_date",
+        "permno"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "permno:int64:not_null",
+        "permco:int64:not_null",
+        "long_eligible:bool:not_null",
+        "short_eligible:bool:not_null",
+        "holding_month:utf8:not_null",
+        "entry_date:date32:not_null",
+        "exit_date:date32:not_null",
+        "beta_label_mktrf:float64:nullable",
+        "beta_label_smb:float64:nullable",
+        "beta_label_hml:float64:nullable",
+        "beta_label_rmw:float64:nullable",
+        "beta_label_cma:float64:nullable",
+        "beta_label_umd:float64:nullable",
+        "beta_complete:bool:not_null",
+        "expected_leg_count:int16:not_null",
+        "used_leg_count:int16:not_null",
+        "first_used_leg_date:date32:nullable",
+        "last_used_leg_date:date32:nullable",
+        "terminal_delisting_used:bool:not_null",
+        "terminal_delisting_date:date32:nullable",
+        "max_outcome_availability_date:date32:nullable",
+        "security_label_available_date:date32:nullable",
+        "month_label_available_date:date32:nullable",
+        "unranked_excess_return:float64:nullable",
+        "unranked_residual_return:float64:nullable",
+        "residual_rank_numerator:int64:nullable",
+        "excess_rank_numerator:int64:nullable",
+        "residual_return_rank:float64:nullable",
+        "excess_return_rank:float64:nullable",
+        "residual_return_mad_standardized:float64:nullable",
+        "valid_primary_count_in_month:int32:not_null",
+        "outcome_status:utf8:not_null",
+        "primary_label_status:utf8:not_null",
+        "magnitude_label_status:utf8:not_null"
+      ]
+    },
+    "development_label_leg_lineage.parquet": {
+      "rows": null,
+      "primary_key": [
+        "signal_date",
+        "permno",
+        "calendar_date"
+      ],
+      "sort": [
+        "signal_date",
+        "permno",
+        "calendar_date"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "permno:int64:not_null",
+        "calendar_date:date32:not_null",
+        "leg_ordinal:int16:not_null",
+        "return_leg_class:utf8:not_null",
+        "authoritative_total_return:float64:not_null",
+        "rf:float64:not_null",
+        "mktrf:float64:not_null",
+        "smb:float64:not_null",
+        "hml:float64:not_null",
+        "rmw:float64:not_null",
+        "cma:float64:not_null",
+        "umd:float64:not_null",
+        "systematic_component:float64:not_null",
+        "excess_return_contribution:float64:not_null",
+        "residual_return_contribution:float64:not_null",
+        "outcome_availability_date:date32:not_null",
+        "factor_public_availability_date:date32:not_null",
+        "terminal_delisting:bool:not_null"
+      ]
+    },
+    "development_labels.parquet": {
+      "rows": 286628,
+      "primary_key": [
+        "signal_date",
+        "permno"
+      ],
+      "sort": [
+        "signal_date",
+        "permno"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "permno:int64:not_null",
+        "permco:int64:not_null",
+        "short_eligible:bool:not_null",
+        "holding_month:utf8:not_null",
+        "entry_date:date32:not_null",
+        "exit_date:date32:not_null",
+        "security_label_available_date:date32:nullable",
+        "month_label_available_date:date32:nullable",
+        "unranked_excess_return:float64:nullable",
+        "unranked_residual_return:float64:nullable",
+        "residual_rank_numerator:int64:nullable",
+        "excess_rank_numerator:int64:nullable",
+        "residual_return_rank:float64:nullable",
+        "excess_return_rank:float64:nullable",
+        "residual_return_mad_standardized:float64:nullable",
+        "outcome_status:utf8:not_null",
+        "primary_label_status:utf8:not_null",
+        "magnitude_label_status:utf8:not_null"
+      ]
+    },
+    "development_label_month_summary.parquet": {
+      "rows": 178,
+      "primary_key": [
+        "signal_date"
+      ],
+      "sort": [
+        "signal_date"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "holding_month:utf8:not_null",
+        "entry_date:date32:not_null",
+        "exit_date:date32:not_null",
+        "eligible_security_count:int32:not_null",
+        "beta_complete_count:int32:not_null",
+        "valid_forward_count:int32:not_null",
+        "valid_primary_count:int32:not_null",
+        "minimum_required_count:int32:not_null",
+        "primary_month_valid:bool:not_null",
+        "terminal_delisting_label_count:int32:not_null",
+        "delayed_availability_count:int32:not_null",
+        "month_label_available_date:date32:nullable",
+        "residual_median:float64:nullable",
+        "residual_mad:float64:nullable",
+        "residual_rank_numerator_sum:int64:nullable",
+        "excess_rank_numerator_sum:int64:nullable",
+        "residual_rank_mean:float64:nullable",
+        "excess_rank_mean:float64:nullable",
+        "month_status:utf8:not_null"
+      ]
+    },
+    "label_split_membership.parquet": {
+      "rows": 712,
+      "primary_key": [
+        "fold_id",
+        "signal_date"
+      ],
+      "sort": [
+        "fold_id",
+        "signal_date"
+      ],
+      "columns": [
+        "fold_id:utf8:not_null",
+        "signal_date:date32:not_null",
+        "holding_month:utf8:not_null",
+        "fit_signal_date:date32:not_null",
+        "role:utf8:not_null",
+        "month_label_available_date:date32:nullable",
+        "available_by_fit:bool:not_null",
+        "included_in_training:bool:not_null",
+        "included_in_validation:bool:not_null",
+        "purged_or_embargoed:bool:not_null"
+      ]
+    },
+    "label_coverage.parquet": {
+      "rows": 178,
+      "primary_key": [
+        "signal_date"
+      ],
+      "sort": [
+        "signal_date"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "holding_month:utf8:not_null",
+        "eligible_count:int32:not_null",
+        "beta_complete_count:int32:not_null",
+        "outcome_present_count:int32:not_null",
+        "primary_present_count:int32:not_null",
+        "magnitude_present_count:int32:not_null",
+        "eligible_denominator:int32:not_null",
+        "outcome_coverage_rate:float64:not_null",
+        "primary_coverage_rate:float64:not_null",
+        "magnitude_coverage_rate:float64:not_null",
+        "primary_month_valid:bool:not_null"
+      ]
+    },
+    "label_status_counts.parquet": {
+      "rows": null,
+      "primary_key": [
+        "signal_date",
+        "status_dimension",
+        "status"
+      ],
+      "sort": [
+        "signal_date",
+        "status_dimension",
+        "status"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "holding_month:utf8:not_null",
+        "status_dimension:utf8:not_null",
+        "status:utf8:not_null",
+        "row_count:int64:not_null",
+        "dimension_total:int64:not_null",
+        "row_fraction:float64:not_null"
+      ]
+    },
+    "label_timing_checks.parquet": {
+      "rows": null,
+      "primary_key": [
+        "check_name"
+      ],
+      "sort": [
+        "check_name"
+      ],
+      "columns": [
+        "check_name:utf8:not_null",
+        "observed_count:int64:not_null",
+        "expected_count:int64:not_null",
+        "passed:bool:not_null",
+        "severity:utf8:not_null",
+        "details:utf8:not_null"
+      ]
+    },
+    "label_distribution.parquet": {
+      "rows": null,
+      "primary_key": [
+        "signal_date",
+        "target_name"
+      ],
+      "sort": [
+        "signal_date",
+        "target_name"
+      ],
+      "columns": [
+        "signal_date:date32:not_null",
+        "holding_month:utf8:not_null",
+        "target_name:utf8:not_null",
+        "finite_count:int32:not_null",
+        "missing_count:int32:not_null",
+        "minimum:float64:nullable",
+        "p01:float64:nullable",
+        "median:float64:nullable",
+        "mean:float64:nullable",
+        "p99:float64:nullable",
+        "maximum:float64:nullable"
+      ]
+    }
+  },
+  "quality_gates": {
+    "duplicate_audit_keys": 0,
+    "audit_key_order_mismatches": 0,
+    "audit_rows": 1263048,
+    "duplicate_processed_keys": 0,
+    "processed_key_domain_mismatches": 0,
+    "processed_key_order_mismatches": 0,
+    "processed_rows": 286628,
+    "duplicate_leg_lineage_keys": 0,
+    "leg_lineage_key_domain_mismatches": 0,
+    "leg_lineage_sort_mismatches": 0,
+    "duplicate_month_summary_keys": 0,
+    "month_summary_key_domain_mismatches": 0,
+    "month_summary_sort_mismatches": 0,
+    "month_summary_rows": 178,
+    "duplicate_split_membership_keys": 0,
+    "split_membership_key_domain_mismatches": 0,
+    "split_membership_sort_mismatches": 0,
+    "split_membership_rows": 712,
+    "duplicate_coverage_keys": 0,
+    "coverage_key_domain_mismatches": 0,
+    "coverage_sort_mismatches": 0,
+    "duplicate_status_count_keys": 0,
+    "status_count_key_domain_mismatches": 0,
+    "status_count_sort_mismatches": 0,
+    "duplicate_timing_check_keys": 0,
+    "timing_check_key_domain_mismatches": 0,
+    "timing_check_sort_mismatches": 0,
+    "duplicate_distribution_keys": 0,
+    "distribution_key_domain_mismatches": 0,
+    "distribution_sort_mismatches": 0,
+    "spine_key_or_audit_field_mismatches": 0,
+    "nonlong_nonnull_target_values": 0,
+    "short_eligibility_influence_violations": 0,
+    "beta_value_mismatches": 0,
+    "post_cutoff_return_rows_used": 0,
+    "post_cutoff_factor_rows_used": 0,
+    "signal_to_entry_legs_used": 0,
+    "after_exit_legs_used": 0,
+    "duplicate_or_overlapping_legs_used": 0,
+    "multi_session_or_straddling_legs_used": 0,
+    "unusable_return_legs_used": 0,
+    "unresolved_delisting_legs_used": 0,
+    "terminal_delisting_double_counts": 0,
+    "missing_factor_legs_used": 0,
+    "factor_date_mismatches": 0,
+    "residual_value_mismatches": 0,
+    "excess_value_mismatches": 0,
+    "rank_population_mismatches": 0,
+    "rank_formula_mismatches": 0,
+    "nonzero_rank_numerator_month_sums": 0,
+    "excess_primary_mask_mismatches": 0,
+    "mad_value_mismatches": 0,
+    "security_availability_mismatches": 0,
+    "month_availability_mismatches": 0,
+    "split_or_embargo_mismatches": 0,
+    "unknown_statuses": 0,
+    "nonfinite_published_values": 0,
+    "label_coverage_is_descriptive_not_pass_fail": true,
+    "missing_outcomes_are_never_zero_filled": true
+  },
+  "publication_payloads": {
+    "success_required_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "location_kind",
+      "status",
+      "bindings",
+      "table_receipts"
+    ],
+    "primary_manifest_required_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "status",
+      "bindings",
+      "inputs",
+      "outputs",
+      "summary",
+      "authorizations"
+    ],
+    "primary_pointer_required_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "status",
+      "primary_manifest_sha256",
+      "authorizations"
+    ],
+    "independent_check_required_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "verification_id",
+      "status",
+      "primary_manifest_sha256",
+      "checks",
+      "differences_sha256",
+      "output_hashes_sha256",
+      "authorizations"
+    ],
+    "verified_pointer_required_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "verification_id",
+      "status",
+      "primary_manifest_sha256",
+      "independent_check_sha256",
+      "differences_sha256",
+      "authorizations"
+    ],
+    "quality_summary_exact_keys": [
+      "schema_version",
+      "contract_id",
+      "policy_id",
+      "build_id",
+      "status",
+      "scope",
+      "counts",
+      "hard_gates",
+      "quality_policy_flags",
+      "input_builds"
+    ]
+  }
+}

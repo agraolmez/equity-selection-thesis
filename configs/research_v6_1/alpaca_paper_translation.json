@@ -1,0 +1,79 @@
+{
+  "schema": "research_v6_1_alpaca_paper_translation_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_DEPLOYMENT_TRANSLATION",
+  "approved_on": "2026-08-14",
+  "question": "How does the frozen V6.1 1.5% position-cap strategy behave in a $100,000 Alpaca paper-account translation when relative stock weights are preserved, rebalance gross is capped at 1.80x, and a 1.95x operational safety threshold is monitored?",
+  "scope": {
+    "frozen_features": true,
+    "frozen_selectors": true,
+    "frozen_ranks": true,
+    "frozen_ff5_momentum_gate": true,
+    "frozen_stock_selection": true,
+    "frozen_relative_monthly_weights": true,
+    "no_optimizer_rerun": true,
+    "no_outcome_dependent_monthly_scaling": true,
+    "post_diagnostic_deployment_translation": true
+  },
+  "sources": {
+    "maximum_return_frontier_config": {
+      "path": "configs/research_v6_1/maximum_return_scaling_frontier.json",
+      "sha256": "b50c39dfbd62e1c924a95f923bbac55809b8a899e13434b9b602244d00da0401"
+    }
+  },
+  "account": {
+    "starting_nav_dollars": 100000.0,
+    "alpaca_overnight_buying_power": 2.0,
+    "rebalance_gross_target": 1.8,
+    "operational_safety_gross": 1.95,
+    "raw_frozen_weight_multiplier": 2.05,
+    "uniform_proportional_scaling": true
+  },
+  "policies": [
+    {
+      "id": "unscaled_1p00",
+      "raw_multiplier": 1.0,
+      "rebalance_gross_target": null,
+      "description": "Frozen V6.1 weights at their original scale, replayed at $100,000."
+    },
+    {
+      "id": "alpaca_target_1p80",
+      "raw_multiplier": 2.05,
+      "rebalance_gross_target": 1.8,
+      "description": "Frozen 2.05x relative weights proportionally reduced whenever needed so rebalance gross does not exceed 1.80x."
+    },
+    {
+      "id": "uncapped_2p05",
+      "raw_multiplier": 2.05,
+      "rebalance_gross_target": null,
+      "description": "Research comparator only; it exceeds Alpaca's stated 2x overnight framework."
+    }
+  ],
+  "cost_cases": {
+    "frozen_primary": {
+      "spread_multiplier": 1.0,
+      "impact_coefficient": 0.1,
+      "financing_rate_annual": 0.005,
+      "borrow_column": "primary_borrow_rate_annual",
+      "interpretation": "Original frozen institutional cost contract."
+    },
+    "broker_current": {
+      "spread_multiplier": 1.0,
+      "impact_coefficient": 0.1,
+      "financing_rate_annual": 0.0625,
+      "borrow_column": "primary_borrow_rate_annual",
+      "interpretation": "Sensitivity using Alpaca's published non-elite annual margin rate accessed on 2026-08-14."
+    }
+  },
+  "commission_rate": 0.0001,
+  "official_broker_sources": {
+    "margin": "https://docs.alpaca.markets/us/docs/margin-and-short-selling",
+    "paper_trading": "https://docs.alpaca.markets/us/v1.4.2/docs/paper-trading"
+  },
+  "interpretation": {
+    "safety_threshold_is_monitored_at_month_end_only_in_historical_replay": true,
+    "intramonth_safety_enforcement_requires_daily_live_monitoring": true,
+    "historical_point_in_time_alpaca_shortability_is_not_available": true,
+    "paper_environment_does_not_simulate_all_live_costs": true,
+    "deployment_translation_is_not_untouched_confirmation": true
+  }
+}

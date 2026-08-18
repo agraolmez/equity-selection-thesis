@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-logical-fingerprint-transport-v1",
+  "status": "STAGE12_LOGICAL_FINGERPRINT_TRANSPORT_AMENDMENT_AUTHORIZED",
+  "classification": "proven_non_economic_arrow_physical_buffer_false_difference_correction",
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_LOGICAL_FINGERPRINT_TRANSPORT_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "cbfa2ee2afd71294d71ea201c83c79a845ae4f87ace205a2f19e5c7d9dbac5e5",
+    "status": "STAGE12_LOGICAL_FINGERPRINT_TRANSPORT_AMENDMENT_AUTHORIZED"
+  },
+  "materiality_policy": {
+    "path": "artifacts/phase_06_final_test/ERROR_MATERIALITY_POLICY_20260727.json",
+    "sha256": "622d1335c540dfa84a4a396bade529e2e3632d1090a41ce66e1990dc582df03d",
+    "status": "THESIS_ERROR_MATERIALITY_POLICY_ACTIVE",
+    "source_message_text_sha256": "0b174c972f81469f73df4630786ba7d9f5cf024a170306e797fbc8b25883caf6"
+  },
+  "prior_v8_authority": {
+    "policy_path": "configs/phase_06_final_test/stage_12_freeze_policy_v8.json",
+    "policy_sha256": "991a46141e751217850dab3b87d540c1a0544082c241b70e1e6cbdfd7df9e5d9",
+    "freeze_id": "stage12-freeze-0e8c91f5940398fdf0fb9dba",
+    "manifest_sha256": "1855ce20d754ad9d853f6acb57b5d0f34d3e1dd3a7775469118d982156629b16",
+    "file_inventory_path": "artifacts/phase_06_final_test/stage_12_freezes/stage12-freeze-0e8c91f5940398fdf0fb9dba/file_inventory.json",
+    "file_inventory_sha256": "36bc157b97089caa768f7e80fb677f3bbf97a6c3b91a9c96f0c0749a434538bf",
+    "file_count": 606,
+    "project_tree_sha256": "83b79290c60f0b2b39d92eb783bf419bc8f268bd9612d1e1922aa2786b28e2b5",
+    "primary_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_0E8C91F5.json",
+    "primary_pointer_sha256": "1a2314c978d92222e80d9a625fd2fecb692243dc7a964f5ead530c22bb6e4048",
+    "primary_success_sha256": "09e8ff855bbe74546bc65e1de7b86d4276897d51a58d281bd528209bcf0e3adb",
+    "verification_id": "stage12-verify-abfbc7074602e93da006a218",
+    "verification_report_sha256": "0e407fa860ec276169d3171a5d939460cef04b9d1daad1aa7632852413446662",
+    "verified_pointer_archive_path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_0E8C91F5.json",
+    "verified_pointer_sha256": "979d51cff41b05e3e6e32880ac91ba54f35c196eade63f2fce2483da70c7eb9c",
+    "verification_success_sha256": "9689efa2442a9ded1f553c9737add3004b43d95939c40593ae49025876ecb427",
+    "stage12_binding_sha256": "10f8f05e55b62ca0cb1a2eaeb46dd16d6b4ae1bdd3190a2daa9ab72e6d3d3e0a",
+    "stage13_approval_archive_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_0E8C91F5.json",
+    "stage13_approval_sha256": "5bafb96b36c7fc0e02ba44e4c607270a24c5d836c520a037b021506084dd1d4a",
+    "stage13_approval_payload_sha256": "c33ed879b36756fb91797f8f3ab20a5752581e35ffae71c4f6760b57b2ee2f27"
+  },
+  "incident_authorities": {
+    "blocker": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_FINAL_MARKET_INPUT_LOGICAL_FINGERPRINT_BLOCKER_20260727.json",
+      "sha256": "5b14591d9c559cb01f27262ceb7e7eaa12af2702e0575ccbf57b39a227c5d197",
+      "status": "STAGE13_FAILED_CLOSED_BEFORE_DECISION_BARRIER_ON_PHYSICAL_FINGERPRINT_FALSE_DIFFERENCE"
+    },
+    "preflight": {
+      "path": "artifacts/phase_06_final_test/STAGE_13_FINAL_MARKET_INPUT_LOGICAL_FINGERPRINT_PREFLIGHT_20260727.json",
+      "sha256": "8daa9c7e078072bc9fcc73249086eeaf9c608192dd33331942b6896ea3013cf4",
+      "status": "STAGE13_FINAL_MARKET_INPUT_LOGICAL_FINGERPRINT_PREFLIGHT_COMPLETE"
+    }
+  },
+  "diagnosis": {
+    "table": "final_market_inputs",
+    "holding_month": "2025-12",
+    "rows": 3056,
+    "columns": 60,
+    "schema_equal_with_metadata": true,
+    "arrow_table_logically_equal": true,
+    "differing_logical_value_count": 0,
+    "differing_null_mask_count": 0,
+    "differing_finite_float_bit_count": 0,
+    "nullable_hidden_value_buffer_difference_column_count": 2,
+    "nullable_hidden_value_buffer_difference_columns": [
+      "primary_borrow_rate_annual",
+      "stress_borrow_rate_annual"
+    ],
+    "null_count_per_differing_column": 1379,
+    "redundant_all_valid_bitmap_column_count": 53,
+    "redundant_all_valid_bitmap_bytes_per_column": 382,
+    "outcome_sources_opened": false
+  },
+  "logical_comparator_contract": {
+    "application_scope": "only_in_memory_built_fragment_vs_parquet_reopened_staged_fragment",
+    "schema_with_metadata_exact": true,
+    "row_and_column_counts_exact": true,
+    "nonfloating_arrow_values_and_nulls_exact": true,
+    "floating_null_masks_exact": true,
+    "finite_floating_point_bits_exact": true,
+    "signed_zero_bits_exact": true,
+    "infinity_bits_exact": true,
+    "nan_positions_exact": true,
+    "nan_payload_bits_canonicalized_only": true,
+    "undefined_value_buffer_bytes_beneath_nulls_ignored": true,
+    "persisted_receipt_logical_content_fingerprint_algorithm_changed": false,
+    "persisted_parquet_sha256_authentication_changed": false,
+    "checkpoint_receipt_schema_changed": false,
+    "rows_values_dates_keys_formulas_models_weights_trades_costs_returns_pnl_or_inference_changed": false
+  },
+  "source_transition": {
+    "exact_changed_runtime_member_count": 1,
+    "members": [
+      {
+        "path": "src/portfolio_bot/final_test/final_source_replay.py",
+        "pre_amendment_sha256": "f88c9aa6532659c3d4b0cbddaa912a29d2d3d4594b01a5b184fa5edcfc99c664",
+        "post_amendment_sha256": "25cea785f5eb3c390041221ee07d0333ca9f0374ebab5d4702ebd8e2302c1cfa"
+      }
+    ]
+  },
+  "focused_test_evidence": {
+    "test_file": "tests/unit/test_final_source_builder.py",
+    "pre_amendment_sha256": "7acc6a7ac4b5ab2af1919ba70279d9355649fc0998120e793099ddecfcbd6e39",
+    "post_amendment_sha256": "828d86021a4b511c1a892817ef56dd56f91b0b41f0cf558ab2cd5ca757755824",
+    "focused_tests_passed": 4,
+    "must_reject": [
+      "schema_or_metadata_difference",
+      "row_or_column_count_difference",
+      "null_vs_nan_difference",
+      "finite_value_or_bit_difference",
+      "signed_zero_difference",
+      "nan_position_difference"
+    ],
+    "must_accept": [
+      "undefined_bytes_beneath_matching_null_cells",
+      "redundant_all_valid_bitmap_representation",
+      "matching_nan_positions_with_different_nan_payload_bits"
+    ]
+  },
+  "access_disclosure": {
+    "authorized_decision_side_diagnostic_replays": 1,
+    "diagnosed_decision_table_months": 1,
+    "outcome_or_economic_payload_files_opened": 0,
+    "models_fit": 0,
+    "forecasts_weights_trades_or_pnl_created": 0,
+    "stage12_v9_parent_checkpoint_payload_files_opened_required": 0,
+    "stage12_v9_outcome_or_economic_payload_files_opened_required": 0
+  },
+  "checkpoint_reuse": {
+    "stage13_decision_checkpoint_rebind_v2_unchanged": true,
+    "authenticated_checkpoint_pairs_rebound": 431,
+    "v8_failed_context_sha256": "ed2a7b2ba2a5a740aa426faa88ee68098f789f453d1c3a8e204ee67cbd644c04",
+    "v8_rebind_receipt_sha256": "0f7c6b9d623ef5d62c5f5ce401365cd41909258b7ed7b525beb2e78a67555fe3",
+    "only_rebuilt_decision_checkpoint": "final_market_inputs/2025-12",
+    "decision_barrier_recommitted_after_authentication": true,
+    "failed_v8_context_preserved_immutably": true,
+    "outcome_or_economic_checkpoint_reuse_available": false
+  },
+  "non_economic_boundary": {
+    "sample_rows_dates_features_models_candidates_weights_trades_cost_formulas_returns_pnl_or_inference_changed": false,
+    "decision_barrier_committed_by_failed_v8_run": false,
+    "outcome_sources_opened_by_failed_v8_run": false,
+    "outcome_month_checkpoints": 0,
+    "economic_month_checkpoints": 0,
+    "stage12_analysis_or_model_training_repeated": false
+  },
+  "replacement_authority": {
+    "replacement_stage12_v9_identity_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_v8_stage13_approval_valid_for_v9": false,
+    "fresh_exact_binding_stage13_receipt_required": true,
+    "standing_approval_permits_receipt_after_verification": true,
+    "additional_user_prompt_after_v9_verification_required": false,
+    "stage13_execution_authorized_now": false
+  }
+}

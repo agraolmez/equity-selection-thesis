@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase05-stage11-diagnostic-regressions-v1",
+  "status": "FROZEN_FAILURE_TO_REGRESSION_REGISTRY",
+  "failure_regressions": {
+    "a85c53ad7da93d181c1e729d62991cb569a4d55d592d7146df4ec581202f4ee3": {
+      "fixture_path": "tests/fixtures/stage11_failures/2015-08_rank_projection_equivalent_retry/manifest.json",
+      "fixture_sha256": "87f5342008dfe62c30a50e99cbd6dfb9ac8ca134fe8a56abbe16310392f95366",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "3bf7e10fde4d2d681a72d043d19d8294dc002c8abae93ba6c4901ee9a9073f28": {
+      "fixture_path": "tests/fixtures/stage11_failures/2017-02-ensemble-uniform-dual-tolerance/manifest.json",
+      "fixture_sha256": "c00319ea4fb549e343c1e238bdff530a9ce94537c2b003ba2710646bdb4fc232",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "3ec463f0fe9ca11ee7e89063eccd45033724a62f38b35dcdde0d8a71e48b9ce7": {
+      "fixture_path": "tests/fixtures/stage11_failures/2017-04-pending-weight-roundtrip/manifest.json",
+      "fixture_sha256": "9d46864663946c1287989c98b38b0296f879b8c9df16a69a9bf656b3438c685b",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "4bf2a4eccdef94ff1c6373fb32f3416b5c2c58689a438ad4bfaa8216c405b8b8": {
+      "fixture_path": "tests/fixtures/stage11_failures/2017-04-pending-weight-roundtrip/manifest.json",
+      "fixture_sha256": "9d46864663946c1287989c98b38b0296f879b8c9df16a69a9bf656b3438c685b",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "823f546f49a5a0fc6a140ea372225f27240f61e71849bd091deff4ec8970a312": {
+      "fixture_path": "tests/fixtures/stage11_failures/2017-10-ensemble-objective-agreement/manifest.json",
+      "fixture_sha256": "a6938bea51e8d573fa6aa8933abd089ffd30d16d6198f7d73cec08ca035cb580",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "3685058a0356c30573436850654a35b9956c05cba1918a67ae96f38cb5e34e9f": {
+      "fixture_path": "tests/fixtures/stage11_failures/2018-06-elastic-net-feasibility-status/manifest.json",
+      "fixture_sha256": "22faceb7e6f8e56c4e254bfa8df211c5f0085ff63125fd14fcb87d8434734637",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "ece0d5e87a5ab6e31c9f478e896c645e8c87cf62002c889d64946c5c424c9d78": {
+      "fixture_path": "tests/fixtures/stage11_failures/2015-11-ensemble-emergency-bounded-dual/manifest.json",
+      "fixture_sha256": "73f1a10f9c3c60342530a67de3f90409f644a48b387f5ba6d61d3445fb8e72d9",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "f0f18eb25bbe03f9e9126f828a65011b99d039fd7b0b0f2c15c63b0264b8f478": {
+      "fixture_path": "tests/fixtures/stage11_failures/2016-04-ensemble-uniform-dual-tolerance/manifest.json",
+      "fixture_sha256": "8b6844fa0fe21007d8173bc73e83d25e835eef714098f1e39a9a0d73f8e3a4aa",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "bdbff27995f7c21fcab3c48c58422a3a328968f0459d4320d7e18757c4a974da": {
+      "fixture_path": "tests/fixtures/stage11_failures/2015-11-ensemble-emergency-sum-certificate/manifest.json",
+      "fixture_sha256": "e1b82bc7a5a384d528d6cf349d19c4b4aede6ac92818d5a218842c431eefa292",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "31c79c48ef576f37159215ed64c1ae2f9f386027754de846f8d5847c5de4a54e": {
+      "fixture_path": "tests/fixtures/stage11_failures/2018-10-pending-dust-reentry/manifest.json",
+      "fixture_sha256": "2408d05d8755de324af71ffb349a1713e5a884ae5c4f191871128e55271d0c47",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "cb1af39bfe6a50c55edb1d1c90c4489be5d68891a0db93a93cf022485e2a0332": {
+      "fixture_path": "tests/fixtures/stage11_failures/2018-12-rank-infeasibility/manifest.json",
+      "fixture_sha256": "cbe308ca247472b9e69b7ed0a80ca0008bd1fd0d8e20a5d21203799ca320343b",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    },
+    "378543580a35bf14da95523e0967f1847b1c3868f7ce1dfe5a101542855f2776": {
+      "fixture_path": "tests/fixtures/stage11_failures/2019-06-ensemble-uniform-dual-gap/manifest.json",
+      "fixture_sha256": "8d7b374853b5f40b9a4ec4c8e3d126c72c087bea45bee25049b0189cdcc957e2",
+      "regression_test_path": "tests/unit/test_stage11_failure_regressions.py",
+      "regression_test_sha256": "08ee1c8534f5778445e31039cb731a3eb0dbf04311330e2a875fe1c0ceaa51ad"
+    }
+  }
+}

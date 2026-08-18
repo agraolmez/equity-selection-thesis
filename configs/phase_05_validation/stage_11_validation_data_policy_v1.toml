@@ -1,0 +1,156 @@
+schema_version = 1
+policy_id = "phase05-stage11-validation-data-policy-v1"
+contract_id = "phase05-stage11-validation-data-v1"
+stage = 11
+status = "frozen_scaffold_before_validation_data_materialization"
+purpose = "point_in_time_validation_predictor_risk_and_cost_extension_without_outcomes"
+
+[scientific_authority]
+methodology_source = "outputs/methodology_v1_source.md"
+methodology_source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+methodology_freeze = "outputs/methodology_v1_freeze.json"
+methodology_freeze_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[physical_rules]
+path = "configs/phase_05_validation/stage_11_validation_data_rules_v1.json"
+sha256 = "43f52f578f5ca810e537962380272d93398d1d2734ce688262724f81b080ce1a"
+required_rules_id = "phase05-stage11-validation-data-rules-v1"
+
+[preflight_authority]
+policy = "configs/phase_05_validation/stage_11_preflight_policy_v1.toml"
+policy_sha256 = "030ef9cc162b91001d89ae5d4beace423476b259c69f6c89e7a8a5933c6768b8"
+approval = "configs/phase_05_validation/stage_11_preflight_approval_v1.json"
+approval_sha256 = "31bf22eaeabd9c47b9751bfbe4197bbec45bf167185ad677eec4e963bce49fec"
+required_scope = "stage11_implementation_no_outcome_preflight"
+validation_outcome_access_authorized = false
+
+[frozen_stage06]
+policy = "configs/phase_03_features/feature_store_policy_v1.toml"
+policy_sha256 = "1a66bfa4ad537e06829f585e080c356750c7360d486414a40a895de6f6b5380f"
+registry = "configs/phase_03_features/feature_registry_v1.json"
+registry_sha256 = "7bac81cd8083c9a5c44ab2482223a342ed6ce2ce265d73cd8cc1bd843e33805a"
+verified_pointer = "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json"
+verified_pointer_sha256 = "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+required_build_id = "phase03-features-fda21f0e51b8276c10246f9f"
+required_verification_id = "verify-350915782d3ef12e"
+
+[frozen_stage08]
+policy = "configs/phase_04_models/risk_cost_policy_v1.toml"
+policy_sha256 = "58c6ef10ad6fb9ee60cd054ae6de856765d621e6114e158324375912a644a000"
+rules = "configs/phase_04_models/risk_cost_build_rules_v1.json"
+rules_sha256 = "a7049869595625fc192f1fbfcf1570324545009e655af0ab6610eba084c94890"
+verified_pointer = "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json"
+verified_pointer_sha256 = "491bf16f5ee5bf2b8ba197cd251a3e41cbbdacbed7442877eaa3493221831e7a"
+required_build_id = "phase04-risk-cost-8e2fe8061e776ff3aa527d09"
+required_verification_id = "verify-b109581df93e2c12"
+
+[verified_calendar]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+required_build_id = "calendar-ae2e4ba4a280d66e"
+required_verification_id = "verify-7dc718e9be47873c"
+
+[scope]
+internal_context_signal_date = "2014-11-28"
+first_signal_date = "2014-12-31"
+last_signal_date = "2019-10-31"
+required_signal_dates = 59
+required_economic_features = 163
+required_physical_feature_columns = 170
+required_factor_covariance_rows = 2124
+validation_predictor_access_permitted = true
+validation_outcome_or_forward_return_access_permitted = false
+validation_labels_permitted = false
+model_fitting_permitted = false
+portfolio_weights_trades_or_pnl_permitted = false
+final_2020_2025_access_permitted = false
+
+[database]
+root = "/Users/agraemirolmez/Desktop/Thesis"
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+relocation_receipt = "data/database_relocation_v1.json"
+relocation_receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+raw_is_read_only = true
+interim_build_root = "interim/phase_05_validation/phase05-stage11-validation-data-v1/builds"
+processed_build_root = "processed/phase_05_validation/phase05-stage11-validation-data-v1/builds"
+quality_build_root = "quality/phase_05_validation/phase05-stage11-validation-data-v1/builds"
+cache_root = "cache/phase_05_validation/phase05-stage11-validation-data-v1"
+
+[inputs]
+validation_scope_rebuild_from_frozen_raw_required = true
+development_only_stage02_through_stage08_payloads_are_not_validation_inputs = true
+source_identity_must_match_frozen_phase01_receipts = true
+context_signal_is_internal_only = true
+context_signal_published_rows = 0
+labels_outcomes_forward_returns_or_final_rows_read = 0
+
+[outputs.interim]
+required_files = [
+  "_SUCCESS.json",
+  "validation_feature_store_raw.parquet",
+  "feature_lineage_price_trends_path.parquet",
+  "feature_lineage_risk_return_distribution.parquet",
+  "feature_lineage_size_liquidity_trading_frictions.parquet",
+  "feature_lineage_valuation_fundamentals.parquet",
+  "feature_lineage_ownership_filings_events_segments.parquet",
+  "feature_lineage_optionmetrics.parquet",
+  "feature_lineage_aggregate_state.parquet",
+  "validation_risk_cost_audit.parquet",
+]
+
+[outputs.processed]
+required_files = [
+  "_SUCCESS.json",
+  "validation_risk_cost_inputs.parquet",
+  "validation_factor_covariance.parquet",
+  "validation_risk_cost_month_summary.parquet",
+  "model_parameters.json",
+]
+
+[outputs.quality]
+required_files = [
+  "_SUCCESS.json",
+  "quality_summary.json",
+  "validation_data_timing_checks.parquet",
+  "validation_data_coverage.parquet",
+  "development_parity.json",
+]
+
+[quality_gates]
+published_signal_dates = 59
+economic_feature_columns = 163
+physical_feature_columns = 170
+duplicate_feature_keys = 0
+duplicate_lineage_keys = 0
+missing_lineage_keys = 0
+lineage_rows_per_feature_row = 163
+context_signal_rows_published = 0
+observation_date_after_signal = 0
+public_availability_date_after_signal = 0
+stale_feature_uses = 0
+unknown_feature_names = 0
+feature_order_mismatches = 0
+frozen_vocabulary_expansions = 0
+frozen_model_support_changes = 0
+label_outcome_or_forward_columns = 0
+label_outcome_or_forward_rows_read = 0
+final_period_rows_read = 0
+post_cutoff_return_rows_used = 0
+post_cutoff_factor_rows_used = 0
+factor_covariance_rows = 2124
+development_parity_differences = 0
+
+[publication]
+artifact_root = "artifacts/phase_05_validation"
+primary_build_namespace = "stage_11_validation_data_builds"
+verification_namespace = "stage_11_validation_data_verifications"
+latest_primary_pointer = "artifacts/phase_05_validation/LATEST_STAGE_11_VALIDATION_DATA_PRIMARY.json"
+latest_verified_pointer = "artifacts/phase_05_validation/LATEST_STAGE_11_VALIDATION_DATA_VERIFIED.json"
+primary_pointer_authorizes_validation_runner_use = false
+independent_verification_required = true
+verified_pointer_authorizes_validation_predictor_risk_and_cost_use = true
+verified_pointer_authorizes_validation_outcomes_weights_trades_pnl_or_final_access = false
+closed_file_sets_required = true
+content_addressed_build_id_required = true
+pointer_replaced_last = true

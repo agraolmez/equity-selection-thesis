@@ -1,0 +1,172 @@
+{
+  "schema": "research_v6_1_selector_step_01_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "created_on": "2026-08-13",
+  "scope": {
+    "selector_only": true,
+    "portfolio_or_optimizer_authorized": false,
+    "separate_from_closed_v6": true,
+    "historical_development_not_untouched_confirmation": true,
+    "v6_models_or_checkpoints_reused": false,
+    "v6_predictions_used_only_as_named_frozen_comparators": true
+  },
+  "inputs": {
+    "v6_run": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc",
+    "v6_contract_sha256": "841b5f23ca9dcbfa497bdef772fcee2dffb588e304c7c87743ad65aa30a62e2d",
+    "v6_code_identity": "dab475636cfcaa4f049995de0c57c3095e0746690d5429c15b379d548eb6b4eb",
+    "v6_input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd",
+    "model_feature_build_identity": "01c2e95ca6b928446b3524f1c621db01cc6285858ca39ac7646441d1265de2d7",
+    "expected_rows": 278897,
+    "expected_months": 128,
+    "expected_raw_features": 318,
+    "expected_encoded_features": 850,
+    "first_month": "2015-01",
+    "last_month": "2025-08",
+    "december_2019_required": true
+  },
+  "targets": {
+    "capm": {"rank_column": "target_rank_capm", "economic_column": "alpha_capm"},
+    "ff5_momentum": {"rank_column": "target_rank_ff5_momentum", "economic_column": "alpha_ff5_momentum"},
+    "long_net": {"rank_column": "target_rank_long_net", "economic_column": "long_net_opportunity"},
+    "short_net": {"rank_column": "target_rank_short_net", "economic_column": "short_net_opportunity"}
+  },
+  "chronology": {
+    "correlation_training_end": "2019-12",
+    "validation_start": "2020-01",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_outcomes_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09",
+    "fit_rule": "A row enters a fit only when label_available_date is no later than the forecast signal_date."
+  },
+  "feature_views": {
+    "views": ["full", "cam_free", "correlation_reduced"],
+    "direct_cam_sources": [
+      "lseg_cam_information_age_days",
+      "lseg_cam_country_rank",
+      "lseg_cam_rank_change_1m",
+      "lseg_cam_rank_change_3m",
+      "lseg_cam_rank_change_6m"
+    ],
+    "direct_cam_level": "lseg_cam_country_rank",
+    "correlation_reduction": {
+      "training_end": "2019-12",
+      "absolute_rank_correlation_threshold": 0.90,
+      "minimum_pair_observations": 2000,
+      "priority": ["observed_fraction_desc", "registry_ordinal_asc", "feature_name_asc"],
+      "outcomes_used": false,
+      "categorical_sources_pruned": false,
+      "encoded_columns_move_with_source": true
+    },
+    "missing_policy": "Reuse V6 neutral value plus explicit missingness indicators; never complete-case filter."
+  },
+  "objectives": ["pairwise", "continuous_rank"],
+  "pairwise_target_encoding": "XGBoost rank:ndcg uses 32 monotonic within-month integer relevance grades (0-31), preserving the stock ordering while satisfying the stable XGBoost 3.0 NDCG implementation; the MLP uses the continuous ordering in sampled pairs.",
+  "operating_policy": {
+    "xgboost": {
+      "capm": {"candidate_id": "quarterly_expanding_annual_retune", "refit": "quarterly", "history": "expanding", "retune": "annual"},
+      "ff5_momentum": {"candidate_id": "annual_expanding_annual_retune", "refit": "annual", "history": "expanding", "retune": "annual"},
+      "long_net": {"candidate_id": "quarterly_expanding_annual_retune", "refit": "quarterly", "history": "expanding", "retune": "annual"},
+      "short_net": {"candidate_id": "quarterly_expanding_annual_retune", "refit": "quarterly", "history": "expanding", "retune": "annual"}
+    },
+    "neural_network": {
+      "capm": {"candidate_id": "quarterly_expanding_biennial_retune", "refit": "quarterly", "history": "expanding", "retune": "biennial"},
+      "ff5_momentum": {"candidate_id": "quarterly_expanding_annual_retune", "refit": "quarterly", "history": "expanding", "retune": "annual"},
+      "long_net": {"candidate_id": "quarterly_rolling_60m_annual_retune", "refit": "quarterly", "history": "rolling", "history_months": 60, "retune": "annual"},
+      "short_net": {"candidate_id": "quarterly_rolling_60m_annual_retune", "refit": "quarterly", "history": "rolling", "history_months": 60, "retune": "annual"}
+    },
+    "elastic_net": {"candidate_id": "quarterly_expanding_annual_retune", "refit": "quarterly", "history": "expanding", "retune": "annual"},
+    "rationale": "Reuse only V6 validation-selected operating schedules to isolate the V6.1 feature and model hypothesis and keep the run bounded; refit and retune schedules are not reselected from V6 test outcomes."
+  },
+  "xgboost": {
+    "profiles": [
+      {"profile_id": "xgb_d2_base", "max_depth": 2, "n_estimators": 700, "learning_rate": 0.03, "min_child_weight": 40.0, "subsample": 0.80, "colsample_bytree": 0.80, "reg_alpha": 0.05, "reg_lambda": 20.0},
+      {"profile_id": "xgb_d3_base", "max_depth": 3, "n_estimators": 700, "learning_rate": 0.03, "min_child_weight": 40.0, "subsample": 0.80, "colsample_bytree": 0.80, "reg_alpha": 0.05, "reg_lambda": 20.0},
+      {"profile_id": "xgb_d4_base", "max_depth": 4, "n_estimators": 700, "learning_rate": 0.03, "min_child_weight": 40.0, "subsample": 0.80, "colsample_bytree": 0.75, "reg_alpha": 0.10, "reg_lambda": 25.0},
+      {"profile_id": "xgb_d5_regularized", "max_depth": 5, "n_estimators": 800, "learning_rate": 0.02, "min_child_weight": 60.0, "subsample": 0.75, "colsample_bytree": 0.65, "reg_alpha": 0.15, "reg_lambda": 35.0},
+      {"profile_id": "xgb_d6_regularized", "max_depth": 6, "n_estimators": 800, "learning_rate": 0.02, "min_child_weight": 75.0, "subsample": 0.75, "colsample_bytree": 0.60, "reg_alpha": 0.20, "reg_lambda": 50.0},
+      {"profile_id": "xgb_d3_faster", "max_depth": 3, "n_estimators": 500, "learning_rate": 0.05, "min_child_weight": 20.0, "subsample": 0.90, "colsample_bytree": 0.85, "reg_alpha": 0.00, "reg_lambda": 10.0},
+      {"profile_id": "xgb_d4_slow", "max_depth": 4, "n_estimators": 900, "learning_rate": 0.015, "min_child_weight": 50.0, "subsample": 0.85, "colsample_bytree": 0.75, "reg_alpha": 0.10, "reg_lambda": 30.0},
+      {"profile_id": "xgb_d5_sparse", "max_depth": 5, "n_estimators": 750, "learning_rate": 0.025, "min_child_weight": 50.0, "subsample": 0.80, "colsample_bytree": 0.55, "reg_alpha": 0.25, "reg_lambda": 40.0},
+      {"profile_id": "xgb_d6_shallow_rate", "max_depth": 6, "n_estimators": 900, "learning_rate": 0.015, "min_child_weight": 100.0, "subsample": 0.70, "colsample_bytree": 0.55, "reg_alpha": 0.25, "reg_lambda": 60.0}
+    ],
+    "shared": {
+      "tree_method": "hist",
+      "max_bin": 128,
+      "n_jobs": 4,
+      "early_stopping_rounds": 50,
+      "pair_method": "topk",
+      "pairs_per_sample": 32
+    }
+  },
+  "neural_network": {
+    "profiles": [
+      {"profile_id": "mlp_64_32", "hidden_layers": [64, 32], "dropout": 0.10, "epochs": 8, "learning_rate": 0.001, "weight_decay": 0.0001},
+      {"profile_id": "mlp_128_64", "hidden_layers": [128, 64], "dropout": 0.15, "epochs": 8, "learning_rate": 0.001, "weight_decay": 0.0001},
+      {"profile_id": "mlp_128_64_low_lr", "hidden_layers": [128, 64], "dropout": 0.20, "epochs": 10, "learning_rate": 0.0005, "weight_decay": 0.0003},
+      {"profile_id": "mlp_256_128_64", "hidden_layers": [256, 128, 64], "dropout": 0.20, "epochs": 8, "learning_rate": 0.0005, "weight_decay": 0.0003},
+      {"profile_id": "mlp_64_32_sparse", "hidden_layers": [64, 32], "dropout": 0.25, "epochs": 10, "learning_rate": 0.0005, "weight_decay": 0.001}
+    ],
+    "shared": {"batch_size": 8192, "pairs_per_row": 2, "gradient_clip": 5.0}
+  },
+  "elastic_net": {
+    "alpha_grid": [0.0001, 0.0003, 0.001, 0.003, 0.01],
+    "l1_ratio_grid": [0.1, 0.5, 0.9]
+  },
+  "causal_tuning": {
+    "holdout_months": 12,
+    "metric": "equal-month mean cross-sectional Spearman rank IC",
+    "tuning_seed": 42,
+    "validation_final_fit_seeds": [42],
+    "historical_test_final_fit_seeds": [17, 42, 101],
+    "profile_tie_tolerance": 0.002,
+    "objective_tie_tolerance": 0.002,
+    "objective_tie_preference": "continuous_rank",
+    "historical_test_cannot_change_view_objective_profile_or_ensemble_definition": true
+  },
+  "ensembles": {
+    "sets": {
+      "full_xgb_mlp": ["full__xgboost", "full__mlp"],
+      "full_all_learned": ["full__xgboost", "full__mlp", "full__elastic_net"],
+      "cam_free_xgb_mlp": ["cam_free__xgboost", "cam_free__mlp"],
+      "cam_free_all_learned": ["cam_free__xgboost", "cam_free__mlp", "cam_free__elastic_net"],
+      "correlation_reduced_xgb_mlp": ["correlation_reduced__xgboost", "correlation_reduced__mlp"],
+      "correlation_reduced_all_learned": ["correlation_reduced__xgboost", "correlation_reduced__mlp", "correlation_reduced__elastic_net"],
+      "cam_free_xgb_plus_cam": ["cam_free__xgboost", "cam_direct"],
+      "cam_free_mlp_plus_cam": ["cam_free__mlp", "cam_direct"],
+      "cam_free_enet_plus_cam": ["cam_free__elastic_net", "cam_direct"],
+      "cam_free_all_plus_cam": ["cam_free__xgboost", "cam_free__mlp", "cam_free__elastic_net", "cam_direct"],
+      "full_all_plus_cam_double_count_diagnostic": ["full__xgboost", "full__mlp", "full__elastic_net", "cam_direct"]
+    },
+    "report_equal_weight_control": true,
+    "dynamic": {"half_life_months": 12, "minimum_history_months": 24, "minimum_component_weight": 0.05, "maximum_component_weight": 0.70, "negative_quality_floor": 0.0}
+  },
+  "evaluation": {
+    "primary_metric": "equal-month mean Spearman rank IC",
+    "hac_lags": 6,
+    "report_all_candidates": true,
+    "multiple_testing_disclosure": "V6.1 is post-diagnostic model development. Report the complete candidate table and paired deltas; do not interpret the best historical-test candidate as a single prespecified hypothesis test.",
+    "paired_v6_comparator": true,
+    "seed_stability": true,
+    "rank_turnover": true,
+    "tail_spreads": true,
+    "size_liquidity_stratification": {"size_source": "log_market_cap", "liquidity_source": "median_dollar_volume_60d", "monthly_groups": 3},
+    "label_shuffle_smoke": {"enabled": true, "family": "elastic_net", "feature_view": "correlation_reduced", "seed": 20260813, "maximum_absolute_mean_ic": 0.02},
+    "interesting_selector_gate": {"historical_test_mean_rank_ic_minimum": 0.02, "historical_test_hac_t_minimum": 2.0, "early_mean_rank_ic_strictly_positive": true, "recent_mean_rank_ic_strictly_positive": true, "minimum_rolling_mean_rank_ic_strictly_positive": true, "economic_top_minus_bottom_direction_strictly_positive": true}
+  },
+  "checkpointing": {
+    "natural_unit": "target/feature-view/model/objective/refit-block",
+    "atomic": true,
+    "resume": true,
+    "identity_binds": ["contract SHA-256", "V6 input identity", "V6.1 code identity", "feature-view manifest", "target", "objective", "profile", "seed", "train cutoff", "forecast months"],
+    "identity_mismatch": "fail closed into a new V6.1 output lineage"
+  },
+  "execution": {
+    "stable_python": "/opt/anaconda3/envs/finance/bin/python",
+    "default_parallel_targets": 2,
+    "threads_per_xgboost_fit": 4,
+    "full_run_allowed_by_current_status": true
+  }
+}

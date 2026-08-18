@@ -1,0 +1,137 @@
+{
+  "schema": "research_v6_3_signal_weight_research_v1",
+  "status": "AUTHORIZED_READY_TO_RUN",
+  "approved_on": "2026-08-14",
+  "question": "Can six economically distinct signal-to-weight improvements beat the frozen V6.1 1.5-percent-cap portfolio without changing its universe, schedule, costs, capacity, or core risk controls?",
+  "lineage": {
+    "separate_from_frozen_v6_and_v6_1": true,
+    "post_diagnostic_historical_development_only": true,
+    "v6_or_v6_1_models_reused_only_as_named_frozen_inputs": true,
+    "no_overwrite_of_predecessor_artifacts": true
+  },
+  "base_portfolio_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "incumbent": {
+    "description": "Frozen return-ranking selectors plus FF5/momentum alpha sign gate and expected-net-return optimizer, with a 1.5-percent candidate position cap.",
+    "position_cap": 0.015,
+    "frontier_root": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db",
+    "frontier_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+    "frontier_profile": "position_1p5"
+  },
+  "model_input_cache": {
+    "root": "artifacts/research_v6/selector_step_01/841b5f23ca9d-01c2e95ca6b9-dab475636cfc/input_cache",
+    "rows_sha256": "40733849c56bef55b81e04f4a8d32052f1a8fa479b5229e7b95785b553f98056",
+    "matrix_sha256": "0404afe9af600ce02d7461c56a357dd6da5f79a91a82a84da1e19795607570fd",
+    "metadata_sha256": "549235b75fa1991f84b45c3f89a6a498daa773177c7c81ea878f14ecd1398814"
+  },
+  "feature_views": {
+    "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/feature_views/feature_views.json",
+    "sha256": "a1effcd8641efbad8721e7838418a25448267c3b9e28a2c3aec611433a213f71"
+  },
+  "evidence": {
+    "signal_start": "2020-01",
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "fixed_portfolio_policy": {
+    "alpha_gate": "return_plus_ff5_momentum",
+    "candidate_fraction_each_side": 0.20,
+    "maximum_position_weight": 0.015,
+    "all_other_constraints_costs_and_accounting": "unchanged from the bound V6.1 portfolio contract"
+  },
+  "ideas": {
+    "01_confidence_adjusted_edge": {
+      "description": "Discount calibrated long and short expected returns when frozen component models disagree or the signal is unstable.",
+      "penalties": [0.5, 1.0, 2.0]
+    },
+    "02_opportunity_breadth_scaling": {
+      "description": "Scale expected returns, not hard portfolio limits, using the causal percentile of monthly high-confidence opportunity breadth.",
+      "strengths": [0.5, 1.0, 1.5],
+      "minimum_multiplier": 0.65,
+      "maximum_multiplier": 1.35
+    },
+    "03_specialist_mixture": {
+      "description": "Four XGBoost experts cover all feature families: market, fundamentals/corporate, analysts, and alternative data; causal trailing IC and stock-level coverage route their ranks.",
+      "temperatures": [0.02, 0.05, 0.10],
+      "minimum_component_weight": 0.05,
+      "quality_history_months": 24,
+      "experts": {
+        "market": ["price_trends_path", "risk_return_distribution", "size_liquidity_trading_frictions", "aggregate_state"],
+        "fundamental_corporate": ["valuation_fundamentals", "ownership_filings_events_segments"],
+        "analyst": ["lseg_analyst_expectations"],
+        "alternative": ["alpaca_related_news", "optionmetrics"]
+      },
+      "xgboost": {
+        "n_estimators": 300,
+        "learning_rate": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 40.0,
+        "subsample": 0.80,
+        "colsample_bytree": 0.80,
+        "reg_alpha": 0.10,
+        "reg_lambda": 25.0,
+        "tree_method": "hist",
+        "max_bin": 128,
+        "n_jobs": 4
+      }
+    },
+    "04_multitask_multihorizon": {
+      "description": "A shared neural representation jointly predicts long, short, FF5/momentum, tail probabilities, and a three-month return rank from all encoded features.",
+      "horizon_blends": [0.15, 0.30, 0.50],
+      "hidden_layers": [96, 48],
+      "dropout": 0.15,
+      "epochs": 3,
+      "batch_size": 8192,
+      "learning_rate": 0.0007,
+      "weight_decay": 0.0003,
+      "refit": "annual",
+      "seed": 20260814
+    },
+    "05_decision_aware_rank_mask": {
+      "description": "Use the multitask tail-probability heads to rank and abstain before the unchanged optimizer; this is not direct weight learning.",
+      "horizon_blends": [0.15, 0.30],
+      "tail_probability_thresholds": [0.45, 0.55, 0.65]
+    },
+    "06_latent_risk_layer": {
+      "description": "Augment the frozen six-factor covariance with causal trailing latent residual-return factors while keeping the same exposure, cost, capacity, and position limits.",
+      "trailing_months": 36,
+      "minimum_months": 24,
+      "profiles": [
+        {"latent_factors": 3, "latent_variance_share": 0.50},
+        {"latent_factors": 5, "latent_variance_share": 0.50},
+        {"latent_factors": 5, "latent_variance_share": 1.00}
+      ],
+      "specific_variance_floor_fraction": 0.25
+    }
+  },
+  "selection": {
+    "uses_validation_only": true,
+    "primary_metric": "annualized_net_excess_return_primary",
+    "guardrails": {
+      "positive_stressed_net_return": true,
+      "minimum_net_sharpe_fraction_of_incumbent": 0.75,
+      "practical_constraint_tolerance": 0.0000005
+    },
+    "rule": "Within each idea, select the feasible profile with the highest validation annualized net excess return; the unchanged incumbent is an explicit fallback. Historical-test outcomes never select a profile.",
+    "promotion_rule": "A challenger must improve historical-test annualized net excess return and net Sharpe, retain positive stressed Sharpe, pass practical constraints, and have a positive paired mean-return difference. Statistical evidence is reported, not used to silently rescue a failed economic comparison."
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "checkpointing": {
+    "natural_units": ["target/expert/refit-year", "multitask/refit-year", "idea/profile/portfolio-month"],
+    "atomic": true,
+    "resume": true,
+    "identity_binds_config_code_inputs_profile_and_month": true
+  }
+}

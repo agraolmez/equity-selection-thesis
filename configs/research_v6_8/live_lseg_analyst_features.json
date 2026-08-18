@@ -1,0 +1,8 @@
+{
+  "schema": "research_v6_8_live_lseg_analyst_features_v1",
+  "purpose": "Current same-source LSEG analyst estimates, recommendations, price targets, and CAM for V6.8 paper signals.",
+  "batch_size": 500,
+  "currency": "USD",
+  "addressing": "consolidated_ric_with_quote_permid_as_stable_identity",
+  "missing_history_policy": "exact 1m, 3m, and 6m revision fields remain missing until same-source live snapshots exist at those exact lags"
+}

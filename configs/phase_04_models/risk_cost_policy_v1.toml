@@ -1,0 +1,164 @@
+schema_version = 1
+policy_id = "phase04-risk-cost-policy-v1"
+contract_id = "phase04-risk-cost-v1"
+stage = 8
+status = "frozen_development_only_before_primary_risk_cost_build"
+
+[methodology]
+source = "outputs/methodology_v1_source.md"
+source_sha256 = "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+freeze_receipt = "outputs/methodology_v1_freeze.json"
+freeze_receipt_sha256 = "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+
+[authority]
+verified_stage07_pointer = "artifacts/phase_03_features/LATEST_LABEL_STORE_VERIFIED.json"
+verified_stage07_pointer_sha256 = "119a20dffafeb348022de373e2c4aedd790f5a03ef7cd6be8550bbf8278ce5b1"
+required_stage07_build_id = "phase03-labels-2ed3885a0844fbad6c8a90a7"
+required_stage07_verification_id = "verify-d84e8c9b472a966a"
+required_authorization = "stage_08_risk_and_cost_models_authorized"
+stage07_label_payload_access_permitted = false
+
+[verified_feature_store]
+verified_pointer = "artifacts/phase_03_features/LATEST_FEATURE_STORE_VERIFIED.json"
+verified_pointer_sha256 = "29421df4f8d5becd5f68af566dacad1b6683c57f98083c03cfa624649b591308"
+primary_manifest = "artifacts/phase_03_features/feature_store_builds/phase03-features-fda21f0e51b8276c10246f9f/manifest.json"
+primary_manifest_sha256 = "96ab135c0628054699fa3f27a76abd1cb30f3e3e46279a84052a29c895b51375"
+required_build_id = "phase03-features-fda21f0e51b8276c10246f9f"
+required_verification_id = "verify-350915782d3ef12e"
+
+[physical_rules]
+path = "configs/phase_04_models/risk_cost_build_rules_v1.json"
+sha256 = "a7049869595625fc192f1fbfcf1570324545009e655af0ab6610eba084c94890"
+required_rules_id = "phase04-risk-cost-build-rules-v1"
+
+[scope]
+first_signal_date = "2000-01-31"
+last_signal_date = "2014-10-31"
+required_signal_dates = 178
+required_audit_rows = 1263048
+required_long_eligible_rows = 286628
+model_fitting_permitted = false
+portfolio_or_backtest_permitted = false
+pnl_or_performance_permitted = false
+validation_2015_2019_payload_access_permitted = false
+final_2020_2025_payload_access_permitted = false
+
+[database]
+root = "/Users/agraemirolmez/Desktop/Thesis"
+paths_config = "configs/paths.toml"
+paths_config_sha256 = "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+relocation_receipt = "data/database_relocation_v1.json"
+relocation_receipt_sha256 = "bb4cb92fadfd8df903ec2815f7b11281537e96d542b90c89af8d033321940bec"
+raw_is_read_only = true
+interim_build_root = "interim/phase_04_models/phase04-risk-cost-v1/risk_cost_builds"
+processed_build_root = "processed/phase_04_models/phase04-risk-cost-v1/risk_cost_builds"
+quality_build_root = "quality/phase_04_models/phase04-risk-cost-v1/risk_cost_builds"
+cache_root = "cache/phase_04_models/phase04-risk-cost-v1/risk_cost"
+
+[inputs]
+stage07_input_policy = "configs/phase_03_features/label_store_policy_v1.toml"
+stage07_input_policy_sha256 = "1f6f5649cfd1959a707c6e04465b70a334b1fbc4b32e9b81158baf521c2abcad"
+required_table_names = [
+  "feature_store_raw.parquet",
+  "crsp_signal_date_universe.parquet",
+  "rebalance_calendar.parquet",
+  "trading_calendar.parquet",
+  "crsp_security_day_return.parquet",
+  "ff_factor_daily_observation.parquet",
+]
+consumed_table_names = [
+  "feature_store_raw.parquet",
+  "rebalance_calendar.parquet",
+  "trading_calendar.parquet",
+  "crsp_security_day_return.parquet",
+  "ff_factor_daily_observation.parquet",
+]
+signal_universe_is_authenticated_reconciliation_only = true
+only_closed_allowlist_tables_permitted = true
+label_tables_permitted = false
+post_signal_rows_permitted = false
+production_hash_bypass_permitted = false
+symlinked_root_or_path_component_permitted = false
+stable_stat_and_full_rehash_before_publication_required = true
+
+[build]
+row_group_size = 131072
+compression = "zstd"
+dictionary_encode_strings = true
+return_scan_batch_rows = 262144
+deterministic_threads = 1
+content_addressed_build_id_required = true
+dependency_scoped_code_hashes_required = true
+resume_requires_authenticated_receipt = true
+
+[outputs.interim]
+required_files = [
+  "_SUCCESS.json",
+  "development_risk_cost_audit.parquet",
+]
+
+[outputs.processed]
+required_files = [
+  "_SUCCESS.json",
+  "development_risk_cost_inputs.parquet",
+  "development_factor_covariance.parquet",
+  "development_risk_cost_month_summary.parquet",
+  "model_parameters.json",
+]
+
+[outputs.quality]
+required_files = [
+  "_SUCCESS.json",
+  "quality_summary.json",
+  "risk_cost_timing_checks.parquet",
+  "risk_cost_coverage.parquet",
+]
+
+[quality_gates]
+duplicate_audit_keys = 0
+duplicate_processed_keys = 0
+audit_key_order_mismatches = 0
+processed_key_order_mismatches = 0
+audit_rows = 1263048
+processed_rows = 286628
+signal_dates = 178
+factor_covariance_rows = 6408
+post_signal_return_rows_used = 0
+post_signal_factor_rows_used = 0
+label_payload_rows_read = 0
+beta_label_substitution_count = 0
+nonfinite_published_numeric_values = 0
+negative_published_variances = 0
+factor_covariance_symmetry_violations = 0
+factor_covariance_psd_violations = 0
+ridge_formula_mismatches = 0
+sector_shrinkage_formula_mismatches = 0
+impact_volatility_formula_mismatches = 0
+missing_input_new_trade_permissions = 0
+borrow_quintile_order_mismatches = 0
+cost_parameter_mismatches = 0
+input_reauthentication_failures = 0
+
+[publication]
+artifact_root = "artifacts/phase_04_models"
+primary_build_namespace = "risk_cost_builds"
+verification_namespace = "risk_cost_verifications"
+latest_primary_pointer = "artifacts/phase_04_models/LATEST_RISK_COST_PRIMARY.json"
+latest_verified_pointer = "artifacts/phase_04_models/LATEST_RISK_COST_VERIFIED.json"
+primary_pointer_authorizes_downstream_use = false
+independent_verification_required = true
+verified_pointer_authorizes_stage09_model_training = true
+verified_pointer_authorizes_stage10_or_later = false
+verified_pointer_authorizes_portfolios_pnl_or_backtests = false
+verified_pointer_authorizes_validation_or_final_access = false
+closed_file_sets_required = true
+pointer_replaced_last = true
+
+[notebook]
+path = "notebooks/08_stage_08_risk_cost_quality.ipynb"
+must_execute_top_to_bottom = true
+must_bind_verified_build_and_verification_ids = true
+
+[report]
+technical_report_path = "reports/stage_08_risk_cost/index.html"
+must_bind_verified_build_and_verification_ids = true

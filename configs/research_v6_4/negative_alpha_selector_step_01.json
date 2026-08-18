@@ -1,0 +1,59 @@
+{
+  "schema": "research_v6_4_negative_alpha_selector_step_01_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-15",
+  "scope": {
+    "selector_only": true,
+    "portfolio_or_optimizer_authorized": false,
+    "separate_from_closed_v6_v6_1_v6_3": true,
+    "research_question": "Can a separately trained FF5-plus-momentum negative-alpha specialist identify the worst future alpha tail better than reversing the frozen general FF5-alpha selector?",
+    "historical_development_not_untouched_confirmation": true,
+    "predecessor_fitted_models_or_checkpoints_reused": false,
+    "frozen_predecessor_predictions_used_only_as_named_control": true
+  },
+  "base_selector_contract": {
+    "path": "configs/research_v6_1/selector_step_01.json",
+    "sha256": "481e306553c2f5b9d4fc7309f7c7a122d92d3489d39d0f0f4c772a5eeffcca92"
+  },
+  "target": {
+    "target_id": "negative_ff5_alpha",
+    "source_rank_column": "target_rank_ff5_momentum",
+    "source_economic_column": "alpha_ff5_momentum",
+    "rank_column": "target_rank_negative_ff5_alpha",
+    "economic_column": "negative_ff5_alpha_opportunity",
+    "construction": "Exact sign reversal: higher target values denote more negative next-holding-period FF5-plus-momentum residual alpha.",
+    "higher_is_more_attractive_short_alpha": true
+  },
+  "frozen_control": {
+    "path": "artifacts/research_v6_1/selector_step_01/481e306553c2-16046ee58521-d5dadd9cd9c3/ff5_momentum/official_predictions.parquet",
+    "sha256": "2ec9be95ccbb48199bc896d01cb46a6c5a5326ce7a9b42ce9877da22dbd8ccf8",
+    "score_column": "ensemble__cam_free_mlp_plus_cam__equal",
+    "negative_alpha_control_column": "frozen_ff5_alpha_reversed",
+    "interpretation": "The existing general FF5-alpha score reversed so that high values indicate predicted negative alpha."
+  },
+  "search": {
+    "feature_views": ["full", "cam_free", "correlation_reduced"],
+    "families": ["xgboost", "neural_network", "elastic_net"],
+    "objectives": ["pairwise", "continuous_rank"],
+    "ensembles": "Reuse every prespecified V6.1 equal and causal dynamic ensemble; direct CAM is sign-reversed for the negative-alpha orientation.",
+    "operating_schedule": "Reuse the frozen V6.1 FF5-plus-momentum refit, history, and retune schedules so the new experiment isolates side specialization.",
+    "historical_test_cannot_change_feature_view_family_objective_profile_or_ensemble": true
+  },
+  "selection": {
+    "period": "2020-01 through 2023-12",
+    "metric": "equal-month mean cross-sectional Spearman rank IC",
+    "challenger_rule": "Choose the highest validation mean IC among all new components and prespecified ensembles; break an exact tie by model_id.",
+    "control_comparison": "Report the frozen reversed FF5-alpha control separately; do not select a different challenger from the 2024-01 through 2025-08 historical test.",
+    "tail_diagnostics": [0.10, 0.20]
+  },
+  "checkpointing": {
+    "natural_unit": "feature-view/model/objective/refit-block",
+    "atomic": true,
+    "resume": true,
+    "identity_mismatch": "fail closed into a new V6.4 output lineage"
+  },
+  "execution": {
+    "stable_python": "/opt/anaconda3/envs/finance/bin/python",
+    "full_run_allowed_by_current_status": true
+  }
+}

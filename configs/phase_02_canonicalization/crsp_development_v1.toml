@@ -1,0 +1,510 @@
+schema_version = 1
+profile_name = "crsp_development_duplicate_and_flag_profile"
+profile_version = "v1"
+status = "locked_before_primary_profile"
+purpose = "Prove deterministic duplicate handling and observed flag domains before any CRSP panel is materialized."
+
+[scope]
+scope_name = "pre_validation_raw_quality_slice"
+start_date = "2000-01-01"
+end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+model_development_last_holding_month = "2014-11"
+model_development_last_exit_date = "2014-12-01"
+december_2014_stage = "embargo"
+december_2014_permitted_use = "raw quality and boundary reconciliation only"
+december_2014_prohibited_uses = ["labels", "features", "model fitting", "hyperparameter selection", "portfolio construction", "performance analysis"]
+eligibility_filters_applied = false
+canonical_panel_materialized = false
+targets_built = false
+features_built = false
+portfolios_built = false
+pnl_built = false
+performance_analyzed = false
+raw_security_keys_may_be_published = false
+excluded_period_values_may_be_retained = false
+excluded_period_values_may_be_aggregated = false
+excluded_period_values_may_be_fingerprinted = false
+excluded_period_values_may_be_written = false
+whole_file_byte_authentication_sha256_is_only_fingerprint_exception = true
+whole_file_byte_authentication_sha256_may_feed_profile_statistics = false
+whole_file_byte_authentication_sha256_may_feed_key_or_content_fingerprints = false
+monolithic_csv_scan_disclosure = "Full-file records and bytes must be counted because dates are interleaved by security. Only the date field may be used to gate scope; no non-date value outside the profile scope may enter a comparison, statistic, key/content fingerprint, log, or output."
+
+[upstream.contract]
+contract_id = "phase02-crsp-b03263a970e52fbd"
+verification_id = "verify-6640223bff5ef6bc"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CONTRACT_VERIFIED.json"
+verified_pointer_sha256 = "0a082b0f78dfb0c549f679852a07ae4bcb4bfc1da6727abe8f56b150ec4ad843"
+
+[upstream.calendar]
+build_id = "calendar-ae2e4ba4a280d66e"
+verification_id = "verify-7dc718e9be47873c"
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+verified_pointer_sha256 = "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+independent_check_sha256 = "64b5c179d9b4ec50c06f6c86d22f4a648f599ab3394f764a8198310a8e0cf332"
+required_status = "verified_passed"
+
+[comparison]
+raw_fields_compared_in_header_order = true
+raw_field_count_per_source = 36
+parse_all_compared_fields_as_strings = true
+trim_whitespace = false
+normalize_case = false
+coerce_numeric_values = false
+normalize_null_tokens = false
+blank_string_is_distinct = true
+literal_n_slash_a_is_value = true
+field_value_semantics = "RFC-4180-style CSV-decoded field strings after quote removal and escaped-quote decoding; compare decoded values, not lexical CSV record bytes."
+embedded_newline_semantics = "A quoted embedded newline is part of the decoded field string."
+exact_row_definition = "Every one of the 36 header-ordered CSV-decoded string fields is identical."
+
+[key_and_date_semantics]
+scope_date_format = "strict Gregorian YYYY-MM-DD"
+blank_or_invalid_scope_date_is_fatal = true
+permno_format = "one or more ASCII decimal digits representing a positive integer"
+blank_invalid_or_nonpositive_permno_is_fatal_in_retained_rows = true
+grouping_and_sort_permno_type = "positive_int64"
+grouping_and_sort_date_type = "Gregorian date"
+interval_date_format = "strict Gregorian YYYY-MM-DD"
+blank_or_invalid_interval_endpoint_is_fatal_in_retained_rows = true
+inverted_interval_is_fatal_in_retained_rows = true
+blank_monthly_price_date_is_permitted_for_singleton_canonical_keys = true
+invalid_nonblank_monthly_price_date_is_fatal = true
+
+[sources.daily]
+filename = "crsp_daily_ciz.csv"
+sha256 = "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9"
+size_bytes = 12740735288
+full_file_rows = 49886907
+date_column = "DlyCalDt"
+raw_key = ["PERMNO", "DlyCalDt"]
+canonical_key = ["PERMNO", "DlyCalDt"]
+header = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD",
+  "NAICS", "ICBIndustry", "IssuerNm", "DlyCalDt", "DlyPrc", "DlyPrcFlg", "DlyCap",
+  "DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg", "DlyVol", "DlyClose",
+  "DlyLow", "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol",
+]
+
+[sources.monthly]
+filename = "crsp_monthly_ciz.csv"
+sha256 = "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf"
+size_bytes = 561296199
+full_file_rows = 2423212
+date_column = "MthCalDt"
+price_date_column = "MthPrcDt"
+interval_start_column = "SecInfoStartDt"
+interval_end_column = "SecInfoEndDt"
+raw_key = ["PERMNO", "MthCalDt", "SecInfoStartDt", "SecInfoEndDt"]
+canonical_key = ["PERMNO", "MthCalDt"]
+header = [
+  "PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch",
+  "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType",
+  "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD",
+  "NAICS", "ICBIndustry", "IssuerNm", "YYYYMM", "MthCalDt", "MthPrc", "MthPrcFlg",
+  "MthPrcDt", "MthCap", "MthRet", "MthRetx", "MthRetFlg", "MthDisCnt", "MthVol",
+  "MthVolFlg", "MthPrcVol", "MthFacShrFlg", "MthPrcVolMissCnt", "ShrOut",
+]
+
+[rules.daily]
+first_stage = "group_on_raw_key"
+collapse_only_all_field_exact_rows = true
+conflicting_raw_key_groups_are_fatal = true
+sort_order_required_by_primary_implementation = true
+final_key_must_be_unique = true
+
+[rules.monthly]
+first_stage = "group_on_four_part_raw_key"
+collapse_only_all_field_exact_rows = true
+conflicting_raw_key_groups_are_fatal = true
+second_stage = "group_on_PERMNO_and_MthCalDt_after_exact_raw_key_collapse"
+second_stage_groups_are_effective_interval_candidates = true
+selection_applies_only_when_post_collapse_canonical_group_size_exceeds_one = true
+singleton_canonical_groups_pass_through_without_interval_selection = true
+selection_rule = "Select the unique row satisfying SecInfoStartDt <= MthPrcDt <= SecInfoEndDt."
+selection_interval_is_inclusive = true
+zero_price_date_interval_matches_are_fatal_in_candidate_groups = true
+multiple_price_date_interval_matches_are_fatal_in_candidate_groups = true
+selected_interval_must_also_contain_MthCalDt = true
+zero_calendar_date_interval_matches_are_fatal_in_candidate_groups = true
+multiple_calendar_date_interval_matches_are_fatal_in_candidate_groups = true
+price_date_and_calendar_date_must_select_same_row = true
+conditional_type_is_tiebreaker = false
+trading_status_is_tiebreaker = false
+historical_descriptors_are_authoritative = false
+historical_descriptor_authority = "crsp_names_ciz.csv in a later gate"
+sort_order_required_by_primary_implementation = true
+final_key_must_be_unique = true
+
+[expected.daily_raw_key]
+input_rows = 26785087
+distinct_groups = 26778093
+duplicate_groups = 6413
+affected_rows = 13407
+surplus_rows = 6994
+all_field_exact_groups = 6413
+conflicting_groups = 0
+output_rows = 26778093
+sort_violations = 0
+
+[expected.monthly_raw_key]
+input_rows = 1299612
+distinct_groups = 1285279
+duplicate_groups = 9688
+affected_rows = 24021
+surplus_rows = 14333
+all_field_exact_groups = 9688
+conflicting_groups = 0
+output_rows = 1285279
+sort_violations = 0
+
+[expected.monthly_canonical_key_before_raw_exact_collapse]
+input_rows = 1299612
+distinct_groups = 1284297
+duplicate_groups = 10658
+affected_rows = 25973
+surplus_rows = 15315
+all_field_exact_groups = 9676
+effective_interval_candidate_groups = 982
+raw_exact_duplicate_groups_embedded_in_effective_interval_candidates = 12
+
+[expected.monthly_canonical_key_after_raw_exact_collapse]
+input_rows = 1285279
+distinct_groups = 1284297
+duplicate_groups = 982
+affected_rows = 1964
+surplus_rows = 982
+effective_interval_candidate_groups = 982
+candidate_group_size = 2
+groups_with_exactly_one_price_date_match = 982
+groups_with_zero_price_date_matches = 0
+groups_with_multiple_price_date_matches = 0
+groups_with_exactly_one_calendar_date_match = 982
+groups_with_zero_calendar_date_matches = 0
+groups_with_multiple_calendar_date_matches = 0
+output_rows = 1284297
+
+[expected.monthly_candidate_diagnostics]
+selected_conditional_type = "RW"
+selected_trading_status = "A"
+rejected_conditional_type = "N/A"
+rejected_trading_status = "D"
+groups_with_observed_pattern = 982
+diagnostic_may_select_row = false
+
+[expected.monthly_candidate_column_difference_groups]
+SecInfoStartDt = 982
+SecInfoEndDt = 982
+CUSIP = 982
+PrimaryExch = 982
+ConditionalType = 982
+TradingStatusFlg = 982
+SecurityType = 982
+SecuritySubType = 982
+ShareType = 982
+Ticker = 982
+SICCD = 955
+IssuerNm = 955
+USIncFlg = 856
+ExchangeTier = 610
+NAICS = 536
+ICBIndustry = 277
+
+[expected.monthly_candidate_column_difference_policy]
+listed_columns_are_the_only_permitted_differences = true
+every_unlisted_header_field_expected_groups_differing = 0
+new_differing_column_is_fatal = true
+price_return_cap_volume_share_and_flag_payload_must_be_invariant = true
+
+[expected.flag_domains.daily]
+ConditionalType = ["N/A", "NT", "NW", "RW"]
+TradingStatusFlg = ["A", "D", "H", "S", "X"]
+DlyPrcFlg = ["BA", "DA", "DM", "DP", "HA", "MP", "NT", "SU", "TR"]
+DlyRetMissFlg = ["DG", "DM", "DP", "GP", "MP", "MV", "NA", "NS", "NT", "RA"]
+DlyRetDurFlg = ["D1", "D2", "D3", "D4", "DD", "DU", "MR", "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"]
+
+[expected.flag_domains.monthly]
+MthPrcFlg = ["BA", "MP", "TR"]
+MthRetFlg = ["CR", "DE", "GP", "IP", "MP", "NS", "NT"]
+MthVolFlg = ["CV", "DE", "GP", "IP", "MI", "MV", "NS"]
+MthFacShrFlg = ["N", "O", "S"]
+
+[profiled_categorical_columns]
+daily = [
+  "PrimaryExch", "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg",
+  "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "DlyPrcFlg",
+  "DlyRetMissFlg", "DlyRetDurFlg",
+]
+monthly = [
+  "PrimaryExch", "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg",
+  "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "MthPrcFlg",
+  "MthRetFlg", "MthVolFlg", "MthFacShrFlg",
+]
+known_domain_columns_are_hard_gates = true
+previously_unprofiled_domain_columns_are_discovery_only = true
+discovery_only_columns_require_independent_frequency_reproduction = true
+discovery_only_columns_require_semantic_mapping_before_eligibility_use = true
+
+[domain_semantics]
+expected_arrays_are_exact_sorted_distinct_nonblank_decoded_literals = true
+blank_value_is_excluded_from_expected_arrays = true
+blank_value_frequency_is_reported_separately = true
+missing_expected_nonblank_value_is_fatal = true
+unexpected_nonblank_value_is_fatal = true
+literal_n_slash_a_is_nonblank = true
+
+[ordering_and_fingerprints]
+scope = "retained rows from 2000-01-01 through 2014-12-31 only"
+sort_violation_definition = "One adjacent typed key is strictly less than its preceding typed key."
+daily_typed_key = ["positive_int64(PERMNO)", "GregorianDate(DlyCalDt)"]
+monthly_raw_typed_key = ["positive_int64(PERMNO)", "GregorianDate(MthCalDt)", "GregorianDate(SecInfoStartDt)", "GregorianDate(SecInfoEndDt)"]
+monthly_canonical_typed_key = ["positive_int64(PERMNO)", "GregorianDate(MthCalDt)"]
+group_order = "ascending typed key"
+multiplicity_fingerprint_payload = "For every group in ascending typed-key order, append one canonical JSON array containing the typed key fields followed by the integer multiplicity, then one LF byte. Only the final aggregate digest is published; no key, per-key digest, or payload is written."
+multiplicity_fingerprint_algorithm = "SHA-256"
+fingerprint_domain = "portfolio-bot/crsp-key-multiplicity/v1"
+fingerprint_initial_bytes = "UTF-8 fingerprint_domain followed by one NUL byte"
+fingerprint_key_integer_representation = "JSON integer"
+fingerprint_key_date_representation = "JSON string in YYYY-MM-DD"
+fingerprint_json_separators = "comma and colon with no spaces"
+fingerprint_ensure_ascii = false
+fingerprint_published_material = "final lowercase SHA-256 digest only"
+integer_serialization = "minimal base-10 ASCII with no sign or leading zero"
+line_terminator = "LF"
+
+[required_additional_diagnostics]
+duplicate_multiplicity_histograms = true
+maximum_duplicate_group_sizes = true
+monthly_post_collapse_group_sizes = true
+monthly_exact_duplicates_embedded_in_candidate_keys = true
+blank_and_invalid_key_counts = true
+blank_and_invalid_date_counts = true
+inverted_interval_counts = true
+missing_price_date_counts_overall = true
+missing_price_date_counts_inside_candidates = true
+flag_value_frequencies_include_blank = true
+row_conservation_equations = true
+sorted_key_multiplicity_fingerprints_without_raw_keys = true
+
+[outputs]
+quality_subdirectory = "crsp_development_profile"
+artifact_subdirectory = "crsp_development_profiles"
+primary_pointer = "LATEST_CRSP_DEVELOPMENT_PROFILE_PRIMARY.json"
+verified_pointer = "LATEST_CRSP_DEVELOPMENT_PROFILE_VERIFIED.json"
+duplicate_summary = "duplicate_summary.csv"
+duplicate_column_differences = "duplicate_column_differences.csv"
+duplicate_multiplicity = "duplicate_multiplicity.csv"
+flag_domains = "flag_domains.csv"
+canonicalization_rules = "canonicalization_rules.json"
+checks = "checks.csv"
+input_receipt = "input_receipt.json"
+summary = "summary.json"
+success = "_SUCCESS.json"
+closed_quality_file_set = [
+  "_SUCCESS.json", "canonicalization_rules.json", "checks.csv",
+  "duplicate_column_differences.csv", "duplicate_multiplicity.csv",
+  "duplicate_summary.csv", "flag_domains.csv", "input_receipt.json", "summary.json",
+]
+
+[outputs.serialization]
+text_encoding = "UTF-8 without BOM"
+json = "Objects use lexicographically sorted keys, separators comma and colon with no extra spaces, ensure_ascii=false, and exactly one trailing LF."
+csv = "RFC-4180-compatible comma delimiter, double-quote quote character, doubled embedded quotes, minimal quoting, no escape character, header row present, and LF record terminators."
+csv_integer = "minimal base-10 ASCII"
+csv_boolean = "lowercase true or false"
+csv_null = "empty field"
+csv_array_or_object = "canonical JSON using the declared JSON serialization"
+sha256_inventory = "lowercase 64-hex digest, two ASCII spaces, path, LF; rows sorted by path"
+published_primary_status = "profile_primary_passed_pending_independent_verification"
+published_verified_status = "verified_passed"
+failed_verification_status = "verification_failed"
+csv_inapplicable_integer = "0"
+csv_nulls_permitted = false
+
+[outputs.population_registry]
+source_order = ["crsp_daily_ciz.csv", "crsp_monthly_ciz.csv"]
+duplicate_stage_order = [
+  "daily_raw_key", "monthly_raw_key",
+  "monthly_canonical_key_before_raw_exact_collapse",
+  "monthly_canonical_key_after_raw_exact_collapse",
+]
+daily_raw_key_source = "crsp_daily_ciz.csv"
+daily_raw_key_population = "all and only retained profile-scope daily raw rows before collapse"
+monthly_raw_key_source = "crsp_monthly_ciz.csv"
+monthly_raw_key_population = "all and only retained profile-scope monthly raw rows before collapse"
+monthly_canonical_key_before_raw_exact_collapse_source = "crsp_monthly_ciz.csv"
+monthly_canonical_key_before_raw_exact_collapse_population = "all and only retained profile-scope monthly raw rows before collapse"
+monthly_canonical_key_after_raw_exact_collapse_source = "crsp_monthly_ciz.csv"
+monthly_canonical_key_after_raw_exact_collapse_population = "one row per exact four-part monthly raw-key group after stage-one collapse"
+duplicate_summary_output_rows_semantics = "distinct_groups: the row count obtained if the stage resolves to one row per grouped typed key"
+stage_inapplicable_integer_value = 0
+multiplicity_includes_singleton_groups = true
+multiplicity_rows_have_positive_group_count_only = true
+multiplicity_affected_rows_formula = "multiplicity * group_count"
+column_difference_source = "crsp_monthly_ciz.csv"
+column_difference_stage = "monthly_canonical_key_after_raw_exact_collapse"
+column_difference_population = "exactly the 982 effective-interval candidate groups after four-part raw-key exact collapse"
+flag_daily_stage = "daily_retained_raw_rows"
+flag_daily_population = "all retained profile-scope daily raw rows before duplicate collapse, including exact duplicates"
+flag_monthly_stage = "monthly_retained_raw_rows"
+flag_monthly_population = "all retained profile-scope monthly raw rows before duplicate collapse, including exact duplicates"
+
+[outputs.schemas.duplicate_summary]
+columns = [
+  "source", "stage", "key_fields", "input_rows", "distinct_groups", "duplicate_groups",
+  "affected_rows", "surplus_rows", "all_field_exact_groups", "conflicting_groups",
+  "effective_interval_candidate_groups", "output_rows", "sort_violations",
+  "maximum_group_size", "multiplicity_fingerprint_sha256",
+]
+logical_types = [
+  "string", "string", "json_array_string", "int64", "int64", "int64", "int64",
+  "int64", "int64", "int64", "int64", "int64", "int64", "int64", "sha256",
+]
+stage_order = [
+  "daily_raw_key", "monthly_raw_key",
+  "monthly_canonical_key_before_raw_exact_collapse",
+  "monthly_canonical_key_after_raw_exact_collapse",
+]
+row_count = 4
+
+[outputs.schemas.duplicate_column_differences]
+columns = ["source", "stage", "column", "groups_differing", "expected_groups_differing", "status"]
+logical_types = ["string", "string", "string", "int64", "int64", "PASS_or_FAIL"]
+row_policy = "Exactly one row for each of the 36 monthly header fields, in header order."
+source_literal = "crsp_monthly_ciz.csv"
+stage_literal = "monthly_canonical_key_after_raw_exact_collapse"
+row_count = 36
+
+[outputs.schemas.duplicate_multiplicity]
+columns = ["source", "stage", "multiplicity", "group_count", "affected_rows"]
+logical_types = ["string", "string", "int64", "int64", "int64"]
+row_policy = "Observed positive multiplicities only, ordered by configured stage and ascending multiplicity."
+stage_order = [
+  "daily_raw_key", "monthly_raw_key",
+  "monthly_canonical_key_before_raw_exact_collapse",
+  "monthly_canonical_key_after_raw_exact_collapse",
+]
+
+[outputs.schemas.flag_domains]
+columns = ["source", "stage", "column", "raw_value", "row_count", "is_blank", "domain_policy", "classification"]
+logical_types = ["string", "string", "string", "decoded_string", "int64", "bool", "hard_gate_or_discovery", "expected_nonblank_or_discovered_nonblank_or_blank_or_unexpected_nonblank"]
+row_policy = "Observed values only; configured source and column order, then UTF-8 binary raw-value order with blank first."
+stage_by_source = ["crsp_daily_ciz.csv:daily_retained_raw_rows", "crsp_monthly_ciz.csv:monthly_retained_raw_rows"]
+population_basis = "retained raw rows before any duplicate collapse"
+failed_compilations_are_not_published_to_the_closed_quality_directory = true
+
+[outputs.schemas.checks]
+columns = ["check_id", "severity", "status", "expected", "actual", "evidence", "message"]
+logical_types = ["string", "hard_or_info", "PASS_or_FAIL", "canonical_json_value", "canonical_json_value", "string", "string"]
+row_policy = "Lexicographically ascending unique check_id; every hard check must PASS before publication."
+
+[outputs.schemas.canonicalization_rules]
+format = "canonical_json_object"
+top_level_keys = ["comparison", "config_sha256", "key_and_date_semantics", "ordering_and_fingerprints", "profile_name", "profile_version", "rules", "scope", "sources"]
+top_level_types = ["object", "sha256", "object", "object", "string", "string", "object", "object", "object"]
+nested_object_policy = "comparison, key_and_date_semantics, ordering_and_fingerprints, rules, scope, and sources must equal those exact parsed TOML subtrees."
+
+[outputs.schemas.input_receipt]
+format = "canonical_json_object"
+top_level_keys = ["build_id", "columns_read", "config_sha256", "implementation_sha256", "profile_name", "raw_inputs", "schema_version", "scope", "upstream"]
+top_level_types = ["string", "object", "sha256", "sha256", "string", "object", "int64", "object", "object"]
+columns_read_keys = ["daily", "monthly"]
+columns_read_value_policy = "Each value exactly equals the corresponding 36-field configured header in order."
+scope_keys = ["end_date", "start_date"]
+scope_types = ["YYYY-MM-DD", "YYYY-MM-DD"]
+upstream_keys = ["calendar_build_id", "calendar_pointer_sha256", "calendar_verification_id", "contract_id", "contract_pointer_sha256", "contract_verification_id"]
+upstream_types = ["string", "sha256", "string", "string", "sha256", "string"]
+raw_input_keys = ["daily", "monthly"]
+raw_input_entry_keys = ["expected_full_file_rows", "expected_sha256", "expected_size_bytes", "filename", "full_file_rows_scanned", "operational_stat_after", "operational_stat_before", "retained_rows"]
+raw_input_entry_types = ["int64", "sha256", "int64", "string", "int64", "object", "object", "int64"]
+operational_stat_keys = ["device", "inode", "mode", "mtime_ns", "size_bytes"]
+operational_stat_types = ["int64", "int64", "int64", "int64", "int64"]
+runtime_or_timestamp_permitted = false
+
+[outputs.schemas.summary]
+format = "canonical_json_object"
+top_level_keys = [
+  "build_id", "check_count", "daily_full_file_rows_scanned", "daily_retained_rows",
+  "daily_unique_security_days", "fail_count", "features_built",
+  "monthly_full_file_rows_scanned", "monthly_retained_rows",
+  "monthly_unique_security_months", "pass_count", "performance_results_seen",
+  "pnl_built", "portfolios_built", "profile_name", "schema_version", "status",
+  "targets_built",
+]
+top_level_types = [
+  "string", "int64", "int64", "int64", "int64", "int64", "bool", "int64",
+  "int64", "int64", "int64", "bool", "bool", "bool", "string", "int64",
+  "string", "bool",
+]
+must_equal_success_json = true
+
+[outputs.schemas.manifest]
+format = "canonical_json_object"
+top_level_keys = ["binding", "build_id", "calendar_build_id", "contract_id", "outputs", "profile_name", "schema_version", "status", "summary"]
+top_level_types = ["object", "string", "string", "string", "array", "string", "int64", "string", "object"]
+binding_keys = ["calendar_build_id", "calendar_pointer_sha256", "calendar_verification_id", "config_sha256", "contract_id", "contract_pointer_sha256", "contract_verification_id", "daily_raw_sha256", "implementation_sha256", "monthly_raw_sha256"]
+binding_types = ["string", "sha256", "string", "sha256", "string", "sha256", "string", "sha256", "sha256", "sha256"]
+output_entry_keys = ["path", "sha256", "size_bytes"]
+output_entry_types = ["database_root_relative_posix_path", "sha256", "int64"]
+outputs_order = "ascending path"
+
+[outputs.schemas.output_hashes]
+format = "sha256_inventory"
+row_policy = "Exactly one row per closed-set quality output, ordered by database-root-relative POSIX path."
+membership = "Exactly the nine files in outputs.closed_quality_file_set; excludes manifest.json and output_hashes.sha256."
+path_form = "POSIX path relative to configured database root, beginning with quality/"
+self_hash_permitted = false
+manifest_hash_permitted = false
+
+[outputs.schemas.primary_pointer]
+format = "canonical_json_object"
+top_level_keys = ["artifact_path", "build_id", "calendar_build_id", "contract_id", "manifest_sha256", "schema_version", "status"]
+top_level_types = ["project_root_relative_posix_path", "string", "string", "string", "sha256", "int64", "string"]
+
+[outputs.schemas.differences]
+columns = ["check_id", "category", "expected", "actual", "evidence", "message"]
+logical_types = ["string", "string", "canonical_json_value", "canonical_json_value", "string", "string"]
+row_policy = "Header plus failing independent-verification checks only, ordered by check_id; a pass has exactly the header and zero data rows."
+
+[outputs.schemas.independent_check]
+format = "canonical_json_object"
+top_level_keys = ["build_id", "checks", "contract_id", "independence", "primary_manifest_sha256", "profile_name", "schema_version", "status", "summary", "verification_id", "verifier_implementation_sha256"]
+top_level_types = ["string", "array", "string", "object", "sha256", "string", "int64", "string", "object", "string", "sha256"]
+check_entry_keys = ["actual", "category", "check_id", "evidence", "expected", "message", "status"]
+check_entry_types = ["json_value", "string", "string", "string", "json_value", "string", "PASS_or_FAIL"]
+check_order = "ascending unique check_id"
+summary_keys = ["check_count", "daily_full_file_rows_read", "daily_retained_rows", "difference_count", "fail_count", "monthly_full_file_rows_read", "monthly_retained_rows", "pass_count"]
+summary_types = ["int64", "int64", "int64", "int64", "int64", "int64", "int64", "int64"]
+independence_keys = ["full_raw_hashes_recomputed", "grouping_depends_on_input_sort", "primary_builder_imported", "raw_files_reread"]
+independence_types = ["bool", "bool", "bool", "int64"]
+
+[outputs.schemas.verified_pointer]
+format = "canonical_json_object"
+top_level_keys = ["build_id", "contract_id", "differences_sha256", "independent_check_sha256", "primary_manifest_sha256", "schema_version", "status", "verification_id", "verification_path"]
+top_level_types = ["string", "string", "sha256", "sha256", "sha256", "int64", "string", "string", "project_root_relative_posix_path"]
+
+[outputs.closed_sets]
+artifact_build_files = ["manifest.json", "output_hashes.sha256"]
+verification_files = ["differences.csv", "independent_check.json"]
+quality_inventory_members = [
+  "_SUCCESS.json", "canonicalization_rules.json", "checks.csv",
+  "duplicate_column_differences.csv", "duplicate_multiplicity.csv",
+  "duplicate_summary.csv", "flag_domains.csv", "input_receipt.json", "summary.json",
+]
+run_receipts_are_outside_immutable_quality_and_artifact_sets = true
+timestamps_elapsed_seconds_and_machine_metadata_are_run_receipt_only = true
+
+[verification]
+standalone_verifier_required = true
+verifier_may_import_primary_builder = false
+independent_full_raw_reread_required = true
+independent_raw_hash_required = true
+independent_grouping_must_not_depend_on_input_sort = true
+all_output_hashes_must_match = true
+exact_output_schemas_required = true
+closed_directory_file_sets_required = true
+zero_differences_required = true
+failed_verification_may_replace_verified_pointer = false

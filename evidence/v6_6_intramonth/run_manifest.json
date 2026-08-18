@@ -1,0 +1,13 @@
+{
+  "identity": {
+    "code_identity": "a82fbba1983b6797210e6752ba16fae212680cd3372e3e4bb9da060d2279a483",
+    "config_sha256": "566f3749ee9baa6317a7af2a123323cb96bc3870908ead3a4525baf6d334c6ff",
+    "daily_returns_sha256": "45a0abdadc50ac05945a55b68672ed7723fc88d4e281df645a26b656a8b1d512",
+    "frontier_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+    "v6_input_identity": "16046ee5852109ce092f0e0fa0bda4ec4f73e5c67460e14bcbb049ea60ada6fd"
+  },
+  "report": "RESULT.md",
+  "result": "result.json",
+  "schema": "research_v6_6_intramonth_run_v1",
+  "status": "COMPLETE"
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "relocation_id": "database-root-relocation-2026-07-15-v1",
+  "status": "verified_same_frozen_files_at_new_root",
+  "reason": "The user intentionally renamed the external database root from Desktop/database to Desktop/Thesis.",
+  "recorded_on_date": "2026-07-15",
+  "old_database_root": "/Users/agraemirolmez/Desktop/database",
+  "new_database_root": "/Users/agraemirolmez/Desktop/Thesis",
+  "old_root_exists_at_recording": false,
+  "new_root_exists_at_recording": true,
+  "paths_configuration": {
+    "historical_path": "configs/history/paths_desktop_database_v1.toml",
+    "historical_semantic_copy_sha256": "0a111a81e44b055fe7016bf66c69876ef0640cf067c67eea37d9d16f9798ddd2",
+    "historical_frozen_sha256": "f628e2263da59774aff10d480628ba3cebdca555e48765c2507ec6795be9c61c",
+    "historical_frozen_size_bytes": 304,
+    "historical_note": "The frozen file ended with two LF bytes; the semantic history copy is human-readable and is not represented as the original byte artifact.",
+    "current_path": "configs/paths.toml",
+    "current_sha256": "a41135d4b12e3138b65027b5d522e5cb6066ce50e742f878c474ac120a075878"
+  },
+  "frozen_snapshot": {
+    "raw_snapshot_id": "raw-v1-c1ab523852daf9e5",
+    "freeze_id": "phase01-freeze-9241d6d2adcd7a88",
+    "freeze_manifest": "artifacts/phase_01_raw_manifest/freezes/raw-v1-c1ab523852daf9e5/manifest.json",
+    "freeze_manifest_sha256": "fc2478d15eba609731c8374b761ba77a4399d346befcc596abddd5d1ac1ff7ac",
+    "expected_csv_files": 25
+  },
+  "relocation_evidence": {
+    "raw_registry_matches_frozen_snapshot": true,
+    "current_csv_file_count": 25,
+    "all_frozen_stat_identities_match": true,
+    "stat_identity_fields": [
+      "device",
+      "inode",
+      "size_bytes",
+      "mtime_ns",
+      "ctime_ns",
+      "mode"
+    ],
+    "identity_registry_sha256": "3e2f4665ba338e3a94e3fe16dcd5c4bde88048cf397360a27c7fb9a49386c026",
+    "core_source_sha256": {
+      "crsp_daily_ciz.csv": "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9",
+      "crsp_monthly_ciz.csv": "a6229c8fc8cfa7ba23d7c5a62e01375553ea5cb71b0f92d31b40fe84de132acf",
+      "crsp_names_ciz.csv": "ee791429169b380b5fcacd896d76a16795861ce42d703d0d188d2c4fc9c26e24"
+    },
+    "core_hashes_match_frozen_contracts": true,
+    "interpretation": "The same frozen file inodes are now reachable under the renamed parent directory; no raw file migration or rewrite is inferred."
+  },
+  "historical_evidence_policy": {
+    "rewrite_sealed_artifacts": false,
+    "historical_absolute_paths_remain_valid_provenance": true,
+    "new_runs_must_use_new_database_root": true,
+    "relocation_receipt_required_for_new_runs_that_bind_pre_relocation_evidence": true
+  }
+}

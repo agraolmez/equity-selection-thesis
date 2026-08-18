@@ -1,0 +1,103 @@
+{
+  "schema": "research_v6_1_maximum_return_scaling_frontier_v1",
+  "status": "AUTHORIZED_RETURN_CEILING_STUDY",
+  "approved_on": "2026-08-14",
+  "question": "What is the highest validation-selected net total return obtainable by scaling the frozen 1.5% position-cap portfolio after stateful trading, impact, financing, and borrow costs, and where do SPY and QQQ cease to be the binding economic comparison?",
+  "nav_dollars": 100000000.0,
+  "scope": {
+    "frozen_features": true,
+    "frozen_selectors": true,
+    "frozen_ranks": true,
+    "frozen_ff5_momentum_gate": true,
+    "frozen_stock_selection": true,
+    "frozen_relative_monthly_weights": true,
+    "no_outcome_dependent_monthly_scaling": true,
+    "selection_uses_validation_only": true,
+    "historical_test_profiles_are_frozen_before_evaluation": true,
+    "optimizer_frontier_reused_without_rerun": true
+  },
+  "sources": {
+    "portfolio": {
+      "root": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db",
+      "run_manifest": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db/run_manifest.json",
+      "run_manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+      "profile": "position_1p5"
+    },
+    "risk_cost": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_risk_cost.parquet",
+      "sha256": "8482a12856429f97234e664ca9b3093b6548a3fa4dc8805da966a155a2b9466e"
+    },
+    "benchmarks": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/processed/phase_06_final_test/stage13-final-inputs-v2/primary_benchmarks.parquet",
+      "sha256": "b7041648b15d345910b6b3810bfd5ad31b3eebfc6bf7a18b7a5d33a31f491c03",
+      "ids": ["spy_total_return", "qqq_total_return"]
+    }
+  },
+  "evidence": {
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "prospective_confirmation_earliest_start": "2026-09"
+  },
+  "multiplier_grid": [
+    {"start": 0.50, "end": 12.00, "step": 0.05},
+    {"start": 12.25, "end": 20.00, "step": 0.25}
+  ],
+  "costs": {
+    "commission_rate": 0.0001,
+    "primary": {
+      "spread_multiplier": 1.0,
+      "impact_coefficient": 0.10,
+      "financing_rate_annual": 0.005,
+      "borrow_column": "primary_borrow_rate_annual"
+    },
+    "stress": {
+      "spread_multiplier": 2.0,
+      "impact_coefficient": 0.20,
+      "financing_rate_annual": 0.015,
+      "borrow_column": "stress_borrow_rate_annual"
+    }
+  },
+  "selection": {
+    "metric": "net_total_return_cagr",
+    "tie_break": "lower_multiplier",
+    "tiers": {
+      "realistic_100m": {
+        "maximum_gross": 1.50,
+        "maximum_one_way_adv_participation": 0.10,
+        "maximum_absolute_position": 0.020,
+        "maximum_one_way_turnover": 0.75,
+        "require_positive_stress_excess_return": true
+      },
+      "expanded_institutional_100m": {
+        "maximum_gross": 2.00,
+        "maximum_one_way_adv_participation": 0.125,
+        "maximum_absolute_position": 0.020,
+        "maximum_one_way_turnover": 0.75,
+        "require_positive_stress_excess_return": true
+      },
+      "balanced_high_return": {
+        "minimum_net_sharpe": 0.75,
+        "require_positive_stress_excess_return": true
+      },
+      "stress_positive_ceiling": {
+        "require_positive_stress_excess_return": true
+      },
+      "absolute_return_ceiling": {}
+    }
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "interpretation": {
+    "benchmark_crossing_is_not_a_stopping_rule": true,
+    "absolute_ceiling_is_not_deployable_without_separate_margin_and_capacity_authorization": true,
+    "historical_result_is_an_exploratory_return_frontier": true
+  }
+}

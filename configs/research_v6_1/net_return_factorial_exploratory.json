@@ -1,0 +1,160 @@
+{
+  "schema": "research_v6_1_net_return_factorial_exploratory_v1",
+  "status": "AUTHORIZED_POST_DIAGNOSTIC_TEST",
+  "approved_on": "2026-08-14",
+  "question": "Can three modest, economically distinct constraint relaxations improve the validation-selected 1.5% portfolio's net return or Sharpe without changing its genuine selectors?",
+  "base_portfolio_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "frozen_control": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "variant": "return_plus_ff5_momentum__optimized_10pct_vol",
+    "manifest_sha256": "1b083109faad0ac8dfbc5ac4ed9deaa04e9e99acdbd9c36f707b427e481e02ef"
+  },
+  "paired_comparator": {
+    "label": "validation_selected_1p5_position_cap",
+    "path": "artifacts/research_v6_1/net_return_frontier/880c4b16de97-6e6c91767c46-eac64c8cf6db",
+    "manifest_sha256": "ca8bc83ff81616526ff910c4981fbab15d4985332f2a3f84b90dfea629c911e2",
+    "monthly_file": "historical_test_monthly.parquet",
+    "filter_column": "profile",
+    "filter_value": "position_1p5"
+  },
+  "scope": {
+    "selector_retraining": false,
+    "feature_change": false,
+    "model_change": false,
+    "signal_change": false,
+    "rank_change": false,
+    "alpha_gate_change": false,
+    "candidate_tail_change": false,
+    "calibration_change": false,
+    "cost_model_change": false,
+    "position_cap_fixed": 0.015,
+    "gross_net_short_floor_turnover_and_risk_objective_fixed": true,
+    "factorial_dimensions": [
+      "factor_absolute_limit_0p10_or_0p125",
+      "sic2_limits_0p05_0p30_or_0p075_0p40",
+      "one_way_adv_0p10_or_0p125"
+    ],
+    "post_diagnostic_curiosity_only": true,
+    "cannot_promote_from_historical_test": true
+  },
+  "evidence": {
+    "validation_start": "2022-02",
+    "validation_end": "2023-12",
+    "historical_test_start": "2024-01",
+    "historical_test_end": "2025-08",
+    "quarantined_start": "2025-09",
+    "quarantined_end": "2026-08",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "profiles": [
+    {
+      "id": "control",
+      "family": "position_1p5_control",
+      "overrides": {"maximum_position_weight": 0.015}
+    },
+    {
+      "id": "factor_12p5",
+      "family": "factorial_factor",
+      "overrides": {"maximum_position_weight": 0.015, "market_beta_absolute_limit": 0.125, "other_factor_absolute_limit": 0.125}
+    },
+    {
+      "id": "industry_7p5_40",
+      "family": "factorial_industry",
+      "overrides": {"maximum_position_weight": 0.015, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40}
+    },
+    {
+      "id": "adv_12p5",
+      "family": "factorial_liquidity",
+      "overrides": {"maximum_position_weight": 0.015, "maximum_one_way_adv_participation": 0.125}
+    },
+    {
+      "id": "factor_industry",
+      "family": "factorial_two_way",
+      "overrides": {"maximum_position_weight": 0.015, "market_beta_absolute_limit": 0.125, "other_factor_absolute_limit": 0.125, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40}
+    },
+    {
+      "id": "factor_adv",
+      "family": "factorial_two_way",
+      "overrides": {"maximum_position_weight": 0.015, "market_beta_absolute_limit": 0.125, "other_factor_absolute_limit": 0.125, "maximum_one_way_adv_participation": 0.125}
+    },
+    {
+      "id": "industry_adv",
+      "family": "factorial_two_way",
+      "overrides": {"maximum_position_weight": 0.015, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40, "maximum_one_way_adv_participation": 0.125}
+    },
+    {
+      "id": "factor_industry_adv",
+      "family": "factorial_three_way",
+      "overrides": {"maximum_position_weight": 0.015, "market_beta_absolute_limit": 0.125, "other_factor_absolute_limit": 0.125, "sic2_industry_net_absolute_limit": 0.075, "sic2_industry_gross_limit": 0.40, "maximum_one_way_adv_participation": 0.125}
+    }
+  ],
+  "selection_tiers": {
+    "practical_return": {
+      "allowed_profiles": ["control", "factor_12p5", "industry_7p5_40", "factor_industry"],
+      "selection_metric": "annualized_net_excess_return_primary",
+      "maximum_gross": 1.50,
+      "maximum_one_way_adv_participation": 0.10,
+      "maximum_candidate_absolute_position": 0.015,
+      "maximum_one_way_turnover": 0.50,
+      "maximum_absolute_factor_exposure": 0.125,
+      "maximum_sic2_net": 0.075,
+      "maximum_sic2_gross": 0.40,
+      "require_positive_stressed_net_return": true
+    },
+    "practical_sharpe": {
+      "allowed_profiles": ["control", "factor_12p5", "industry_7p5_40", "factor_industry"],
+      "selection_metric": "net_sharpe_primary",
+      "maximum_gross": 1.50,
+      "maximum_one_way_adv_participation": 0.10,
+      "maximum_candidate_absolute_position": 0.015,
+      "maximum_one_way_turnover": 0.50,
+      "maximum_absolute_factor_exposure": 0.125,
+      "maximum_sic2_net": 0.075,
+      "maximum_sic2_gross": 0.40,
+      "require_positive_stressed_net_return": true
+    },
+    "expanded_return": {
+      "selection_metric": "annualized_net_excess_return_primary",
+      "maximum_gross": 1.50,
+      "maximum_one_way_adv_participation": 0.125,
+      "maximum_candidate_absolute_position": 0.015,
+      "maximum_one_way_turnover": 0.50,
+      "maximum_absolute_factor_exposure": 0.125,
+      "maximum_sic2_net": 0.075,
+      "maximum_sic2_gross": 0.40,
+      "require_positive_stressed_net_return": true
+    },
+    "expanded_sharpe": {
+      "selection_metric": "net_sharpe_primary",
+      "maximum_gross": 1.50,
+      "maximum_one_way_adv_participation": 0.125,
+      "maximum_candidate_absolute_position": 0.015,
+      "maximum_one_way_turnover": 0.50,
+      "maximum_absolute_factor_exposure": 0.125,
+      "maximum_sic2_net": 0.075,
+      "maximum_sic2_gross": 0.40,
+      "require_positive_stressed_net_return": true
+    }
+  },
+  "selection": {
+    "uses_validation_only": true,
+    "metric": "annualized_net_excess_return_primary",
+    "rule": "Select return and Sharpe winners separately within practical 10% ADV and expanded 12.5% ADV tiers using February 2022--December 2023 only. Run only distinct winners plus the 1.5% control on January 2024--August 2025.",
+    "test_outcomes_never_select_profile": true
+  },
+  "inference": {
+    "hac_lags": 3,
+    "circular_block_length_months": 3,
+    "bootstrap_resamples": 100000,
+    "bootstrap_seed": 20260814
+  },
+  "interpretation": {
+    "primary_question": "Does a modest orthogonal constraint interaction improve the 1.5% portfolio without changing its information set?",
+    "no_promotion_from_historical_test": true,
+    "clean_confirmation_required": true,
+    "do_not_expand_grid_after_results": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "research_v6_8_live_risk_cost_v1",
+  "purpose": "Rebuild the frozen Stage 8 point-in-time risk and cost inputs for one prospective V6.8 portfolio signal.",
+  "risk": {
+    "lookback_global_sessions": 252,
+    "minimum_observations": 126,
+    "half_life_sessions": 63.0,
+    "sector_minimum_securities": 10,
+    "specific_variance_prior_observations": 60.0,
+    "monthly_session_scale": 21.0
+  },
+  "cost": {
+    "spread_source": "median_estimated_full_spread_20d",
+    "adv_source": "median_dollar_volume_20d",
+    "impact_windows_sessions": [20, 60],
+    "primary_borrow_rate_annual": 0.01,
+    "regular_stress_borrow_rate_annual": 0.03,
+    "lowest_liquidity_quintile_stress_borrow_rate_annual": 0.10
+  },
+  "short_eligibility": {
+    "minimum_price_usd": 10.0,
+    "minimum_market_cap_usd": 1000000000.0,
+    "minimum_median_dollar_volume_60d": 20000000.0,
+    "minimum_positive_volume_share_60d": 0.95
+  },
+  "policy": {
+    "new_trade_requires_complete_spread_adv_impact_and_risk": true,
+    "broker_shortability_is_a_separate_current_pre_order_gate": true,
+    "factor_observations_must_exist_in_the_pre_cutoff_official_snapshot": true
+  }
+}

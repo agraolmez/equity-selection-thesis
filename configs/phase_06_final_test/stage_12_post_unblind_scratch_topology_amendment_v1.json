@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "stage": 12,
+  "amendment_id": "stage12-post-unblind-parent-scratch-topology-v1",
+  "status": "STAGE12_POST_UNBLIND_SCRATCH_TOPOLOGY_AMENDMENT_AUTHORIZED",
+  "classification": "non_economic_fail_closed_scratch_topology_contract_correction",
+  "authorization": {
+    "source": "current_codex_task_user_message",
+    "authorization_form": "contextual_affirmative_reply_after_clarification",
+    "scope_request_authored_by_user": false,
+    "scope_request_text": "I authorize the narrow, non-mutating Stage 12 scratch-topology amendment described in the blocker record: preserve the parent unchanged, authenticate the exact six empty directories, add topology-drift tests, refreeze and independently verify Stage 12. Ask me again before restarting Stage 13.",
+    "scope_request_text_sha256": "21dcc932f427e7fac30d6b89034f92670e228af55486793a84d82abc1d46cf81",
+    "source_message_text": "Okay lets start",
+    "source_message_text_sha256": "eadc45ff3c3a792931392d1491b0065e17804a1ef93eed54b82901d9c047c1d5",
+    "authorized": true,
+    "authorized_scope": "only_the_non_mutating_exact_parent_scratch_topology_contract_correction_tests_and_replacement_stage12_refreeze_and_independent_verification",
+    "parent_mutation_authorized": false,
+    "destructive_cleanup_authorized": false,
+    "renewed_stage13_approval_granted": false,
+    "stage13_execution_authorized_now": false
+  },
+  "authorization_receipt": {
+    "path": "artifacts/phase_06_final_test/STAGE_12_SCRATCH_TOPOLOGY_AMENDMENT_AUTHORIZATION.json",
+    "sha256": "3f0a285671144a91eccccf84cc345c62a73b21e379d9debf0d00c40a44fab3d2",
+    "status": "STAGE12_NON_MUTATING_SCRATCH_TOPOLOGY_AMENDMENT_AUTHORIZED"
+  },
+  "historical_bindings": {
+    "prior_policy_v2_path": "configs/phase_06_final_test/stage_12_freeze_policy_v2.json",
+    "prior_policy_v2_sha256": "99531170627ff7c28bb6f05d3e88aad94cef6d33f07f658283b2e2a800367394",
+    "prior_stage12_primary_pointer_path": "artifacts/phase_06_final_test/STAGE_12_PRIMARY_PRIOR_FREEZE_A0B24EE3.json",
+    "prior_stage12_primary_pointer_sha256": "04d1105329b09ea078f1abb4c7842ce6441b7c9f70d7869a11bf4954ced274fe",
+    "prior_stage12_verified_pointer_path": "artifacts/phase_06_final_test/STAGE_12_VERIFIED_PRIOR_FREEZE_A0B24EE3.json",
+    "prior_stage12_verified_pointer_sha256": "850ba5805753406f9e7002e1cb71f8dfdea51c5d22606c80851baef8929384a6",
+    "prior_stage12_freeze_id": "stage12-freeze-a0b24ee3eea641805a798dae",
+    "prior_stage12_manifest_sha256": "8fde217d8200355b1cd5dcfa3f2a6fcb3d57bb4591deda1f323dcd75e8023b16",
+    "prior_stage12_verification_id": "stage12-verify-2c0a3632f0ddfd77235aabfc",
+    "prior_stage13_approval_path": "artifacts/phase_06_final_test/STAGE_13_APPROVAL_PRIOR_STAGE12_FREEZE_A0B24EE3.json",
+    "prior_stage13_approval_sha256": "3eece897f35e123659bc2fbf5721b42122d8be0394363d2fe31137c8d53548f2",
+    "prior_stage13_approval_payload_sha256": "00aa26a946504bf0eb449a6bb0c4ff9b50eaf80dbe565cee2777e019fbf01e55",
+    "blocker_path": "artifacts/phase_06_final_test/STAGE_13_PARENT_SCRATCH_TOPOLOGY_BLOCKER.json",
+    "blocker_sha256": "927fd04990a93ac01faf67bee9e600cf345d830e323c708420fd0d1ab1c6069e",
+    "failed_stage13_context_sha256": "7bc6e0a792c842c4763cf986d0b6acb8b6da857cfce51a7b9df3cc201b83b9b9",
+    "failed_stage13_final_calendar_receipt_count": 72,
+    "failed_stage13_economic_or_outcome_month_checkpoint_count": 0
+  },
+  "topology_contract": {
+    "root_relative_path": "full_predictor_context/.duckdb_spill/exact-table-compare-1ejjjtbr",
+    "exact_descendant_relative_paths": [
+      "left",
+      "left/__stage13_exact_partition=27",
+      "left/__stage13_exact_partition=79",
+      "right",
+      "right/__stage13_exact_partition=20",
+      "right/__stage13_exact_partition=94"
+    ],
+    "exact_descendant_directory_count": 6,
+    "root_and_descendant_directory_identity_count": 7,
+    "regular_file_count": 0,
+    "payload_bytes": 0,
+    "symlink_count": 0,
+    "special_node_count": 0,
+    "missing_extra_renamed_or_type_drift_permitted": false,
+    "stable_root_and_descendant_identity_before_after_required": true,
+    "directory_identity_fields": [
+      "st_dev",
+      "st_ino",
+      "st_mode",
+      "st_nlink",
+      "st_size",
+      "st_mtime_ns",
+      "st_ctime_ns"
+    ],
+    "parent_access_read_only": true,
+    "parent_entry_deletion_move_rename_or_write_permitted": false
+  },
+  "source_scope": {
+    "economic_model_formula_registry_or_methodology_change_permitted": false,
+    "data_rows_values_dates_types_keys_linkage_or_sort_change_permitted": false,
+    "new_migration_authority_required": "configs/phase_06_final_test/stage_13_source_checkpoint_context_migration_v2.json",
+    "new_stage12_policy_required": "configs/phase_06_final_test/stage_12_freeze_policy_v3.json",
+    "runtime_validator_path": "src/portfolio_bot/final_test/final_source_replay.py",
+    "synthetic_test_path": "tests/unit/test_stage13_source_checkpoint_context_migration.py"
+  },
+  "non_economic_boundary": {
+    "parent_entries_deleted_moved_renamed_or_mutated": false,
+    "parent_payload_files_opened_by_stage12_amendment_work": 0,
+    "outcome_or_economic_payload_files_opened_by_stage12_amendment_work": 0,
+    "final_period_rows_read_by_stage12_amendment_work": 0,
+    "economic_or_outcome_months_executed_by_stage12_amendment_work": 0,
+    "final_forecasts_weights_trades_or_pnl_created_by_stage12_amendment_work": 0,
+    "scientific_or_economic_result_informed_choice": false
+  },
+  "replacement_authority": {
+    "replacement_stage12_freeze_required": true,
+    "independent_stage12_verification_required": true,
+    "prior_stage13_approval_valid_for_replacement_identity": false,
+    "renewed_explicit_stage13_approval_bound_to_exact_replacement_required": true,
+    "renewed_stage13_approval_granted_by_this_amendment": false,
+    "stage13_parent_context_open_authorized_now": false,
+    "stage13_execution_authorized_now": false
+  },
+  "required_tests": {
+    "test_file": "tests/unit/test_stage13_source_checkpoint_context_migration.py",
+    "must_cover": [
+      "exact_nested_payload_empty_topology_acceptance",
+      "missing_renamed_or_extra_directory_rejection",
+      "regular_file_symlink_and_special_node_rejection",
+      "root_and_descendant_identity_drift_rejection",
+      "before_after_parent_identity_equality",
+      "receipt_reuse_reauthentication",
+      "zero_parent_writes"
+    ]
+  }
+}

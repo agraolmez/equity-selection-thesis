@@ -1,0 +1,39 @@
+[[files]]
+filename = "optionmetrics_option_volume.csv"
+family = "OptionMetrics"
+role = "Underlying security-day call, put, and total option volume/open interest"
+coverage_date = "date"
+date_columns = ["date"]
+key_columns = ["secid", "date", "cp_flag"]
+grain = "security_day_call_put_or_total"
+required_columns = ["secid", "date", "cp_flag", "index_flag", "cusip", "ticker", "exchange_d", "class", "issue_type", "volume", "open_interest"]
+
+[[files]]
+filename = "optionmetrics_historical_volatility.csv"
+family = "OptionMetrics"
+role = "Vendor historical volatility by underlying security, day, and horizon"
+coverage_date = "date"
+date_columns = ["date"]
+key_columns = ["secid", "date", "days"]
+grain = "security_day_horizon"
+required_columns = ["secid", "date", "days", "volatility", "cusip", "ticker", "index_flag", "exchange_d", "class", "issue_type"]
+
+[[files]]
+filename = "optionmetrics_security_prices.csv"
+family = "OptionMetrics"
+role = "Underlying security-day coverage and market-data cross-check"
+coverage_date = "date"
+date_columns = ["date"]
+key_columns = ["secid", "date"]
+grain = "underlying_security_day"
+required_columns = ["secid", "date", "cusip", "ticker", "index_flag", "exchange_d", "class", "issue_type", "low", "high", "open", "close", "volume", "return", "cfadj", "shrout", "cfret"]
+
+[[files]]
+filename = "optionmetrics_security_name_history.csv"
+family = "OptionMetrics"
+role = "Effective-dated underlying security names and identifiers"
+coverage_date = "effect_date"
+date_columns = ["effect_date"]
+key_columns = ["secid", "effect_date"]
+grain = "security_name_effective_date"
+required_columns = ["secid", "effect_date", "ticker", "cusip", "class", "issue", "issuer"]

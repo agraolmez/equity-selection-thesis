@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "policy_id": "stage13-public-interest-last-tradable-close-liquidation-v1",
+  "status": "post_unblind_economic_data_gap_treatment",
+  "purpose": "Preserve the vendor's missing post-delisting payoff while permitting a mandatory cash exit at an authenticated final regular-way exchange close for one narrowly defined public-interest GDR delisting class.",
+  "scope": {
+    "first_final_holding_month": "2020-01",
+    "last_final_holding_month": "2025-12",
+    "expected_match_count": 2,
+    "expected_matches": [
+      {
+        "permno": 85421,
+        "delisting_date": "2021-01-08",
+        "posting_date": "2021-01-11",
+        "event_day_bid_usd_per_share": "27.650000",
+        "event_day_ask_usd_per_share": "27.690000",
+        "event_day_quoted_full_spread": "0.001445608962775569"
+      },
+      {
+        "permno": 88888,
+        "delisting_date": "2021-03-08",
+        "posting_date": "2021-03-09",
+        "event_day_bid_usd_per_share": "122.290000",
+        "event_day_ask_usd_per_share": "122.400000",
+        "event_day_quoted_full_spread": "0.000899096816379909"
+      }
+    ],
+    "unexpected_or_missing_match_disposition": "fail_closed"
+  },
+  "event_eligibility": {
+    "action_type": "GDR",
+    "status_type": "VCL",
+    "reason_type": "PUBI",
+    "payment_type": "PRCF",
+    "distribution_type": "NO",
+    "primary_exchange": "N",
+    "performance_related": false,
+    "treatment_status": "missing_nonperformance_terminal_leg_unresolved",
+    "embedding_status": "posting_daily_total_missing",
+    "return_missing_type": "DM",
+    "observed_delisting_return_must_be_null": true,
+    "effective_delisting_return_must_be_null": true,
+    "successor_identity_must_be_null": true,
+    "next_price_and_date_must_be_null": true,
+    "next_price_flag": "DM",
+    "payment_date_and_amount_must_be_null": true,
+    "delisting_price_flag": "TR",
+    "delisting_price_must_be_positive_finite": true,
+    "assigned_exactly_once": true
+  },
+  "final_session_eligibility": {
+    "conditional_type": "RW",
+    "trading_status_flag": "A",
+    "price_flag": "TR",
+    "positive_finite_volume_required": true,
+    "screening_price_valid_required": true,
+    "liquidity_session_valid_required": true,
+    "delisting_price_must_equal_same_day_close": true,
+    "raw_total_return_missing_flag": "NA",
+    "mapped_trading_periods": 1,
+    "covered_trading_sessions": 1,
+    "return_leg_class": "ordinary_with_unresolved_terminal_delisting",
+    "span_alignment_status": "ordinary_span_terminal_outcome_unresolved",
+    "raw_total_return_must_equal_return_ex_distributions": true,
+    "raw_total_return_must_reproduce_from_consecutive_closes": true,
+    "maximum_close_reproduction_absolute_difference": 0.000001,
+    "raw_total_return_minimum": -1.0,
+    "following_posting_return_missing_flag": "DM",
+    "following_posting_return_duration_flag": "MR",
+    "later_tracked_market_rows_permitted": false
+  },
+  "monthly_crosscheck": {
+    "raw_monthly_return_flag": "DE",
+    "monthly_flag_class": "delisting_conditioned",
+    "daily_coverage_class": "nonperformance_delisting_outcome_unresolved",
+    "numeric_transport_status": "match_within_locked_tolerance",
+    "maximum_absolute_difference": 0.00006
+  },
+  "treatment": {
+    "treatment_status": "public_interest_last_tradable_close_liquidation",
+    "ordinary_final_session_return_authorized": true,
+    "vendor_post_delisting_return_relabelled_as_zero": false,
+    "vendor_missing_return_fields_preserved_in_source_evidence": true,
+    "settlement_kind": "cash",
+    "settlement_value_multiplier": 1.0,
+    "terminal_total_return_already_applied": true,
+    "apply_order": "observed_final_session_return_then_single_cash_retirement",
+    "reentry_after_retirement_permitted": false
+  },
+  "sensitivity": {
+    "status": "mandatory_reporting_only_one_at_a_time_counterfactuals",
+    "counterfactual_post_delisting_value_multipliers": [
+      0.7,
+      0.45,
+      0.0
+    ],
+    "counterfactual_multiplier_interpretation": "replace_multiplier_one_final_close_cash_settlement_after_observed_ordinary_final_session_return",
+    "counterfactual_multiplier_applies_to_signed_post_return_pre_settlement_position_value": true,
+    "counterfactual_multiplier_is_not_an_imputed_vendor_delisting_return": true,
+    "vendor_missing_return_fields_remain_missing": true,
+    "terminal_execution_cost_stress": "maximum_of_authenticated_event_day_quoted_full_spread_and_frozen_full_spread_20d",
+    "event_day_quoted_full_spread_formula": "(ask_usd_per_share-bid_usd_per_share)/((ask_usd_per_share+bid_usd_per_share)/2)",
+    "execution_cost_charge": "one_full_selected_spread_times_absolute_post_return_pre_settlement_position_value",
+    "execution_cost_scenario_is_separate_one_at_a_time_not_cartesian": true,
+    "within_holding_month_cash_carry": "counterfactual_cash_difference_compounds_by_observed_remaining_daily_risk_free_growth_after_event_session",
+    "subsequent_primary_monthly_percentage_returns_unchanged": true,
+    "primary_estimates_modified": false,
+    "model_fitting_scoring_selection_or_allocation_rerun": false,
+    "strategy_ranking_rule": "sharpe_descending_then_net_cagr_descending_then_strategy_id_ascending",
+    "final_thesis_conclusion_status": "pending_stage14_inference_and_stage15_synthesis",
+    "required_reported_effects": [
+      "event_day_portfolio_weight",
+      "holding_month_return",
+      "cagr",
+      "sharpe_ratio",
+      "maximum_drawdown",
+      "strategy_ranking",
+      "thesis_conclusion"
+    ],
+    "counterfactuals_are_primary_estimates": false,
+    "scenario_results_may_be_promoted": false
+  },
+  "governance": {
+    "post_unblind_substantive_amendment": true,
+    "replacement_stage12_freeze_required": true,
+    "independent_stage12_verification_required": true,
+    "fresh_binding_specific_stage13_approval_required": true,
+    "historical_stage11_outputs_may_be_rewritten": false,
+    "historical_stage12_receipts_may_be_rewritten": false
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase05-stage11-source-materialization-approval-v1",
+  "stage": 11,
+  "gate": "A",
+  "scope": "stage11_validation_source_materialization_gate_a",
+  "approved": true,
+  "approved_by": "thesis-owner",
+  "approved_at_utc": "2026-07-22T21:21:48Z",
+  "approval_text": "Okay, I approve Gate A, and also I will approve Gate B. Please finish stage 11 completely",
+  "approval_text_sha256": "c38a1550bab64c0cd3b5de3ffee6e2b3f0ad98a1171dce979646feb43274b6a6",
+  "source_materialization_plan_sha256": "02707c1f885ea67e866970dbe78537d31f47d4023b8a9d9d4eb603d213fbe594",
+  "stage10_verified_pointer_sha256": "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2",
+  "methodology_source_sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81",
+  "authorizations": {
+    "normalized_source_materialization_authorized": true,
+    "main_2015_01_02_through_2019_10_31_authorized": true,
+    "reserve_2019_11_01_through_2019_12_02_authorized": true,
+    "labels_or_targets_authorized": false,
+    "model_fit_or_selection_authorized": false,
+    "forecasts_authorized": false,
+    "portfolio_weights_authorized": false,
+    "trades_authorized": false,
+    "pnl_or_performance_authorized": false,
+    "december_2019_holding_month_authorized": false,
+    "final_2020_2025_authorized": false,
+    "stage12_or_later_authorized": false
+  },
+  "payload_sha256": "59fbf47780eddc390b61f1a05aea313bd191f2ea1114e7026207e9d5aa431115"
+}

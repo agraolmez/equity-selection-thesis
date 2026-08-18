@@ -1,0 +1,55 @@
+[[files]]
+filename = "sec_filings_index.csv"
+family = "SEC"
+role = "Indexed filing records and form coverage, including 10-K, 10-Q, 20-F, 40-F, and 6-K where present"
+coverage_date = "fdate"
+availability_note = "fdate is the filing-date coverage axis; Phase 2 applies the locked plus-one-trading-day fallback because acceptance time is unavailable here. first_cik_date and last_cik_date are coverage metadata and are prohibited from features."
+date_columns = ["fdate", "first_cik_date", "last_cik_date", "findexdate", "lindexdate"]
+key_columns = ["cik", "fdate", "form", "fname", "source"]
+grain = "indexed_filing_source_record"
+required_columns = ["cik", "fdate", "form", "coname", "fname", "iname", "source"]
+
+[[files]]
+filename = "sec_8k_items.csv"
+family = "SEC"
+role = "8-K filing-item taxonomy; foreign 6-K coverage is sourced from sec_filings_index.csv and has no 8-K-style item taxonomy"
+coverage_date = "fdate"
+availability_note = "fdate is the coverage axis; Phase 2 prefers secadate plus secatime after provider-field validation. first_cik_date and last_cik_date are prohibited from features."
+date_columns = ["fdate", "first_cik_date", "last_cik_date", "rdate", "secadate"]
+key_columns = ["accession", "cik", "nitem"]
+grain = "accession_subject_cik_item; blank item requires deterministic ingest row ordinal"
+required_columns = ["cik", "fdate", "form", "fname", "rdate", "secatime", "nitem", "item", "secadate", "accession"]
+
+[[files]]
+filename = "sec_13f_holdings.csv"
+family = "SEC/13F"
+role = "Raw 13F information-table lines; same security can occupy multiple legitimate lines"
+coverage_date = "fdate"
+availability_note = "fdate is the filing-date coverage axis; holdings become usable one trading day later. rdate is the report period and is never availability."
+date_columns = ["fdate", "rdate"]
+key_columns = ["fname"]
+key_semantics = "nonunique_filing_group_only"
+grain = "filing_source_row_ordinal; no reliable natural line key"
+required_columns = ["cik", "fdate", "form", "rdate", "fname", "nameofissuer", "titleofclass", "cusip", "value", "sshprnamt", "sshprnamttype", "putcall", "investmentdiscretion", "othermanager", "sole", "shared", "none"]
+
+[[files]]
+filename = "sec_13f_summary.csv"
+family = "SEC/13F"
+role = "13F filing summary and reported other-manager rows"
+coverage_date = "fdate"
+availability_note = "fdate is the filing-date coverage axis; the filing becomes usable one trading day later and rdate is not availability."
+date_columns = ["fdate", "rdate", "datedeniedexpired", "datereported"]
+key_columns = ["fname", "om"]
+grain = "filing_other_manager_row; collapse to fname for filing-level summary"
+required_columns = ["cik", "fdate", "form", "rdate", "fname", "form13ffilenumber", "isamendment", "amendmenttype", "tableentrytotal", "tablevaluetotal", "isconfidentialomitted", "reporttype", "om", "omsqnm", "omcik", "omfilen", "omname"]
+
+[[files]]
+filename = "audit_financial_restatements.csv"
+family = "Audit Analytics"
+role = "Publicly disclosed financial restatement notification events"
+coverage_date = "file_date"
+availability_note = "file_date is the event coverage axis; Phase 2 prefers file_accepted and otherwise applies the locked fallback. meta/current/latest fields are current-vintage coverage metadata and are prohibited from features and point-in-time joins."
+date_columns = ["file_date", "file_accepted", "event_date", "res_begin_date", "res_end_date", "date_of_8k_402", "mr_file_date", "mr_file_accepted", "meta_date_time_created", "meta_date_time_changed", "current_date_num", "curr_pr_date"]
+key_columns = ["restatement_notification_key"]
+grain = "restatement_notification_event"
+required_columns = ["company_fkey", "file_date", "file_accepted", "event_date", "restatement_notification_key", "cusip_number", "best_edgar_ticker", "res_begin_date", "res_end_date", "res_accounting", "res_fraud", "res_adverse", "res_improves", "general_type", "currency_code_fkey"]

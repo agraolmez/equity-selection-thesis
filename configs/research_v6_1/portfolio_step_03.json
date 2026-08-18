@@ -1,0 +1,99 @@
+{
+  "schema": "research_v6_1_portfolio_step_03_v1",
+  "status": "FROZEN_READY_TO_RUN",
+  "approved_on": "2026-08-13",
+  "question": "Can the frozen V6.1 ranks be converted into stronger net portfolios when shorts are optional, rank magnitudes are treated conservatively, and trading is persistent?",
+  "scope": {
+    "portfolio_only": true,
+    "selector_retraining": false,
+    "selector_choices_frozen": true,
+    "historical_post_diagnostic_evidence": true,
+    "outcome_based_winner_switching_prohibited": true
+  },
+  "base_contract": {
+    "path": "configs/research_v6_1/portfolio_step_02.json",
+    "sha256": "48f429eb0d7f305a899e432dfe952cf2c192cd450d1cd661b679f11c24b6c47f"
+  },
+  "base_result": {
+    "path": "artifacts/research_v6_1/portfolio_step_02/48f429eb0d7f-53a6425a3d92-7256b91cc393",
+    "required_status": "COMPLETE"
+  },
+  "evidence": {
+    "portfolio_start": "2024-01",
+    "portfolio_end": "2025-08",
+    "calibration_start": "2020-01",
+    "quarantined_start": "2025-09",
+    "untouched_confirmation_earliest_start": "2026-09"
+  },
+  "formation": {
+    "policies": ["return_plus_both", "return_plus_ff5_momentum"],
+    "entry_percentile": 0.80,
+    "holding_percentile": 0.70,
+    "alpha_gate": "Strictly positive calibrated alpha for longs and strictly negative calibrated alpha for alpha shorts; holding bands apply to return rank, not to the alpha sign.",
+    "opposing_signal_rule": "An inherited holding may be reduced or closed but never flipped in the same month.",
+    "short_rule": "Shorts are permitted but never required. New alpha shorts must clear stressed round-trip trading and one-month borrow costs. Separate zero-alpha hedge shorts may be used only to satisfy risk limits and are capped in aggregate.",
+    "hedge_short": {
+      "maximum_gross": 0.20,
+      "minimum_adv_cross_section_percentile": 0.50,
+      "maximum_stress_borrow_cross_section_percentile": 0.75
+    }
+  },
+  "rank_to_payoff": {
+    "methods": ["direct_rank", "shrunk_linear", "broad_bucket"],
+    "minimum_history_months": 24,
+    "equal_weight_months": true,
+    "shrinkage_prior_months": 24,
+    "direct_rank": "Use tail rank strength and one causal side-level payoff scale; do not estimate stock-specific return magnitudes.",
+    "shrunk_linear": "Fit one causal nonnegative rank-payoff slope plus intercept with equal month weights and ridge shrinkage.",
+    "broad_bucket": {
+      "bin_edges": [0.0, 0.20, 0.40, 0.60, 0.80, 1.0],
+      "monotonic": true
+    }
+  },
+  "optimizer": {
+    "objective": "maximize causal expected monthly stock excess return minus trading, financing, and borrow costs subject to a forecast-risk ceiling",
+    "forecast_volatility": 0.10,
+    "maximum_gross": 1.50,
+    "minimum_long_gross": 0.0,
+    "minimum_short_gross": 0.0,
+    "minimum_net": -0.10,
+    "maximum_net": 1.00,
+    "maximum_position_weight": 0.01,
+    "maximum_one_way_turnover": 0.35,
+    "maximum_one_way_adv_participation": 0.10,
+    "market_beta_absolute_limit": 0.10,
+    "other_factor_absolute_limit": 0.10,
+    "sic2_industry_net_absolute_limit": 0.05,
+    "sic2_industry_gross_limit": 0.30,
+    "cash_allowed": true,
+    "solver": "CLARABEL"
+  },
+  "cost_hurdle": {
+    "scenario": "standard_stress",
+    "round_trip": true,
+    "representative_position_weight": 0.001,
+    "commission_each_way": 0.0001
+  },
+  "evaluation": {
+    "primary_metric": "realized annualized net Sharpe under primary costs",
+    "report": [
+      "net and stress Sharpe",
+      "net return and volatility",
+      "drawdown",
+      "turnover and costs",
+      "long, alpha-short, and hedge-short contribution",
+      "gross, net, factor, industry, capacity, and breadth"
+    ],
+    "comparison_controls": [
+      "V6.1 Step 02 joint-alpha optimized 10 percent volatility",
+      "V6.1 Step 02 FF5-only optimized 10 percent volatility",
+      "V6.1 Step 02 return-only squared-rank"
+    ]
+  },
+  "checkpointing": {
+    "natural_unit": "portfolio policy/rank mapping/completed holding month",
+    "atomic": true,
+    "resume": true,
+    "binds_config_code_inputs_and_variant": true
+  }
+}

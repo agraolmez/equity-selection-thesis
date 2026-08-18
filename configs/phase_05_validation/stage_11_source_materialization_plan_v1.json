@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "plan_id": "phase05-stage11-source-materialization-plan-v1",
+  "stage": 11,
+  "gate": "A",
+  "scope": {
+    "main_start": "2015-01-02",
+    "main_end": "2019-10-31",
+    "reserve_start": "2019-11-01",
+    "reserve_end": "2019-12-02",
+    "first_prohibited_date": "2020-01-02",
+    "physical_main_reserve_separation_required": true
+  },
+  "upstream_authorities": {
+    "phase01_frozen_pointer": {
+      "path": "artifacts/phase_01_raw_manifest/LATEST_FROZEN.json",
+      "sha256": "b11436c10eafbabd52e2fd3d230bb3e48e97529282ba6fd81315c25396455299"
+    },
+    "phase01_verified_pointer": {
+      "path": "artifacts/phase_01_raw_manifest/LATEST_VERIFIED.json",
+      "sha256": "ba8070e3a282ac8c4e389254e2b848724a57d85b30130ecd44649c9c16b88b1a"
+    },
+    "phase02_calendar_verified_pointer": {
+      "path": "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json",
+      "sha256": "6e4377fa1cc898d676d8e44832ce6497e936707944d87ca212889500c97536a9"
+    },
+    "stage11_main_market_extension_independent_verification": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/quality/phase_05_validation/stage11-validation-data-v1/market_extension_independent_verification.json",
+      "sha256": "3dcd6fd5970f214f5784cb20ede392c5b11e97dd9eb2ba7d1cfc180bea1d50b1"
+    },
+    "stage11_factor_boundary_independent_verification": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/quality/phase_05_validation/stage11-validation-data-v1/factor_boundary_repair_independent_verification.json",
+      "sha256": "ac7708297ee834fd37d5f2e2a9550cd01d991f25377119ef7de7c85802fefd63"
+    },
+    "stage10_verified_pointer": {
+      "path": "artifacts/phase_04_models/LATEST_ALLOCATOR_VERIFIED.json",
+      "sha256": "af78595e3cd6f35535dd9d30ac018c6c053dfb9e798ff8f00779cf0a451d58a2"
+    },
+    "methodology_source": {
+      "path": "outputs/methodology_v1_source.md",
+      "sha256": "77ac9a4a79b0f46188b56f9a9a3d4affccdbfb13feafdc0f5facc79f2bbc6e81"
+    },
+    "methodology_freeze": {
+      "path": "outputs/methodology_v1_freeze.json",
+      "sha256": "cbd897684639a2ccfe1ecf266cf458ef836017b91310fed2e266a75c38808d98"
+    },
+    "approval_schema": {
+      "path": "configs/phase_05_validation/stage_11_source_materialization_approval_v1.schema.json",
+      "sha256": "3f618e6ac98e9fb8ff8f43be3d0f45795ea9593383c28e01de0312745fa6cd76"
+    },
+    "primary_manifest_schema": {
+      "path": "configs/phase_05_validation/stage_11_source_materialization_manifest_v1.schema.json",
+      "sha256": "65b2e413b9bafe743f824991cc712ed309f74bac5d93c8a827369eef28777fc9"
+    }
+  },
+  "sources": {
+    "crsp_daily": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/raw/crsp_daily_ciz.csv",
+      "sha256": "2e274021d6bf2a4485d2a6f4f3485fdd26c654380ca247ac975456c73e5646d9",
+      "size_bytes": 12740735288,
+      "full_file_rows": 49886907,
+      "date_column": "DlyCalDt",
+      "allowed_columns": ["PERMNO", "SecInfoStartDt", "SecInfoEndDt", "HdrCUSIP", "CUSIP", "PrimaryExch", "ConditionalType", "ExchangeTier", "TradingStatusFlg", "USIncFlg", "IssuerType", "SecurityType", "SecuritySubType", "ShareType", "Ticker", "PERMCO", "SICCD", "NAICS", "ICBIndustry", "IssuerNm", "DlyCalDt", "DlyPrc", "DlyPrcFlg", "DlyCap", "DlyRet", "DlyRetx", "DlyRetMissFlg", "DlyRetDurFlg", "DlyVol", "DlyClose", "DlyLow", "DlyHigh", "DlyBid", "DlyAsk", "DlyOpen", "DlyPrcVol"],
+      "use": "reserve_market_and_return_staging_only"
+    },
+    "crsp_distribution": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/raw/crsp_distribution_ciz.csv",
+      "sha256": "2f88d667bfa4b66f135f98bb13bae5c75ca0abf926ee934cb5eb0031ace531d7",
+      "size_bytes": 65402747,
+      "full_file_rows": 552234,
+      "date_column": "DisExDt",
+      "allowed_columns": ["PERMNO", "DisExDt", "DisSeqNbr", "DisOrdinaryFlg", "DisType", "DisFreqType", "DisPaymentType", "DisDetailType", "DisTaxType", "DisOrigCurType", "DisDivAmt", "DisFacPr", "DisFacShr", "DisDeclareDt", "DisRecordDt", "DisPayDt", "DisPERMNO", "DisPERMCO", "DisAmountSourceType", "PrimaryExch", "SICCD", "NASDIssuno"],
+      "use": "frozen_exactly_once_return_reconciliation"
+    },
+    "crsp_delisting": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/raw/crsp_delisting_ciz.csv",
+      "sha256": "bdee1560043d059c7b75518a31a4637398234168a087d9f37ba1fcb8fc90d4cb",
+      "size_bytes": 1786555,
+      "full_file_rows": 14618,
+      "date_column": "DelistingDt",
+      "allowed_columns": ["PERMNO", "DelistingDt", "DelDtPrc", "DelDtPrcFlg", "DelActionType", "DelStatusType", "DelReasonType", "DelPaymentType", "DelPERMNO", "DelPERMCO", "DelRet", "DelRetMissType", "DelNextDt", "DelNextPrc", "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType", "DelDlyDt", "PrimaryExch", "SICCD", "NASDIssuno"],
+      "use": "frozen_exactly_once_return_and_terminal_event_reconciliation"
+    },
+    "ff_factor_daily": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/raw/ff_5_momentum_daily.csv",
+      "sha256": "c709acdb7e3a383d1f7b9f1208fb7d460dcc5b1cc1ea260060e289f5baa964ba",
+      "size_bytes": 499241,
+      "full_file_rows": 6578,
+      "date_column": "date",
+      "allowed_columns": ["date", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"],
+      "use": "reserve_factor_normalization_and_main_lineage_crosscheck"
+    },
+    "trading_calendar": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_02_canonical_panel/phase02-crsp-b03263a970e52fbd/calendar/calendar-ae2e4ba4a280d66e/trading_calendar.parquet",
+      "sha256": "b53c9fb689cea035019180405f7c2b3f90fae76f1815dadc8d2b30a1bfc7ea03",
+      "size_bytes": 28382,
+      "date_column": "calendar_date",
+      "allowed_columns": ["calendar_date"],
+      "use": "main_and_reserve_session_projection"
+    },
+    "verified_market_main": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_day.parquet",
+      "sha256": "9492024f0206a5336b67b4c7f5fb7be0b2e12a311ae05bfec177df6226d94e5e",
+      "size_bytes": 345664203,
+      "date_column": "calendar_date",
+      "allowed_columns": ["permno", "calendar_date", "close_usd_per_share"],
+      "use": "authenticated_main_market_projection"
+    },
+    "verified_factor_main": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/auxiliary_extension/tables/ff_factor_daily_observation.parquet",
+      "sha256": "9d9019a832a26082b21fb8e7ec441d05933225c46b54aca3ae37db4de6200eb4",
+      "size_bytes": 28688,
+      "date_column": "observation_date",
+      "allowed_columns": ["observation_date", "public_availability_date", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"],
+      "use": "authenticated_main_factor_projection"
+    },
+    "verified_daily_return_staging_main": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_day_return_staging.parquet",
+      "sha256": "a797b05c1331c85f289a80dcc32a3122ee6cc06f1a4649353b06ca33a945f680",
+      "size_bytes": 54355389,
+      "date_column": "calendar_date",
+      "allowed_columns": ["permno", "calendar_date", "raw_total_return", "raw_return_ex_distributions", "raw_return_missing_flag", "raw_return_duration_flag", "mapped_trading_periods", "return_history_authorized"],
+      "use": "authenticated_main_staging_reused_without_raw_rematerialization"
+    },
+    "verified_monthly_return_staging": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/typed/crsp_security_month_return_staging.parquet",
+      "sha256": "7366adfce86d612c421e0f07cb17de2895cf627fcf8d8b687cea423cde98b271",
+      "size_bytes": 3341775,
+      "date_column": "calendar_month",
+      "allowed_columns": ["permno", "calendar_month", "raw_total_return", "raw_return_ex_distributions", "raw_return_flag", "return_history_authorized"],
+      "use": "verified_main_transport_diagnostic_only_through_2019_10_31;reserve_daily_authority_does_not_depend_on_vendor_monthly_crosscheck"
+    },
+    "verified_return_main_parity": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/returns/interim/stage11-return-extension-7125b77b26fcc103dcb8ae1f/crsp_security_day_return.parquet",
+      "sha256": "3d38761a0dc62b62c54ee45b02e26901acd25596770e6c1be4f95d09c942901e",
+      "size_bytes": 93064437,
+      "date_column": "calendar_date",
+      "allowed_columns": ["permno", "calendar_date", "return_leg_class", "return_span_start_date", "return_span_end_date", "covered_trading_sessions", "span_alignment_status", "delisting_event_count", "delisting_treatment_status", "delisting_adjustment_return", "authoritative_total_return", "outcome_availability_date", "authoritative_return_state", "reconciliation_status", "return_history_usable", "return_history_authorized"],
+      "use": "main_parity_baseline_before_late_available_terminal_event_completion"
+    },
+    "verified_delisting_main_parity": {
+      "path": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/market_extension/returns/interim/stage11-return-extension-7125b77b26fcc103dcb8ae1f/crsp_delisting_event.parquet",
+      "sha256": "435e1ffbea63d8488c9ddfc0d757b434b2eab712b731a50232baa53392919bf6",
+      "size_bytes": 100920,
+      "date_column": "assigned_return_date",
+      "allowed_columns": ["permno", "delisting_date", "posting_date", "action_type", "status_type", "reason_type", "payment_type", "successor_permno", "successor_permco", "observed_delisting_return", "return_missing_type", "next_date", "next_price", "amount_date", "delisting_dividend_amount", "distribution_type", "primary_exchange", "performance_related", "embedding_status", "treatment_status", "effective_delisting_return", "imputation_applied", "assigned_return_date", "outcome_availability_date", "assigned_exactly_once"],
+      "use": "main_parity_baseline_before_late_available_terminal_event_completion"
+    }
+  },
+  "outputs": {
+    "validation_sessions_main": {
+      "filename": "validation_sessions_main.parquet",
+      "source_dependencies": ["trading_calendar"],
+      "normalization": "exact date projection",
+      "allowed_columns": ["calendar_date"],
+      "date_column": "calendar_date",
+      "schema_sha256": "943963228dadaeabfbcebb7a28e9a77353bb0bb1176c34240ef41b7ea5b9ead2",
+      "minimum_date": "2015-01-02",
+      "maximum_date": "2019-10-31",
+      "predictor_use_permitted": false
+    },
+    "validation_sessions_reserve": {
+      "filename": "validation_sessions_reserve.parquet",
+      "source_dependencies": ["trading_calendar"],
+      "normalization": "exact date projection",
+      "allowed_columns": ["calendar_date"],
+      "date_column": "calendar_date",
+      "schema_sha256": "943963228dadaeabfbcebb7a28e9a77353bb0bb1176c34240ef41b7ea5b9ead2",
+      "minimum_date": "2019-11-01",
+      "maximum_date": "2019-12-02",
+      "predictor_use_permitted": false
+    },
+    "validation_market_main": {
+      "filename": "validation_market_main.parquet",
+      "source_dependencies": ["verified_market_main"],
+      "normalization": "authenticated deterministic projection",
+      "allowed_columns": ["permno", "calendar_date", "close_usd_per_share"],
+      "date_column": "calendar_date",
+      "schema_sha256": "86d719ca49a762c46f97892ef915989cddc35e3d31a875cafcbdadb2a35f0f91",
+      "minimum_date": "2015-01-02",
+      "maximum_date": "2019-10-31",
+      "predictor_use_permitted": false
+    },
+    "validation_market_reserve": {
+      "filename": "validation_market_reserve.parquet",
+      "source_dependencies": ["crsp_daily"],
+      "normalization": "frozen CRSP typed transform after date-first reserve filter",
+      "allowed_columns": ["permno", "calendar_date", "close_usd_per_share"],
+      "date_column": "calendar_date",
+      "schema_sha256": "86d719ca49a762c46f97892ef915989cddc35e3d31a875cafcbdadb2a35f0f91",
+      "minimum_date": "2019-11-01",
+      "maximum_date": "2019-12-02",
+      "predictor_use_permitted": false
+    },
+    "validation_returns_main": {
+      "filename": "validation_returns_main.parquet",
+      "source_dependencies": ["verified_daily_return_staging_main", "crsp_distribution", "crsp_delisting", "verified_return_main_parity"],
+      "normalization": "frozen exactly-once reconciliation with late-available terminal events retained and availability dated",
+      "allowed_columns": ["permno", "calendar_date", "return_leg_class", "return_span_start_date", "return_span_end_date", "covered_trading_sessions", "span_alignment_status", "delisting_event_count", "delisting_treatment_status", "delisting_adjustment_return", "authoritative_total_return", "outcome_availability_date", "authoritative_return_state", "reconciliation_status", "return_history_usable", "return_history_authorized"],
+      "date_column": "calendar_date",
+      "schema_sha256": "6ea8bd3da88d9aa0385865c50ba1d6b02891dd3645af1fc1ec71a668be2fb59f",
+      "minimum_date": "2015-01-02",
+      "maximum_date": "2019-10-31",
+      "predictor_use_permitted": false
+    },
+    "validation_returns_reserve": {
+      "filename": "validation_returns_reserve.parquet",
+      "source_dependencies": ["crsp_daily", "crsp_distribution", "crsp_delisting"],
+      "normalization": "frozen exactly-once reconciliation on physical outcome reserve",
+      "allowed_columns": ["permno", "calendar_date", "return_leg_class", "return_span_start_date", "return_span_end_date", "covered_trading_sessions", "span_alignment_status", "delisting_event_count", "delisting_treatment_status", "delisting_adjustment_return", "authoritative_total_return", "outcome_availability_date", "authoritative_return_state", "reconciliation_status", "return_history_usable", "return_history_authorized"],
+      "date_column": "calendar_date",
+      "schema_sha256": "6ea8bd3da88d9aa0385865c50ba1d6b02891dd3645af1fc1ec71a668be2fb59f",
+      "minimum_date": "2019-11-01",
+      "maximum_date": "2019-12-02",
+      "predictor_use_permitted": false
+    },
+    "validation_factors_main": {
+      "filename": "validation_factors_main.parquet",
+      "source_dependencies": ["verified_factor_main", "ff_factor_daily"],
+      "normalization": "authenticated deterministic projection with raw lineage binding",
+      "allowed_columns": ["observation_date", "public_availability_date", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"],
+      "date_column": "observation_date",
+      "schema_sha256": "30e580eb13fe31011cebe7b912ee1b843f027bb71e56d7d0ffcd81771de693b3",
+      "minimum_date": "2015-01-02",
+      "maximum_date": "2019-10-31",
+      "predictor_use_permitted": false
+    },
+    "validation_factors_reserve": {
+      "filename": "validation_factors_reserve.parquet",
+      "source_dependencies": ["ff_factor_daily"],
+      "normalization": "strict date and decimal128(38,12) normalization",
+      "allowed_columns": ["observation_date", "public_availability_date", "mktrf", "smb", "hml", "rmw", "cma", "rf", "umd"],
+      "date_column": "observation_date",
+      "schema_sha256": "30e580eb13fe31011cebe7b912ee1b843f027bb71e56d7d0ffcd81771de693b3",
+      "minimum_date": "2019-11-01",
+      "maximum_date": "2019-12-02",
+      "predictor_use_permitted": false
+    },
+    "validation_delistings_main": {
+      "filename": "validation_delistings_main.parquet",
+      "source_dependencies": ["crsp_delisting", "verified_delisting_main_parity"],
+      "normalization": "frozen terminal-event treatment including late-available main-assigned events",
+      "allowed_columns": ["permno", "delisting_date", "posting_date", "action_type", "status_type", "reason_type", "payment_type", "successor_permno", "successor_permco", "observed_delisting_return", "return_missing_type", "next_date", "next_price", "amount_date", "delisting_dividend_amount", "distribution_type", "primary_exchange", "performance_related", "embedding_status", "treatment_status", "effective_delisting_return", "imputation_applied", "assigned_return_date", "outcome_availability_date", "assigned_exactly_once"],
+      "date_column": "assigned_return_date",
+      "schema_sha256": "740777f345b25d5022561c8b77ce3893a9d8dcf4836f4f41b39e42b6a927a22b",
+      "minimum_date": "2015-01-02",
+      "maximum_date": "2019-10-31",
+      "predictor_use_permitted": false
+    },
+    "validation_delistings_reserve": {
+      "filename": "validation_delistings_reserve.parquet",
+      "source_dependencies": ["crsp_delisting"],
+      "normalization": "frozen terminal-event treatment on physical outcome reserve",
+      "allowed_columns": ["permno", "delisting_date", "posting_date", "action_type", "status_type", "reason_type", "payment_type", "successor_permno", "successor_permco", "observed_delisting_return", "return_missing_type", "next_date", "next_price", "amount_date", "delisting_dividend_amount", "distribution_type", "primary_exchange", "performance_related", "embedding_status", "treatment_status", "effective_delisting_return", "imputation_applied", "assigned_return_date", "outcome_availability_date", "assigned_exactly_once"],
+      "date_column": "assigned_return_date",
+      "schema_sha256": "740777f345b25d5022561c8b77ce3893a9d8dcf4836f4f41b39e42b6a927a22b",
+      "minimum_date": "2019-11-01",
+      "maximum_date": "2019-12-02",
+      "predictor_use_permitted": false
+    }
+  },
+  "publication": {
+    "work_root": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/source_materialization/work",
+    "verification_work_root": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/source_materialization/verification_work",
+    "primary_bundle_root": "/Users/agraemirolmez/Desktop/Thesis/interim/phase_05_validation/stage11-validation-data-v1/source_materialization/primary",
+    "verification_bundle_root": "/Users/agraemirolmez/Desktop/Thesis/quality/phase_05_validation/stage11-validation-data-v1/source_materialization/verifications",
+    "primary_pointer": "artifacts/phase_05_validation/STAGE_11_SOURCE_MATERIALIZATION_PRIMARY.json",
+    "verified_pointer": "artifacts/phase_05_validation/STAGE_11_SOURCE_MATERIALIZATION_VERIFIED.json",
+    "immutable_closed_bundle_required": true,
+    "independent_raw_to_normalized_replay_required": true
+  },
+  "implementation_code_hashes": {
+    "scripts/materialize_stage_11_validation_sources.py": "33585a369f610db9d45a64a9285bc0ce2ac00fe64a2b37b4b5b498bc8f24deac",
+    "scripts/verify_stage_11_validation_sources.py": "ad0efd34d493927ce6b4b965a3d78598030fa24ad31093bd4a70d813905d3e3a",
+    "src/portfolio_bot/data/phase_02_auxiliary_core.py": "24a4a5855db74c02c9088d87eeef986bb6c6469d30f0783f77207cd65aa682be",
+    "src/portfolio_bot/data/phase_02_crsp_return_reconciliation.py": "b76785d8744d63a1dc28cd975e128d59d9c8ff731f7b1cd46aac083c57b38aea",
+    "src/portfolio_bot/data/phase_02_crsp_typed_backbone.py": "31029f88578a70881cb44c775e34da0f37d5b33fa09c93aabbca1a53e353324e",
+    "src/portfolio_bot/data/phase_02_crsp_typed_backbone_discovery.py": "ac456246c2313fee0181401e14450b3fb1138cb731f4d35fa8b2e8bfc616251a",
+    "src/portfolio_bot/data/phase_02_crsp_typed_backbone_transforms.py": "5482d323b8ba52822f8cdb37d81e92e3fe683e45d3d89fec19be9d8809c4eae0",
+    "src/portfolio_bot/validation/validation_market_extension.py": "1bd9a4487351f1ac3337f2d3216f946ba553ee43a6006353ed1a019d7ad09446",
+    "src/portfolio_bot/validation/validation_return_adapter.py": "aae4f208c33e62d2f0a983a0415b70e839f71189e0f24c2425f37e794bf3d9d9",
+    "src/portfolio_bot/validation/validation_source_extraction.py": "1658c6df6f0eae97b63916bc457f80205d43bd64a81954956f842d7e40220432",
+    "src/portfolio_bot/validation/validation_source_materialization.py": "685cbc2715052a40e2159d9b36470406a7885e7c912686c494f77fa5d1ac1c39",
+    "src/portfolio_bot/validation/validation_source_publication.py": "3610f472debd66cb2197faab83c6807c8e8158d7975842e907e6219e15c84205",
+    "src/portfolio_bot/validation/validation_source_verification.py": "c3e6c68c8b8552bbe337be1c37474fddd56f0af8b7fa6d6fd2c55daa0898d1a8"
+  },
+  "authorizations": {
+    "normalized_source_materialization_authorized": true,
+    "main_2015_01_02_through_2019_10_31_authorized": true,
+    "reserve_2019_11_01_through_2019_12_02_authorized": true,
+    "labels_or_targets_authorized": false,
+    "model_fit_or_selection_authorized": false,
+    "forecasts_authorized": false,
+    "portfolio_weights_authorized": false,
+    "trades_authorized": false,
+    "pnl_or_performance_authorized": false,
+    "december_2019_holding_month_authorized": false,
+    "final_2020_2025_authorized": false,
+    "stage12_or_later_authorized": false
+  },
+  "payload_sha256": "dd07e9467ed4d73e77618e499c3d58b1575ce487c8359791573d451236714a4e"
+}

@@ -1,0 +1,136 @@
+schema_version = 1
+discovery_name = "crsp_return_reconciliation_discovery"
+discovery_version = "v1"
+status = "frozen_aggregate_only_discovery_contract_not_yet_run"
+purpose = "Resolve return-flag availability, exact return spans, distribution and delisting treatment, and a daily-to-monthly reconciliation tolerance without publishing security-level examples or authorizing returns."
+
+[scope]
+start_date = "2000-01-01"
+development_end_date = "2014-11-30"
+quality_end_date = "2014-12-31"
+date_bounds_are_inclusive = true
+date_first_gating_required = true
+december_2014_role = "embargo_quality_and_boundary_reconciliation_only"
+validation_or_final_test_access_permitted = false
+post_2014_non_date_payload_access_permitted = false
+security_level_examples_or_keys_in_discovery_artifacts_permitted = false
+
+[inputs.typed_backbone]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_TYPED_BACKBONE_VERIFIED.json"
+required_status = "verified_passed"
+required_tables = [
+  "crsp_security_day_return_staging",
+  "crsp_security_month_return_staging",
+]
+consume_verified_parquet_instead_of_redecoding_raw_daily_and_monthly_csv = true
+
+[inputs.supporting_profile]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CRSP_SUPPORTING_PROFILE_VERIFIED.json"
+required_status = "verified_passed"
+
+[inputs.calendar]
+verified_pointer = "artifacts/phase_02_canonical_panel/LATEST_CALENDAR_VERIFIED.json"
+required_status = "verified_passed"
+
+[inputs.raw_distribution]
+filename = "crsp_distribution_ciz.csv"
+sha256 = "2f88d667bfa4b66f135f98bb13bae5c75ca0abf926ee934cb5eb0031ace531d7"
+required_columns = [
+  "PERMNO", "DisExDt", "DisSeqNbr", "DisOrdinaryFlg", "DisType",
+  "DisFreqType", "DisPaymentType", "DisDetailType", "DisTaxType",
+  "DisOrigCurType", "DisDivAmt", "DisFacPr", "DisFacShr",
+  "DisDeclareDt", "DisRecordDt", "DisPayDt", "DisPERMNO", "DisPERMCO",
+  "DisAmountSourceType", "PrimaryExch",
+]
+
+[inputs.raw_delisting]
+filename = "crsp_delisting_ciz.csv"
+sha256 = "bdee1560043d059c7b75518a31a4637398234168a087d9f37ba1fcb8fc90d4cb"
+required_columns = [
+  "PERMNO", "DelistingDt", "DelDtPrc", "DelDtPrcFlg", "DelActionType",
+  "DelStatusType", "DelReasonType", "DelPaymentType", "DelPERMNO",
+  "DelPERMCO", "DelRet", "DelRetMissType", "DelNextDt", "DelNextPrc",
+  "DelNextPrcFlg", "DelAmtDt", "DelDivAmt", "DelDisType", "DelDlyDt",
+  "PrimaryExch",
+]
+
+[aggregate_profiles]
+required = [
+  "daily_flag_by_duration_and_numeric_state",
+  "daily_span_alignment_by_duration",
+  "monthly_flag_by_numeric_and_daily_coverage_state",
+  "distribution_assignment_by_calendar_and_return_span_state",
+  "distribution_total_vs_ex_distribution_identity_state",
+  "delisting_assignment_by_posting_and_delisting_date_state",
+  "delisting_embedding_hypothesis_counts",
+  "delisting_missing_payoff_by_action_status_reason_payment_and_exchange",
+  "monthly_exact_difference_threshold_counts_by_flag_and_coverage_class",
+]
+raw_rows_or_security_identifiers_may_be_emitted = false
+aggregate_cells_must_reconcile_to_population_totals = true
+unknown_codes_are_hard = true
+
+[empirical_expectations.numeric_P_rows]
+status = "hard_prelock_expectation_must_be_reproduced_before_empirical_lock"
+population_rows = 1910
+ordinary_non_delisting_rows = 1250
+delisting_linked_rows = 660
+delisting_linked_posted_next_verified_trading_session_rows = 660
+delisting_linked_equal_observed_DelRet_rows = 660
+delisting_linked_with_intervening_numeric_endpoint_rows = 659
+classification_rule = "delisting_event_linkage_precedes_generic_Pn_duration_interpretation"
+ordinary_rule = "Pn_is_one_nonoverlapping_return_covering_n_plus_one_verified_trading_periods_and_preceding_MR_gaps"
+delisting_rule = "Pn_is_a_terminal_delisting_leg_and_never_a_generic_backward_multi_session_span"
+
+[empirical_expectations.numeric_MV_rows]
+status = "hard_prelock_expectation_must_be_reproduced_before_empirical_lock"
+population_rows = 67
+distribution_linked_rows = 65
+delisting_linked_rows = 28
+linkage_memberships_may_overlap = true
+authorized_return_history_rows = 0
+rule = "preserve_for_audit_and_numeric_transport_QA_but_quarantine_from_authorized_return_history"
+
+[empirical_expectations.monthly_numeric_transport]
+status = "hard_prelock_expectation_must_be_reproduced_before_empirical_lock"
+complete_CR_maximum_absolute_difference = "0.000054710100"
+proposed_absolute_tolerance = "0.000060000000"
+transport_compound_includes_all_finite_in_domain_raw_daily_returns = true
+authorized_compound_excludes_MV_and_includes_locked_delisting_imputation = true
+authorized_compound_is_expected_to_differ_from_vendor_monthly_when_MV_or_imputation_exists = true
+
+[monthly_tolerance_discovery]
+arithmetic = "exact_fixed_scale_decimal_only"
+binary_float_or_default_isclose_permitted = false
+comparison_metric = "absolute(raw_vendor_monthly_total_return - compounded_raw_numeric_daily_total_return)"
+candidate_absolute_tolerances = [
+  "0.000001000000",
+  "0.000005000000",
+  "0.000010000000",
+  "0.000025000000",
+  "0.000050000000",
+  "0.000060000000",
+]
+initial_proposal = "0.000060000000"
+initial_proposal_status = "proposal_only_not_authoritative_until_empirical_lock"
+relative_tolerance_permitted = false
+profiles_must_separate_monthly_flag_and_daily_coverage_class = true
+authorized_return_monthly_comparison_is_diagnostic_only = true
+hard_comparison_population_must_not_be_selected_after_viewing_model_or_portfolio_results = true
+
+[empirical_lock]
+template = "configs/phase_02_canonicalization/crsp_return_reconciliation_empirical_lock_template_v1.json"
+required_output = "configs/phase_02_canonicalization/crsp_return_reconciliation_empirical_lock_v1.json"
+required_status = "locked_after_aggregate_only_development_discovery"
+must_bind_discovery_config_sha256 = true
+must_bind_policy_sha256 = true
+must_bind_schema_sha256 = true
+must_bind_all_authenticated_input_authorities = true
+must_record_zero_validation_or_final_test_access = true
+production_build_before_lock_permitted = false
+
+[authorizations]
+return_history_authorized = false
+beta_estimation_authorized = false
+labels_targets_features_models_portfolios_pnl_performance_or_backtests_authorized = false
+validation_or_final_test_access_authorized = false
