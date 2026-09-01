@@ -1,0 +1,37 @@
+{
+  "annualized_excess_volatility": 0.12575273087981192,
+  "annualized_net_excess_return": 0.2550101255291614,
+  "cumulative_net_total_return": 1.1163365573470334,
+  "evidence_boundary": {
+    "2024-01--2025-08": "POST_DIAGNOSTIC_HISTORICAL_DEVELOPMENT",
+    "2025-09--2026-07": "RETROSPECTIVE_OPERATIONAL_DIAGNOSTIC_NOT_PROSPECTIVE"
+  },
+  "limitations": [
+    "The September 2025-July 2026 segment was reconstructed after outcomes existed.",
+    "July 2026 and the 3 August exit use SPY as the daily market-factor proxy, zero UMD, and the last available official daily risk-free rate.",
+    "Historical borrow eligibility remains modelled rather than supported by a contemporaneous broker locate archive.",
+    "The reported daily drawdown is the worse segment-level figure, not a recomputation from one uninterrupted public daily ledger.",
+    "No Alpaca order is represented by this replay."
+  ],
+  "maximum_monthly_drawdown": -0.03366310890220059,
+  "maximum_reported_segment_daily_drawdown": -0.09242907752707341,
+  "months": 31,
+  "net_sharpe": 2.0278694843842966,
+  "period": "2024-01--2026-07",
+  "schema": "v6_8_post_thesis_stitched_replay_evidence_v1",
+  "source_artifacts": [
+    {
+      "role": "V6.8 historical-development monthly returns",
+      "rows": 20,
+      "sha256": "fcfc660d9a134879d69c36b86c3da11a8a67deacbb333b760a8dc83c8d2a1b8f"
+    },
+    {
+      "role": "V6.8 retrospective operational monthly returns",
+      "rows": 11,
+      "sha256": "91fc0f0c8533497126886ecddcbfff27e13f9c6b167ebb7bc34c4c2c0914b10d"
+    }
+  ],
+  "status": "PASS_DIAGNOSTIC_STITCHED_NOT_THESIS_OR_LIVE_EVIDENCE",
+  "total_return_cagr": 0.33669646719825397,
+  "wealth_100k": 211633.65573470335
+}

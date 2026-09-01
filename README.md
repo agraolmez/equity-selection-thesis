@@ -52,6 +52,21 @@ V6.7/V6.8 are shadow or paper-research mechanisms only. V6.8 paper execution
 is fail-closed when current authenticated signals, source data, broker state,
 or credentials are absent.
 
+## Post-thesis V6.8 replay
+
+After the thesis was closed, the unchanged V6.8 policy was reconstructed
+through July 2026 as an operational diagnostic. Stitching its January
+2024-August 2025 historical-development returns to the separately rebuilt
+September 2025-July 2026 segment produces a 111.63% cumulative net total return,
+a 33.67% CAGR, and a 2.028 monthly net-excess Sharpe over 31 holding months.
+
+This is **not** an additional thesis result, a live track record, or untouched
+prospective confirmation. The later segment was reconstructed retrospectively;
+July 2026 uses documented factor approximations, and borrow eligibility remains
+modelled rather than supported by a contemporaneous locate archive. The exact
+boundary, monthly returns, formulas, source hashes, and limitations are in
+[`POST_THESIS_REPLAY.md`](POST_THESIS_REPLAY.md).
+
 The concise source-backed result files are in [`evidence/`](evidence/). The
 complete paper is [`thesis/MASTER_DRAFT.md`](thesis/MASTER_DRAFT.md), with claim
 provenance in [`thesis/EVIDENCE_MAP.md`](thesis/EVIDENCE_MAP.md).
